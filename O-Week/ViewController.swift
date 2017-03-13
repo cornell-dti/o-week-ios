@@ -9,8 +9,6 @@
 import UIKit
 
 class ViewController: UIViewController {
-
-    //random comment to be able to commit in github
     
     override func viewDidLoad() {
         super.viewDidLoad()
