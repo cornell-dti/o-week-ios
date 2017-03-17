@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--My Schedule-->
+        <!--O-Week Schedule-->
         <scene sceneID="AAZ-Xz-HAZ">
             <objects>
                 <viewController id="hxv-cm-Tid" sceneMemberID="viewController">
@@ -36,7 +36,9 @@
                             <constraint firstItem="eIo-WG-8dV" firstAttribute="centerX" secondItem="saa-wQ-whf" secondAttribute="centerX" id="y7a-Gv-ybV"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="My Schedule" id="coI-25-hSi"/>
+                    <navigationItem key="navigationItem" title="O-Week Schedule" id="coI-25-hSi">
+                        <barButtonItem key="backBarButtonItem" title=" " id="EU9-Bp-5Os"/>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YWD-cP-Vvi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

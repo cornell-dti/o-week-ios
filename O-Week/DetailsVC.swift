@@ -10,8 +10,6 @@ import UIKit
 
 class DetailsVC: UIViewController {
     
-    //TODO: fix constraints
-    
     @IBOutlet weak var image: UIImageView!
     
     
