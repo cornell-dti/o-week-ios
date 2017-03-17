@@ -23,8 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func setNavBarColor()
     {
         let navigationBarAppearence = UINavigationBar.appearance()
-        let red = UIColor(red: 215/255, green: 50/255, blue: 37/255, alpha: 1)
-        navigationBarAppearence.barTintColor = red
+        navigationBarAppearence.barTintColor = Color.RED
         navigationBarAppearence.tintColor = UIColor.white   //back arrow is white
         navigationBarAppearence.isTranslucent = false
         navigationBarAppearence.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: UIFont(name: "AvenirNext-DemiBold", size: 14)!]

@@ -13,7 +13,7 @@
         <!--O-Week Schedule-->
         <scene sceneID="AAZ-Xz-HAZ">
             <objects>
-                <viewController id="hxv-cm-Tid" sceneMemberID="viewController">
+                <viewController id="hxv-cm-Tid" customClass="FeedVC" customModule="O_Week" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="TYf-fm-HJf"/>
                         <viewControllerLayoutGuide type="bottom" id="QUB-o7-jvF"/>
@@ -22,18 +22,111 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eIo-WG-8dV">
-                                <rect key="frame" x="143.5" y="318" width="87" height="30"/>
-                                <state key="normal" title="Show details"/>
-                                <connections>
-                                    <segue destination="BYZ-38-t0r" kind="show" id="WS9-NW-8np"/>
-                                </connections>
-                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ga3-DW-adf" customClass="ExtendedNavBarView" customModule="O_Week" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="64" width="375" height="66"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eIo-WG-8dV">
+                                        <rect key="frame" x="136" y="18" width="87" height="30"/>
+                                        <state key="normal" title="Show details">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="BYZ-38-t0r" kind="show" id="WS9-NW-8np"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.84313725490196079" green="0.13725490196078433" blue="0.20784313725490194" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="eIo-WG-8dV" firstAttribute="centerX" secondItem="ga3-DW-adf" secondAttribute="centerX" constant="-8" id="SNQ-qk-5DE"/>
+                                    <constraint firstItem="eIo-WG-8dV" firstAttribute="centerY" secondItem="ga3-DW-adf" secondAttribute="centerY" id="cO5-Z7-8bu"/>
+                                    <constraint firstAttribute="height" constant="66" id="tEq-83-hyX"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0aJ-U7-FmW">
+                                <rect key="frame" x="0.0" y="130" width="375" height="537"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="86" id="Qlj-Vs-voW">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="86"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Qlj-Vs-voW" id="feu-kf-Nka">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="85"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="goc-WY-85J">
+                                                    <rect key="frame" x="20" y="28" width="45" height="28"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="8:45 AM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HJj-KF-fU6">
+                                                            <rect key="frame" x="6" y="0.0" width="39" height="14"/>
+                                                            <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="10"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="10:00 AM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gKZ-T1-mrf">
+                                                            <rect key="frame" x="0.0" y="14" width="45" height="14"/>
+                                                            <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="10"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstItem="HJj-KF-fU6" firstAttribute="top" secondItem="goc-WY-85J" secondAttribute="top" id="4f1-9P-TXg"/>
+                                                        <constraint firstItem="HJj-KF-fU6" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="goc-WY-85J" secondAttribute="leading" id="SgI-lo-Fya"/>
+                                                        <constraint firstAttribute="trailing" secondItem="HJj-KF-fU6" secondAttribute="trailing" id="TZB-eP-orh"/>
+                                                        <constraint firstItem="gKZ-T1-mrf" firstAttribute="top" secondItem="HJj-KF-fU6" secondAttribute="bottom" id="Tpz-Vt-hHQ"/>
+                                                        <constraint firstAttribute="width" constant="45" id="eei-27-mXt"/>
+                                                        <constraint firstItem="gKZ-T1-mrf" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="goc-WY-85J" secondAttribute="leading" id="fW4-K7-u5o"/>
+                                                        <constraint firstAttribute="trailing" secondItem="gKZ-T1-mrf" secondAttribute="trailing" id="ilM-ME-9v3"/>
+                                                        <constraint firstAttribute="bottom" secondItem="gKZ-T1-mrf" secondAttribute="bottom" id="iv0-TW-rhA"/>
+                                                    </constraints>
+                                                </view>
+                                                <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MtZ-QM-Ncd">
+                                                    <rect key="frame" x="73" y="26" width="240" height="33"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alumni Families and Legacy Reception" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CIK-Al-ja9">
+                                                            <rect key="frame" x="0.0" y="0.0" width="214" height="17"/>
+                                                            <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="12"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tent on Rawlings Green" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AqS-yf-u58">
+                                                            <rect key="frame" x="0.0" y="19" width="108" height="14"/>
+                                                            <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="10"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstItem="AqS-yf-u58" firstAttribute="leading" secondItem="MtZ-QM-Ncd" secondAttribute="leading" id="8zC-HA-CMl"/>
+                                                        <constraint firstItem="AqS-yf-u58" firstAttribute="top" secondItem="CIK-Al-ja9" secondAttribute="bottom" constant="2" id="Bn6-Gj-hfp"/>
+                                                        <constraint firstItem="CIK-Al-ja9" firstAttribute="top" secondItem="MtZ-QM-Ncd" secondAttribute="top" id="X1e-oZ-GnR"/>
+                                                        <constraint firstAttribute="bottom" secondItem="AqS-yf-u58" secondAttribute="bottom" id="kMr-A3-Rms"/>
+                                                        <constraint firstItem="CIK-Al-ja9" firstAttribute="leading" secondItem="MtZ-QM-Ncd" secondAttribute="leading" id="xQc-VP-fV8"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="MtZ-QM-Ncd" firstAttribute="leading" secondItem="goc-WY-85J" secondAttribute="trailing" constant="17" id="4Xt-AM-WNV"/>
+                                                <constraint firstItem="goc-WY-85J" firstAttribute="centerY" secondItem="feu-kf-Nka" secondAttribute="centerY" id="Ha8-7P-iyW"/>
+                                                <constraint firstItem="goc-WY-85J" firstAttribute="leading" secondItem="feu-kf-Nka" secondAttribute="leading" constant="20" id="Pi1-6j-n5R"/>
+                                                <constraint firstItem="MtZ-QM-Ncd" firstAttribute="centerY" secondItem="feu-kf-Nka" secondAttribute="centerY" id="YCo-Mf-WGo"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="eIo-WG-8dV" firstAttribute="centerY" secondItem="saa-wQ-whf" secondAttribute="centerY" id="XJJ-JN-Gwb"/>
-                            <constraint firstItem="eIo-WG-8dV" firstAttribute="centerX" secondItem="saa-wQ-whf" secondAttribute="centerX" id="y7a-Gv-ybV"/>
+                            <constraint firstItem="0aJ-U7-FmW" firstAttribute="leading" secondItem="saa-wQ-whf" secondAttribute="leading" id="0jv-Il-vZm"/>
+                            <constraint firstItem="0aJ-U7-FmW" firstAttribute="top" secondItem="ga3-DW-adf" secondAttribute="bottom" id="KZm-7y-WT6"/>
+                            <constraint firstItem="QUB-o7-jvF" firstAttribute="top" secondItem="0aJ-U7-FmW" secondAttribute="bottom" id="Rr6-NY-Ffp"/>
+                            <constraint firstItem="ga3-DW-adf" firstAttribute="leading" secondItem="saa-wQ-whf" secondAttribute="leading" id="cuf-B5-CEo"/>
+                            <constraint firstAttribute="trailing" secondItem="0aJ-U7-FmW" secondAttribute="trailing" id="kco-7X-Q7c"/>
+                            <constraint firstItem="ga3-DW-adf" firstAttribute="top" secondItem="TYf-fm-HJf" secondAttribute="bottom" id="lMq-Mm-cru"/>
+                            <constraint firstAttribute="trailing" secondItem="ga3-DW-adf" secondAttribute="trailing" id="wiB-Ew-ahe"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="O-Week Schedule" id="coI-25-hSi">
@@ -42,7 +135,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YWD-cP-Vvi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-692" y="137"/>
+            <point key="canvasLocation" x="-692" y="136.28185907046478"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Dlx-C2-gCy">
@@ -76,7 +169,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="42R-Lk-cbS" userLabel="ContentView">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="740.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_oweek" translatesAutoresizingMaskIntoConstraints="NO" id="XrJ-gJ-Myz">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="211"/>
@@ -115,10 +208,10 @@
                                                 </constraints>
                                             </mapView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JRs-HM-P8C">
-                                                <rect key="frame" x="22" y="476.5" width="331" height="238"/>
+                                                <rect key="frame" x="22" y="476.5" width="331" height="88.5"/>
                                                 <attributedString key="attributedText">
                                                     <fragment>
-                                                        <mutableString key="content">This will be your official welcome from university administrators, as well as from your student body president and other key student leaders in Schoellkopf Stadium. Note that it takes 30 minutes to walk to Schoellkopf Stadium from North Campus and 20 minutes from West Campus; plan accordingly.This will be your official welcome from university administrators, as well as from your student body president and other key student leaders in Schoellkopf Stadium. Note that it takes 30 minutes to walk to Schoellkopf Stadium from North Campus and 20 minutes from West Campus; plan accordingly. This will be your official welcome from university administrators, as well as from your student body president and other key student leaders in Schoellkopf Stadium. Note that it takes 30 minutes to walk to Schoellkopf Stadium from North Campus and 20 minutes from West Campus; plan accordingly.  </mutableString>
+                                                        <string key="content">This will be your official welcome from university administrators, as well as from your student body president and other key student leaders in Schoellkopf Stadium. Note that it takes 30 minutes to walk to Schoellkopf Stadium from North Campus and 20 minutes from West Campus; plan accordingly.</string>
                                                         <attributes>
                                                             <font key="NSFont" size="10" name="AvenirNext-Regular"/>
                                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="5" tighteningFactorForTruncation="0.0"/>
