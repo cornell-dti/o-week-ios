@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0628E4851E7C82830066A308 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0628E4841E7C82830066A308 /* MapKit.framework */; };
 		DC18B3111E76CBCE00C3FCD6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC18B3101E76CBCE00C3FCD6 /* AppDelegate.swift */; };
 		DC18B3161E76CBCE00C3FCD6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC18B3141E76CBCE00C3FCD6 /* Main.storyboard */; };
 		DC18B3181E76CBCE00C3FCD6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC18B3171E76CBCE00C3FCD6 /* Assets.xcassets */; };
@@ -34,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0628E4841E7C82830066A308 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		DC18B30D1E76CBCE00C3FCD6 /* O-Week.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "O-Week.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC18B3101E76CBCE00C3FCD6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DC18B3151E76CBCE00C3FCD6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -54,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0628E4851E7C82830066A308 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,6 +77,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0628E4831E7C82830066A308 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0628E4841E7C82830066A308 /* MapKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		DC18B3041E76CBCE00C3FCD6 = {
 			isa = PBXGroup;
 			children = (
@@ -81,6 +92,7 @@
 				DC18B3241E76CBCE00C3FCD6 /* O-WeekTests */,
 				DC18B32F1E76CBCE00C3FCD6 /* O-WeekUITests */,
 				DC18B30E1E76CBCE00C3FCD6 /* Products */,
+				0628E4831E7C82830066A308 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -195,6 +207,11 @@
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = 82HRX58VPA;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					DC18B3201E76CBCE00C3FCD6 = {
 						CreatedOnToolsVersion = 8.2.1;
