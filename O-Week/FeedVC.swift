@@ -11,8 +11,6 @@ import UIKit
 class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource
 {
     
-    //TODO: Fix all label constraints
-    
     @IBOutlet weak var feedTableView: UITableView!
     
     //Temporary Data
