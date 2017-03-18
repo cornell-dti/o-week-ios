@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -46,7 +47,7 @@
                                 <rect key="frame" x="0.0" y="130" width="375" height="537"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="86" id="Qlj-Vs-voW">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="feedCell" rowHeight="86" id="Qlj-Vs-voW" customClass="FeedCell" customModule="O_Week" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="86"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Qlj-Vs-voW" id="feu-kf-Nka">
@@ -81,7 +82,7 @@
                                                         <constraint firstAttribute="bottom" secondItem="gKZ-T1-mrf" secondAttribute="bottom" id="iv0-TW-rhA"/>
                                                     </constraints>
                                                 </view>
-                                                <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MtZ-QM-Ncd">
+                                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MtZ-QM-Ncd">
                                                     <rect key="frame" x="73" y="26" width="240" height="33"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alumni Families and Legacy Reception" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CIK-Al-ja9">
@@ -106,16 +107,32 @@
                                                         <constraint firstItem="CIK-Al-ja9" firstAttribute="leading" secondItem="MtZ-QM-Ncd" secondAttribute="leading" id="xQc-VP-fV8"/>
                                                     </constraints>
                                                 </view>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eXf-CR-pzI">
+                                                    <rect key="frame" x="333" y="31" width="22" height="22"/>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="MtZ-QM-Ncd" firstAttribute="leading" secondItem="goc-WY-85J" secondAttribute="trailing" constant="17" id="4Xt-AM-WNV"/>
+                                                <constraint firstItem="eXf-CR-pzI" firstAttribute="leading" secondItem="MtZ-QM-Ncd" secondAttribute="trailing" constant="20" id="8Je-Yh-LEg"/>
                                                 <constraint firstItem="goc-WY-85J" firstAttribute="centerY" secondItem="feu-kf-Nka" secondAttribute="centerY" id="Ha8-7P-iyW"/>
+                                                <constraint firstItem="eXf-CR-pzI" firstAttribute="centerY" secondItem="feu-kf-Nka" secondAttribute="centerY" id="OeI-Mr-MhI"/>
                                                 <constraint firstItem="goc-WY-85J" firstAttribute="leading" secondItem="feu-kf-Nka" secondAttribute="leading" constant="20" id="Pi1-6j-n5R"/>
                                                 <constraint firstItem="MtZ-QM-Ncd" firstAttribute="centerY" secondItem="feu-kf-Nka" secondAttribute="centerY" id="YCo-Mf-WGo"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="eXf-CR-pzI" secondAttribute="trailing" constant="12" id="eQ5-k2-pQQ"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="eventCaption" destination="AqS-yf-u58" id="z0G-tc-A2l"/>
+                                            <outlet property="eventEndTime" destination="gKZ-T1-mrf" id="OPR-HT-KWo"/>
+                                            <outlet property="eventStartTime" destination="HJj-KF-fU6" id="9xg-O9-m6E"/>
+                                            <outlet property="eventTitle" destination="CIK-Al-ja9" id="Y4m-Tq-Ao7"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="hxv-cm-Tid" id="PjQ-3E-2Pj"/>
+                                    <outlet property="delegate" destination="hxv-cm-Tid" id="Dkd-N5-buP"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
