@@ -2,8 +2,8 @@
 //  FeedVC.swift
 //  O-Week
 //
-//  Created by David Chu on 2017/3/17.
-//  Copyright © 2017年 Cornell SA Tech. All rights reserved.
+//  Created by David Chu and Vicente Caycedo on 3/17/17.
+//  Copyright © 2017 Cornell SA Tech. All rights reserved.
 //
 
 import UIKit
@@ -11,6 +11,7 @@ import UIKit
 class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource
 {
     
+    //Temporary Data
     let data = [["7:45 AM", "8:45 AM", "Alumni Families and Legacy Reception", "Tent on Rawlings Green"],
                 ["8:45 AM", "10:00 AM", "New Student Convocation", "Shoellkopf Stadium"],
                 ["10:00 AM", "11:30 AM", "Tours of Libraries and Manuscript", "Upper Lobby, Uris Library"],
@@ -21,7 +22,10 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        
+        setUpExtendedNavBar()
+    }
+
+    func setUpExtendedNavBar(){
         navigationController?.navigationBar.shadowImage = UIImage(named: "transparent_pixel")
         navigationController?.navigationBar.setBackgroundImage(UIImage(named: "pixel"), for: .default)
     }
@@ -30,6 +34,7 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource
     {
         return data.count
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         let cell = tableView.dequeueReusableCell(withIdentifier: "feedCell", for: indexPath) as! FeedCell
