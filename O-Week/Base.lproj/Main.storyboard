@@ -145,6 +145,9 @@
                     <navigationItem key="navigationItem" title="O-Week Schedule" id="coI-25-hSi">
                         <barButtonItem key="backBarButtonItem" title=" " id="EU9-Bp-5Os"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="feedTableView" destination="0aJ-U7-FmW" id="b5l-30-Azk"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YWD-cP-Vvi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -221,7 +224,7 @@
                                                 </constraints>
                                             </mapView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JRs-HM-P8C">
-                                                <rect key="frame" x="22" y="477" width="331" height="89"/>
+                                                <rect key="frame" x="22" y="477" width="331" height="88.5"/>
                                                 <attributedString key="attributedText">
                                                     <fragment>
                                                         <string key="content">This will be your official welcome from university administrators, as well as from your student body president and other key student leaders in Schoellkopf Stadium. Note that it takes 30 minutes to walk to Schoellkopf Stadium from North Campus and 20 minutes from West Campus; plan accordingly.</string>

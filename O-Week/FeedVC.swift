@@ -11,6 +11,8 @@ import UIKit
 class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource
 {
     
+    @IBOutlet weak var feedTableView: UITableView!
+    
     //Temporary Data
     let data = [["7:45 AM", "8:45 AM", "Alumni Families and Legacy Reception", "Tent on Rawlings Green"],
                 ["8:45 AM", "10:00 AM", "New Student Convocation", "Shoellkopf Stadium"],
@@ -23,8 +25,14 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource
     {
         super.viewDidLoad()
         setUpExtendedNavBar()
+        setUpHeightofFeedCell()
     }
-
+    
+    func setUpHeightofFeedCell(){
+        feedTableView.rowHeight = UITableViewAutomaticDimension
+        feedTableView.estimatedRowHeight = 86
+    }
+    
     func setUpExtendedNavBar(){
         navigationController?.navigationBar.shadowImage = UIImage(named: "transparent_pixel")
         navigationController?.navigationBar.setBackgroundImage(UIImage(named: "pixel"), for: .default)
