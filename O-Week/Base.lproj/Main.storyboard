@@ -25,9 +25,52 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ga3-DW-adf" customClass="ExtendedNavBarView" customModule="O_Week" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="64" width="375" height="66"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FRI" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V9g-ky-eii">
+                                        <rect key="frame" x="42" y="0.0" width="15" height="14"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="10"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SAT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eeB-Gc-3E0">
+                                        <rect key="frame" x="93.5" y="0.0" width="18" height="14"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="10"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SUN" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H2h-1w-tTg">
+                                        <rect key="frame" x="144" y="0.0" width="21" height="14"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="10"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MON" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bfd-hc-vp6">
+                                        <rect key="frame" x="192" y="0.0" width="25.5" height="14"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="10"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TUE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8q3-f1-nOd">
+                                        <rect key="frame" x="240" y="0.0" width="98" height="14"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="10"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
                                 <color key="backgroundColor" red="0.84313725490196079" green="0.13725490196078433" blue="0.20784313725490194" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
+                                    <constraint firstItem="V9g-ky-eii" firstAttribute="top" secondItem="ga3-DW-adf" secondAttribute="top" id="4nt-Dd-yNK"/>
+                                    <constraint firstItem="bfd-hc-vp6" firstAttribute="top" secondItem="ga3-DW-adf" secondAttribute="top" id="71m-df-mWj"/>
+                                    <constraint firstAttribute="trailing" secondItem="8q3-f1-nOd" secondAttribute="trailing" constant="37" id="8UO-Tx-h2h"/>
+                                    <constraint firstItem="V9g-ky-eii" firstAttribute="leading" secondItem="ga3-DW-adf" secondAttribute="leading" constant="42" id="DJh-vC-Uxk"/>
+                                    <constraint firstItem="bfd-hc-vp6" firstAttribute="leading" secondItem="H2h-1w-tTg" secondAttribute="leading" constant="48" id="GZS-zU-yKo"/>
+                                    <constraint firstItem="8q3-f1-nOd" firstAttribute="top" secondItem="ga3-DW-adf" secondAttribute="top" id="GzQ-KU-Ij0"/>
+                                    <constraint firstItem="8q3-f1-nOd" firstAttribute="leading" secondItem="bfd-hc-vp6" secondAttribute="leading" constant="48" id="KxD-0y-BFE"/>
+                                    <constraint firstItem="eeB-Gc-3E0" firstAttribute="leading" secondItem="V9g-ky-eii" secondAttribute="leading" constant="51.5" id="O0o-J4-ckd"/>
+                                    <constraint firstItem="eeB-Gc-3E0" firstAttribute="top" secondItem="ga3-DW-adf" secondAttribute="top" id="TwM-0G-oL7"/>
+                                    <constraint firstItem="H2h-1w-tTg" firstAttribute="top" secondItem="ga3-DW-adf" secondAttribute="top" id="Xk9-WB-M4u"/>
                                     <constraint firstAttribute="height" constant="66" id="tEq-83-hyX"/>
+                                    <constraint firstItem="H2h-1w-tTg" firstAttribute="leading" secondItem="eeB-Gc-3E0" secondAttribute="leading" constant="50.5" id="wCt-R7-PUD"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="116" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0aJ-U7-FmW">
@@ -143,7 +186,24 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="O-Week Schedule" id="coI-25-hSi">
-                        <barButtonItem key="backBarButtonItem" title=" " id="EU9-Bp-5Os"/>
+                        <barButtonItem key="backBarButtonItem" title=" " id="i8U-te-6gx"/>
+                        <barButtonItem key="leftBarButtonItem" style="done" id="0dx-bs-IP1">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="GHf-vx-XuE">
+                                <rect key="frame" x="16" y="11" width="21" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="filter"/>
+                            </button>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="done" id="cNJ-Gd-EYx">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="h5L-zE-0jG">
+                                <rect key="frame" x="337" y="11" width="22" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="profile_icon"/>
+                                <connections>
+                                    <segue destination="VJl-le-ciO" kind="show" id="Rh0-DZ-3qf"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="feedTableView" destination="0aJ-U7-FmW" id="b5l-30-Azk"/>
@@ -151,7 +211,25 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YWD-cP-Vvi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-692" y="136.28185907046478"/>
+            <point key="canvasLocation" x="-884" y="136"/>
+        </scene>
+        <!--ScheduleVC-->
+        <scene sceneID="mRG-QY-EXx">
+            <objects>
+                <viewController id="VJl-le-ciO" customClass="ScheduleVC" customModule="O_Week" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="SCi-WJ-POg"/>
+                        <viewControllerLayoutGuide type="bottom" id="cyx-yo-m44"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="PQb-M6-1RW">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8qi-Jw-nrL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-884" y="863"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Dlx-C2-gCy">
@@ -167,7 +245,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k5d-ZX-AIB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1425" y="136"/>
+            <point key="canvasLocation" x="-1778" y="135"/>
         </scene>
         <!--Details-->
         <scene sceneID="tne-QT-ifu">
@@ -282,17 +360,16 @@
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
-                    <connections>
-                        <outlet property="image" destination="XrJ-gJ-Myz" id="9j3-Zu-elD"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="136.80000000000001" y="137.18140929535232"/>
+            <point key="canvasLocation" x="55" y="135"/>
         </scene>
     </scenes>
     <resources>
         <image name="add_event" width="22" height="22"/>
         <image name="default_oweek" width="375" height="251"/>
+        <image name="filter" width="21" height="21"/>
+        <image name="profile_icon" width="22" height="22"/>
     </resources>
 </document>

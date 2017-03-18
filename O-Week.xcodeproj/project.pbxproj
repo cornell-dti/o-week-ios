@@ -17,6 +17,7 @@
 		DC18B31B1E76CBCE00C3FCD6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC18B3191E76CBCE00C3FCD6 /* LaunchScreen.storyboard */; };
 		DC18B3261E76CBCE00C3FCD6 /* O_WeekTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC18B3251E76CBCE00C3FCD6 /* O_WeekTests.swift */; };
 		DC18B3311E76CBCE00C3FCD6 /* O_WeekUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC18B3301E76CBCE00C3FCD6 /* O_WeekUITests.swift */; };
+		DC2C02991E7DC25F00E9DDEF /* ScheduleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2C02981E7DC25F00E9DDEF /* ScheduleVC.swift */; };
 		DC3274621E7CB4F100CB3E22 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3274611E7CB4F100CB3E22 /* FeedCell.swift */; };
 		DCD4464C1E76F941002D8F68 /* DetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD4464B1E76F941002D8F68 /* DetailsVC.swift */; };
 /* End PBXBuildFile section */
@@ -55,6 +56,7 @@
 		DC18B32C1E76CBCE00C3FCD6 /* O-WeekUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "O-WeekUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC18B3301E76CBCE00C3FCD6 /* O_WeekUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O_WeekUITests.swift; sourceTree = "<group>"; };
 		DC18B3321E76CBCE00C3FCD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DC2C02981E7DC25F00E9DDEF /* ScheduleVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleVC.swift; sourceTree = "<group>"; };
 		DC3274611E7CB4F100CB3E22 /* FeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		DCD4464B1E76F941002D8F68 /* DetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -118,11 +120,12 @@
 			isa = PBXGroup;
 			children = (
 				DC18B3101E76CBCE00C3FCD6 /* AppDelegate.swift */,
-				0628E4861E7CA3260066A308 /* FeedVC.swift */,
-				DC3274611E7CB4F100CB3E22 /* FeedCell.swift */,
 				0628E4881E7CA3790066A308 /* ExtendedNavBarView.swift */,
 				0628E48A1E7CA4750066A308 /* Color.swift */,
+				0628E4861E7CA3260066A308 /* FeedVC.swift */,
+				DC3274611E7CB4F100CB3E22 /* FeedCell.swift */,
 				DCD4464B1E76F941002D8F68 /* DetailsVC.swift */,
+				DC2C02981E7DC25F00E9DDEF /* ScheduleVC.swift */,
 				DC18B3171E76CBCE00C3FCD6 /* Assets.xcassets */,
 				DC18B3191E76CBCE00C3FCD6 /* LaunchScreen.storyboard */,
 				DC18B3141E76CBCE00C3FCD6 /* Main.storyboard */,
@@ -292,6 +295,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0628E4871E7CA3260066A308 /* FeedVC.swift in Sources */,
+				DC2C02991E7DC25F00E9DDEF /* ScheduleVC.swift in Sources */,
 				0628E4891E7CA3790066A308 /* ExtendedNavBarView.swift in Sources */,
 				DC18B3111E76CBCE00C3FCD6 /* AppDelegate.swift in Sources */,
 				0628E48B1E7CA4750066A308 /* Color.swift in Sources */,
