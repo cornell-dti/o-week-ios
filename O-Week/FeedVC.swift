@@ -11,7 +11,12 @@ import UIKit
 class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource
 {
     
-    let data = [["8:45 AM", "10:00 AM", "New Student Convocation", "Shoellkopf Stadium"], ["8:45 AM", "10:00 AM", "New Student Convocation", "Shoellkopf Stadium"], ["8:45 AM", "10:00 AM", "New Student Convocation", "Shoellkopf Stadium"]]
+    let data = [["7:45 AM", "8:45 AM", "Alumni Families and Legacy Reception", "Tent on Rawlings Green"],
+                ["8:45 AM", "10:00 AM", "New Student Convocation", "Shoellkopf Stadium"],
+                ["10:00 AM", "11:30 AM", "Tours of Libraries and Manuscript", "Upper Lobby, Uris Library"],
+                ["10:00 AM", "6:00 PM", "Dump and Run Sale", "Helen Newman Hall"],
+                ["10:30 AM", "11:30 AM", "AAP—Dean’s Convocation", "Abby and Howard Milstein Hall"],
+                ["10:30 AM", "11:30 AM", "CALS—Dean’s Convocation", "Call Alumni Auditorium, Kennedy Hall"]]
     
     override func viewDidLoad()
     {
