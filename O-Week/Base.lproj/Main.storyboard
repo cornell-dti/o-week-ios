@@ -25,21 +25,8 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ga3-DW-adf" customClass="ExtendedNavBarView" customModule="O_Week" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="64" width="375" height="66"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eIo-WG-8dV">
-                                        <rect key="frame" x="136" y="18" width="87" height="30"/>
-                                        <state key="normal" title="Show details">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <segue destination="BYZ-38-t0r" kind="show" id="WS9-NW-8np"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
                                 <color key="backgroundColor" red="0.84313725490196079" green="0.13725490196078433" blue="0.20784313725490194" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstItem="eIo-WG-8dV" firstAttribute="centerX" secondItem="ga3-DW-adf" secondAttribute="centerX" constant="-8" id="SNQ-qk-5DE"/>
-                                    <constraint firstItem="eIo-WG-8dV" firstAttribute="centerY" secondItem="ga3-DW-adf" secondAttribute="centerY" id="cO5-Z7-8bu"/>
                                     <constraint firstAttribute="height" constant="66" id="tEq-83-hyX"/>
                                 </constraints>
                             </view>
@@ -82,8 +69,8 @@
                                                         <constraint firstAttribute="bottom" secondItem="gKZ-T1-mrf" secondAttribute="bottom" id="iv0-TW-rhA"/>
                                                     </constraints>
                                                 </view>
-                                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MtZ-QM-Ncd">
-                                                    <rect key="frame" x="73" y="26" width="240" height="33"/>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MtZ-QM-Ncd">
+                                                    <rect key="frame" x="82" y="26" width="231" height="33"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alumni Families and Legacy Reception" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CIK-Al-ja9">
                                                             <rect key="frame" x="0.0" y="0.0" width="214" height="17"/>
@@ -126,6 +113,7 @@
                                             <outlet property="eventEndTime" destination="gKZ-T1-mrf" id="OPR-HT-KWo"/>
                                             <outlet property="eventStartTime" destination="HJj-KF-fU6" id="9xg-O9-m6E"/>
                                             <outlet property="eventTitle" destination="CIK-Al-ja9" id="Y4m-Tq-Ao7"/>
+                                            <segue destination="BYZ-38-t0r" kind="show" id="5gC-ZM-1w1"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
