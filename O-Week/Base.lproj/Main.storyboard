@@ -503,21 +503,21 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="SOg-vS-3DE" firstAttribute="top" secondItem="SCi-WJ-POg" secondAttribute="bottom" id="3Hp-yp-ces"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="SOg-vS-3DE" secondAttribute="trailing" constant="-16" id="DXp-C7-rdZ"/>
-                            <constraint firstItem="SOg-vS-3DE" firstAttribute="leading" secondItem="PQb-M6-1RW" secondAttribute="leadingMargin" constant="-16" id="WNK-5Y-fa3"/>
+                            <constraint firstAttribute="trailing" secondItem="SOg-vS-3DE" secondAttribute="trailing" id="DXp-C7-rdZ"/>
+                            <constraint firstItem="SOg-vS-3DE" firstAttribute="leading" secondItem="PQb-M6-1RW" secondAttribute="leading" id="WNK-5Y-fa3"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outletCollection property="views" destination="WIi-Fg-LRG" id="a70-4x-S6p"/>
-                        <outletCollection property="views" destination="GnS-Wr-ymi" id="JVK-w1-KSl"/>
-                        <outletCollection property="views" destination="anf-8O-58v" id="WfS-DJ-kBm"/>
-                        <outletCollection property="views" destination="F4z-Rn-nr0" id="4xc-Rw-jxD"/>
-                        <outletCollection property="views" destination="SWz-cl-1Sn" id="F6o-iq-Hkd"/>
-                        <outletCollection property="labels" destination="rE2-0B-BAf" id="6KE-Oo-sUn"/>
-                        <outletCollection property="labels" destination="Utk-Tt-wS2" id="WLs-De-1HD"/>
-                        <outletCollection property="labels" destination="fvz-8g-Mlv" id="WtJ-eL-qZQ"/>
-                        <outletCollection property="labels" destination="ou8-MY-OZo" id="TuT-GH-DJu"/>
-                        <outletCollection property="labels" destination="c85-fa-awp" id="yTl-pl-5PB"/>
+                        <outletCollection property="views" destination="WIi-Fg-LRG" collectionClass="NSMutableArray" id="a70-4x-S6p"/>
+                        <outletCollection property="views" destination="GnS-Wr-ymi" collectionClass="NSMutableArray" id="JVK-w1-KSl"/>
+                        <outletCollection property="views" destination="anf-8O-58v" collectionClass="NSMutableArray" id="WfS-DJ-kBm"/>
+                        <outletCollection property="views" destination="F4z-Rn-nr0" collectionClass="NSMutableArray" id="4xc-Rw-jxD"/>
+                        <outletCollection property="views" destination="SWz-cl-1Sn" collectionClass="NSMutableArray" id="F6o-iq-Hkd"/>
+                        <outletCollection property="labels" destination="rE2-0B-BAf" collectionClass="NSMutableArray" id="6KE-Oo-sUn"/>
+                        <outletCollection property="labels" destination="Utk-Tt-wS2" collectionClass="NSMutableArray" id="WLs-De-1HD"/>
+                        <outletCollection property="labels" destination="fvz-8g-Mlv" collectionClass="NSMutableArray" id="WtJ-eL-qZQ"/>
+                        <outletCollection property="labels" destination="ou8-MY-OZo" collectionClass="NSMutableArray" id="TuT-GH-DJu"/>
+                        <outletCollection property="labels" destination="c85-fa-awp" collectionClass="NSMutableArray" id="yTl-pl-5PB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8qi-Jw-nrL" userLabel="First Responder" sceneMemberID="firstResponder"/>
