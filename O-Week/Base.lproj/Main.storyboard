@@ -188,11 +188,11 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="116"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Qlj-Vs-voW" id="feu-kf-Nka">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="115.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="116"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="goc-WY-85J">
-                                                    <rect key="frame" x="20" y="35" width="45" height="45.5"/>
+                                                    <rect key="frame" x="20" y="35" width="45" height="46"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="8:45 AM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HJj-KF-fU6">
                                                             <rect key="frame" x="6" y="0.0" width="39" height="14"/>
@@ -201,7 +201,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10:00 AM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gKZ-T1-mrf">
-                                                            <rect key="frame" x="0.0" y="14" width="45" height="31.5"/>
+                                                            <rect key="frame" x="0.0" y="14" width="45" height="32"/>
                                                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="10"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -220,16 +220,16 @@
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MtZ-QM-Ncd">
-                                                    <rect key="frame" x="82" y="35" width="201" height="45.5"/>
+                                                    <rect key="frame" x="82" y="35" width="201" height="46"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Alumni Families and Legacy Reception" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CIK-Al-ja9">
-                                                            <rect key="frame" x="0.0" y="0.0" width="214" height="16.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="214" height="17"/>
                                                             <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="12"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tent on Rawlings Green" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AqS-yf-u58">
-                                                            <rect key="frame" x="0.0" y="18.5" width="108" height="27"/>
+                                                            <rect key="frame" x="0.0" y="19" width="108" height="27"/>
                                                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="10"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -245,7 +245,7 @@
                                                     </constraints>
                                                 </view>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eXf-CR-pzI">
-                                                    <rect key="frame" x="325" y="35" width="22" height="45.5"/>
+                                                    <rect key="frame" x="325" y="35" width="22" height="46"/>
                                                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <state key="normal" image="add_event"/>
                                                     <connections>
@@ -314,16 +314,16 @@
                     </navigationItem>
                     <connections>
                         <outlet property="feedTableView" destination="0aJ-U7-FmW" id="b5l-30-Azk"/>
-                        <outlet property="label0" destination="FTm-vo-49D" id="GLf-1Q-Q4a"/>
-                        <outlet property="label1" destination="dzX-Wb-EJ8" id="d3W-2T-kq9"/>
-                        <outlet property="label2" destination="3dd-v9-W2u" id="2Bw-bJ-gd3"/>
-                        <outlet property="label3" destination="9Oq-5Z-EDb" id="olk-05-nkd"/>
-                        <outlet property="label4" destination="Jdl-Ye-4hy" id="q06-L0-kG5"/>
-                        <outlet property="view0" destination="V4G-47-ulG" id="A8k-2J-Mc0"/>
-                        <outlet property="view1" destination="oXK-sY-fYQ" id="jjH-eg-9UK"/>
-                        <outlet property="view2" destination="NVR-6c-6Hi" id="nX8-3e-XKm"/>
-                        <outlet property="view3" destination="K1F-ej-MEc" id="9We-b4-5HW"/>
-                        <outlet property="view4" destination="CAl-sg-DLs" id="9jW-Ua-9mS"/>
+                        <outletCollection property="views" destination="V4G-47-ulG" collectionClass="NSMutableArray" id="ZYF-hd-G8F"/>
+                        <outletCollection property="views" destination="oXK-sY-fYQ" collectionClass="NSMutableArray" id="bcw-UV-cyu"/>
+                        <outletCollection property="views" destination="NVR-6c-6Hi" collectionClass="NSMutableArray" id="cHb-Ri-vge"/>
+                        <outletCollection property="views" destination="K1F-ej-MEc" collectionClass="NSMutableArray" id="pe1-sV-a08"/>
+                        <outletCollection property="views" destination="CAl-sg-DLs" collectionClass="NSMutableArray" id="LBe-HF-OMr"/>
+                        <outletCollection property="labels" destination="FTm-vo-49D" collectionClass="NSMutableArray" id="yHh-BN-tRh"/>
+                        <outletCollection property="labels" destination="dzX-Wb-EJ8" collectionClass="NSMutableArray" id="0Of-oU-bAb"/>
+                        <outletCollection property="labels" destination="3dd-v9-W2u" collectionClass="NSMutableArray" id="2K9-Uw-cV9"/>
+                        <outletCollection property="labels" destination="9Oq-5Z-EDb" collectionClass="NSMutableArray" id="tkV-eI-lLM"/>
+                        <outletCollection property="labels" destination="Jdl-Ye-4hy" collectionClass="NSMutableArray" id="igc-yb-bcM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YWD-cP-Vvi" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -508,16 +508,16 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="label0" destination="rE2-0B-BAf" id="u8g-NQ-frq"/>
-                        <outlet property="label1" destination="Utk-Tt-wS2" id="yJL-5t-FQV"/>
-                        <outlet property="label2" destination="fvz-8g-Mlv" id="KQW-CW-vZU"/>
-                        <outlet property="label3" destination="ou8-MY-OZo" id="Voy-Er-DSO"/>
-                        <outlet property="label4" destination="c85-fa-awp" id="Dav-Kd-nK6"/>
-                        <outlet property="view0" destination="WIi-Fg-LRG" id="RN1-mN-NoI"/>
-                        <outlet property="view1" destination="GnS-Wr-ymi" id="q1p-kR-D5b"/>
-                        <outlet property="view2" destination="anf-8O-58v" id="Fzf-06-4kn"/>
-                        <outlet property="view3" destination="F4z-Rn-nr0" id="ADy-9X-a72"/>
-                        <outlet property="view4" destination="SWz-cl-1Sn" id="5Qk-r8-7aB"/>
+                        <outletCollection property="views" destination="WIi-Fg-LRG" id="a70-4x-S6p"/>
+                        <outletCollection property="views" destination="GnS-Wr-ymi" id="JVK-w1-KSl"/>
+                        <outletCollection property="views" destination="anf-8O-58v" id="WfS-DJ-kBm"/>
+                        <outletCollection property="views" destination="F4z-Rn-nr0" id="4xc-Rw-jxD"/>
+                        <outletCollection property="views" destination="SWz-cl-1Sn" id="F6o-iq-Hkd"/>
+                        <outletCollection property="labels" destination="rE2-0B-BAf" id="6KE-Oo-sUn"/>
+                        <outletCollection property="labels" destination="Utk-Tt-wS2" id="WLs-De-1HD"/>
+                        <outletCollection property="labels" destination="fvz-8g-Mlv" id="WtJ-eL-qZQ"/>
+                        <outletCollection property="labels" destination="ou8-MY-OZo" id="TuT-GH-DJu"/>
+                        <outletCollection property="labels" destination="c85-fa-awp" id="yTl-pl-5PB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8qi-Jw-nrL" userLabel="First Responder" sceneMemberID="firstResponder"/>
