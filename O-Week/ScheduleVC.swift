@@ -115,6 +115,9 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         if (scrollView.contentOffset.x != 0){
             scrollView.contentOffset.x = 0 //Remove horizontal scrolling
         }
+        if (scrollView.contentOffset.y < 0){
+            scrollView.contentOffset.y = 0
+        }
         if (myTableView == scrollView) {
             myScrollView.setContentOffset(scrollView.contentOffset, animated: false)
         } else {
