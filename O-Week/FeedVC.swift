@@ -54,7 +54,7 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource, UIGes
         navigationController?.navigationBar.shadowImage = UIImage(named: "transparent_pixel")
         navigationController?.navigationBar.setBackgroundImage(UIImage(named: "pixel"), for: .default)
         for view in views{
-            view.layer.cornerRadius = 18 //half of width for a perfect circle
+            view.layer.cornerRadius = view.frame.width / 2 //half of width for a perfect circle
         }
         changeSelectedDate(to: 0)
     }
