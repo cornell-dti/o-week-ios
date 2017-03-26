@@ -28,7 +28,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         setUpNavBar()
         setUpExtendedNavBar()
         setUpGestureRecognizers()
-        setUpTableView()
+        setUpTableViewandScrollView()
     }
     
     func setUpNavBar(){
@@ -52,8 +52,10 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         }
     }
     
-    func setUpTableView(){
+    func setUpTableViewandScrollView(){
         myTableView.allowsSelection = false
+        myTableView.isScrollEnabled = false
+        myScrollView.isScrollEnabled = false
     }
     
     // MARK:- Date Actions
@@ -108,21 +110,19 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         return cell
     }
     
-    //MARK:- Scroll View
+    //MARK:- Scrolling
     
-    //FIXME: Not scrolling to bottom if scrolled via scrollview and not tableview
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (scrollView.contentOffset.x != 0){
-            scrollView.contentOffset.x = 0 //Remove horizontal scrolling
+    @IBAction func didScroll(_ sender: UIPanGestureRecognizer) {
+        let translation = sender.translation(in: self.view)
+        var finalOffset = (x: myScrollView.contentOffset.x, y: myScrollView.contentOffset.y - translation.y)
+        if (finalOffset.y < 0) {
+            finalOffset.y = 0
+        } else if(finalOffset.y > 600 ){
+            finalOffset.y = 600
         }
-        if (scrollView.contentOffset.y < 0){
-            scrollView.contentOffset.y = 0
-        }
-        if (myTableView == scrollView) {
-            myScrollView.setContentOffset(scrollView.contentOffset, animated: false)
-        } else {
-            myTableView.setContentOffset(scrollView.contentOffset, animated: false)
-        }
+        myScrollView.setContentOffset(CGPoint(x: finalOffset.x, y:finalOffset.y), animated: false)
+        myTableView.setContentOffset(CGPoint(x: finalOffset.x, y:finalOffset.y ), animated: false)
+        sender.setTranslation(CGPoint.zero, in: self.view)
     }
     
 }
