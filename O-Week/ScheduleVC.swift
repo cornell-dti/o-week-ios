@@ -17,7 +17,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     @IBOutlet weak var myTableView: UITableView!
     @IBOutlet weak var myScrollView: UIScrollView!
     
-    var selected: Int = 0 //index of date selected (0-4)
+    var selected = 0 //index of date selected (0-4)
     var hours = ["7 AM", "8 AM", "9 AM", "10 AM", "11 AM", "12 PM", "1 PM", "2 PM", "3 PM", "4 PM", "5 PM", "6 PM", "7 PM", "8 PM", "9 PM", "10 PM", "11 PM", "12 AM", "1 AM", "2 AM"] //Table view data
     
     // MARK:- Setup
@@ -62,26 +62,26 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     
     func handleTap(_ sender: UITapGestureRecognizer) {
         //TODO: implement filtering functionality for selected date
-        switch sender.view {
-        case views[0]?: changeSelectedDate(to: 0)
-        case views[1]?: changeSelectedDate(to: 1)
-        case views[2]?: changeSelectedDate(to: 2)
-        case views[3]?: changeSelectedDate(to: 3)
-        case views[4]?: changeSelectedDate(to: 4)
-        default: break
+        for i in 0..<views.count
+        {
+            if (views[i] == sender.view)
+            {
+                changeSelectedDate(to: i)
+                break
+            }
         }
     }
     
-    func changeSelectedDate(to selected: Int){
-        for index in 0...views.count - 1 {
-            if(index == selected){
-                views[index].backgroundColor = UIColor.white
-                labels[index].textColor = UIColor.black
-            }else{
-                views[index].backgroundColor = Color.RED
-                labels[index].textColor = UIColor.white
-            }
-        }
+    func changeSelectedDate(to selected: Int)
+    {
+        //revert last selected date
+        views[self.selected].backgroundColor = Color.RED
+        labels[self.selected].textColor = UIColor.white
+        //set new selected date
+        views[selected].backgroundColor = UIColor.white
+        labels[selected].textColor = UIColor.black
+        
+        self.selected = selected
     }
     
     //MARK:- Table View 
