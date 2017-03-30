@@ -20,12 +20,12 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource, UIGes
     var selected = 0 //index of date selected (0-4)
     
     // FIXME: Temporary Data
-    let data = [["7:45 AM", "8:45 AM", "Alumni Families and Legacy Reception", "Tent on Rawlings Green"],
-                ["8:45 AM", "10:00 AM", "New Student Convocation", "Shoellkopf Stadium"],
-                ["10:00 AM", "11:30 AM", "Tours of Libraries and Manuscript", "Upper Lobby, Uris Library"],
-                ["10:00 AM", "6:00 PM", "Dump and Run Sale", "Helen Newman Hall"],
-                ["10:30 AM", "11:30 AM", "AAP—Dean’s Convocation", "Abby and Howard Milstein Hall"],
-                ["10:30 AM", "11:30 AM", "CALS—Dean’s Convocation", "Call Alumni Auditorium, Kennedy Hall"]]
+    let data = [Event(title:"Alumni Families and Legacy Reception", caption:"Tent on Rawlings Green", start:Time(hour:7, minute:45), end:Time(hour:8, minute:45)),
+                Event(title:"New Student Convocation", caption:"Shoellkopf Stadium", start:Time(hour:8, minute:45), end:Time(hour:10, minute:0)),
+                Event(title:"Tours of Libraries and Manuscript", caption:"Upper Lobby, Uris Library", start:Time(hour:10, minute:0), end:Time(hour:11, minute:30)),
+                Event(title:"Dump and Run Sale", caption:"Helen Newman Hall", start:Time(hour:10, minute:0), end:Time(hour:18, minute:0)),
+                Event(title:"AAP—Dean’s Convocation", caption:"Abby and Howard Milstein Hall", start:Time(hour:10, minute:30), end:Time(hour:11, minute:30)),
+                Event(title:"CALS—Dean’s Convocation", caption:"Call Alumni Auditorium, Kennedy Hall", start:Time(hour:10, minute:30), end:Time(hour:11, minute:30))]
     
     // MARK:- Setup
     
@@ -94,8 +94,7 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource, UIGes
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         let cell = tableView.dequeueReusableCell(withIdentifier: "feedCell", for: indexPath) as! FeedCell
-        let dataForCell = data[indexPath.row]
-        cell.configure(title: dataForCell[2], caption: dataForCell[3], startTime: dataForCell[0], endTime: dataForCell[1])
+        cell.configure(event: data[indexPath.row])
         return cell
     }
     

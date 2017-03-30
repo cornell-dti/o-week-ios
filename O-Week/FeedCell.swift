@@ -17,29 +17,39 @@ class FeedCell:UITableViewCell
     @IBOutlet weak var eventCaption: UILabel!
     
     var added = false
+    var event:Event!
     
-    let imageAdded = UIImage(named: "added_event.png")
-    let imageNotAdded = UIImage(named: "add_event.png")
+    static let imageAdded = UIImage(named: "added_event.png")
+    static let imageNotAdded = UIImage(named: "add_event.png")
+    
+    static var selectedEvents:Set<Event> = Set()
     
     
-    func configure(title:String, caption:String, startTime:String, endTime: String)
+    func configure(event:Event)
     {
-        eventTitle.text = title
-        eventCaption.text = caption
-        eventStartTime.text = startTime
-        eventEndTime.text = endTime
+        self.event = event
+        eventTitle.text = event.title
+        eventCaption.text = event.caption
+        eventStartTime.text = event.startTime.description
+        eventEndTime.text = event.endTime.description
         
         // TODO: fix button image when initialized depending on whether user had previously added event
     }
     
-    @IBAction func addBttnPressed(_ sender: UIButton) {
+    @IBAction func addBttnPressed(_ sender: UIButton)
+    {
         //TODO: implement button functionality
-        if(!added){
-            sender.setImage(imageAdded, for: .normal)
+        if (!added)
+        {
+            sender.setImage(FeedCell.imageAdded, for: .normal)
             added = true
-        } else {
-            sender.setImage(imageNotAdded, for: .normal)
+            FeedCell.selectedEvents.insert(event)
+        }
+        else
+        {
+            sender.setImage(FeedCell.imageNotAdded, for: .normal)
             added = false
+            FeedCell.selectedEvents.remove(event)
         }
     }
 }
