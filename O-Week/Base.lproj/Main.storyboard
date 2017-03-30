@@ -502,56 +502,22 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V95-fc-cUR" userLabel="ScheduleView">
                                 <rect key="frame" x="0.0" y="130" width="375" height="537"/>
                                 <subviews>
-                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mE5-Ts-gfM">
-                                        <rect key="frame" x="69" y="0.0" width="306" height="537"/>
-                                        <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Aos-I1-FHF" userLabel="Content View">
-                                                <rect key="frame" x="0.0" y="0.0" width="306" height="537"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gb7-uF-b8t">
-                                                        <rect key="frame" x="0.0" y="0.0" width="306" height="20.5"/>
-                                                        <string key="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla porta auctor dignissim. Praesent sit amet urna a ipsum faucibus molestie non eget dui. Duis tempor urna tortor, in venenatis urna vulputate nec. Phasellus eu eros ligula. Praesent ac dui ultrices, accumsan sapien sed, interdum lacus. Suspendisse ut ante dolor. Proin ullamcorper semper lorem. Vivamus quis aliquet lorem, id maximus massa. Vestibulum pulvinar dui nec massa dictum, vel consectetur mi mattis. Fusce vel leo sagittis, tincidunt urna eu, egestas mi. Suspendisse tincidunt pharetra enim vitae dictum. Vivamus sit amet sapien eu nibh semper ullamcorper. Etiam fringilla elit non quam auctor pellentesque. Mauris dignissim nibh vitae purus porta, eget dictum elit dignissim. Nunc auctor mauris ac imperdiet sagittis. Fusce sollicitudin neque libero, vel vestibulum eros elementum a. Integer faucibus urna a massa mattis finibus. Quisque non eros a dolor vestibulum auctor ac nec felis. Aliquam quis sem sed ante blandit venenatis sit amet sit amet mi. Vestibulum nisl orci, tincidunt et tempor ut, lacinia vitae nibh. Nunc in elit tellus. Pellentesque gravida dictum augue id iaculis. Pellentesque euismod est non est venenatis mollis quis interdum turpis. Nam a diam est. Donec risus quam, fringilla nec ex et, sodales posuere elit. Cras quis molestie ipsum. Vivamus elit dolor, rutrum sed nunc in, convallis congue nibh. Vestibulum sodales velit id massa bibendum commodo. Proin eleifend, dui id lobortis commodo, neque sem fringilla augue, a aliquam ipsum arcu quis quam. Praesent sit amet imperdiet dolor, et volutpat urna. Proin ultricies, lorem vitae interdum tincidunt, leo dui euismod metus, at suscipit arcu turpis sed tortor. Quisque et eros non orci vulputate volutpat vitae eu diam.</string>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                </subviews>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <constraints>
-                                                    <constraint firstItem="gb7-uF-b8t" firstAttribute="top" secondItem="Aos-I1-FHF" secondAttribute="top" id="1C5-e3-Rdv"/>
-                                                    <constraint firstAttribute="trailing" secondItem="gb7-uF-b8t" secondAttribute="trailing" id="edg-kD-Cwv"/>
-                                                    <constraint firstItem="gb7-uF-b8t" firstAttribute="leading" secondItem="Aos-I1-FHF" secondAttribute="leading" id="sWh-by-bLj"/>
-                                                </constraints>
-                                            </view>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="Aos-I1-FHF" secondAttribute="trailing" id="Ey3-5k-1N5"/>
-                                            <constraint firstAttribute="bottom" secondItem="Aos-I1-FHF" secondAttribute="bottom" id="Qqt-rx-a3l"/>
-                                            <constraint firstItem="Aos-I1-FHF" firstAttribute="width" secondItem="mE5-Ts-gfM" secondAttribute="width" id="X6H-5V-0Zx"/>
-                                            <constraint firstItem="Aos-I1-FHF" firstAttribute="height" secondItem="mE5-Ts-gfM" secondAttribute="height" id="bCs-BH-yIN"/>
-                                            <constraint firstItem="Aos-I1-FHF" firstAttribute="leading" secondItem="mE5-Ts-gfM" secondAttribute="leading" id="oeR-51-GIb"/>
-                                            <constraint firstItem="Aos-I1-FHF" firstAttribute="top" secondItem="mE5-Ts-gfM" secondAttribute="top" id="xUe-Uf-JVP"/>
-                                        </constraints>
-                                        <connections>
-                                            <outlet property="delegate" destination="VJl-le-ciO" id="CWF-wY-SwG"/>
-                                        </connections>
-                                    </scrollView>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="mTJ-5S-Tbp">
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="56" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="mTJ-5S-Tbp">
                                         <rect key="frame" x="0.0" y="0.0" width="69" height="537"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="69" id="bpp-c0-E5m"/>
                                         </constraints>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="scheduleCell" id="5QY-f6-eZx" customClass="ScheduleCell" customModule="O_Week" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="28" width="69" height="44"/>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="scheduleCell" rowHeight="56" id="5QY-f6-eZx" customClass="ScheduleCell" customModule="O_Week" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="28" width="69" height="56"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5QY-f6-eZx" id="Usm-kO-qkT">
-                                                    <rect key="frame" x="0.0" y="0.0" width="69" height="44"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="69" height="56"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bIk-yM-eFt">
-                                                            <rect key="frame" x="19.5" y="14" width="30.5" height="16.5"/>
+                                                            <rect key="frame" x="19.5" y="20" width="30.5" height="16.5"/>
                                                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="12"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -584,21 +550,24 @@
                                             <outlet property="delegate" destination="VJl-le-ciO" id="vEp-W4-JLn"/>
                                         </connections>
                                     </tableView>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KyL-C5-vw0">
+                                        <rect key="frame" x="69" y="0.0" width="306" height="537"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="VJl-le-ciO" id="h1b-Ej-ASA"/>
+                                        </connections>
+                                    </scrollView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="mE5-Ts-gfM" secondAttribute="trailing" id="4aK-aX-gIV"/>
-                                    <constraint firstItem="mE5-Ts-gfM" firstAttribute="leading" secondItem="mTJ-5S-Tbp" secondAttribute="leading" constant="69" id="Irs-3L-NlR"/>
+                                    <constraint firstAttribute="bottom" secondItem="KyL-C5-vw0" secondAttribute="bottom" id="HXW-0h-qN2"/>
                                     <constraint firstAttribute="bottom" secondItem="mTJ-5S-Tbp" secondAttribute="bottom" id="Jio-zw-lha"/>
-                                    <constraint firstItem="mE5-Ts-gfM" firstAttribute="top" secondItem="V95-fc-cUR" secondAttribute="top" id="R0f-Re-Dmy"/>
+                                    <constraint firstItem="KyL-C5-vw0" firstAttribute="leading" secondItem="mTJ-5S-Tbp" secondAttribute="trailing" id="Kwb-dF-lRk"/>
+                                    <constraint firstAttribute="trailing" secondItem="KyL-C5-vw0" secondAttribute="trailing" id="Q2h-9B-AcD"/>
                                     <constraint firstItem="mTJ-5S-Tbp" firstAttribute="top" secondItem="V95-fc-cUR" secondAttribute="top" id="ahj-Vw-ZFp"/>
                                     <constraint firstItem="mTJ-5S-Tbp" firstAttribute="leading" secondItem="V95-fc-cUR" secondAttribute="leading" id="g1d-at-bSi"/>
-                                    <constraint firstAttribute="bottom" secondItem="mE5-Ts-gfM" secondAttribute="bottom" id="tLk-OR-YgV"/>
+                                    <constraint firstItem="KyL-C5-vw0" firstAttribute="height" secondItem="V95-fc-cUR" secondAttribute="height" id="haZ-hV-L6a"/>
                                 </constraints>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="gqi-Pd-xkZ" appends="YES" id="GLS-OM-qfd"/>
-                                </connections>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -613,7 +582,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="myScrollView" destination="mE5-Ts-gfM" id="hXy-Wx-EEL"/>
+                        <outlet property="myScrollView" destination="KyL-C5-vw0" id="Zd1-zW-KLh"/>
                         <outlet property="myTableView" destination="mTJ-5S-Tbp" id="Klh-WP-BuB"/>
                         <outletCollection property="views" destination="WIi-Fg-LRG" collectionClass="NSMutableArray" id="a70-4x-S6p"/>
                         <outletCollection property="views" destination="GnS-Wr-ymi" collectionClass="NSMutableArray" id="JVK-w1-KSl"/>
@@ -628,11 +597,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8qi-Jw-nrL" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <panGestureRecognizer minimumNumberOfTouches="1" id="gqi-Pd-xkZ">
-                    <connections>
-                        <action selector="didScroll:" destination="VJl-le-ciO" id="sNf-7V-iGG"/>
-                    </connections>
-                </panGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="gqi-Pd-xkZ"/>
             </objects>
             <point key="canvasLocation" x="-884" y="862.21889055472275"/>
         </scene>
