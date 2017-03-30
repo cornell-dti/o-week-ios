@@ -97,5 +97,4 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource, UIGes
         cell.configure(event: data[indexPath.row])
         return cell
     }
-    
 }

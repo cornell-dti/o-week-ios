@@ -730,6 +730,12 @@
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <connections>
+                        <outlet property="endTime" destination="VuR-RR-hNo" id="2np-wB-P2M"/>
+                        <outlet property="eventCaption" destination="Cf6-38-bgE" id="kPN-mT-Pln"/>
+                        <outlet property="eventTitle" destination="wn6-9U-lkC" id="3K8-2L-K8b"/>
+                        <outlet property="startTime" destination="Wpu-cU-njA" id="alg-jw-ljy"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
