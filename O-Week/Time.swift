@@ -19,9 +19,36 @@ struct Time:Hashable, CustomStringConvertible
         {
             return String(format: "\(hour - 12):%02d PM", minute)
         }
+        else if (hour == 12)
+        {
+            return String(format: "12:%02d PM", minute)
+        }
+        else if (hour == 0)
+        {
+            return String(format: "12:%02d AM", minute)
+        }
         else
         {
             return String(format: "\(hour):%02d AM", minute)
+        }
+    }
+    var hourDescription:String
+    {
+        if (hour > 12)
+        {
+            return String(format: "\(hour - 12) PM", minute)
+        }
+        else if (hour == 12)
+        {
+            return String(format: "12 PM", minute)
+        }
+        else if (hour == 0)
+        {
+            return String(format: "12 AM", minute)
+        }
+        else
+        {
+            return String(format: "\(hour) AM", minute)
         }
     }
     var hashValue: Int
@@ -40,6 +67,11 @@ struct Time:Hashable, CustomStringConvertible
     {
         self.hour = hour
         self.minute = minute
+    }
+    init(hour:Int)
+    {
+        self.hour = hour
+        minute = 0
     }
     //expected format: "10:00 AM"
     static func fromString(_ timeString:String) -> Time
@@ -83,7 +115,9 @@ struct Time:Hashable, CustomStringConvertible
     {
         let startTimeInMinutes = startTime.toMinutes()
         let endTimeInMinutes = endTime.toMinutes()
-        return endTimeInMinutes - startTimeInMinutes
+        let length = endTimeInMinutes - startTimeInMinutes
+        //wrap around to the next day. 1440 = 24 * 60
+        return (length < 0) ? (length + 1440) : length
     }
 }
 

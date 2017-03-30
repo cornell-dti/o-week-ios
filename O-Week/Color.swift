@@ -12,6 +12,7 @@ import UIKit
 class Color
 {
     static let RED = UIColor(red: 215/255, green: 35/255, blue: 53/255, alpha: 1)
+    static let GRAY = UIColor(red: 151/255, green: 151/255, blue: 151/255, alpha: 0.52)
     
     private init(){}
 }
