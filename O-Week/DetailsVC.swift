@@ -14,8 +14,11 @@ class DetailsVC: UIViewController {
     @IBOutlet weak var startTime: UILabel!
     @IBOutlet weak var endTime: UILabel!
     
+    var myEvent: Event?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        configure(event: myEvent!)
     }
     
     func configure(event:Event)

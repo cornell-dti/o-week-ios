@@ -18,6 +18,7 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource, UIGes
     @IBOutlet var labels: [UILabel]!
 
     var selected = 0 //index of date selected (0-4)
+    var selectedEvent: Event? = nil
     
     // FIXME: Temporary Data
     let data = [Event(title:"Alumni Families and Legacy Reception", caption:"Tent on Rawlings Green", start:Time(hour:7, minute:45), end:Time(hour:8, minute:45)),
@@ -96,5 +97,20 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource, UIGes
         let cell = tableView.dequeueReusableCell(withIdentifier: "feedCell", for: indexPath) as! FeedCell
         cell.configure(event: data[indexPath.row])
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedEvent = data[indexPath.row]
+        performSegue(withIdentifier: "showEventDetails", sender: self)
+    }
+    
+    // MARK:- Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showEventDetails" {
+            if let destination = segue.destination as? DetailsVC {
+                destination.myEvent = selectedEvent
+            }
+        }
     }
 }
