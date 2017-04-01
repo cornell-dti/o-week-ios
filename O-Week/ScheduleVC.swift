@@ -19,6 +19,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
     var contentView: UIView!
     
     var selected = 0 //index of date selected (0-4)
+    var selectedEvent: Event? = nil
     var hours = [Time(hour:7), Time(hour:8), Time(hour:9), Time(hour:10), Time(hour:11), Time(hour:12), Time(hour:13), Time(hour:14), Time(hour:15), Time(hour:16), Time(hour:17), Time(hour:18), Time(hour:19), Time(hour:20), Time(hour:21), Time(hour:22), Time(hour:23), Time(hour:0), Time(hour:1), Time(hour:2)] //Table view data
     
     let CONTAINER_RIGHT_MARGIN:CGFloat = 20
@@ -90,6 +91,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
             
             contentView.addSubview(container)
             
+            //First subview of "container" must be UILabel corresponding to Title for eventClicked func to work
             let title = UILabel(frame: CGRect(x: 16, y: 14, width: 0, height: 0))
             title.numberOfLines = 0
             title.lineBreakMode = .byTruncatingTail
@@ -117,6 +119,12 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
                 caption.frame = CGRect(x: caption.frame.origin.x, y: caption.frame.origin.y, width: container.frame.width - 32, height: caption.frame.height)
             }
             container.addSubview(caption)
+            
+            //add gesture recognizer to container to segue to Details VC
+            let gr = UITapGestureRecognizer(target: self, action: #selector(self.eventClicked(_:)))
+            container.addGestureRecognizer(gr)
+            container.isUserInteractionEnabled = true
+            
         }
     }
     
@@ -146,7 +154,26 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
         self.selected = selected
     }
     
-    //MARK:- Table View 
+    // MARK:- Event Actions
+    
+    func eventClicked(_ sender: UITapGestureRecognizer){
+        //TODO: Clean up code
+        //Subview[0] must be UILabel corresponding to Title
+        //If above parameter is changed, update comment where UILabel is made and added to its parent view
+        if let titleLabel = sender.view?.subviews[0] as! UILabel! {
+            for event in FeedCell.selectedEvents {
+                if event.title == titleLabel.text {
+                    selectedEvent = event
+                    performSegue(withIdentifier: "showDetailsVC", sender: self)
+                }
+            }
+        } else {
+            fatalError("Error with eventClicked function in ScheduleView")
+        }
+        
+    }
+    
+    // MARK:- Table View
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return hours.count
@@ -180,4 +207,15 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
         //60 min = 1 rowHeight
         return CGFloat(Time.length(startTime: event.startTime, endTime: event.endTime)) / 60 * myTableView.rowHeight
     }
+    
+    // MARK:- Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showDetailsVC" {
+            if let destination = segue.destination as? DetailsVC {
+                destination.myEvent = selectedEvent
+            }
+        }
+    }
+    
 }

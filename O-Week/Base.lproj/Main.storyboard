@@ -594,6 +594,7 @@
                         <outletCollection property="labels" destination="fvz-8g-Mlv" collectionClass="NSMutableArray" id="WtJ-eL-qZQ"/>
                         <outletCollection property="labels" destination="ou8-MY-OZo" collectionClass="NSMutableArray" id="TuT-GH-DJu"/>
                         <outletCollection property="labels" destination="c85-fa-awp" collectionClass="NSMutableArray" id="yTl-pl-5PB"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="showDetailsVC" id="mu3-We-PmB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8qi-Jw-nrL" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -742,4 +743,7 @@
         <image name="filter" width="21" height="21"/>
         <image name="profile_icon" width="22" height="22"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="mu3-We-PmB"/>
+    </inferredMetricsTieBreakers>
 </document>
