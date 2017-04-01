@@ -12,6 +12,7 @@ struct Event:Hashable
 {
     let title:String
     let caption:String
+    let description: String
     let startTime:Time
     let endTime:Time
     var hashValue: Int
@@ -23,10 +24,15 @@ struct Event:Hashable
         return hash
     }
     
-    init(title:String, caption:String, start:Time, end:Time)
+    init(title:String, caption:String, start:Time, end:Time, description: String?)
     {
         self.title = title
         self.caption = caption
+        if let unwrappedDescription = description {
+            self.description = unwrappedDescription
+        } else {
+            self.description = "No description available at this time."
+        }
         startTime = start
         endTime = end
     }
