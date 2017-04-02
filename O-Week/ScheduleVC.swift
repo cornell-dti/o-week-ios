@@ -29,16 +29,11 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        setUpNavBar()
         setUpExtendedNavBar()
         setUpGestureRecognizers()
         setUpContentView()
         drawTimeLines()
         drawCells()
-    }
-    
-    func setUpNavBar(){
-        self.navigationItem.title = "My Schedule"
     }
     
     func setUpExtendedNavBar(){

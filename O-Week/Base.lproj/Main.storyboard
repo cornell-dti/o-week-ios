@@ -330,7 +330,7 @@
             </objects>
             <point key="canvasLocation" x="-884" y="135.38230884557723"/>
         </scene>
-        <!--ScheduleVC-->
+        <!--My Schedule-->
         <scene sceneID="mRG-QY-EXx">
             <objects>
                 <viewController id="VJl-le-ciO" customClass="ScheduleVC" customModule="O_Week" customModuleProvider="target" sceneMemberID="viewController">
@@ -581,6 +581,9 @@
                             <constraint firstAttribute="trailing" secondItem="V95-fc-cUR" secondAttribute="trailing" id="t5B-FY-1W5"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="My Schedule" id="ID6-5Z-Krl">
+                        <barButtonItem key="backBarButtonItem" title=" " id="dIF-jY-UsN"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="myScrollView" destination="KyL-C5-vw0" id="Zd1-zW-KLh"/>
                         <outlet property="myTableView" destination="mTJ-5S-Tbp" id="Klh-WP-BuB"/>
@@ -598,7 +601,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8qi-Jw-nrL" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <panGestureRecognizer minimumNumberOfTouches="1" id="gqi-Pd-xkZ"/>
             </objects>
             <point key="canvasLocation" x="-884" y="862.21889055472275"/>
         </scene>
