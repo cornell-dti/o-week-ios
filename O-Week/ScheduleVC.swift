@@ -68,7 +68,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
     {
         for hour in hours
         {
-            let line = UIView(frame: CGRect(x: 0, y: yForStartTime(hour), width: cellWidth(), height: 0.5))
+            let line = UIView(frame: CGRect(x: 0, y: yForStartTime(hour), width: fullCellWidth(), height: 0.5))
             line.backgroundColor = Color.GRAY
             contentView.addSubview(line)
         }
@@ -78,49 +78,95 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
     {
         //consider events that start earliest first
         let sortedEvents = FeedCell.selectedEvents.sorted(by: {$0.startTime < $1.startTime})
-        
-        for event in sortedEvents
-        {
-            let container = UIView(frame: CGRect(x: 0, y: yForStartTime(event.startTime), width: cellWidth(), height: cellHeight(event: event)))
-            container.backgroundColor = Color.RED
-            
-            contentView.addSubview(container)
-            
-            //First subview of "container" must be UILabel corresponding to Title for eventClicked func to work
-            let title = UILabel(frame: CGRect(x: 16, y: 14, width: 0, height: 0))
-            title.numberOfLines = 0
-            title.lineBreakMode = .byTruncatingTail
-            title.font = UIFont(name: "AvenirNext-DemiBold", size: 12)
-            title.textColor = UIColor.white
-            title.text = event.title
-            title.sizeToFit()
-            //bound right margin so title doesn't go past the block
-            if (title.frame.width > container.frame.width - 32)
-            {
-                title.frame = CGRect(x: title.frame.origin.x, y: title.frame.origin.y, width: container.frame.width - 32, height: title.frame.height)
-            }
-            container.addSubview(title)
-            
-            let caption = UILabel(frame: CGRect(x: 16, y: title.frame.origin.y + title.frame.height, width: 0, height: 0))
-            caption.numberOfLines = 0
-            caption.lineBreakMode = .byTruncatingTail
-            caption.font = UIFont(name: "AvenirNext-Regular", size: 10)
-            caption.textColor = UIColor.white
-            caption.text = event.caption
-            caption.sizeToFit()
-            //bound right margin so title doesn't go past the block
-            if (caption.frame.width > container.frame.width - 32)
-            {
-                caption.frame = CGRect(x: caption.frame.origin.x, y: caption.frame.origin.y, width: container.frame.width - 32, height: caption.frame.height)
-            }
-            container.addSubview(caption)
-            
-            //add gesture recognizer to container to segue to Details VC
-            let gr = UITapGestureRecognizer(target: self, action: #selector(self.eventClicked(_:)))
-            container.addGestureRecognizer(gr)
-            container.isUserInteractionEnabled = true
-            
+        guard !sortedEvents.isEmpty else {
+            return
         }
+        
+        drawContainer(parentSlot: 0, numSlots: 1, eventForSlot: [Int:Event](), events: sortedEvents)
+    }
+    
+    func drawContainer(parentSlot:Int, numSlots:Int, eventForSlot:[Int:Event], events:[Event]) -> (numSlots:Int, eventForSlot:[Int:Event])
+    {
+        let event = events.first!
+        let slot = slotForEvent(event, numSlots: numSlots, eventForSlot: eventForSlot)
+        
+        var newNumSlots = numSlots
+        var newEventForSlot = eventForSlot
+        newEventForSlot[slot] = event
+        
+        //if this event was assigned to a slot equal to the current number of slots, resize the current number of slots
+        if (slot == numSlots)
+        {
+            newNumSlots = slot + 1
+        }
+        //if there's a later event, process that before we can calculate the position of the current event
+        if (events.count > 1)
+        {
+            let nextEvent = events[1]
+            if (areEventOverlaps(nextEvent, numSlots: newNumSlots, eventForSlot: newEventForSlot))
+            {
+                let recursiveData = drawContainer(parentSlot: slot, numSlots: newNumSlots, eventForSlot: newEventForSlot, events: Array(events.dropFirst()))
+                newNumSlots = recursiveData.numSlots
+                newEventForSlot = recursiveData.eventForSlot
+            }
+            else
+            {
+                drawContainer(parentSlot: slot, numSlots: 1, eventForSlot: [Int:Event](), events: Array(events.dropFirst()))
+            }
+        }
+        
+        let container = UIView(frame: CGRect(x: cellX(slot: slot, numSlots: newNumSlots), y: yForStartTime(event.startTime), width: cellWidth(event: event, slot: slot, numSlots: newNumSlots, eventForSlot: newEventForSlot), height: cellHeight(event: event)))
+        container.backgroundColor = UIColor(white: CGFloat(arc4random()) / CGFloat(UInt32.max), alpha: 1)
+        //container.backgroundColor = Color.Red
+        contentView.addSubview(container)
+        drawTitleAndCaptionFor(container, event:event)
+        //add gesture recognizer to container to segue to Details VC
+        let gr = UITapGestureRecognizer(target: self, action: #selector(self.eventClicked(_:)))
+        container.addGestureRecognizer(gr)
+        container.isUserInteractionEnabled = true
+        
+        //the parent event wants to know if any new events have been added to the right of it, but not beneath it. Therefore, only let the parent know of slots that are added, not replaced. This way it expands to the right by the correct value.
+        var parentEventForSlot = eventForSlot
+        for slot in newEventForSlot.keys
+        {
+            if (parentEventForSlot[slot] == nil)
+            {
+                parentEventForSlot[slot] = newEventForSlot[slot]
+            }
+        }
+        return (numSlots:newNumSlots, eventForSlot:parentEventForSlot)
+    }
+    
+    func drawTitleAndCaptionFor(_ container:UIView, event:Event)
+    {
+        //First subview of "container" must be UILabel corresponding to Title for eventClicked func to work
+        let title = UILabel(frame: CGRect(x: 16, y: 14, width: 0, height: 0))
+        title.numberOfLines = 0
+        title.lineBreakMode = .byTruncatingTail
+        title.font = UIFont(name: "AvenirNext-DemiBold", size: 12)
+        title.textColor = UIColor.white
+        title.text = event.title
+        title.sizeToFit()
+        //bound right margin so title doesn't go past the block
+        if (title.frame.width > container.frame.width - 32)
+        {
+            title.frame = CGRect(x: title.frame.origin.x, y: title.frame.origin.y, width: container.frame.width - 32, height: title.frame.height)
+        }
+        container.addSubview(title)
+        
+        let caption = UILabel(frame: CGRect(x: 16, y: title.frame.origin.y + title.frame.height, width: 0, height: 0))
+        caption.numberOfLines = 0
+        caption.lineBreakMode = .byTruncatingTail
+        caption.font = UIFont(name: "AvenirNext-Regular", size: 10)
+        caption.textColor = UIColor.white
+        caption.text = event.caption
+        caption.sizeToFit()
+        //bound right margin so title doesn't go past the block
+        if (caption.frame.width > container.frame.width - 32)
+        {
+            caption.frame = CGRect(x: caption.frame.origin.x, y: caption.frame.origin.y, width: container.frame.width - 32, height: caption.frame.height)
+        }
+        container.addSubview(caption)
     }
     
     // MARK:- Date Actions
@@ -187,13 +233,59 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
         viewToSyncScrolling?.contentOffset = scrollView.contentOffset
     }
     
-    //MARK:- Private functions for drawing cells
+    // MARK:- Private functions for drawing cells
+    
     private func yForStartTime(_ startTime:Time) -> CGFloat
     {
+        //TODO: Special treatment past midnight
         let timeFrom7 = Time.length(startTime: hours[0], endTime: startTime)
         return CGFloat(timeFrom7) * myTableView.rowHeight / 60 + (myTableView.rowHeight / 2)
     }
-    private func cellWidth() -> CGFloat
+    private func cellX(slot:Int, numSlots:Int) -> CGFloat
+    {
+        return fullCellWidth() / CGFloat(numSlots) * CGFloat(slot)
+    }
+    //Returns the correct slot for this event
+    private func slotForEvent(_ event:Event, numSlots:Int, eventForSlot:[Int:Event]) -> Int
+    {
+        for i in 0..<numSlots
+        {
+            if (canUseSlot(i, event: event, eventForSlot: eventForSlot))
+            {
+                return i
+            }
+        }
+        return numSlots
+    }
+    //Returns true if any event on the eventForSlot list overlaps with the event of interest
+    private func areEventOverlaps(_ event:Event, numSlots:Int, eventForSlot:[Int:Event]) -> Bool
+    {
+        for i in 0..<numSlots
+        {
+            if (!canUseSlot(i, event: event, eventForSlot: eventForSlot))
+            {
+                return true
+            }
+        }
+        return false
+    }
+    private func cellWidth(event:Event, slot:Int, numSlots:Int, eventForSlot:[Int:Event]) -> CGFloat
+    {
+        var occupiedSlots:CGFloat = 1
+        var nextSlot = slot + 1
+        //while the next slot isn't filled and we haven't reached the rightmost slot
+        while (canUseSlot(nextSlot, event: event, eventForSlot: eventForSlot) && nextSlot < numSlots)
+        {
+            occupiedSlots += 1
+            nextSlot += 1
+        }
+        return fullCellWidth() / CGFloat(numSlots) * occupiedSlots
+    }
+    private func canUseSlot(_ slot:Int, event:Event, eventForSlot:[Int:Event]) -> Bool
+    {
+        return eventForSlot[slot] == nil || eventForSlot[slot]!.startTime >= event.endTime || eventForSlot[slot]!.endTime <= event.startTime
+    }
+    private func fullCellWidth() -> CGFloat
     {
         return myScrollView.frame.width - CONTAINER_RIGHT_MARGIN
     }

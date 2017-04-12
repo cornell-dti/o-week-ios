@@ -126,6 +126,18 @@ func < (lhs:Time, rhs:Time) -> Bool
 {
     return lhs.toMinutes() < rhs.toMinutes()
 }
+func > (lhs:Time, rhs:Time) -> Bool
+{
+    return lhs.toMinutes() > rhs.toMinutes()
+}
+func >= (lhs:Time, rhs:Time) -> Bool
+{
+    return lhs.toMinutes() >= rhs.toMinutes()
+}
+func <= (lhs:Time, rhs:Time) -> Bool
+{
+    return lhs.toMinutes() <= rhs.toMinutes()
+}
 func == (lhs:Time, rhs:Time) -> Bool
 {
     return lhs.toMinutes() == rhs.toMinutes()

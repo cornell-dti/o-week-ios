@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="2pU-qI-3r5">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="2pU-qI-3r5">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -188,7 +188,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="116"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Qlj-Vs-voW" id="feu-kf-Nka">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="115.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="116"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="goc-WY-85J">
@@ -267,6 +267,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="eventButton" destination="eXf-CR-pzI" id="6EX-jm-qQU"/>
                                             <outlet property="eventCaption" destination="AqS-yf-u58" id="z0G-tc-A2l"/>
                                             <outlet property="eventEndTime" destination="gKZ-T1-mrf" id="OPR-HT-KWo"/>
                                             <outlet property="eventStartTime" destination="HJj-KF-fU6" id="9xg-O9-m6E"/>
@@ -746,6 +747,6 @@
         <image name="profile_icon" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="mu3-We-PmB"/>
+        <segue reference="Xcf-ub-FiZ"/>
     </inferredMetricsTieBreakers>
 </document>

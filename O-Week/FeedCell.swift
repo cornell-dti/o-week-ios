@@ -15,6 +15,7 @@ class FeedCell:UITableViewCell
     @IBOutlet weak var eventEndTime: UILabel!
     @IBOutlet weak var eventTitle: UILabel!
     @IBOutlet weak var eventCaption: UILabel!
+    @IBOutlet weak var eventButton: UIButton!
     
     var added = false
     var event:Event!
@@ -32,22 +33,27 @@ class FeedCell:UITableViewCell
         eventCaption.text = event.caption
         eventStartTime.text = event.startTime.description
         eventEndTime.text = event.endTime.description
+        //setButtonOn(FeedCell.selectedEvents.contains(event))
+        setButtonOn(true)
         
         // TODO: fix button image when initialized depending on whether user had previously added event
     }
     
     @IBAction func addBttnPressed(_ sender: UIButton)
     {
-        //TODO: implement button functionality
-        if (!added)
+        setButtonOn(!added)
+    }
+    private func setButtonOn(_ on:Bool)
+    {
+        if (on)
         {
-            sender.setImage(FeedCell.imageAdded, for: .normal)
+            eventButton.setImage(FeedCell.imageAdded, for: .normal)
             added = true
             FeedCell.selectedEvents.insert(event)
         }
         else
         {
-            sender.setImage(FeedCell.imageNotAdded, for: .normal)
+            eventButton.setImage(FeedCell.imageNotAdded, for: .normal)
             added = false
             FeedCell.selectedEvents.remove(event)
         }
