@@ -31,6 +31,12 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
         super.viewDidLoad()
         setUpExtendedNavBar()
         setUpGestureRecognizers()
+    }
+    
+    override func viewDidLayoutSubviews()
+    {
+        super.viewDidLayoutSubviews()
+        myScrollView.layoutIfNeeded()
         setUpContentView()
         drawTimeLines()
         drawCells()
@@ -129,7 +135,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
         var parentEventForSlot = eventForSlot
         for slot in newEventForSlot.keys
         {
-            if (parentEventForSlot[slot] == nil)
+            if (canUseSlot(slot, event: event, eventForSlot: parentEventForSlot))
             {
                 parentEventForSlot[slot] = newEventForSlot[slot]
             }
