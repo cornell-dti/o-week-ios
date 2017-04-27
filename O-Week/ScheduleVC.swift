@@ -43,8 +43,10 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
     }
     
     func setUpExtendedNavBar(){
-        navigationController?.navigationBar.shadowImage = UIImage(named: "transparent_pixel")
-        navigationController?.navigationBar.setBackgroundImage(UIImage(named: "pixel"), for: .default)
+        /* Old theme */
+        //navigationController?.navigationBar.shadowImage = UIImage(named: "transparent_pixel")
+        //navigationController?.navigationBar.setBackgroundImage(UIImage(named: "pixel"), for: .default)
+       
         for view in views{
             view.layer.cornerRadius = view.frame.width / 2 //half of width for a perfect circle
         }
@@ -191,12 +193,21 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
     
     func changeSelectedDate(to selected: Int)
     {
+        /* Old theme */
         //revert last selected date
-        views[self.selected].backgroundColor = Color.RED
-        labels[self.selected].textColor = UIColor.white
+        //views[self.selected].backgroundColor = Color.RED
+        //labels[self.selected].textColor = UIColor.white
         //set new selected date
-        views[selected].backgroundColor = UIColor.white
-        labels[selected].textColor = UIColor.black
+        //views[selected].backgroundColor = UIColor.white
+        //labels[selected].textColor = UIColor.black
+        
+        /* New theme */
+        //revert last selected date
+        views[self.selected].backgroundColor = UIColor.white
+        labels[self.selected].textColor = UIColor.black
+        //set new selected date
+        views[selected].backgroundColor = Color.RED
+        labels[selected].textColor = UIColor.white
         
         self.selected = selected
     }

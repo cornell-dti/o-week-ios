@@ -34,7 +34,7 @@ class FeedCell:UITableViewCell
         eventStartTime.text = event.startTime.description
         eventEndTime.text = event.endTime.description
         //setButtonOn(FeedCell.selectedEvents.contains(event))
-        setButtonOn(true)
+        //setButtonOn(true)
         
         // TODO: fix button image when initialized depending on whether user had previously added event
     }

@@ -21,15 +21,15 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource, UIGes
     var selectedEvent: Event? = nil
     
     // FIXME: Temporary Data
-    /*let data = [Event(title:"Alumni Families and Legacy Reception", caption:"Tent on Rawlings Green", start:Time(hour:7, minute:45), end:Time(hour:8, minute:45), description: nil),
+    let data = [Event(title:"Alumni Families and Legacy Reception", caption:"Tent on Rawlings Green", start:Time(hour:7, minute:45), end:Time(hour:8, minute:45), description: nil),
                 Event(title:"New Student Convocation", caption:"Shoellkopf Stadium", start:Time(hour:8, minute:45), end:Time(hour:10, minute:0), description: "This will be your official welcome from university administrators, as well as from your student body president and other key student leaders in Schoellkopf Stadium. Note that it takes 30 minutes to walk to Schoellkopf Stadium from North Campus and 20 minutes from West Campus; plan accordingly."),
                 Event(title:"Tours of Libraries and Manuscript", caption:"Upper Lobby, Uris Library", start:Time(hour:10, minute:0), end:Time(hour:11, minute:30), description: nil),
                 Event(title:"Dump and Run Sale", caption:"Helen Newman Hall", start:Time(hour:10, minute:0), end:Time(hour:18, minute:0), description: nil),
                 Event(title:"AAP—Dean’s Convocation", caption:"Abby and Howard Milstein Hall", start:Time(hour:10, minute:30), end:Time(hour:11, minute:30), description: nil),
-                Event(title:"CALS—Dean’s Convocation", caption:"Call Alumni Auditorium, Kennedy Hall", start:Time(hour:10, minute:30), end:Time(hour:11, minute:30), description: nil)]*/
+                Event(title:"CALS—Dean’s Convocation", caption:"Call Alumni Auditorium, Kennedy Hall", start:Time(hour:10, minute:30), end:Time(hour:11, minute:30), description: nil)]
     //test data to make sure scheduleVC performs as expected
-    let data = [Event(title:"A", caption:"A", start:Time(hour:9, minute:30), end:Time(hour:10, minute:30), description: nil), Event(title:"B", caption:"B", start:Time(hour:10, minute:30), end:Time(hour:12, minute:0), description: nil), Event(title:"C", caption:"C", start:Time(hour:11, minute:45), end:Time(hour:15, minute:30), description: nil), Event(title:"D", caption:"D", start:Time(hour:12, minute:0), end:Time(hour:14, minute:0), description: nil), Event(title:"E", caption:"E", start:Time(hour:13, minute:30), end:Time(hour:14, minute:0), description: nil), Event(title:"F", caption:"F", start:Time(hour:14, minute:0), end:Time(hour:15, minute:40), description: nil), Event(title:"G", caption:"G", start:Time(hour:14, minute:30), end:Time(hour:15, minute:0), description: nil), Event(title:"H", caption:"H", start:Time(hour:15, minute:30), end:Time(hour:16, minute:0), description: nil), Event(title:"I", caption:"I", start:Time(hour:16, minute:0), end:Time(hour:16, minute:30), description: nil), Event(title:"J", caption:"J", start:Time(hour:15, minute:50), end:Time(hour:16, minute:40), description: nil), Event(title:"K", caption:"K", start:Time(hour:17, minute:0), end:Time(hour:17, minute:30), description: nil)]
-    
+    /*let data = [Event(title:"A", caption:"A", start:Time(hour:9, minute:30), end:Time(hour:10, minute:30), description: nil), Event(title:"B", caption:"B", start:Time(hour:10, minute:30), end:Time(hour:12, minute:0), description: nil), Event(title:"C", caption:"C", start:Time(hour:11, minute:45), end:Time(hour:15, minute:30), description: nil), Event(title:"D", caption:"D", start:Time(hour:12, minute:0), end:Time(hour:14, minute:0), description: nil), Event(title:"E", caption:"E", start:Time(hour:13, minute:30), end:Time(hour:14, minute:0), description: nil), Event(title:"F", caption:"F", start:Time(hour:14, minute:0), end:Time(hour:15, minute:40), description: nil), Event(title:"G", caption:"G", start:Time(hour:14, minute:30), end:Time(hour:15, minute:0), description: nil), Event(title:"H", caption:"H", start:Time(hour:15, minute:30), end:Time(hour:16, minute:0), description: nil), Event(title:"I", caption:"I", start:Time(hour:16, minute:0), end:Time(hour:16, minute:30), description: nil), Event(title:"J", caption:"J", start:Time(hour:15, minute:50), end:Time(hour:16, minute:40), description: nil), Event(title:"K", caption:"K", start:Time(hour:17, minute:0), end:Time(hour:17, minute:30), description: nil)]
+    */
     // MARK:- Setup
     
     override func viewDidLoad()
@@ -54,8 +54,10 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource, UIGes
     }
     
     func setUpExtendedNavBar(){
-        navigationController?.navigationBar.shadowImage = UIImage(named: "transparent_pixel")
-        navigationController?.navigationBar.setBackgroundImage(UIImage(named: "pixel"), for: .default)
+        /* Old theme */
+        //navigationController?.navigationBar.shadowImage = UIImage(named: "transparent_pixel")
+        //navigationController?.navigationBar.setBackgroundImage(UIImage(named: "pixel"), for: .default)
+        
         for view in views{
             view.layer.cornerRadius = view.frame.width / 2 //half of width for a perfect circle
         }
@@ -77,12 +79,21 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource, UIGes
     }
     
     func changeSelectedDate(to selected: Int){
+        /* Old theme */
         //revert last selected date
-        views[self.selected].backgroundColor = Color.RED
-        labels[self.selected].textColor = UIColor.white
+        //views[self.selected].backgroundColor = Color.RED
+        //labels[self.selected].textColor = UIColor.white
         //set new selected date
-        views[selected].backgroundColor = UIColor.white
-        labels[selected].textColor = UIColor.black
+        //views[selected].backgroundColor = UIColor.white
+        //labels[selected].textColor = UIColor.black
+        
+        /* New theme */
+        //revert last selected date
+        views[self.selected].backgroundColor = UIColor.white
+        labels[self.selected].textColor = UIColor.black
+        //set new selected date
+        views[selected].backgroundColor = Color.RED
+        labels[selected].textColor = UIColor.white
         
         self.selected = selected
     }
