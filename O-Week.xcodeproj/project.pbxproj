@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		0628E4851E7C82830066A308 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0628E4841E7C82830066A308 /* MapKit.framework */; };
 		0628E4871E7CA3260066A308 /* FeedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0628E4861E7CA3260066A308 /* FeedVC.swift */; };
-		0628E4891E7CA3790066A308 /* ExtendedNavBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0628E4881E7CA3790066A308 /* ExtendedNavBarView.swift */; };
 		0628E48B1E7CA4750066A308 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0628E48A1E7CA4750066A308 /* Color.swift */; };
 		0668416A1EB192B7009B75E3 /* Internet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066841691EB192B7009B75E3 /* Internet.swift */; };
 		067EC2E71E8C9F8D0098ED94 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067EC2E61E8C9F8D0098ED94 /* Event.swift */; };
@@ -46,7 +45,6 @@
 /* Begin PBXFileReference section */
 		0628E4841E7C82830066A308 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		0628E4861E7CA3260066A308 /* FeedVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedVC.swift; sourceTree = "<group>"; };
-		0628E4881E7CA3790066A308 /* ExtendedNavBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtendedNavBarView.swift; sourceTree = "<group>"; };
 		0628E48A1E7CA4750066A308 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		066841691EB192B7009B75E3 /* Internet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Internet.swift; sourceTree = "<group>"; };
 		067EC2E61E8C9F8D0098ED94 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
@@ -128,8 +126,11 @@
 			isa = PBXGroup;
 			children = (
 				DC18B3101E76CBCE00C3FCD6 /* AppDelegate.swift */,
+<<<<<<< HEAD
+=======
 				066841691EB192B7009B75E3 /* Internet.swift */,
 				0628E4881E7CA3790066A308 /* ExtendedNavBarView.swift */,
+>>>>>>> 0324fc13cdb6a23fe67d8086a1b7ee9041fbbd23
 				0628E48A1E7CA4750066A308 /* Color.swift */,
 				067EC2E61E8C9F8D0098ED94 /* Event.swift */,
 				067EC2E81E8C9FE20098ED94 /* Time.swift */,
@@ -311,8 +312,11 @@
 				067EC2E91E8C9FE20098ED94 /* Time.swift in Sources */,
 				DC2C02991E7DC25F00E9DDEF /* ScheduleVC.swift in Sources */,
 				DC1E83191E85E635000CD56B /* ScheduleCell.swift in Sources */,
+<<<<<<< HEAD
+=======
 				0668416A1EB192B7009B75E3 /* Internet.swift in Sources */,
 				0628E4891E7CA3790066A308 /* ExtendedNavBarView.swift in Sources */,
+>>>>>>> 0324fc13cdb6a23fe67d8086a1b7ee9041fbbd23
 				DC18B3111E76CBCE00C3FCD6 /* AppDelegate.swift in Sources */,
 				0628E48B1E7CA4750066A308 /* Color.swift in Sources */,
 				DCD4464C1E76F941002D8F68 /* DetailsVC.swift in Sources */,

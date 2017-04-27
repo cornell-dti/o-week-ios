@@ -15,18 +15,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        setNavBarColor()
         // Override point for customization after application launch.
+        setNavBarColor()
         return true
     }
     
     private func setNavBarColor()
     {
         let navigationBarAppearence = UINavigationBar.appearance()
-        navigationBarAppearence.barTintColor = Color.RED
-        navigationBarAppearence.tintColor = UIColor.white   //back arrow is white
+        
+        navigationBarAppearence.barTintColor = UIColor.white
+        navigationBarAppearence.tintColor = UIColor.black   //back arrow is black
         navigationBarAppearence.isTranslucent = false
-        navigationBarAppearence.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: UIFont(name: "AvenirNext-DemiBold", size: 14)!]
+        navigationBarAppearence.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.black, NSFontAttributeName: UIFont(name: "AvenirNext-DemiBold", size: 14)!]
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

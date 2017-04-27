@@ -23,6 +23,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
     var hours = [Time(hour:7), Time(hour:8), Time(hour:9), Time(hour:10), Time(hour:11), Time(hour:12), Time(hour:13), Time(hour:14), Time(hour:15), Time(hour:16), Time(hour:17), Time(hour:18), Time(hour:19), Time(hour:20), Time(hour:21), Time(hour:22), Time(hour:23), Time(hour:0), Time(hour:1), Time(hour:2)] //Table view data
     
     let CONTAINER_RIGHT_MARGIN:CGFloat = 20
+    let EVENT_CORNER_RADIUS:CGFloat = 7
     
     // MARK:- Setup
     
@@ -88,7 +89,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
             return
         }
         
-        drawContainer(parentSlot: 0, numSlots: 1, eventForSlot: [Int:Event](), events: sortedEvents)
+        _ = drawContainer(parentSlot: 0, numSlots: 1, eventForSlot: [Int:Event](), events: sortedEvents)
     }
     
     func drawContainer(parentSlot:Int, numSlots:Int, eventForSlot:[Int:Event], events:[Event]) -> (numSlots:Int, eventForSlot:[Int:Event])
@@ -117,13 +118,13 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
             }
             else
             {
-                drawContainer(parentSlot: slot, numSlots: 1, eventForSlot: [Int:Event](), events: Array(events.dropFirst()))
+                _ = drawContainer(parentSlot: slot, numSlots: 1, eventForSlot: [Int:Event](), events: Array(events.dropFirst()))
             }
         }
         
         let container = UIView(frame: CGRect(x: cellX(slot: slot, numSlots: newNumSlots), y: yForStartTime(event.startTime), width: cellWidth(event: event, slot: slot, numSlots: newNumSlots, eventForSlot: newEventForSlot), height: cellHeight(event: event)))
-        container.backgroundColor = UIColor(white: CGFloat(arc4random()) / CGFloat(UInt32.max), alpha: 1)
-        //container.backgroundColor = Color.Red
+        container.backgroundColor = Color.RED
+        container.layer.cornerRadius = EVENT_CORNER_RADIUS
         contentView.addSubview(container)
         drawTitleAndCaptionFor(container, event:event)
         //add gesture recognizer to container to segue to Details VC
@@ -192,11 +193,11 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
     func changeSelectedDate(to selected: Int)
     {
         //revert last selected date
-        views[self.selected].backgroundColor = Color.RED
-        labels[self.selected].textColor = UIColor.white
+        views[self.selected].backgroundColor = UIColor.white
+        labels[self.selected].textColor = UIColor.black
         //set new selected date
-        views[selected].backgroundColor = UIColor.white
-        labels[selected].textColor = UIColor.black
+        views[selected].backgroundColor = Color.RED
+        labels[selected].textColor = UIColor.white
         
         self.selected = selected
     }
@@ -310,5 +311,4 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
             }
         }
     }
-    
 }
