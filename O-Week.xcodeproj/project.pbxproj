@@ -21,6 +21,7 @@
 		DC1E83191E85E635000CD56B /* ScheduleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E83181E85E635000CD56B /* ScheduleCell.swift */; };
 		DC2C02991E7DC25F00E9DDEF /* ScheduleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2C02981E7DC25F00E9DDEF /* ScheduleVC.swift */; };
 		DC3274621E7CB4F100CB3E22 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3274611E7CB4F100CB3E22 /* FeedCell.swift */; };
+		DCC2FF8B1EB24EEA00624B4F /* Internet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC2FF8A1EB24EEA00624B4F /* Internet.swift */; };
 		DCD4464C1E76F941002D8F68 /* DetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD4464B1E76F941002D8F68 /* DetailsVC.swift */; };
 /* End PBXBuildFile section */
 
@@ -62,6 +63,7 @@
 		DC1E83181E85E635000CD56B /* ScheduleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleCell.swift; sourceTree = "<group>"; };
 		DC2C02981E7DC25F00E9DDEF /* ScheduleVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleVC.swift; sourceTree = "<group>"; };
 		DC3274611E7CB4F100CB3E22 /* FeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
+		DCC2FF8A1EB24EEA00624B4F /* Internet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Internet.swift; sourceTree = "<group>"; };
 		DCD4464B1E76F941002D8F68 /* DetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -131,6 +133,7 @@
 				DC3274611E7CB4F100CB3E22 /* FeedCell.swift */,
 				DCD4464B1E76F941002D8F68 /* DetailsVC.swift */,
 				DC2C02981E7DC25F00E9DDEF /* ScheduleVC.swift */,
+				DCC2FF8A1EB24EEA00624B4F /* Internet.swift */,
 				DC1E83181E85E635000CD56B /* ScheduleCell.swift */,
 				DC18B3171E76CBCE00C3FCD6 /* Assets.xcassets */,
 				DC18B3191E76CBCE00C3FCD6 /* LaunchScreen.storyboard */,
@@ -304,6 +307,7 @@
 				067EC2E71E8C9F8D0098ED94 /* Event.swift in Sources */,
 				067EC2E91E8C9FE20098ED94 /* Time.swift in Sources */,
 				DC2C02991E7DC25F00E9DDEF /* ScheduleVC.swift in Sources */,
+				DCC2FF8B1EB24EEA00624B4F /* Internet.swift in Sources */,
 				DC1E83191E85E635000CD56B /* ScheduleCell.swift in Sources */,
 				DC18B3111E76CBCE00C3FCD6 /* AppDelegate.swift in Sources */,
 				0628E48B1E7CA4750066A308 /* Color.swift in Sources */,
