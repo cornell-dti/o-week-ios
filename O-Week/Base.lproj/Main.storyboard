@@ -480,11 +480,18 @@
                                     <constraint firstItem="2w5-Zm-0LA" firstAttribute="centerX" secondItem="SWz-cl-1Sn" secondAttribute="centerX" id="yr8-cM-WFZ"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TRZ-sf-bf4" userLabel="GrayHairline">
+                                <rect key="frame" x="0.0" y="130" width="375" height="0.5"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="0.5" id="lts-I1-eth"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V95-fc-cUR" userLabel="ScheduleView">
-                                <rect key="frame" x="0.0" y="130" width="375" height="537"/>
+                                <rect key="frame" x="0.0" y="130.5" width="375" height="536.5"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="56" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="mTJ-5S-Tbp">
-                                        <rect key="frame" x="0.0" y="0.0" width="69" height="537"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="69" height="536.5"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="69" id="bpp-c0-E5m"/>
@@ -532,7 +539,7 @@
                                         </connections>
                                     </tableView>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KyL-C5-vw0">
-                                        <rect key="frame" x="69" y="0.0" width="306" height="537"/>
+                                        <rect key="frame" x="69" y="0.0" width="306" height="536.5"/>
                                         <connections>
                                             <outlet property="delegate" destination="VJl-le-ciO" id="h1b-Ej-ASA"/>
                                         </connections>
@@ -553,12 +560,15 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="TRZ-sf-bf4" firstAttribute="leading" secondItem="PQb-M6-1RW" secondAttribute="leading" id="1yL-zs-mPo"/>
                             <constraint firstItem="SOg-vS-3DE" firstAttribute="top" secondItem="SCi-WJ-POg" secondAttribute="bottom" id="3Hp-yp-ces"/>
                             <constraint firstAttribute="trailing" secondItem="SOg-vS-3DE" secondAttribute="trailing" id="DXp-C7-rdZ"/>
-                            <constraint firstItem="V95-fc-cUR" firstAttribute="top" secondItem="SOg-vS-3DE" secondAttribute="bottom" id="KCG-Ou-5IS"/>
+                            <constraint firstItem="TRZ-sf-bf4" firstAttribute="top" secondItem="SOg-vS-3DE" secondAttribute="bottom" id="Ht3-nl-EH1"/>
                             <constraint firstItem="cyx-yo-m44" firstAttribute="top" secondItem="V95-fc-cUR" secondAttribute="bottom" id="Ru4-gx-SZn"/>
                             <constraint firstItem="SOg-vS-3DE" firstAttribute="leading" secondItem="PQb-M6-1RW" secondAttribute="leading" id="WNK-5Y-fa3"/>
+                            <constraint firstItem="V95-fc-cUR" firstAttribute="top" secondItem="TRZ-sf-bf4" secondAttribute="bottom" id="XdW-Zj-XHc"/>
                             <constraint firstItem="V95-fc-cUR" firstAttribute="leading" secondItem="PQb-M6-1RW" secondAttribute="leading" id="i2d-ax-KRj"/>
+                            <constraint firstAttribute="trailing" secondItem="TRZ-sf-bf4" secondAttribute="trailing" id="rUX-do-o5o"/>
                             <constraint firstAttribute="trailing" secondItem="V95-fc-cUR" secondAttribute="trailing" id="t5B-FY-1W5"/>
                         </constraints>
                     </view>
@@ -726,6 +736,6 @@
         <image name="schedule_icon" width="20" height="20"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Xcf-ub-FiZ"/>
+        <segue reference="mu3-We-PmB"/>
     </inferredMetricsTieBreakers>
 </document>

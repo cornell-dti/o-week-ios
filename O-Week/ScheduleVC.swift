@@ -191,15 +191,6 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
     
     func changeSelectedDate(to selected: Int)
     {
-        /* Old theme */
-        //revert last selected date
-        //views[self.selected].backgroundColor = Color.RED
-        //labels[self.selected].textColor = UIColor.white
-        //set new selected date
-        //views[selected].backgroundColor = UIColor.white
-        //labels[selected].textColor = UIColor.black
-        
-        /* New theme */
         //revert last selected date
         views[self.selected].backgroundColor = UIColor.white
         labels[self.selected].textColor = UIColor.black
@@ -319,5 +310,4 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
             }
         }
     }
-    
 }
