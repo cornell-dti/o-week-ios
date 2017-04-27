@@ -14,7 +14,6 @@ class DetailsVC: UIViewController {
     @IBOutlet weak var eventDescription: UILabel!
     @IBOutlet weak var startTime: UILabel!
     @IBOutlet weak var endTime: UILabel!
-    @IBOutlet weak var eventImage: UIImageView!
     
     var myEvent: Event?
     
@@ -30,6 +29,5 @@ class DetailsVC: UIViewController {
         eventDescription.text = event.description
         startTime.text = event.startTime.description
         endTime.text = event.endTime.description
-        Internet.imageFrom("https://upload.wikimedia.org/wikipedia/commons/3/34/Cornell_University%2C_Ho_Plaza_and_Sage_Hall.jpg", imageView: eventImage)
     }
 }
