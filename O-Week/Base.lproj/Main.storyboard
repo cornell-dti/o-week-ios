@@ -721,6 +721,7 @@
                         <outlet property="endTime" destination="VuR-RR-hNo" id="2np-wB-P2M"/>
                         <outlet property="eventCaption" destination="Cf6-38-bgE" id="kPN-mT-Pln"/>
                         <outlet property="eventDescription" destination="JRs-HM-P8C" id="4fE-SR-Jdc"/>
+                        <outlet property="eventImage" destination="XrJ-gJ-Myz" id="c45-v8-dyN"/>
                         <outlet property="eventTitle" destination="wn6-9U-lkC" id="3K8-2L-K8b"/>
                         <outlet property="startTime" destination="Wpu-cU-njA" id="alg-jw-ljy"/>
                     </connections>
