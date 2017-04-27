@@ -15,8 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        setNavBarColor()
         // Override point for customization after application launch.
+        setNavBarColor()
         return true
     }
     
@@ -24,13 +24,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     {
         let navigationBarAppearence = UINavigationBar.appearance()
         
-        /* Old theme */
-        //navigationBarAppearence.barTintColor = Color.RED
-        //navigationBarAppearence.tintColor = UIColor.white   //back arrow is white
-        //navigationBarAppearence.isTranslucent = false
-        //navigationBarAppearence.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: UIFont(name: "AvenirNext-DemiBold", size: 14)!]
-        
-        /* New theme */
         navigationBarAppearence.barTintColor = UIColor.white
         navigationBarAppearence.tintColor = UIColor.black   //back arrow is black
         navigationBarAppearence.isTranslucent = false

@@ -54,10 +54,8 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource, UIGes
     }
     
     func setUpExtendedNavBar(){
-        /* Old theme */
-        //navigationController?.navigationBar.shadowImage = UIImage(named: "transparent_pixel")
-        //navigationController?.navigationBar.setBackgroundImage(UIImage(named: "pixel"), for: .default)
-        
+        navigationController?.navigationBar.shadowImage = UIImage(named: "transparent_pixel")
+        navigationController?.navigationBar.setBackgroundImage(UIImage(named: "pixel"), for: .default)
         for view in views{
             view.layer.cornerRadius = view.frame.width / 2 //half of width for a perfect circle
         }
@@ -79,15 +77,6 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource, UIGes
     }
     
     func changeSelectedDate(to selected: Int){
-        /* Old theme */
-        //revert last selected date
-        //views[self.selected].backgroundColor = Color.RED
-        //labels[self.selected].textColor = UIColor.white
-        //set new selected date
-        //views[selected].backgroundColor = UIColor.white
-        //labels[selected].textColor = UIColor.black
-        
-        /* New theme */
         //revert last selected date
         views[self.selected].backgroundColor = UIColor.white
         labels[self.selected].textColor = UIColor.black

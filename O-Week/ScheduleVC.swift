@@ -43,10 +43,8 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
     }
     
     func setUpExtendedNavBar(){
-        /* Old theme */
-        //navigationController?.navigationBar.shadowImage = UIImage(named: "transparent_pixel")
-        //navigationController?.navigationBar.setBackgroundImage(UIImage(named: "pixel"), for: .default)
-       
+        navigationController?.navigationBar.shadowImage = UIImage(named: "transparent_pixel")
+        navigationController?.navigationBar.setBackgroundImage(UIImage(named: "pixel"), for: .default)
         for view in views{
             view.layer.cornerRadius = view.frame.width / 2 //half of width for a perfect circle
         }
@@ -90,7 +88,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
             return
         }
         
-        drawContainer(parentSlot: 0, numSlots: 1, eventForSlot: [Int:Event](), events: sortedEvents)
+        _ = drawContainer(parentSlot: 0, numSlots: 1, eventForSlot: [Int:Event](), events: sortedEvents)
     }
     
     func drawContainer(parentSlot:Int, numSlots:Int, eventForSlot:[Int:Event], events:[Event]) -> (numSlots:Int, eventForSlot:[Int:Event])
@@ -119,7 +117,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
             }
             else
             {
-                drawContainer(parentSlot: slot, numSlots: 1, eventForSlot: [Int:Event](), events: Array(events.dropFirst()))
+                _ = drawContainer(parentSlot: slot, numSlots: 1, eventForSlot: [Int:Event](), events: Array(events.dropFirst()))
             }
         }
         

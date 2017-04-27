@@ -28,7 +28,7 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="66"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FRI" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V9g-ky-eii">
-                                        <rect key="frame" x="43" y="0.0" width="15" height="16"/>
+                                        <rect key="frame" x="42.5" y="0.0" width="15" height="16"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="10"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -38,7 +38,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SUN" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H2h-1w-tTg">
-                                        <rect key="frame" x="177" y="0.0" width="21" height="16"/>
+                                        <rect key="frame" x="176.5" y="0.0" width="21" height="16"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="10"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -56,7 +56,7 @@
                                         <rect key="frame" x="32.5" y="21" width="36" height="36"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="17" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FTm-vo-49D">
-                                                <rect key="frame" x="8" y="6" width="20.5" height="24"/>
+                                                <rect key="frame" x="8" y="6" width="21" height="24"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -74,7 +74,7 @@
                                         <rect key="frame" x="101" y="21" width="36" height="36"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="18" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dzX-Wb-EJ8">
-                                                <rect key="frame" x="7" y="6" width="20.5" height="24"/>
+                                                <rect key="frame" x="7" y="6" width="21" height="24"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -91,7 +91,7 @@
                                         <rect key="frame" x="169.5" y="21" width="36" height="36"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="19" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3dd-v9-W2u">
-                                                <rect key="frame" x="7.5" y="6" width="20.5" height="24"/>
+                                                <rect key="frame" x="8" y="6" width="21" height="24"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -108,7 +108,7 @@
                                         <rect key="frame" x="238" y="21" width="36" height="36"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Oq-5Z-EDb">
-                                                <rect key="frame" x="7" y="6" width="20.5" height="24"/>
+                                                <rect key="frame" x="7" y="6" width="21" height="24"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -122,10 +122,10 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CAl-sg-DLs">
-                                        <rect key="frame" x="306.5" y="21" width="36" height="36"/>
+                                        <rect key="frame" x="307" y="21" width="36" height="36"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="21" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jdl-Ye-4hy">
-                                                <rect key="frame" x="7" y="6" width="20.5" height="24"/>
+                                                <rect key="frame" x="7" y="6" width="21" height="24"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -169,8 +169,15 @@
                                     <constraint firstItem="bfd-hc-vp6" firstAttribute="centerX" secondItem="K1F-ej-MEc" secondAttribute="centerX" id="zlV-O1-JNv"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yRo-uO-BeE" userLabel="Gray Hairline">
+                                <rect key="frame" x="0.0" y="130" width="375" height="0.5"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="0.5" id="QXu-ng-tZ7"/>
+                                </constraints>
+                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="116" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0aJ-U7-FmW">
-                                <rect key="frame" x="0.0" y="130" width="375" height="537"/>
+                                <rect key="frame" x="0.0" y="130.5" width="375" height="536.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="feedCell" id="Qlj-Vs-voW" customClass="FeedCell" customModule="O_Week" customModuleProvider="target">
@@ -273,28 +280,24 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="0aJ-U7-FmW" firstAttribute="leading" secondItem="saa-wQ-whf" secondAttribute="leading" id="0jv-Il-vZm"/>
-                            <constraint firstItem="0aJ-U7-FmW" firstAttribute="top" secondItem="ga3-DW-adf" secondAttribute="bottom" id="KZm-7y-WT6"/>
                             <constraint firstItem="QUB-o7-jvF" firstAttribute="top" secondItem="0aJ-U7-FmW" secondAttribute="bottom" id="Rr6-NY-Ffp"/>
+                            <constraint firstAttribute="trailing" secondItem="yRo-uO-BeE" secondAttribute="trailing" id="WmS-0R-mOb"/>
+                            <constraint firstItem="yRo-uO-BeE" firstAttribute="top" secondItem="ga3-DW-adf" secondAttribute="bottom" id="XAe-MX-WMb"/>
                             <constraint firstItem="ga3-DW-adf" firstAttribute="leading" secondItem="saa-wQ-whf" secondAttribute="leading" id="cuf-B5-CEo"/>
+                            <constraint firstItem="0aJ-U7-FmW" firstAttribute="top" secondItem="yRo-uO-BeE" secondAttribute="bottom" id="fUt-eS-ag4"/>
                             <constraint firstAttribute="trailing" secondItem="0aJ-U7-FmW" secondAttribute="trailing" id="kco-7X-Q7c"/>
                             <constraint firstItem="ga3-DW-adf" firstAttribute="top" secondItem="TYf-fm-HJf" secondAttribute="bottom" id="lMq-Mm-cru"/>
+                            <constraint firstItem="yRo-uO-BeE" firstAttribute="leading" secondItem="saa-wQ-whf" secondAttribute="leading" id="vSf-fo-WM6"/>
                             <constraint firstAttribute="trailing" secondItem="ga3-DW-adf" secondAttribute="trailing" id="wiB-Ew-ahe"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Orientation Events" id="coI-25-hSi">
                         <barButtonItem key="backBarButtonItem" title=" " id="i8U-te-6gx"/>
-                        <barButtonItem key="leftBarButtonItem" id="0dx-bs-IP1">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="GHf-vx-XuE">
-                                <rect key="frame" x="16" y="11" width="21" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="filter"/>
-                            </button>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" id="cNJ-Gd-EYx">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="h5L-zE-0jG">
                                 <rect key="frame" x="337" y="11" width="22" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="profile_icon"/>
+                                <state key="normal" image="schedule_icon"/>
                                 <connections>
                                     <segue destination="VJl-le-ciO" kind="show" id="Rh0-DZ-3qf"/>
                                 </connections>
@@ -720,8 +723,7 @@
     <resources>
         <image name="add_event" width="22" height="22"/>
         <image name="default_oweek" width="375" height="251"/>
-        <image name="filter" width="21" height="21"/>
-        <image name="profile_icon" width="22" height="22"/>
+        <image name="schedule_icon" width="20" height="20"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Xcf-ub-FiZ"/>
