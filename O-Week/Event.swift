@@ -3,7 +3,7 @@
 //  O-Week
 //
 //  Created by David Chu on 2017/3/29.
-//  Copyright © 2017年 Cornell SA Tech. All rights reserved.
+//  Copyright © 2017 Cornell SA Tech. All rights reserved.
 //
 
 import Foundation
@@ -15,6 +15,7 @@ struct Event:Hashable
     let description: String
     let startTime:Time
     let endTime:Time
+    
     var hashValue: Int
     {
         var hash = title.hashValue
@@ -28,15 +29,12 @@ struct Event:Hashable
     {
         self.title = title
         self.caption = caption
-        if let unwrappedDescription = description {
-            self.description = unwrappedDescription
-        } else {
-            self.description = "No description available at this time."
-        }
+        self.description = description ?? "No description available at this time." // Nil-Coalescing Operator
         startTime = start
         endTime = end
     }
 }
+
 func == (lhs:Event, rhs:Event) -> Bool
 {
     return lhs.title == rhs.title && lhs.caption == rhs.caption && lhs.startTime == rhs.startTime && lhs.endTime == rhs.endTime

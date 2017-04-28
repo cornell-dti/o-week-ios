@@ -20,8 +20,8 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
     
     var selected = 0 //index of date selected (0-4)
     var selectedEvent: Event? = nil
-    var hours = [Time(hour:7), Time(hour:8), Time(hour:9), Time(hour:10), Time(hour:11), Time(hour:12), Time(hour:13), Time(hour:14), Time(hour:15), Time(hour:16), Time(hour:17), Time(hour:18), Time(hour:19), Time(hour:20), Time(hour:21), Time(hour:22), Time(hour:23), Time(hour:0), Time(hour:1), Time(hour:2)] //Table view data
     
+    let hours = [Time(hour:7), Time(hour:8), Time(hour:9), Time(hour:10), Time(hour:11), Time(hour:12), Time(hour:13), Time(hour:14), Time(hour:15), Time(hour:16), Time(hour:17), Time(hour:18), Time(hour:19), Time(hour:20), Time(hour:21), Time(hour:22), Time(hour:23), Time(hour:0), Time(hour:1), Time(hour:2)] //Table view data
     let CONTAINER_RIGHT_MARGIN:CGFloat = 20
     let EVENT_CORNER_RADIUS:CGFloat = 7
     
@@ -193,11 +193,11 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
     func changeSelectedDate(to selected: Int)
     {
         //revert last selected date
-        views[self.selected].backgroundColor = UIColor.white
-        labels[self.selected].textColor = UIColor.black
+        views[self.selected].backgroundColor = Color.RED
+        labels[self.selected].textColor = UIColor.white
         //set new selected date
-        views[selected].backgroundColor = Color.RED
-        labels[selected].textColor = UIColor.white
+        views[selected].backgroundColor = UIColor.white
+        labels[selected].textColor = UIColor.black
         
         self.selected = selected
     }

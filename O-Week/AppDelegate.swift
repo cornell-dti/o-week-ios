@@ -24,10 +24,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     {
         let navigationBarAppearence = UINavigationBar.appearance()
         
-        navigationBarAppearence.barTintColor = UIColor.white
-        navigationBarAppearence.tintColor = UIColor.black   //back arrow is black
+        navigationBarAppearence.barTintColor = Color.RED
+        navigationBarAppearence.tintColor = UIColor.white   //back arrow is black
         navigationBarAppearence.isTranslucent = false
-        navigationBarAppearence.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.black, NSFontAttributeName: UIFont(name: "AvenirNext-DemiBold", size: 14)!]
+        navigationBarAppearence.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: UIFont(name: "AvenirNext-DemiBold", size: 14)!]
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

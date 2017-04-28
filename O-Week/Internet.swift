@@ -2,7 +2,7 @@
 //  Internet.swift
 //  O-Week
 //
-//  Created by Yung Chang Chu on 2017/4/23.
+//  Created by David Chu on 2017/4/23.
 //  Copyright © 2017 Cornell SA Tech. All rights reserved.
 //
 //  Handles all communications with the database, sending and receiving information.

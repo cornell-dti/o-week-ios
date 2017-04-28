@@ -20,6 +20,8 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource, UIGes
     var selected = 0 //index of date selected (0-4)
     var selectedEvent: Event? = nil
     
+    let FEED_TABLEVIEW_ROW_HEIGHT:CGFloat = 86
+    
     // FIXME: Temporary Data
     
     let data = [Event(title:"Alumni Families and Legacy Reception", caption:"Tent on Rawlings Green", start:Time(hour:7, minute:45), end:Time(hour:8, minute:45), description: nil),
@@ -52,7 +54,7 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource, UIGes
     
     func setUpHeightofFeedCell(){
         feedTableView.rowHeight = UITableViewAutomaticDimension
-        feedTableView.estimatedRowHeight = 86
+        feedTableView.estimatedRowHeight = FEED_TABLEVIEW_ROW_HEIGHT
     }
     
     func setUpExtendedNavBar(){
@@ -80,11 +82,11 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource, UIGes
     
     func changeSelectedDate(to selected: Int){
         //revert last selected date
-        views[self.selected].backgroundColor = UIColor.white
-        labels[self.selected].textColor = UIColor.black
+        views[self.selected].backgroundColor = Color.RED
+        labels[self.selected].textColor = UIColor.white
         //set new selected date
-        views[selected].backgroundColor = Color.RED
-        labels[selected].textColor = UIColor.white
+        views[selected].backgroundColor = UIColor.white
+        labels[selected].textColor = UIColor.black
         
         self.selected = selected
     }
