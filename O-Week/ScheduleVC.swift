@@ -23,7 +23,8 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
     
     let hours = [Time(hour:7), Time(hour:8), Time(hour:9), Time(hour:10), Time(hour:11), Time(hour:12), Time(hour:13), Time(hour:14), Time(hour:15), Time(hour:16), Time(hour:17), Time(hour:18), Time(hour:19), Time(hour:20), Time(hour:21), Time(hour:22), Time(hour:23), Time(hour:0), Time(hour:1), Time(hour:2)] //Table view data
     let CONTAINER_RIGHT_MARGIN:CGFloat = 20
-    let EVENT_CORNER_RADIUS:CGFloat = 7
+    let EVENT_CORNER_RADIUS:CGFloat = 3
+    let EVENT_BORDER_WIDTH: CGFloat = 1.25
     
     // MARK:- Setup
     
@@ -123,8 +124,10 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
         }
         
         let container = UIView(frame: CGRect(x: cellX(slot: slot, numSlots: newNumSlots), y: yForStartTime(event.startTime), width: cellWidth(event: event, slot: slot, numSlots: newNumSlots, eventForSlot: newEventForSlot), height: cellHeight(event: event)))
-        container.backgroundColor = Color.RED
+        container.backgroundColor = Color.PINK
         container.layer.cornerRadius = EVENT_CORNER_RADIUS
+        container.layer.borderColor = Color.RED.cgColor
+        container.layer.borderWidth = EVENT_BORDER_WIDTH
         contentView.addSubview(container)
         drawTitleAndCaptionFor(container, event:event)
         //add gesture recognizer to container to segue to Details VC
@@ -151,7 +154,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
         title.numberOfLines = 0
         title.lineBreakMode = .byTruncatingTail
         title.font = UIFont(name: "AvenirNext-DemiBold", size: 12)
-        title.textColor = UIColor.white
+        title.textColor = Color.RED
         title.text = event.title
         title.sizeToFit()
         //bound right margin so title doesn't go past the block
@@ -165,7 +168,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
         caption.numberOfLines = 0
         caption.lineBreakMode = .byTruncatingTail
         caption.font = UIFont(name: "AvenirNext-Regular", size: 10)
-        caption.textColor = UIColor.white
+        caption.textColor = Color.RED
         caption.text = event.caption
         caption.sizeToFit()
         //bound right margin so title doesn't go past the block
