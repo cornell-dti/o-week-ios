@@ -85,7 +85,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
     func drawCells()
     {
         //consider events that start earliest first
-        let sortedEvents = FeedCell.selectedEvents.sorted(by: {$0.startTime < $1.startTime})
+        let sortedEvents = UserData.selectedEvents.sorted(by: {$0.startTime < $1.startTime})
         guard !sortedEvents.isEmpty else {
             return
         }
@@ -212,7 +212,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
         //Subview[0] must be UILabel corresponding to Title
         //If above parameter is changed, update comment where UILabel is made and added to its parent view
         if let titleLabel = sender.view?.subviews[0] as! UILabel! {
-            for event in FeedCell.selectedEvents {
+            for event in UserData.selectedEvents {
                 if event.title == titleLabel.text {
                     selectedEvent = event
                     performSegue(withIdentifier: "showDetailsVC", sender: self)
@@ -310,8 +310,23 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetailsVC" {
             if let destination = segue.destination as? DetailsVC {
-                destination.myEvent = selectedEvent
+                destination.event = selectedEvent
             }
+        }
+    }
+    
+    func updateSchedule(){
+        contentView.subviews.forEach({ $0.removeFromSuperview() })
+        myScrollView.layoutIfNeeded()
+        setUpContentView()
+        drawTimeLines()
+        drawCells()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let parentVC = navigationController?.viewControllers.last as? FeedVC {
+            parentVC.updateFeed()
         }
     }
 }

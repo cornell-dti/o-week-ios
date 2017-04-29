@@ -17,14 +17,7 @@ class FeedCell:UITableViewCell
     @IBOutlet weak var eventCaption: UILabel!
     @IBOutlet weak var eventButton: UIButton!
     
-    var added = false
     var event:Event!
-    
-    static let imageAdded = UIImage(named: "added_event.png")
-    static let imageNotAdded = UIImage(named: "add_event.png")
-    
-    static var selectedEvents:Set<Event> = Set()
-    
     
     func configure(event:Event)
     {
@@ -33,29 +26,29 @@ class FeedCell:UITableViewCell
         eventCaption.text = event.caption
         eventStartTime.text = event.startTime.description
         eventEndTime.text = event.endTime.description
-        //setButtonOn(FeedCell.selectedEvents.contains(event))
-        setButtonOn(true)
+        setButtonAdded(event.added)
         
-        // TODO: fix button image when initialized depending on whether user had previously added event
+        //Setting all events to added for testing
+        //event.added = true
+        //setButtonAdded(true)
+        
     }
     
     @IBAction func addBttnPressed(_ sender: UIButton)
     {
-        setButtonOn(!added)
+        event.added = !event.added
+        setButtonAdded(event.added)
     }
-    private func setButtonOn(_ on:Bool)
+    
+    private func setButtonAdded(_ added:Bool)
     {
-        if (on)
-        {
-            eventButton.setImage(FeedCell.imageAdded, for: .normal)
-            added = true
-            FeedCell.selectedEvents.insert(event)
-        }
-        else
-        {
-            eventButton.setImage(FeedCell.imageNotAdded, for: .normal)
-            added = false
-            FeedCell.selectedEvents.remove(event)
+        if (added){
+            eventButton.setImage(Image.imageAdded, for: .normal)
+            UserData.selectedEvents.insert(event)
+        } else {
+            eventButton.setImage(Image.imageNotAdded, for: .normal)
+            UserData.selectedEvents.remove(event)
         }
     }
+
 }

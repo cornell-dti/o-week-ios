@@ -8,14 +8,15 @@
 
 import Foundation
 
-struct Event:Hashable
+class Event:Hashable
 {
-    let title:String
-    let caption:String
+    let title: String
+    let caption: String
     let description: String
-    let startTime:Time
-    let endTime:Time
+    let startTime: Time
+    let endTime: Time
     
+    var added: Bool
     var hashValue: Int
     {
         var hash = title.hashValue
@@ -32,7 +33,13 @@ struct Event:Hashable
         self.description = description ?? "No description available at this time." // Nil-Coalescing Operator
         startTime = start
         endTime = end
+        self.added = false
     }
+    
+    func setAdded(_ added: Bool){
+        self.added = added
+    }
+    
 }
 
 func == (lhs:Event, rhs:Event) -> Bool
