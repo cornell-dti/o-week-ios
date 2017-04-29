@@ -737,7 +737,19 @@
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <navigationItem key="navigationItem" title="Details" id="4lH-BZ-KbO">
+                        <barButtonItem key="rightBarButtonItem" style="done" id="vPW-L6-NVK">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="7kO-1Z-lw2">
+                                <rect key="frame" x="276" y="7" width="22" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="add_button_pressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="q1H-Pi-wEa"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="add_button" destination="7kO-1Z-lw2" id="y5B-L9-82P"/>
                         <outlet property="endTime" destination="VuR-RR-hNo" id="2np-wB-P2M"/>
                         <outlet property="eventCaption" destination="Cf6-38-bgE" id="kPN-mT-Pln"/>
                         <outlet property="eventDescription" destination="JRs-HM-P8C" id="4fE-SR-Jdc"/>
