@@ -18,6 +18,7 @@ class DetailsVC: UIViewController {
     @IBOutlet weak var add_button: UIButton!
     
     var event: Event?
+    var changed: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,11 +26,8 @@ class DetailsVC: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        //Updating parent view (My schedule or feed) in case the event was added or removed
-        if let parentVC = navigationController?.viewControllers.last as? ScheduleVC {
-            parentVC.updateSchedule()
-        } else if let parentVC = navigationController?.viewControllers.last as? FeedVC {
-            parentVC.updateFeed()
+        if(changed){
+            NotificationCenter.default.post(name: .reload, object: nil)
         }
     }
     
@@ -47,6 +45,7 @@ class DetailsVC: UIViewController {
     @IBAction func add_button_pressed(_ sender: UIButton) {
         event!.added = !event!.added
         setButtonAdded(event!.added)
+        changed = true
     }
     
     private func setButtonAdded(_ added:Bool)

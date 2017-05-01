@@ -8,9 +8,11 @@
 //  Holds user's added events
 
 import Foundation
+import CoreData
 
-class UserData{
+class UserData {
     
+    static var allEvents: [Event] = []
     static var selectedEvents:Set<Event> = Set()
     
 }

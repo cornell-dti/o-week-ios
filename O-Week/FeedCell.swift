@@ -19,29 +19,21 @@ class FeedCell:UITableViewCell
     
     var event:Event!
     
-    func configure(event:Event)
-    {
+    func configure(event:Event) {
         self.event = event
         eventTitle.text = event.title
         eventCaption.text = event.caption
         eventStartTime.text = event.startTime.description
         eventEndTime.text = event.endTime.description
         setButtonAdded(event.added)
-        
-        //Setting all events to added for testing
-        //event.added = true
-        //setButtonAdded(true)
-        
     }
     
-    @IBAction func addBttnPressed(_ sender: UIButton)
-    {
+    @IBAction func addBttnPressed(_ sender: UIButton) {
         event.added = !event.added
         setButtonAdded(event.added)
     }
     
-    private func setButtonAdded(_ added:Bool)
-    {
+    private func setButtonAdded(_ added:Bool) {
         if (added){
             eventButton.setImage(Image.imageAdded, for: .normal)
             UserData.selectedEvents.insert(event)
@@ -50,5 +42,5 @@ class FeedCell:UITableViewCell
             UserData.selectedEvents.remove(event)
         }
     }
-
+    
 }
