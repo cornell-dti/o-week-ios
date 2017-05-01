@@ -24,6 +24,8 @@
 		DC9BD7711EB6496C00552906 /* O-Week.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DC9BD76F1EB6496C00552906 /* O-Week.xcdatamodeld */; };
 		DCB182381EB7936E0041EEBC /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB182371EB7936E0041EEBC /* SettingsVC.swift */; };
 		DCB1823A1EB799B70041EEBC /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB182391EB799B70041EEBC /* SettingsCell.swift */; };
+		DCB335D71EB7DB86000C495E /* OptionsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB335D61EB7DB86000C495E /* OptionsVC.swift */; };
+		DCB335D91EB7DB9B000C495E /* OptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB335D81EB7DB9B000C495E /* OptionsCell.swift */; };
 		DCC2FF8B1EB24EEA00624B4F /* Internet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC2FF8A1EB24EEA00624B4F /* Internet.swift */; };
 		DCD4464C1E76F941002D8F68 /* DetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD4464B1E76F941002D8F68 /* DetailsVC.swift */; };
 		DCDEBFF31EB4127B0014E028 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDEBFF21EB4127B0014E028 /* Image.swift */; };
@@ -71,6 +73,8 @@
 		DC9BD7701EB6496C00552906 /* O-Week.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "O-Week.xcdatamodel"; sourceTree = "<group>"; };
 		DCB182371EB7936E0041EEBC /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		DCB182391EB799B70041EEBC /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
+		DCB335D61EB7DB86000C495E /* OptionsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsVC.swift; sourceTree = "<group>"; };
+		DCB335D81EB7DB9B000C495E /* OptionsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsCell.swift; sourceTree = "<group>"; };
 		DCC2FF8A1EB24EEA00624B4F /* Internet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Internet.swift; sourceTree = "<group>"; };
 		DCD4464B1E76F941002D8F68 /* DetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsVC.swift; sourceTree = "<group>"; };
 		DCDEBFF21EB4127B0014E028 /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
@@ -154,6 +158,8 @@
 				DCD4464B1E76F941002D8F68 /* DetailsVC.swift */,
 				DCB182371EB7936E0041EEBC /* SettingsVC.swift */,
 				DCB182391EB799B70041EEBC /* SettingsCell.swift */,
+				DCB335D61EB7DB86000C495E /* OptionsVC.swift */,
+				DCB335D81EB7DB9B000C495E /* OptionsCell.swift */,
 			);
 			path = "O-Week";
 			sourceTree = "<group>";
@@ -323,6 +329,7 @@
 				067EC2E91E8C9FE20098ED94 /* Time.swift in Sources */,
 				DC2C02991E7DC25F00E9DDEF /* ScheduleVC.swift in Sources */,
 				DC9BD7711EB6496C00552906 /* O-Week.xcdatamodeld in Sources */,
+				DCB335D91EB7DB9B000C495E /* OptionsCell.swift in Sources */,
 				DCC2FF8B1EB24EEA00624B4F /* Internet.swift in Sources */,
 				DC1E83191E85E635000CD56B /* ScheduleCell.swift in Sources */,
 				DCDEBFF71EB414BB0014E028 /* UserData.swift in Sources */,
@@ -333,6 +340,7 @@
 				DC3274621E7CB4F100CB3E22 /* FeedCell.swift in Sources */,
 				DCB182381EB7936E0041EEBC /* SettingsVC.swift in Sources */,
 				DCB1823A1EB799B70041EEBC /* SettingsCell.swift in Sources */,
+				DCB335D71EB7DB86000C495E /* OptionsVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

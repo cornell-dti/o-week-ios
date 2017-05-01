@@ -18,8 +18,13 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 ["Add all events to my schedule", "Add all required events to my schedule" ,"Remove all events from my schedule"]]
     let tempCaptions = [["no events", "at time of event"],
                         ["","",""]]
-    // Reminders set for - no events, all events, required events, custom
+    // Reminders set for - no events, all events, required events, custom?
     // Notify me - at time of event, 1 hour before, 2 hours before, 3 hours before, 5 hours before, morning of (7 am), 1 day before, 2 days before
+    
+    var chosenSetting: String?
+    var chosenSettingsOptions: Int?
+    var options = [ ["No events", "All events", "Required Events"],
+                    ["At time of event", "1 hour before", "2 hours before", "3 hours before", "5 hours before", "morning of (7 am)", "1 day before", "2 days before"]]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +56,22 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let header = view as! UITableViewHeaderFooterView
         header.textLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 14)
         header.textLabel?.textColor = Color.RED
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if(indexPath.section == 0){
+            chosenSetting = data[indexPath.section][indexPath.row]
+            chosenSettingsOptions = indexPath.row
+            performSegue(withIdentifier: "toOptions", sender: self)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "toOptions"){
+            let dest = segue.destination as! OptionsVC
+            dest.navTitle = chosenSetting
+            dest.opts = options[chosenSettingsOptions!]
+        }
     }
     
 }
