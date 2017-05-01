@@ -26,14 +26,14 @@ class Event:Hashable
         return hash
     }
     
-    init(title:String, caption:String, start:Time, end:Time, description: String?)
+    init(title:String, caption:String, start:Time, end:Time, description: String?, added: Bool?)
     {
         self.title = title
         self.caption = caption
         self.description = description ?? "No description available at this time." // Nil-Coalescing Operator
+        self.added = added ?? false
         startTime = start
         endTime = end
-        self.added = false
     }
     
     func setAdded(_ added: Bool){
