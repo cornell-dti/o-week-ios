@@ -10,6 +10,7 @@ import UIKit
 
 class SettingsCell: UITableViewCell {
     
+    @IBOutlet weak var chosenOption: UILabel!
     @IBOutlet weak var label: UILabel!
     
 }

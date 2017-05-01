@@ -16,6 +16,8 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     let section_titles = ["Notifications", "Events"]
     let data = [["Reminders set for" , "Notify me"],
                 ["Add all events to my schedule", "Add all required events to my schedule" ,"Remove all events from my schedule"]]
+    let tempCaptions = [["no events", "at time of event"],
+                        ["","",""]]
     // Reminders set for - no events, all events, required events, custom
     // Notify me - at time of event, 1 hour before, 2 hours before, 3 hours before, 5 hours before, morning of (7 am), 1 day before, 2 days before
     
@@ -40,6 +42,7 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "settingsCell") as! SettingsCell
         cell.label.text = data[indexPath.section][indexPath.row]
+        cell.chosenOption.text = tempCaptions[indexPath.section][indexPath.row]
         return cell
     }
     
