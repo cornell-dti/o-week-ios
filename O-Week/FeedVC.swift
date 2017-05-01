@@ -16,7 +16,7 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource, UIGes
     @IBOutlet weak var feedTableView: UITableView!
     @IBOutlet var views: [UIView]!
     @IBOutlet var labels: [UILabel]!
-
+    
     var selected = 0 //index of date selected (0-4)
     var selectedEvent: Event? = nil
     
@@ -31,12 +31,12 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource, UIGes
     
     // MARK:- Setup
     
-    override func viewDidLoad()
-    {
+    override func viewDidLoad(){
         super.viewDidLoad()
         setUpExtendedNavBar()
         setUpHeightofFeedCell()
         setUpGestureRecognizers()
+        NotificationCenter.default.addObserver(self, selector: #selector(updateFeed), name: .reload, object: nil)
     }
     
     func setUpGestureRecognizers(){
@@ -63,12 +63,10 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource, UIGes
     
     // MARK:- Date Actions
     
-    func handleTap(_ sender: UITapGestureRecognizer) {
+    func handleTap(_ sender: UITapGestureRecognizer){
         //TODO: implement filtering functionality for selected date
-        for i in 0..<views.count
-        {
-            if (views[i] == sender.view)
-            {
+        for i in 0..<views.count {
+            if (views[i] == sender.view) {
                 changeSelectedDate(to: i)
                 break
             }
@@ -90,20 +88,17 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource, UIGes
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        //return data.count
         return UserData.allEvents.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         let cell = tableView.dequeueReusableCell(withIdentifier: "feedCell", for: indexPath) as! FeedCell
-        //let arr = Array(UserData.selectedEvents)
         cell.configure(event: UserData.allEvents[indexPath.row])
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //let arr = Array(UserData.selectedEvents)
         selectedEvent = UserData.allEvents[indexPath.row]
         performSegue(withIdentifier: "showEventDetails", sender: self)
     }

@@ -33,6 +33,8 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
         super.viewDidLoad()
         setUpExtendedNavBar()
         setUpGestureRecognizers()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateSchedule), name: .reload, object: nil)
     }
     
     override func viewDidLayoutSubviews()
@@ -61,8 +63,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
         }
     }
     
-    func setUpContentView()
-    {
+    func setUpContentView() {
         let frame = myScrollView.frame
         let newHeight = CGFloat(hours.count) * myTableView.rowHeight
         let newFrame = CGRect(x:0, y: 0, width: frame.width, height: newHeight)
@@ -72,8 +73,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
         myScrollView.contentSize = CGSize(width: frame.width, height: newHeight)
     }
     
-    func drawTimeLines()
-    {
+    func drawTimeLines() {
         for hour in hours
         {
             let line = UIView(frame: CGRect(x: 0, y: yForStartTime(hour), width: fullCellWidth(), height: 0.5))
@@ -82,8 +82,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
         }
     }
     
-    func drawCells()
-    {
+    func drawCells() {
         //consider events that start earliest first
         let sortedEvents = UserData.selectedEvents.sorted(by: {$0.startTime < $1.startTime})
         guard !sortedEvents.isEmpty else {
@@ -93,8 +92,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
         _ = drawContainer(parentSlot: 0, numSlots: 1, eventForSlot: [Int:Event](), events: sortedEvents)
     }
     
-    func drawContainer(parentSlot:Int, numSlots:Int, eventForSlot:[Int:Event], events:[Event]) -> (numSlots:Int, eventForSlot:[Int:Event])
-    {
+    func drawContainer(parentSlot:Int, numSlots:Int, eventForSlot:[Int:Event], events:[Event]) -> (numSlots:Int, eventForSlot:[Int:Event]) {
         let event = events.first!
         let slot = slotForEvent(event, numSlots: numSlots, eventForSlot: eventForSlot)
         
@@ -103,22 +101,18 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
         newEventForSlot[slot] = event
         
         //if this event was assigned to a slot equal to the current number of slots, resize the current number of slots
-        if (slot == numSlots)
-        {
+        if (slot == numSlots) {
             newNumSlots = slot + 1
         }
         //if there's a later event, process that before we can calculate the position of the current event
-        if (events.count > 1)
-        {
+        if (events.count > 1) {
             let nextEvent = events[1]
-            if (areEventOverlaps(nextEvent, numSlots: newNumSlots, eventForSlot: newEventForSlot))
-            {
+            if (areEventOverlaps(nextEvent, numSlots: newNumSlots, eventForSlot: newEventForSlot)) {
                 let recursiveData = drawContainer(parentSlot: slot, numSlots: newNumSlots, eventForSlot: newEventForSlot, events: Array(events.dropFirst()))
                 newNumSlots = recursiveData.numSlots
                 newEventForSlot = recursiveData.eventForSlot
             }
-            else
-            {
+            else {
                 _ = drawContainer(parentSlot: slot, numSlots: 1, eventForSlot: [Int:Event](), events: Array(events.dropFirst()))
             }
         }
@@ -137,18 +131,15 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
         
         //the parent event wants to know if any new events have been added to the right of it, but not beneath it. Therefore, only let the parent know of slots that are added, not replaced. This way it expands to the right by the correct value.
         var parentEventForSlot = eventForSlot
-        for slot in newEventForSlot.keys
-        {
-            if (canUseSlot(slot, event: event, eventForSlot: parentEventForSlot))
-            {
+        for slot in newEventForSlot.keys {
+            if (canUseSlot(slot, event: event, eventForSlot: parentEventForSlot)) {
                 parentEventForSlot[slot] = newEventForSlot[slot]
             }
         }
         return (numSlots:newNumSlots, eventForSlot:parentEventForSlot)
     }
     
-    func drawTitleAndCaptionFor(_ container:UIView, event:Event)
-    {
+    func drawTitleAndCaptionFor(_ container:UIView, event:Event) {
         //First subview of "container" must be UILabel corresponding to Title for eventClicked func to work
         let title = UILabel(frame: CGRect(x: 16, y: 14, width: 0, height: 0))
         title.numberOfLines = 0
@@ -237,39 +228,35 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
     }
     
     //synchronize scrolling between table & scroll view
-    func scrollViewDidScroll(_ scrollView: UIScrollView)
-    {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let viewToSyncScrolling = (scrollView == myScrollView) ? myTableView : myScrollView
         viewToSyncScrolling?.contentOffset = scrollView.contentOffset
     }
     
     // MARK:- Private functions for drawing cells
     
-    private func yForStartTime(_ startTime:Time) -> CGFloat
-    {
+    private func yForStartTime(_ startTime:Time) -> CGFloat {
         //TODO: Special treatment past midnight
         let timeFrom7 = Time.length(startTime: hours[0], endTime: startTime)
         return CGFloat(timeFrom7) * myTableView.rowHeight / 60 + (myTableView.rowHeight / 2)
     }
-    private func cellX(slot:Int, numSlots:Int) -> CGFloat
-    {
+    
+    private func cellX(slot:Int, numSlots:Int) -> CGFloat {
         return fullCellWidth() / CGFloat(numSlots) * CGFloat(slot)
     }
+    
     //Returns the correct slot for this event
-    private func slotForEvent(_ event:Event, numSlots:Int, eventForSlot:[Int:Event]) -> Int
-    {
-        for i in 0..<numSlots
-        {
-            if (canUseSlot(i, event: event, eventForSlot: eventForSlot))
-            {
+    private func slotForEvent(_ event:Event, numSlots:Int, eventForSlot:[Int:Event]) -> Int {
+        for i in 0..<numSlots {
+            if (canUseSlot(i, event: event, eventForSlot: eventForSlot)) {
                 return i
             }
         }
         return numSlots
     }
+    
     //Returns true if any event on the eventForSlot list overlaps with the event of interest
-    private func areEventOverlaps(_ event:Event, numSlots:Int, eventForSlot:[Int:Event]) -> Bool
-    {
+    private func areEventOverlaps(_ event:Event, numSlots:Int, eventForSlot:[Int:Event]) -> Bool {
         for i in 0..<numSlots
         {
             if (!canUseSlot(i, event: event, eventForSlot: eventForSlot))
@@ -279,28 +266,27 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
         }
         return false
     }
-    private func cellWidth(event:Event, slot:Int, numSlots:Int, eventForSlot:[Int:Event]) -> CGFloat
-    {
+    
+    private func cellWidth(event:Event, slot:Int, numSlots:Int, eventForSlot:[Int:Event]) -> CGFloat {
         var occupiedSlots:CGFloat = 1
         var nextSlot = slot + 1
         //while the next slot isn't filled and we haven't reached the rightmost slot
-        while (canUseSlot(nextSlot, event: event, eventForSlot: eventForSlot) && nextSlot < numSlots)
-        {
+        while (canUseSlot(nextSlot, event: event, eventForSlot: eventForSlot) && nextSlot < numSlots) {
             occupiedSlots += 1
             nextSlot += 1
         }
         return fullCellWidth() / CGFloat(numSlots) * occupiedSlots
     }
-    private func canUseSlot(_ slot:Int, event:Event, eventForSlot:[Int:Event]) -> Bool
-    {
+    
+    private func canUseSlot(_ slot:Int, event:Event, eventForSlot:[Int:Event]) -> Bool {
         return eventForSlot[slot] == nil || eventForSlot[slot]!.startTime >= event.endTime || eventForSlot[slot]!.endTime <= event.startTime
     }
-    private func fullCellWidth() -> CGFloat
-    {
+    
+    private func fullCellWidth() -> CGFloat {
         return myScrollView.frame.width - CONTAINER_RIGHT_MARGIN
     }
-    private func cellHeight(event:Event) -> CGFloat
-    {
+    
+    private func cellHeight(event:Event) -> CGFloat {
         //60 min = 1 rowHeight
         return CGFloat(Time.length(startTime: event.startTime, endTime: event.endTime)) / 60 * myTableView.rowHeight
     }
@@ -323,10 +309,4 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
         drawCells()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        if let parentVC = navigationController?.viewControllers.last as? FeedVC {
-            parentVC.updateFeed()
-        }
-    }
 }

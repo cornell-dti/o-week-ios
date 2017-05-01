@@ -11,22 +11,14 @@ import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
     var window: UIWindow?
-    //var managedContext: NSManagedObjectContext
-    //var entity: NSEntityDescription
-    //var fetchRequest: NSFetchRequest<NSManagedObject>
-
+    
     static let entityName = "EventEntity"
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         setNavBarColor()
-        
-        //managedContext = self.persistentContainer.viewContext
-        //entity = NSEntityDescription.entity(forEntityName: AppDelegate.entityName, in: managedContext)!
-        //fetchRequest = NSFetchRequest<NSManagedObject>(entityName: AppDelegate.entityName)
-        
         loadData()
         return true
     }
@@ -45,13 +37,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
     }
-
+    
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         saveData()
     }
-
+    
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
         loadData()
@@ -60,12 +52,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
-
+    
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         saveData()
     }
-
+    
     // MARK: - Core Data stack
     
     lazy var persistentContainer: NSPersistentContainer = {
@@ -110,7 +102,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-
+    
     // MARK:- Core Data Helper Functions
     
     func loadData(){
@@ -127,7 +119,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tempArray.reverse() //Elements are retrieved FILO
         
         if(tempArray.isEmpty){
-            print("Empty! (For now)")
             //No data found on iPhone
             //TODO: Fix conditional statement, fetch data from DB and compare to Core Data to remove outdated events or add new events
             //Adding temp data for testing
@@ -178,34 +169,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 UserData.selectedEvents.insert(event)
             }
         }
-        //Debugging (remove later)
-        for event in UserData.allEvents{
-            print(event.title)
-        }
+        //Telling other classes to reload their data
+        NotificationCenter.default.post(name: .reload, object: nil)
     }
-
+    
     func saveData(){
-        print("Reached")
+        // TODO: Optimize by simply changing attribute, not deleting and storing again
+        /* Deleting all stored data */
         let managedContext = self.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: AppDelegate.entityName)
+        let entity = NSEntityDescription.entity(forEntityName: AppDelegate.entityName, in: managedContext)!
         var tempArray: [NSManagedObject] = []
         do {
             tempArray = try managedContext.fetch(fetchRequest)
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
-        print(tempArray.count)
-        do {print(try managedContext.count(for: fetchRequest))} catch _ as NSError{}
         for item in tempArray {
             managedContext.delete(item)
         }
-        do {print(try managedContext.count(for: fetchRequest))} catch _ as NSError{}
-        do {
-            try managedContext.save()
-        } catch let error as NSError {
-            print("Could not save. \(error), \(error.userInfo)")
-        }
-        let entity = NSEntityDescription.entity(forEntityName: AppDelegate.entityName, in: managedContext)!
+        /* Storing new data with updated added values*/
         for event in UserData.allEvents{
             let eventToStore = NSManagedObject(entity: entity, insertInto: managedContext)
             eventToStore.setValue(event.title, forKeyPath: "title")
@@ -226,5 +209,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UserData.selectedEvents.removeAll()
     }
     
+}
+extension Notification.Name {
+    static let reload = Notification.Name("reload")
 }
 
