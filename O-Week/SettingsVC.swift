@@ -18,11 +18,18 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var settings: [Setting] = []
     var chosenSetting: Int?
     
+    var defaults: UserDefaults?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTableViewAppearance()
+        initializeVariables()
         NotificationCenter.default.addObserver(self, selector: #selector(updateSettings), name: .reloadSettings, object: nil)
+    }
+    
+    func initializeVariables(){
         settings = UserData.allSettings
+        defaults = UserDefaults.standard
     }
     
     func setUpTableViewAppearance(){
@@ -53,7 +60,13 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "settingsCell") as! SettingsCell
         if(indexPath.section == 0){
             cell.label.text = settings[indexPath.row].name
-            cell.chosenOption.text = settings[indexPath.row].chosenOption!
+            //cell.chosenOption.text = settings[indexPath.row].chosenOption!
+//            if(settings[indexPath.row].name == "Reminders Set For"){
+//                cell.chosenOption.text = defaults!.string(forKey: "Reminders Set For") ?? "No Events"
+//            } else {
+//                cell.chosenOption.text = defaults!.string(forKey: "Notify Me") ?? "At time of event"
+//            }
+            cell.chosenOption.text = defaults!.string(forKey: settings[indexPath.row].name)
         } else {
             cell.label.text = actions[indexPath.row]
             cell.chosenOption.text = ""
@@ -83,15 +96,15 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "toOptions"){
             let dest = segue.destination as! OptionsVC
-            dest.navTitle = settings.remove(at: chosenSetting!).name
-            dest.setting = UserData.allSettings.remove(at: chosenSetting!)
+            //dest.navTitle = settings[chosenSetting!].name
+            dest.setting = settings[chosenSetting!]
         }
     }
     
     // MARK:- Helper Functions
     
     func updateSettings(){
-        settings = UserData.allSettings
+        //settings = UserData.allSettings
         tableView.reloadData()
     }
     

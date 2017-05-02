@@ -14,12 +14,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
-    static let entityName = "EventEntity"
+    static let eventEntityName = "EventEntity"
+    //static let settingsEntityName = "SettingsEntity"
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         setNavBarColor()
         loadData()
+        
+        let defaults = UserDefaults.standard
+        if(defaults.string(forKey: "Reminders Set For") == nil){
+            defaults.set("No events", forKey: "Reminders Set For")
+        }
+        if(defaults.string(forKey: "Notify Me") == nil){
+            defaults.set("At time of event", forKey: "Notify Me")
+        }
+        
         return true
     }
     
@@ -111,8 +121,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func loadData(){
         /* Fetching Core Data */
         let managedContext = self.persistentContainer.viewContext
-        let entity = NSEntityDescription.entity(forEntityName: AppDelegate.entityName, in: managedContext)!
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: AppDelegate.entityName)
+        let entity = NSEntityDescription.entity(forEntityName: AppDelegate.eventEntityName, in: managedContext)!
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: AppDelegate.eventEntityName)
         var tempArray: [NSManagedObject] = []
         do {
             tempArray = try managedContext.fetch(fetchRequest)
@@ -180,8 +190,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // TODO: Optimize by simply changing attribute, not deleting and storing again
         /* Deleting all stored data */
         let managedContext = self.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: AppDelegate.entityName)
-        let entity = NSEntityDescription.entity(forEntityName: AppDelegate.entityName, in: managedContext)!
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: AppDelegate.eventEntityName)
+        let entity = NSEntityDescription.entity(forEntityName: AppDelegate.eventEntityName, in: managedContext)!
         var tempArray: [NSManagedObject] = []
         do {
             tempArray = try managedContext.fetch(fetchRequest)
@@ -210,6 +220,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         UserData.allEvents.removeAll()
         UserData.selectedEvents.removeAll()
+    }
+    
+    func loadSettings(){
+        // FIXME
+        return
+    }
+    
+    func saveSettings(){
+        // FIXME
+        return 
     }
     
 }

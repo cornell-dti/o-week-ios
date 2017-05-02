@@ -12,12 +12,12 @@ class Setting {
     
     let name: String
     let allOptions: [String]
-    var chosenOption: String?
+    //var chosenOption: String?
     
     init(name: String, allOptions: [String], chosenOption: String ){
         self.name = name
         self.allOptions = allOptions
-        self.chosenOption = chosenOption
+        //self.chosenOption = chosenOption
     }
     
 }
