@@ -40,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             defaults.set("No events", forKey: "Reminders Set For")
         }
         if(defaults.string(forKey: "Notify Me") == nil){
-            defaults.set("At time of event", forKey: "Notify Me")
+            defaults.set("No notifications", forKey: "Notify Me")
         }
     }
     
