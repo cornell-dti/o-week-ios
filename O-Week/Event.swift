@@ -30,7 +30,7 @@ class Event:Hashable
     {
         self.title = title
         self.caption = caption
-        self.description = description ?? "No description available at this time." // Nil-Coalescing Operator
+        self.description = description ?? "No description available at this time."
         self.added = added ?? false
         startTime = start
         endTime = end

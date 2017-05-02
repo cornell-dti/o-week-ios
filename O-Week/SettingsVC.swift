@@ -15,7 +15,7 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     let sectionTitles = ["Notifications", "Events"]
     let actions = ["Add all events to my schedule", "Add all required events to my schedule" ,"Remove all events from my schedule"]
     
-    var settings: [Setting] = []
+    var settings: [(name: String, options: [String])] = []
     var chosenSetting: Int?
     
     var defaults: UserDefaults?
@@ -60,12 +60,6 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "settingsCell") as! SettingsCell
         if(indexPath.section == 0){
             cell.label.text = settings[indexPath.row].name
-            //cell.chosenOption.text = settings[indexPath.row].chosenOption!
-//            if(settings[indexPath.row].name == "Reminders Set For"){
-//                cell.chosenOption.text = defaults!.string(forKey: "Reminders Set For") ?? "No Events"
-//            } else {
-//                cell.chosenOption.text = defaults!.string(forKey: "Notify Me") ?? "At time of event"
-//            }
             cell.chosenOption.text = defaults!.string(forKey: settings[indexPath.row].name)
         } else {
             cell.label.text = actions[indexPath.row]
@@ -96,7 +90,6 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "toOptions"){
             let dest = segue.destination as! OptionsVC
-            //dest.navTitle = settings[chosenSetting!].name
             dest.setting = settings[chosenSetting!]
         }
     }
@@ -104,7 +97,6 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     // MARK:- Helper Functions
     
     func updateSettings(){
-        //settings = UserData.allSettings
         tableView.reloadData()
     }
     

@@ -15,21 +15,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     static let eventEntityName = "EventEntity"
-    //static let settingsEntityName = "SettingsEntity"
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         setNavBarColor()
+        checkForSettingsAndSet()
         loadData()
-        
-        let defaults = UserDefaults.standard
-        if(defaults.string(forKey: "Reminders Set For") == nil){
-            defaults.set("No events", forKey: "Reminders Set For")
-        }
-        if(defaults.string(forKey: "Notify Me") == nil){
-            defaults.set("At time of event", forKey: "Notify Me")
-        }
-        
         return true
     }
     
@@ -41,10 +32,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navigationBarAppearence.tintColor = UIColor.white   //back arrow is black
         navigationBarAppearence.isTranslucent = false
         navigationBarAppearence.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: UIFont(name: "AvenirNext-DemiBold", size: 14)!]
-        
-        
-        //UIBarButtonItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: UIFont(name: "AvenirNext-DemiBold", size: 14)!], for: .normal)
     }
+    
+    private func checkForSettingsAndSet(){
+        let defaults = UserDefaults.standard
+        if(defaults.string(forKey: "Reminders Set For") == nil){
+            defaults.set("No events", forKey: "Reminders Set For")
+        }
+        if(defaults.string(forKey: "Notify Me") == nil){
+            defaults.set("At time of event", forKey: "Notify Me")
+        }
+    }
+    
     
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -221,17 +220,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UserData.allEvents.removeAll()
         UserData.selectedEvents.removeAll()
     }
-    
-    func loadSettings(){
-        // FIXME
-        return
-    }
-    
-    func saveSettings(){
-        // FIXME
-        return 
-    }
-    
 }
 extension Notification.Name {
     static let reload = Notification.Name("reload")

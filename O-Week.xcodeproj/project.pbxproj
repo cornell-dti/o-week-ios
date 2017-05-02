@@ -21,7 +21,6 @@
 		DC1E83191E85E635000CD56B /* ScheduleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E83181E85E635000CD56B /* ScheduleCell.swift */; };
 		DC2C02991E7DC25F00E9DDEF /* ScheduleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2C02981E7DC25F00E9DDEF /* ScheduleVC.swift */; };
 		DC3274621E7CB4F100CB3E22 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3274611E7CB4F100CB3E22 /* FeedCell.swift */; };
-		DC43B0B31EB8105200248E8C /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC43B0B21EB8105200248E8C /* Setting.swift */; };
 		DC9BD7711EB6496C00552906 /* O-Week.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DC9BD76F1EB6496C00552906 /* O-Week.xcdatamodeld */; };
 		DCB182381EB7936E0041EEBC /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB182371EB7936E0041EEBC /* SettingsVC.swift */; };
 		DCB1823A1EB799B70041EEBC /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB182391EB799B70041EEBC /* SettingsCell.swift */; };
@@ -71,7 +70,6 @@
 		DC1E83181E85E635000CD56B /* ScheduleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleCell.swift; sourceTree = "<group>"; };
 		DC2C02981E7DC25F00E9DDEF /* ScheduleVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleVC.swift; sourceTree = "<group>"; };
 		DC3274611E7CB4F100CB3E22 /* FeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
-		DC43B0B21EB8105200248E8C /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		DC9BD7701EB6496C00552906 /* O-Week.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "O-Week.xcdatamodel"; sourceTree = "<group>"; };
 		DCB182371EB7936E0041EEBC /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		DCB182391EB799B70041EEBC /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
@@ -153,7 +151,6 @@
 				067EC2E61E8C9F8D0098ED94 /* Event.swift */,
 				067EC2E81E8C9FE20098ED94 /* Time.swift */,
 				DCC2FF8A1EB24EEA00624B4F /* Internet.swift */,
-				DC43B0B21EB8105200248E8C /* Setting.swift */,
 				0628E4861E7CA3260066A308 /* FeedVC.swift */,
 				DC3274611E7CB4F100CB3E22 /* FeedCell.swift */,
 				DC2C02981E7DC25F00E9DDEF /* ScheduleVC.swift */,
@@ -335,7 +332,6 @@
 				DCB335D91EB7DB9B000C495E /* OptionsCell.swift in Sources */,
 				DCC2FF8B1EB24EEA00624B4F /* Internet.swift in Sources */,
 				DC1E83191E85E635000CD56B /* ScheduleCell.swift in Sources */,
-				DC43B0B31EB8105200248E8C /* Setting.swift in Sources */,
 				DCDEBFF71EB414BB0014E028 /* UserData.swift in Sources */,
 				DC18B3111E76CBCE00C3FCD6 /* AppDelegate.swift in Sources */,
 				0628E48B1E7CA4750066A308 /* Color.swift in Sources */,
