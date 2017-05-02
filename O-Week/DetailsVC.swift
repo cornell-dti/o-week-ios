@@ -38,8 +38,8 @@ class DetailsVC: UIViewController {
         eventDescription.text = event.description
         startTime.text = event.startTime.description
         endTime.text = event.endTime.description
-        Internet.imageFrom("https://upload.wikimedia.org/wikipedia/commons/3/34/Cornell_University%2C_Ho_Plaza_and_Sage_Hall.jpg", imageView: eventImage)
         setButtonAdded(event.added)
+        Internet.imageFrom("https://upload.wikimedia.org/wikipedia/commons/3/34/Cornell_University%2C_Ho_Plaza_and_Sage_Hall.jpg", imageView: eventImage)
     }
     
     @IBAction func add_button_pressed(_ sender: UIButton) {

@@ -14,11 +14,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
-    static let entityName = "EventEntity"
+    static let eventEntityName = "EventEntity"
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         setNavBarColor()
+        checkForSettingsAndSet()
         loadData()
         return true
     }
@@ -32,6 +33,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navigationBarAppearence.isTranslucent = false
         navigationBarAppearence.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: UIFont(name: "AvenirNext-DemiBold", size: 14)!]
     }
+    
+    private func checkForSettingsAndSet(){
+        let defaults = UserDefaults.standard
+        if(defaults.string(forKey: "Reminders Set For") == nil){
+            defaults.set("No events", forKey: "Reminders Set For")
+        }
+        if(defaults.string(forKey: "Notify Me") == nil){
+            defaults.set("At time of event", forKey: "Notify Me")
+        }
+    }
+    
     
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -108,8 +120,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func loadData(){
         /* Fetching Core Data */
         let managedContext = self.persistentContainer.viewContext
-        let entity = NSEntityDescription.entity(forEntityName: AppDelegate.entityName, in: managedContext)!
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: AppDelegate.entityName)
+        let entity = NSEntityDescription.entity(forEntityName: AppDelegate.eventEntityName, in: managedContext)!
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: AppDelegate.eventEntityName)
         var tempArray: [NSManagedObject] = []
         do {
             tempArray = try managedContext.fetch(fetchRequest)
@@ -177,8 +189,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // TODO: Optimize by simply changing attribute, not deleting and storing again
         /* Deleting all stored data */
         let managedContext = self.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: AppDelegate.entityName)
-        let entity = NSEntityDescription.entity(forEntityName: AppDelegate.entityName, in: managedContext)!
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: AppDelegate.eventEntityName)
+        let entity = NSEntityDescription.entity(forEntityName: AppDelegate.eventEntityName, in: managedContext)!
         var tempArray: [NSManagedObject] = []
         do {
             tempArray = try managedContext.fetch(fetchRequest)
@@ -208,9 +220,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UserData.allEvents.removeAll()
         UserData.selectedEvents.removeAll()
     }
-    
 }
 extension Notification.Name {
     static let reload = Notification.Name("reload")
+    static let reloadSettings = Notification.Name("reloadSettings")
 }
 
