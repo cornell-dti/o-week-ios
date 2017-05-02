@@ -31,6 +31,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navigationBarAppearence.tintColor = UIColor.white   //back arrow is black
         navigationBarAppearence.isTranslucent = false
         navigationBarAppearence.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: UIFont(name: "AvenirNext-DemiBold", size: 14)!]
+        
+        
+        //UIBarButtonItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: UIFont(name: "AvenirNext-DemiBold", size: 14)!], for: .normal)
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
@@ -212,5 +215,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 extension Notification.Name {
     static let reload = Notification.Name("reload")
+    static let reloadSettings = Notification.Name("reloadSettings")
 }
 

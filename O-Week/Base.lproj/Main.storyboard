@@ -411,7 +411,9 @@
                             <constraint firstAttribute="trailing" secondItem="59D-4p-9lz" secondAttribute="trailing" id="q6d-IX-jg3"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Settings" id="YDH-G2-gqz"/>
+                    <navigationItem key="navigationItem" title="Settings" id="YDH-G2-gqz">
+                        <barButtonItem key="backBarButtonItem" title=" " id="lem-qK-azw"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="59D-4p-9lz" id="V2N-ki-YST"/>
                         <segue destination="nG0-kD-xbn" kind="show" identifier="toOptions" id="tx5-Ol-Fyv"/>
@@ -444,22 +446,33 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="efD-e7-IJR">
-                                                    <rect key="frame" x="8" y="11" width="359" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="efD-e7-IJR">
+                                                    <rect key="frame" x="16" y="8" width="319" height="27.5"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cYw-SZ-ogg">
+                                                    <rect key="frame" x="335" y="14" width="16" height="16"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="16" id="4FV-Jc-XV5"/>
+                                                        <constraint firstAttribute="width" constant="16" id="dFZ-qU-IL9"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottomMargin" secondItem="efD-e7-IJR" secondAttribute="bottom" constant="3.5" id="4ZY-kH-oG2"/>
-                                                <constraint firstAttribute="leadingMargin" secondItem="efD-e7-IJR" secondAttribute="leading" id="Ipz-XT-Tz4"/>
-                                                <constraint firstItem="efD-e7-IJR" firstAttribute="top" secondItem="9ep-jR-TVm" secondAttribute="topMargin" constant="3" id="ZBw-9E-D2N"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="efD-e7-IJR" secondAttribute="trailing" id="eZz-3z-VQq"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="efD-e7-IJR" secondAttribute="bottom" id="4ZY-kH-oG2"/>
+                                                <constraint firstItem="cYw-SZ-ogg" firstAttribute="leading" secondItem="efD-e7-IJR" secondAttribute="trailing" id="Bkf-iS-egP"/>
+                                                <constraint firstItem="cYw-SZ-ogg" firstAttribute="centerY" secondItem="9ep-jR-TVm" secondAttribute="centerY" id="Eh0-5d-0f3"/>
+                                                <constraint firstAttribute="leadingMargin" secondItem="efD-e7-IJR" secondAttribute="leading" constant="-8" id="Ipz-XT-Tz4"/>
+                                                <constraint firstItem="efD-e7-IJR" firstAttribute="top" secondItem="9ep-jR-TVm" secondAttribute="topMargin" id="ZBw-9E-D2N"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="cYw-SZ-ogg" secondAttribute="trailing" constant="16" id="aJT-UB-LAX"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="label" destination="efD-e7-IJR" id="Poo-IK-LM9"/>
+                                            <outlet property="view" destination="cYw-SZ-ogg" id="rkZ-0f-X2O"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -766,7 +779,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8qi-Jw-nrL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-885" y="977"/>
+            <point key="canvasLocation" x="-1137" y="976"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Dlx-C2-gCy">
@@ -921,6 +934,6 @@
         <image name="schedule_icon" width="20" height="20"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Xcf-ub-FiZ"/>
+        <segue reference="mu3-We-PmB"/>
     </inferredMetricsTieBreakers>
 </document>

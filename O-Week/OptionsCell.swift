@@ -11,5 +11,6 @@ import UIKit
 class OptionsCell: UITableViewCell {
     
     @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var view: UIView!
     
 }
