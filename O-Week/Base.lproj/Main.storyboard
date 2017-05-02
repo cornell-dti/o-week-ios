@@ -9,7 +9,6 @@
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
-        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -304,27 +303,16 @@
                     </view>
                     <navigationItem key="navigationItem" title="Orientation Events" id="coI-25-hSi">
                         <barButtonItem key="backBarButtonItem" title=" " id="i8U-te-6gx"/>
-                        <rightBarButtonItems>
-                            <barButtonItem id="UeC-df-i8h">
-                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="SNv-Kc-MBA">
-                                    <rect key="frame" x="337" y="11" width="22" height="22"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <connections>
-                                        <segue destination="XTI-15-9LA" kind="show" id="UVQ-q1-wTP"/>
-                                    </connections>
-                                </button>
-                            </barButtonItem>
-                            <barButtonItem id="cNJ-Gd-EYx">
-                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="h5L-zE-0jG">
-                                    <rect key="frame" x="307" y="11" width="22" height="22"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <state key="normal" image="schedule_icon"/>
-                                    <connections>
-                                        <segue destination="VJl-le-ciO" kind="show" id="Rh0-DZ-3qf"/>
-                                    </connections>
-                                </button>
-                            </barButtonItem>
-                        </rightBarButtonItems>
+                        <barButtonItem key="rightBarButtonItem" id="cNJ-Gd-EYx">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="h5L-zE-0jG">
+                                <rect key="frame" x="337" y="11" width="22" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="schedule_icon"/>
+                                <connections>
+                                    <segue destination="VJl-le-ciO" kind="show" id="Rh0-DZ-3qf"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="feedTableView" destination="0aJ-U7-FmW" id="b5l-30-Azk"/>
@@ -421,7 +409,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yzl-7L-OPq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-116" y="131"/>
+            <point key="canvasLocation" x="748" y="135"/>
         </scene>
         <!--Title-->
         <scene sceneID="dvf-jO-Tld">
@@ -497,7 +485,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lGw-ha-Y4N" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="684" y="130.88455772113943"/>
+            <point key="canvasLocation" x="748" y="898"/>
         </scene>
         <!--My Schedule-->
         <scene sceneID="mRG-QY-EXx">
@@ -760,6 +748,15 @@
                     </view>
                     <navigationItem key="navigationItem" title="My Schedule" id="ID6-5Z-Krl">
                         <barButtonItem key="backBarButtonItem" title=" " id="dIF-jY-UsN"/>
+                        <barButtonItem key="rightBarButtonItem" id="UeC-df-i8h">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="SNv-Kc-MBA">
+                                <rect key="frame" x="337" y="11" width="22" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <segue destination="XTI-15-9LA" kind="show" id="UVQ-q1-wTP"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="myScrollView" destination="KyL-C5-vw0" id="Zd1-zW-KLh"/>
@@ -779,7 +776,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8qi-Jw-nrL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1137" y="976"/>
+            <point key="canvasLocation" x="-23" y="134"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Dlx-C2-gCy">
@@ -926,7 +923,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-261" y="977"/>
+            <point key="canvasLocation" x="-476" y="899"/>
         </scene>
     </scenes>
     <resources>
@@ -934,6 +931,6 @@
         <image name="schedule_icon" width="20" height="20"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="mu3-We-PmB"/>
+        <segue reference="Xcf-ub-FiZ"/>
     </inferredMetricsTieBreakers>
 </document>
