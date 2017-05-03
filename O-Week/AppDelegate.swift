@@ -137,6 +137,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             //let data = [Event(title:"A", caption:"A", start:Time(hour:9, minute:30), end:Time(hour:10, minute:30), description: nil), Event(title:"B", caption:"B", start:Time(hour:10, minute:30), end:Time(hour:12, minute:0), description: nil), Event(title:"C", caption:"C", start:Time(hour:11, minute:45), end:Time(hour:15, minute:30), description: nil), Event(title:"D", caption:"D", start:Time(hour:12, minute:0), end:Time(hour:14, minute:0), description: nil), Event(title:"E", caption:"E", start:Time(hour:13, minute:30), end:Time(hour:14, minute:0), description: nil), Event(title:"F", caption:"F", start:Time(hour:14, minute:0), end:Time(hour:15, minute:40), description: nil), Event(title:"G", caption:"G", start:Time(hour:14, minute:30), end:Time(hour:15, minute:0), description: nil), Event(title:"H", caption:"H", start:Time(hour:15, minute:30), end:Time(hour:16, minute:0), description: nil), Event(title:"I", caption:"I", start:Time(hour:16, minute:0), end:Time(hour:16, minute:30), description: nil), Event(title:"J", caption:"J", start:Time(hour:15, minute:50), end:Time(hour:16, minute:40), description: nil), Event(title:"K", caption:"K", start:Time(hour:17, minute:0), end:Time(hour:17, minute:30), description: nil)]
             let events: [([String], [Int])] = [(["Alumni Families and Legacy Reception","Tent on Rawlings Green", "No description"],[7, 45, 8, 45]), (["New Student Convocation", "Shoellkopf Stadium", "This will be your official welcome from university administrators, as well as from your student body president and other key student leaders in Schoellkopf Stadium. Note that it takes 30 minutes to walk to Schoellkopf Stadium from North Campus and 20 minutes from West Campus; plan accordingly."], [8, 45, 10, 0]), (["Tours of Libraries and Manuscript", "Upper Lobby, Uris Library", "No description"], [10, 0, 11, 30]), (["Dump and Run Sale", "Helen Newman Hall", "No description"], [10,0,18,0]), (["AAP—Dean’s Convocation", "Abby and Howard Milstein Hall", "No description"], [10, 30, 11, 30]), (["CALS—Dean’s Convocation", "Call Alumni Auditorium, Kennedy Hall", "No description"], [10, 30, 11, 30])]
+            var dateComponents = DateComponents()
+            dateComponents.year = 2017
+            dateComponents.month = 08
+            dateComponents.day = 17
+            let date = UserData.userCalendar.date(from: dateComponents)
+
             for event in events {
                 let evnt = NSManagedObject(entity: entity, insertInto: managedContext)
                 evnt.setValue(event.0[0], forKeyPath: "title")
@@ -148,6 +154,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 evnt.setValue(event.1[2], forKeyPath: "endTimeHr")
                 evnt.setValue(event.1[3], forKeyPath: "endTimeMin")
                 evnt.setValue(false, forKeyPath: "required")
+                evnt.setValue(date, forKeyPath: "date")
             }
             do {
                 try managedContext.save()
@@ -169,7 +176,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let end = Time(hour: (obj.value(forKeyPath: "endTimeHr") as? Int)!, minute: (obj.value(forKeyPath: "endTimeMin") as? Int)!)
             let added = obj.value(forKeyPath: "added") as? Bool
             let req = obj.value(forKeyPath: "required") as? Bool
-            let event = Event(title: title!, caption: cap!, start: start, end: end, added: added!, required: req!, description: descrip)
+            let date = obj.value(forKeyPath: "date") as? Date
+            let event = Event(title: title!, caption: cap!, start: start, end: end, date: date!, added: added!, required: req!, description: descrip)
             UserData.allEvents.append(event)
             if(added!){
                 UserData.selectedEvents.insert(event)
@@ -206,6 +214,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             eventToStore.setValue(event.endTime.hour, forKeyPath: "endTimeHr")
             eventToStore.setValue(event.endTime.minute, forKeyPath: "endTimeMin")
             eventToStore.setValue(event.required, forKeyPath: "required")
+            eventToStore.setValue(event.date, forKeyPath: "date")
         }
         do {
             try managedContext.save()
