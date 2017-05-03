@@ -134,28 +134,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             //No data found on iPhone
             //TODO: Fix conditional statement, fetch data from DB and compare to Core Data to remove outdated events or add new events
             //Adding temp data for testing
-            let event1strs = ["Alumni Families and Legacy Reception","Tent on Rawlings Green", "No descrip"]
-            let event1times = [7, 45, 8, 45]
-            let event2strs = ["New Student Convocation", "Shoellkopf Stadium", "This will be your official welcome from university administrators, as well as from your student body president and other key student leaders in Schoellkopf Stadium. Note that it takes 30 minutes to walk to Schoellkopf Stadium from North Campus and 20 minutes from West Campus; plan accordingly."]
-            let event2times = [8, 45, 10, 0]
-            let event1 = NSManagedObject(entity: entity, insertInto: managedContext)
-            event1.setValue(event1strs[0], forKeyPath: "title")
-            event1.setValue(event1strs[1], forKeyPath: "caption")
-            event1.setValue(event1strs[2], forKeyPath: "eventDescription")
-            event1.setValue(false, forKey: "added")
-            event1.setValue(event1times[0], forKeyPath: "startTimeHr")
-            event1.setValue(event1times[1], forKeyPath: "startTimeMin")
-            event1.setValue(event1times[2], forKeyPath: "endTimeHr")
-            event1.setValue(event1times[3], forKeyPath: "endTimeMin")
-            let event2 = NSManagedObject(entity: entity, insertInto: managedContext)
-            event2.setValue(event2strs[0], forKeyPath: "title")
-            event2.setValue(event2strs[1], forKeyPath: "caption")
-            event2.setValue(event2strs[2], forKeyPath: "eventDescription")
-            event2.setValue(false, forKey: "added")
-            event2.setValue(event2times[0], forKeyPath: "startTimeHr")
-            event2.setValue(event2times[1], forKeyPath: "startTimeMin")
-            event2.setValue(event2times[2], forKeyPath: "endTimeHr")
-            event2.setValue(event2times[3], forKeyPath: "endTimeMin")
+            
+            //let data = [Event(title:"A", caption:"A", start:Time(hour:9, minute:30), end:Time(hour:10, minute:30), description: nil), Event(title:"B", caption:"B", start:Time(hour:10, minute:30), end:Time(hour:12, minute:0), description: nil), Event(title:"C", caption:"C", start:Time(hour:11, minute:45), end:Time(hour:15, minute:30), description: nil), Event(title:"D", caption:"D", start:Time(hour:12, minute:0), end:Time(hour:14, minute:0), description: nil), Event(title:"E", caption:"E", start:Time(hour:13, minute:30), end:Time(hour:14, minute:0), description: nil), Event(title:"F", caption:"F", start:Time(hour:14, minute:0), end:Time(hour:15, minute:40), description: nil), Event(title:"G", caption:"G", start:Time(hour:14, minute:30), end:Time(hour:15, minute:0), description: nil), Event(title:"H", caption:"H", start:Time(hour:15, minute:30), end:Time(hour:16, minute:0), description: nil), Event(title:"I", caption:"I", start:Time(hour:16, minute:0), end:Time(hour:16, minute:30), description: nil), Event(title:"J", caption:"J", start:Time(hour:15, minute:50), end:Time(hour:16, minute:40), description: nil), Event(title:"K", caption:"K", start:Time(hour:17, minute:0), end:Time(hour:17, minute:30), description: nil)]
+            let events: [([String], [Int])] = [(["Alumni Families and Legacy Reception","Tent on Rawlings Green", "No description"],[7, 45, 8, 45]), (["New Student Convocation", "Shoellkopf Stadium", "This will be your official welcome from university administrators, as well as from your student body president and other key student leaders in Schoellkopf Stadium. Note that it takes 30 minutes to walk to Schoellkopf Stadium from North Campus and 20 minutes from West Campus; plan accordingly."], [8, 45, 10, 0]), (["Tours of Libraries and Manuscript", "Upper Lobby, Uris Library", "No description"], [10, 0, 11, 30]), (["Dump and Run Sale", "Helen Newman Hall", "No description"], [10,0,18,0]), (["AAP—Dean’s Convocation", "Abby and Howard Milstein Hall", "No description"], [10, 30, 11, 30]), (["CALS—Dean’s Convocation", "Call Alumni Auditorium, Kennedy Hall", "No description"], [10, 30, 11, 30])]
+            for event in events {
+                let evnt = NSManagedObject(entity: entity, insertInto: managedContext)
+                evnt.setValue(event.0[0], forKeyPath: "title")
+                evnt.setValue(event.0[1], forKeyPath: "caption")
+                evnt.setValue(event.0[2], forKeyPath: "eventDescription")
+                evnt.setValue(false, forKey: "added")
+                evnt.setValue(event.1[0], forKeyPath: "startTimeHr")
+                evnt.setValue(event.1[1], forKeyPath: "startTimeMin")
+                evnt.setValue(event.1[2], forKeyPath: "endTimeHr")
+                evnt.setValue(event.1[3], forKeyPath: "endTimeMin")
+            }
             do {
                 try managedContext.save()
             } catch let error as NSError {
