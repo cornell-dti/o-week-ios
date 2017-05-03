@@ -15,6 +15,7 @@ class Event:Hashable
     let description: String
     let startTime: Time
     let endTime: Time
+    let required: Bool
     
     var added: Bool
     var hashValue: Int
@@ -26,18 +27,15 @@ class Event:Hashable
         return hash
     }
     
-    init(title:String, caption:String, start:Time, end:Time, description: String?, added: Bool?)
+    init(title:String, caption:String, start:Time, end:Time, added: Bool, required: Bool, description: String?)
     {
         self.title = title
         self.caption = caption
         self.description = description ?? "No description available at this time."
-        self.added = added ?? false
+        self.added = added
+        self.required = required
         startTime = start
         endTime = end
-    }
-    
-    func setAdded(_ added: Bool){
-        self.added = added
     }
     
 }

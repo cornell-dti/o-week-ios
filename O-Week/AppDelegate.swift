@@ -147,6 +147,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 evnt.setValue(event.1[1], forKeyPath: "startTimeMin")
                 evnt.setValue(event.1[2], forKeyPath: "endTimeHr")
                 evnt.setValue(event.1[3], forKeyPath: "endTimeMin")
+                evnt.setValue(false, forKeyPath: "required")
             }
             do {
                 try managedContext.save()
@@ -167,7 +168,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let start = Time(hour: (obj.value(forKeyPath: "startTimeHr") as? Int)!, minute: (obj.value(forKeyPath: "startTimeMin") as? Int)!)
             let end = Time(hour: (obj.value(forKeyPath: "endTimeHr") as? Int)!, minute: (obj.value(forKeyPath: "endTimeMin") as? Int)!)
             let added = obj.value(forKeyPath: "added") as? Bool
-            let event = Event(title: title!, caption: cap!, start: start, end: end, description: descrip, added: added)
+            let req = obj.value(forKeyPath: "required") as? Bool
+            let event = Event(title: title!, caption: cap!, start: start, end: end, added: added!, required: req!, description: descrip)
             UserData.allEvents.append(event)
             if(added!){
                 UserData.selectedEvents.insert(event)
@@ -203,6 +205,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             eventToStore.setValue(event.startTime.minute, forKeyPath: "startTimeMin")
             eventToStore.setValue(event.endTime.hour, forKeyPath: "endTimeHr")
             eventToStore.setValue(event.endTime.minute, forKeyPath: "endTimeMin")
+            eventToStore.setValue(event.required, forKeyPath: "required")
         }
         do {
             try managedContext.save()
