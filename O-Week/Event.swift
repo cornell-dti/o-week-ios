@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 
 class Event:Hashable
 {
@@ -17,8 +18,8 @@ class Event:Hashable
     let endTime: Time
     let required: Bool
     let date: Date
+    let pk: String
     
-    var added: Bool
     var hashValue: Int
     {
         var hash = title.hashValue
@@ -28,16 +29,27 @@ class Event:Hashable
         return hash
     }
     
-    init(title:String, caption:String, start:Time, end:Time, date: Date, added: Bool, required: Bool, description: String?)
+    init(title:String, caption:String, pk: String, start:Time, end:Time, date: Date, required: Bool, description: String?)
     {
         self.title = title
         self.caption = caption
         self.description = description ?? "No description available at this time."
         self.date = date
-        self.added = added
         self.required = required
+        self.pk = pk
         startTime = start
         endTime = end
+    }
+    
+    init(_ obj: NSManagedObject){
+        self.title = obj.value(forKeyPath: "title") as! String
+        self.caption = obj.value(forKeyPath: "caption") as! String
+        self.description = obj.value(forKeyPath: "eventDescription") as? String ?? "No description available at this time"
+        self.startTime = Time(hour: obj.value(forKeyPath: "startTimeHr") as! Int, minute: obj.value(forKeyPath: "startTimeMin") as! Int)
+        self.endTime = Time(hour: obj.value(forKeyPath: "endTimeHr") as! Int, minute: obj.value(forKeyPath: "endTimeMin") as! Int)
+        self.required = obj.value(forKeyPath: "required") as! Bool
+        self.date = obj.value(forKeyPath: "date") as! Date
+        self.pk = obj.value(forKeyPath: "pk") as! String
     }
     
 }

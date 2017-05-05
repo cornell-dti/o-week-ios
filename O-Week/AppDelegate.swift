@@ -15,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     static let eventEntityName = "EventEntity"
+    static let addedPKsName = "AddedPKs" //KeyPath used for accessing added PKs in User Defaults
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -53,7 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-        saveData()
+        savePKs()
     }
     
     func applicationWillEnterForeground(_ application: UIApplication) {
@@ -67,7 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-        saveData()
+        savePKs()
     }
     
     // MARK: - Core Data stack
@@ -115,9 +116,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    // MARK:- Core Data Helper Functions
-    
     func loadData(){
+        /* Fetching PKs of added events */
+        let defaults = UserDefaults.standard
+        let added = defaults.stringArray(forKey: AppDelegate.addedPKsName) ?? []
+        
         /* Fetching Core Data */
         let managedContext = self.persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: AppDelegate.eventEntityName, in: managedContext)!
@@ -136,19 +139,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             //Adding temp data for testing
             
             //let data = [Event(title:"A", caption:"A", start:Time(hour:9, minute:30), end:Time(hour:10, minute:30), description: nil), Event(title:"B", caption:"B", start:Time(hour:10, minute:30), end:Time(hour:12, minute:0), description: nil), Event(title:"C", caption:"C", start:Time(hour:11, minute:45), end:Time(hour:15, minute:30), description: nil), Event(title:"D", caption:"D", start:Time(hour:12, minute:0), end:Time(hour:14, minute:0), description: nil), Event(title:"E", caption:"E", start:Time(hour:13, minute:30), end:Time(hour:14, minute:0), description: nil), Event(title:"F", caption:"F", start:Time(hour:14, minute:0), end:Time(hour:15, minute:40), description: nil), Event(title:"G", caption:"G", start:Time(hour:14, minute:30), end:Time(hour:15, minute:0), description: nil), Event(title:"H", caption:"H", start:Time(hour:15, minute:30), end:Time(hour:16, minute:0), description: nil), Event(title:"I", caption:"I", start:Time(hour:16, minute:0), end:Time(hour:16, minute:30), description: nil), Event(title:"J", caption:"J", start:Time(hour:15, minute:50), end:Time(hour:16, minute:40), description: nil), Event(title:"K", caption:"K", start:Time(hour:17, minute:0), end:Time(hour:17, minute:30), description: nil)]
-            let events: [([String], [Int])] = [(["Alumni Families and Legacy Reception","Tent on Rawlings Green", "No description"],[7, 45, 8, 45]), (["New Student Convocation", "Shoellkopf Stadium", "This will be your official welcome from university administrators, as well as from your student body president and other key student leaders in Schoellkopf Stadium. Note that it takes 30 minutes to walk to Schoellkopf Stadium from North Campus and 20 minutes from West Campus; plan accordingly."], [8, 45, 10, 0]), (["Tours of Libraries and Manuscript", "Upper Lobby, Uris Library", "No description"], [10, 0, 11, 30]), (["Dump and Run Sale", "Helen Newman Hall", "No description"], [10,0,18,0]), (["AAP—Dean’s Convocation", "Abby and Howard Milstein Hall", "No description"], [10, 30, 11, 30]), (["CALS—Dean’s Convocation", "Call Alumni Auditorium, Kennedy Hall", "No description"], [10, 30, 11, 30])]
+            let events: [([String], [Int])] = [(["Alumni Families and Legacy Reception","Tent on Rawlings Green", "No description", "1"],[7, 45, 8, 45]), (["New Student Convocation", "Shoellkopf Stadium", "This will be your official welcome from university administrators, as well as from your student body president and other key student leaders in Schoellkopf Stadium. Note that it takes 30 minutes to walk to Schoellkopf Stadium from North Campus and 20 minutes from West Campus; plan accordingly.", "2"], [8, 45, 10, 0]), (["Tours of Libraries and Manuscript", "Upper Lobby, Uris Library", "No description", "3"], [10, 0, 11, 30]), (["Dump and Run Sale", "Helen Newman Hall", "No description", "4"], [10,0,18,0]), (["AAP—Dean’s Convocation", "Abby and Howard Milstein Hall", "No description", "5"], [10, 30, 11, 30]), (["CALS—Dean’s Convocation", "Call Alumni Auditorium, Kennedy Hall", "No description", "6"], [10, 30, 11, 30])]
             var dateComponents = DateComponents()
             dateComponents.year = 2017
             dateComponents.month = 08
             dateComponents.day = 17
             let date = UserData.userCalendar.date(from: dateComponents)
-
+            
             for event in events {
                 let evnt = NSManagedObject(entity: entity, insertInto: managedContext)
                 evnt.setValue(event.0[0], forKeyPath: "title")
                 evnt.setValue(event.0[1], forKeyPath: "caption")
                 evnt.setValue(event.0[2], forKeyPath: "eventDescription")
-                evnt.setValue(false, forKey: "added")
+                evnt.setValue(event.0[3], forKeyPath: "pk")
                 evnt.setValue(event.1[0], forKeyPath: "startTimeHr")
                 evnt.setValue(event.1[1], forKeyPath: "startTimeMin")
                 evnt.setValue(event.1[2], forKeyPath: "endTimeHr")
@@ -169,61 +172,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             tempArray.reverse() //Elements are retrieved FILO
         }
         for obj in tempArray {
-            let title = obj.value(forKeyPath: "title") as? String
-            let cap = obj.value(forKeyPath: "caption") as? String
-            let descrip = obj.value(forKeyPath: "eventDescription") as? String
-            let start = Time(hour: (obj.value(forKeyPath: "startTimeHr") as? Int)!, minute: (obj.value(forKeyPath: "startTimeMin") as? Int)!)
-            let end = Time(hour: (obj.value(forKeyPath: "endTimeHr") as? Int)!, minute: (obj.value(forKeyPath: "endTimeMin") as? Int)!)
-            let added = obj.value(forKeyPath: "added") as? Bool
-            let req = obj.value(forKeyPath: "required") as? Bool
-            let date = obj.value(forKeyPath: "date") as? Date
-            let event = Event(title: title!, caption: cap!, start: start, end: end, date: date!, added: added!, required: req!, description: descrip)
-            UserData.allEvents.append(event)
-            if(added!){
-                UserData.selectedEvents.insert(event)
+            let event = Event(obj)
+            if(!UserData.allEvents.contains(event)){
+                UserData.allEvents.append(event)
+                if(!UserData.selectedEvents.contains(event) && added.contains(event.pk)){
+                    UserData.selectedEvents.insert(event)
+                }
             }
         }
         //Telling other classes to reload their data
         NotificationCenter.default.post(name: .reload, object: nil)
     }
     
-    func saveData(){
-        // TODO: Optimize by simply changing attribute, not deleting and storing again
-        /* Deleting all stored data */
-        let managedContext = self.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: AppDelegate.eventEntityName)
-        let entity = NSEntityDescription.entity(forEntityName: AppDelegate.eventEntityName, in: managedContext)!
-        var tempArray: [NSManagedObject] = []
-        do {
-            tempArray = try managedContext.fetch(fetchRequest)
-        } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
+    func savePKs(){
+        let defaults = UserDefaults.standard
+        var addedPks: [String] = []
+        for evnt in UserData.selectedEvents {
+            addedPks.append(evnt.pk)
         }
-        for item in tempArray {
-            managedContext.delete(item)
-        }
-        /* Storing new data with updated added values*/
-        for event in UserData.allEvents{
-            let eventToStore = NSManagedObject(entity: entity, insertInto: managedContext)
-            eventToStore.setValue(event.title, forKeyPath: "title")
-            eventToStore.setValue(event.caption, forKeyPath: "caption")
-            eventToStore.setValue(event.description, forKeyPath: "eventDescription")
-            eventToStore.setValue(event.added, forKey: "added")
-            eventToStore.setValue(event.startTime.hour, forKeyPath: "startTimeHr")
-            eventToStore.setValue(event.startTime.minute, forKeyPath: "startTimeMin")
-            eventToStore.setValue(event.endTime.hour, forKeyPath: "endTimeHr")
-            eventToStore.setValue(event.endTime.minute, forKeyPath: "endTimeMin")
-            eventToStore.setValue(event.required, forKeyPath: "required")
-            eventToStore.setValue(event.date, forKeyPath: "date")
-        }
-        do {
-            try managedContext.save()
-        } catch let error as NSError {
-            print("Could not save. \(error), \(error.userInfo)")
-        }
-        UserData.allEvents.removeAll()
-        UserData.selectedEvents.removeAll()
+        defaults.setValue(addedPks, forKey: AppDelegate.addedPKsName)
     }
+
 }
 extension Notification.Name {
     static let reload = Notification.Name("reload")

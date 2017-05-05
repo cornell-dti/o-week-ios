@@ -25,21 +25,24 @@ class FeedCell:UITableViewCell
         eventCaption.text = event.caption
         eventStartTime.text = event.startTime.description
         eventEndTime.text = event.endTime.description
-        setButtonAdded(event.added)
+        setButtonImage(UserData.selectedEvents.contains(self.event))
     }
     
     @IBAction func addBttnPressed(_ sender: UIButton) {
-        event.added = !event.added
-        setButtonAdded(event.added)
+        if(UserData.selectedEvents.contains(event!)){
+            setButtonImage(false)
+            UserData.selectedEvents.remove(event!)
+        } else {
+            setButtonImage(true)
+            UserData.selectedEvents.insert(event!)
+        }
     }
     
-    private func setButtonAdded(_ added:Bool) {
+    func setButtonImage(_ added: Bool){
         if (added){
             eventButton.setImage(Image.imageAdded, for: .normal)
-            UserData.selectedEvents.insert(event)
         } else {
             eventButton.setImage(Image.imageNotAdded, for: .normal)
-            UserData.selectedEvents.remove(event)
         }
     }
     
