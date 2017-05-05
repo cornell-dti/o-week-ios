@@ -37,11 +37,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func checkForSettingsAndSet(){
         let defaults = UserDefaults.standard
-        if(defaults.string(forKey: "Reminders Set For") == nil){
-            defaults.set("No events", forKey: "Reminders Set For")
+        if(defaults.string(forKey: Settings.receiveRemindersFor.rawValue) == nil){
+            defaults.set("No events", forKey: Settings.receiveRemindersFor.rawValue)
         }
-        if(defaults.string(forKey: "Notify Me") == nil){
-            defaults.set("No notifications", forKey: "Notify Me")
+        if(defaults.string(forKey: Settings.notifyMe.rawValue) == nil){
+            defaults.set("At time of event", forKey: Settings.notifyMe.rawValue)
         }
     }
     
@@ -196,5 +196,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension Notification.Name {
     static let reload = Notification.Name("reload")
     static let reloadSettings = Notification.Name("reloadSettings")
+}
+
+enum Settings: String {
+    case receiveRemindersFor = "Receive reminders for..."
+    case notifyMe = "Notify me..."
 }
 

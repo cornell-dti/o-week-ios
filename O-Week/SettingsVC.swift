@@ -13,7 +13,7 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var tableView: UITableView!
     
     let sectionTitles = ["Notifications", "Events"]
-    let actions = ["Add all events to my schedule", "Add all required events to my schedule" ,"Remove all events from my schedule"]
+    let actions = ["Add all required events to my schedule" ,"Remove all events from my schedule"]
     
     var settings: [(name: String, options: [String])] = []
     var chosenSetting: Int?
@@ -50,7 +50,11 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(section == 0){
-            return settings.count
+            if(defaults!.string(forKey: Settings.receiveRemindersFor.rawValue) == "No events"){
+                return 1
+            }else {
+                return settings.count
+            }
         } else {
             return actions.count
         }
