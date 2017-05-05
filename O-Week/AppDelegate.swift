@@ -125,15 +125,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let managedContext = self.persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: AppDelegate.eventEntityName, in: managedContext)!
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: AppDelegate.eventEntityName)
-        var tempArray: [NSManagedObject] = []
+        var data: [NSManagedObject] = []
         do {
-            tempArray = try managedContext.fetch(fetchRequest)
+            data = try managedContext.fetch(fetchRequest)
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
-        tempArray.reverse() //Elements are retrieved FILO
         
-        if(tempArray.isEmpty){
+        if(data.isEmpty){
             //No data found on iPhone
             //TODO: Fix conditional statement, fetch data from DB and compare to Core Data to remove outdated events or add new events
             //Adding temp data for testing
@@ -165,13 +164,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print("Could not save. \(error), \(error.userInfo)")
             }
             do {
-                tempArray = try managedContext.fetch(fetchRequest)
+                data = try managedContext.fetch(fetchRequest)
             } catch let error as NSError {
                 print("Could not fetch. \(error), \(error.userInfo)")
             }
-            tempArray.reverse() //Elements are retrieved FILO
         }
-        for obj in tempArray {
+        for obj in data {
             let event = Event(obj)
             if(!UserData.allEvents.contains(event)){
                 UserData.allEvents.append(event)
@@ -194,6 +192,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 }
+
 extension Notification.Name {
     static let reload = Notification.Name("reload")
     static let reloadSettings = Notification.Name("reloadSettings")
