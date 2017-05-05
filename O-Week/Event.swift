@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-class Event:Hashable
+struct Event:Hashable
 {
     let title: String
     let caption: String
