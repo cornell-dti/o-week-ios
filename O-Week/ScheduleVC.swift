@@ -22,6 +22,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
     var selectedEvent: Event?
     
     let hours = [Time(hour:7), Time(hour:8), Time(hour:9), Time(hour:10), Time(hour:11), Time(hour:12), Time(hour:13), Time(hour:14), Time(hour:15), Time(hour:16), Time(hour:17), Time(hour:18), Time(hour:19), Time(hour:20), Time(hour:21), Time(hour:22), Time(hour:23), Time(hour:0), Time(hour:1), Time(hour:2)] //Table view data
+    let TITLE_CAPTION_MARGIN:CGFloat = 16
     let CONTAINER_RIGHT_MARGIN:CGFloat = 20
     let EVENT_CORNER_RADIUS:CGFloat = 3
     let EVENT_BORDER_WIDTH: CGFloat = 1.25
@@ -141,33 +142,36 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
     
     func drawTitleAndCaptionFor(_ container:UIView, event:Event) {
         //First subview of "container" must be UILabel corresponding to Title for eventClicked func to work
-        let title = UILabel(frame: CGRect(x: 16, y: 14, width: 0, height: 0))
+        let title = UILabel()
         title.numberOfLines = 0
         title.lineBreakMode = .byTruncatingTail
         title.font = UIFont(name: "AvenirNext-DemiBold", size: 12)
         title.textColor = Color.RED
         title.text = event.title
-        title.sizeToFit()
-        //bound right margin so title doesn't go past the block
-        if (title.frame.width > container.frame.width - 32)
-        {
-            title.frame = CGRect(x: title.frame.origin.x, y: title.frame.origin.y, width: container.frame.width - 32, height: title.frame.height)
-        }
+        title.translatesAutoresizingMaskIntoConstraints = false
+        //title.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
+        //title.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)*/
+        
         container.addSubview(title)
         
-        let caption = UILabel(frame: CGRect(x: 16, y: title.frame.origin.y + title.frame.height, width: 0, height: 0))
+        let caption = UILabel()
         caption.numberOfLines = 0
         caption.lineBreakMode = .byTruncatingTail
         caption.font = UIFont(name: "AvenirNext-Regular", size: 10)
         caption.textColor = Color.RED
         caption.text = event.caption
-        caption.sizeToFit()
-        //bound right margin so title doesn't go past the block
-        if (caption.frame.width > container.frame.width - 32)
-        {
-            caption.frame = CGRect(x: caption.frame.origin.x, y: caption.frame.origin.y, width: container.frame.width - 32, height: caption.frame.height)
-        }
+        caption.translatesAutoresizingMaskIntoConstraints = false
+        //caption.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
+        //caption.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, for: .vertical)
         container.addSubview(caption)
+        
+        let titleHoriz = NSLayoutConstraint.constraints(withVisualFormat: "H:|-(margin)-[title]-(margin)-|", options: [], metrics: ["margin":TITLE_CAPTION_MARGIN], views: ["title":title])
+        let captionHoriz = NSLayoutConstraint.constraints(withVisualFormat: "H:|-(margin)-[caption]-(margin)-|", options: [], metrics: ["margin":TITLE_CAPTION_MARGIN], views: ["caption":caption])
+        let vert = NSLayoutConstraint.constraints(withVisualFormat: "V:|-(14@750)-[title]-0-[caption]-(>=14)-|", options: [], metrics: nil, views: ["title":title, "caption":caption])
+        
+        container.addConstraints(titleHoriz)
+        container.addConstraints(captionHoriz)
+        container.addConstraints(vert)
     }
     
     // MARK:- Date Actions

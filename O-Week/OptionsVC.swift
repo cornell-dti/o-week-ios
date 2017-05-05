@@ -57,6 +57,7 @@ class OptionsVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         defaults?.set(setting!.options[indexPath.row], forKey: setting!.name)
         tableView.reloadData()
     }
