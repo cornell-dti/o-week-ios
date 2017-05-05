@@ -9,6 +9,7 @@
 import UIKit
 
 class DetailsVC: UIViewController {
+    
     @IBOutlet weak var eventTitle: UILabel!
     @IBOutlet weak var eventCaption: UILabel!
     @IBOutlet weak var eventDescription: UILabel!
@@ -18,7 +19,7 @@ class DetailsVC: UIViewController {
     @IBOutlet weak var add_button: UIButton!
     
     var event: Event?
-    var changed: Bool = false
+    var changed = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,24 +39,27 @@ class DetailsVC: UIViewController {
         eventDescription.text = event.description
         startTime.text = event.startTime.description
         endTime.text = event.endTime.description
-        setButtonAdded(event.added)
+        setButtonImage(UserData.selectedEvents.contains(event))
         Internet.imageFrom("https://upload.wikimedia.org/wikipedia/commons/3/34/Cornell_University%2C_Ho_Plaza_and_Sage_Hall.jpg", imageView: eventImage)
     }
     
     @IBAction func add_button_pressed(_ sender: UIButton) {
-        event!.added = !event!.added
-        setButtonAdded(event!.added)
+        if(UserData.selectedEvents.contains(event!)){
+            setButtonImage(false)
+            UserData.selectedEvents.remove(event!)
+        } else {
+            setButtonImage(true)
+            UserData.selectedEvents.insert(event!)
+        }
         changed = true
+        
     }
     
-    private func setButtonAdded(_ added:Bool)
-    {
+    private func setButtonImage(_ added:Bool) {
         if (added){
             add_button.setImage(Image.imageAddedW, for: .normal)
-            UserData.selectedEvents.insert(event!)
         } else {
             add_button.setImage(Image.imageNotAddedW, for: .normal)
-            UserData.selectedEvents.remove(event!)
         }
     }
 }
