@@ -478,7 +478,7 @@
                                             <constraint firstAttribute="trailing" secondItem="w6U-Xb-djd" secondAttribute="trailing" id="ykb-21-sXI"/>
                                         </constraints>
                                         <connections>
-                                            <outlet property="date" destination="y3b-Dz-hk6" id="1ym-4w-Vci"/>
+                                            <outlet property="dayNum" destination="y3b-Dz-hk6" id="AKH-We-Maf"/>
                                             <outlet property="view" destination="G41-hr-VoS" id="b5h-gO-baF"/>
                                             <outlet property="weekDay" destination="ujx-Su-1yP" id="64W-zk-YMf"/>
                                         </connections>
@@ -753,6 +753,6 @@
         <image name="schedule_icon" width="20" height="20"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Xcf-ub-FiZ"/>
+        <segue reference="mu3-We-PmB"/>
     </inferredMetricsTieBreakers>
 </document>
