@@ -12,14 +12,13 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
     
     // MARK:- Properties
     
-    @IBOutlet var views: [UIView]!
-    @IBOutlet var labels: [UILabel]!
+    @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var myTableView: UITableView!
     @IBOutlet weak var myScrollView: UIScrollView!
     var contentView: UIView!
     
-    var selected = 0 //index of date selected (0-4)
     var selectedEvent: Event?
+    var datePickerController: DatePickerController?
     
     let hours = [Time(hour:7), Time(hour:8), Time(hour:9), Time(hour:10), Time(hour:11), Time(hour:12), Time(hour:13), Time(hour:14), Time(hour:15), Time(hour:16), Time(hour:17), Time(hour:18), Time(hour:19), Time(hour:20), Time(hour:21), Time(hour:22), Time(hour:23), Time(hour:0), Time(hour:1), Time(hour:2)] //Table view data
     let TITLE_CAPTION_MARGIN:CGFloat = 16
@@ -32,10 +31,10 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        setUpExtendedNavBar()
-        setUpGestureRecognizers()
+        AppDelegate.setUpExtendedNavBar(navController: navigationController)
+        setNotificationListener()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(updateSchedule), name: .reload, object: nil)
+        datePickerController = DatePickerController(collectionView: collectionView)
     }
     
     override func viewDidLayoutSubviews()
@@ -45,23 +44,6 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
         setUpContentView()
         drawTimeLines()
         drawCells()
-    }
-    
-    func setUpExtendedNavBar(){
-        navigationController?.navigationBar.shadowImage = UIImage(named: "transparent_pixel")
-        navigationController?.navigationBar.setBackgroundImage(UIImage(named: "pixel"), for: .default)
-        for view in views{
-            view.layer.cornerRadius = view.frame.width / 2 //half of width for a perfect circle
-        }
-        changeSelectedDate(to: 0)
-    }
-    
-    func setUpGestureRecognizers(){
-        for view in views {
-            let gr = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
-            view.addGestureRecognizer(gr)
-            view.isUserInteractionEnabled = true
-        }
     }
     
     func setUpContentView() {
@@ -174,32 +156,6 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
         container.addConstraints(vert)
     }
     
-    // MARK:- Date Actions
-    
-    func handleTap(_ sender: UITapGestureRecognizer) {
-        //TODO: implement filtering functionality for selected date
-        for i in 0..<views.count
-        {
-            if (views[i] == sender.view)
-            {
-                changeSelectedDate(to: i)
-                break
-            }
-        }
-    }
-    
-    func changeSelectedDate(to selected: Int)
-    {
-        //revert last selected date
-        views[self.selected].backgroundColor = Color.RED
-        labels[self.selected].textColor = UIColor.white
-        //set new selected date
-        views[selected].backgroundColor = UIColor.white
-        labels[selected].textColor = UIColor.black
-        
-        self.selected = selected
-    }
-    
     // MARK:- Event Actions
     
     func eventClicked(_ sender: UITapGestureRecognizer){
@@ -305,10 +261,14 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
         }
     }
     
+    // MARK:- Handle Updates
+    
+    func setNotificationListener(){
+        NotificationCenter.default.addObserver(self, selector: #selector(updateSchedule), name: .reload, object: nil)
+    }
+    
     func updateSchedule(){
         contentView.subviews.forEach({ $0.removeFromSuperview() })
-        myScrollView.layoutIfNeeded()
-        setUpContentView()
         drawTimeLines()
         drawCells()
     }

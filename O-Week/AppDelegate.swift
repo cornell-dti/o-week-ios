@@ -25,6 +25,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+    static func setUpExtendedNavBar(navController: UINavigationController?){
+        navController?.navigationBar.shadowImage = UIImage(named: "transparent_pixel")
+        navController?.navigationBar.setBackgroundImage(UIImage(named: "pixel"), for: .default)
+    }
+    
     private func setNavBarColor()
     {
         let navigationBarAppearence = UINavigationBar.appearance()
@@ -44,7 +49,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             defaults.set("At time of event", forKey: Settings.notifyMe.rawValue)
         }
     }
-    
     
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

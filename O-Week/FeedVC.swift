@@ -8,17 +8,16 @@
 
 import UIKit
 
-class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate
+class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource
 {
     
     //MARK:- Properties
     
     @IBOutlet weak var feedTableView: UITableView!
-    @IBOutlet var views: [UIView]!
-    @IBOutlet var labels: [UILabel]!
+    @IBOutlet weak var collectionView: UICollectionView!
     
-    var selected = 0 //index of date selected (0-4)
     var selectedEvent: Event? = nil
+    var datePickerController: DatePickerController?
     
     let FEED_TABLEVIEW_ROW_HEIGHT:CGFloat = 86
     
@@ -26,55 +25,17 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource, UIGes
     
     override func viewDidLoad(){
         super.viewDidLoad()
-        setUpExtendedNavBar()
+        
+        AppDelegate.setUpExtendedNavBar(navController: navigationController)
         setUpHeightofFeedCell()
-        setUpGestureRecognizers()
-        NotificationCenter.default.addObserver(self, selector: #selector(updateFeed), name: .reload, object: nil)
-    }
-    
-    func setUpGestureRecognizers(){
-        for view in views {
-            let gr = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
-            view.addGestureRecognizer(gr)
-            view.isUserInteractionEnabled = true
-        }
+        setNotificationListener()
+        
+        datePickerController = DatePickerController(collectionView: collectionView)
     }
     
     func setUpHeightofFeedCell(){
         feedTableView.rowHeight = UITableViewAutomaticDimension
         feedTableView.estimatedRowHeight = FEED_TABLEVIEW_ROW_HEIGHT
-    }
-    
-    func setUpExtendedNavBar(){
-        navigationController?.navigationBar.shadowImage = UIImage(named: "transparent_pixel")
-        navigationController?.navigationBar.setBackgroundImage(UIImage(named: "pixel"), for: .default)
-        for view in views{
-            view.layer.cornerRadius = view.frame.width / 2 //half of width for a perfect circle
-        }
-        changeSelectedDate(to: 0)
-    }
-    
-    // MARK:- Date Actions
-    
-    func handleTap(_ sender: UITapGestureRecognizer){
-        //TODO: implement filtering functionality for selected date
-        for i in 0..<views.count {
-            if (views[i] == sender.view) {
-                changeSelectedDate(to: i)
-                break
-            }
-        }
-    }
-    
-    func changeSelectedDate(to selected: Int){
-        //revert last selected date
-        views[self.selected].backgroundColor = Color.RED
-        labels[self.selected].textColor = UIColor.white
-        //set new selected date
-        views[selected].backgroundColor = UIColor.white
-        labels[selected].textColor = UIColor.black
-        
-        self.selected = selected
     }
     
     // MARK:- Table View Methods
@@ -104,6 +65,12 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource, UIGes
                 destination.event = selectedEvent
             }
         }
+    }
+    
+    // MARK:- Handle Updates
+    
+    func setNotificationListener(){
+        NotificationCenter.default.addObserver(self, selector: #selector(updateFeed), name: .reload, object: nil)
     }
     
     func updateFeed(){

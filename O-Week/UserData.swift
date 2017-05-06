@@ -22,4 +22,10 @@ class UserData {
     //Calendar 
     static let userCalendar = Calendar.current
     
+    //Dates 
+    // FIXME
+    static let dates = ["19", "20", "21", "22", "23", "24", "25", "26", "27", "28"]
+    static let days = ["FRI", "SAT", "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]
+    
+    private init(){}
 }

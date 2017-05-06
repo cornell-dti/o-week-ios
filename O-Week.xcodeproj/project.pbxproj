@@ -19,6 +19,8 @@
 		DC18B3261E76CBCE00C3FCD6 /* O_WeekTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC18B3251E76CBCE00C3FCD6 /* O_WeekTests.swift */; };
 		DC18B3311E76CBCE00C3FCD6 /* O_WeekUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC18B3301E76CBCE00C3FCD6 /* O_WeekUITests.swift */; };
 		DC1E83191E85E635000CD56B /* ScheduleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E83181E85E635000CD56B /* ScheduleCell.swift */; };
+		DC23E00F1EBD63980060F24F /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23E00E1EBD63980060F24F /* DateCell.swift */; };
+		DC23E0111EBD6E780060F24F /* DatePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23E0101EBD6E780060F24F /* DatePickerController.swift */; };
 		DC2C02991E7DC25F00E9DDEF /* ScheduleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2C02981E7DC25F00E9DDEF /* ScheduleVC.swift */; };
 		DC3274621E7CB4F100CB3E22 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3274611E7CB4F100CB3E22 /* FeedCell.swift */; };
 		DC9BD7711EB6496C00552906 /* O-Week.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DC9BD76F1EB6496C00552906 /* O-Week.xcdatamodeld */; };
@@ -68,6 +70,8 @@
 		DC18B3301E76CBCE00C3FCD6 /* O_WeekUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O_WeekUITests.swift; sourceTree = "<group>"; };
 		DC18B3321E76CBCE00C3FCD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC1E83181E85E635000CD56B /* ScheduleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleCell.swift; sourceTree = "<group>"; };
+		DC23E00E1EBD63980060F24F /* DateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateCell.swift; sourceTree = "<group>"; };
+		DC23E0101EBD6E780060F24F /* DatePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerController.swift; sourceTree = "<group>"; };
 		DC2C02981E7DC25F00E9DDEF /* ScheduleVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleVC.swift; sourceTree = "<group>"; };
 		DC3274611E7CB4F100CB3E22 /* FeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		DC9BD7701EB6496C00552906 /* O-Week.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "O-Week.xcdatamodel"; sourceTree = "<group>"; };
@@ -142,24 +146,13 @@
 				DC18B3191E76CBCE00C3FCD6 /* LaunchScreen.storyboard */,
 				DC18B3141E76CBCE00C3FCD6 /* Main.storyboard */,
 				DC18B31C1E76CBCE00C3FCD6 /* Info.plist */,
-				DC18B3171E76CBCE00C3FCD6 /* Assets.xcassets */,
-				DC9BD76F1EB6496C00552906 /* O-Week.xcdatamodeld */,
 				DC18B3101E76CBCE00C3FCD6 /* AppDelegate.swift */,
-				DCDEBFF61EB414BB0014E028 /* UserData.swift */,
 				0628E48A1E7CA4750066A308 /* Color.swift */,
 				DCDEBFF21EB4127B0014E028 /* Image.swift */,
-				067EC2E61E8C9F8D0098ED94 /* Event.swift */,
 				067EC2E81E8C9FE20098ED94 /* Time.swift */,
 				DCC2FF8A1EB24EEA00624B4F /* Internet.swift */,
-				0628E4861E7CA3260066A308 /* FeedVC.swift */,
-				DC3274611E7CB4F100CB3E22 /* FeedCell.swift */,
-				DC2C02981E7DC25F00E9DDEF /* ScheduleVC.swift */,
-				DC1E83181E85E635000CD56B /* ScheduleCell.swift */,
-				DCD4464B1E76F941002D8F68 /* DetailsVC.swift */,
-				DCB182371EB7936E0041EEBC /* SettingsVC.swift */,
-				DCB182391EB799B70041EEBC /* SettingsCell.swift */,
-				DCB335D61EB7DB86000C495E /* OptionsVC.swift */,
-				DCB335D81EB7DB9B000C495E /* OptionsCell.swift */,
+				DC23E0121EBD6F690060F24F /* Model */,
+				DC23E0141EBD6F850060F24F /* Control */,
 			);
 			path = "O-Week";
 			sourceTree = "<group>";
@@ -180,6 +173,35 @@
 				DC18B3321E76CBCE00C3FCD6 /* Info.plist */,
 			);
 			path = "O-WeekUITests";
+			sourceTree = "<group>";
+		};
+		DC23E0121EBD6F690060F24F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DC18B3171E76CBCE00C3FCD6 /* Assets.xcassets */,
+				DC9BD76F1EB6496C00552906 /* O-Week.xcdatamodeld */,
+				DCDEBFF61EB414BB0014E028 /* UserData.swift */,
+				067EC2E61E8C9F8D0098ED94 /* Event.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		DC23E0141EBD6F850060F24F /* Control */ = {
+			isa = PBXGroup;
+			children = (
+				DC23E0101EBD6E780060F24F /* DatePickerController.swift */,
+				DC23E00E1EBD63980060F24F /* DateCell.swift */,
+				0628E4861E7CA3260066A308 /* FeedVC.swift */,
+				DC3274611E7CB4F100CB3E22 /* FeedCell.swift */,
+				DC2C02981E7DC25F00E9DDEF /* ScheduleVC.swift */,
+				DC1E83181E85E635000CD56B /* ScheduleCell.swift */,
+				DCD4464B1E76F941002D8F68 /* DetailsVC.swift */,
+				DCB182371EB7936E0041EEBC /* SettingsVC.swift */,
+				DCB182391EB799B70041EEBC /* SettingsCell.swift */,
+				DCB335D61EB7DB86000C495E /* OptionsVC.swift */,
+				DCB335D81EB7DB9B000C495E /* OptionsCell.swift */,
+			);
+			name = Control;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -337,8 +359,10 @@
 				0628E48B1E7CA4750066A308 /* Color.swift in Sources */,
 				DCD4464C1E76F941002D8F68 /* DetailsVC.swift in Sources */,
 				DCDEBFF31EB4127B0014E028 /* Image.swift in Sources */,
+				DC23E00F1EBD63980060F24F /* DateCell.swift in Sources */,
 				DC3274621E7CB4F100CB3E22 /* FeedCell.swift in Sources */,
 				DCB182381EB7936E0041EEBC /* SettingsVC.swift in Sources */,
+				DC23E0111EBD6E780060F24F /* DatePickerController.swift in Sources */,
 				DCB1823A1EB799B70041EEBC /* SettingsCell.swift in Sources */,
 				DCB335D71EB7DB86000C495E /* OptionsVC.swift in Sources */,
 			);
