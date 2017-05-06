@@ -82,7 +82,13 @@ class UserData {
     static func loadData(){
         /* Fetching PKs of added events */
         let defaults = UserDefaults.standard
-        let added = defaults.stringArray(forKey: UserData.addedPKsName) ?? []
+        //let added = defaults.stringArray(forKey: UserData.addedPKsName) ?? []
+        let added: [Int]
+        if defaults.array(forKey: addedPKsName) != nil {
+            added = defaults.array(forKey: addedPKsName) as! [Int]
+        } else{
+            added = []
+        }
         
         /* Fetching Core Data */
         
@@ -114,7 +120,7 @@ class UserData {
                 evnt.setValue(event.0[0], forKeyPath: "title")
                 evnt.setValue(event.0[1], forKeyPath: "caption")
                 evnt.setValue(event.0[2], forKeyPath: "eventDescription")
-                evnt.setValue(event.0[3], forKeyPath: "pk")
+                evnt.setValue(Int(event.0[3]), forKeyPath: "pk")
                 evnt.setValue(event.1[1], forKeyPath: "startTimeHr")
                 evnt.setValue(event.1[2], forKeyPath: "startTimeMin")
                 evnt.setValue(event.1[3], forKeyPath: "endTimeHr")
@@ -162,7 +168,7 @@ class UserData {
     
     static func savePKs(){
         let defaults = UserDefaults.standard
-        var addedPks: [String] = []
+        var addedPks: [Int] = []
         for setForDay in UserData.selectedEvents.values {
             for event in setForDay {
                 addedPks.append(event.pk)

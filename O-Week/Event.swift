@@ -18,7 +18,7 @@ struct Event:Hashable
     let endTime: Time
     let required: Bool
     let date: Date
-    let pk: String
+    let pk: Int
     
     var hashValue: Int
     {
@@ -29,7 +29,7 @@ struct Event:Hashable
         return hash
     }
     
-    init(title:String, caption:String, pk: String, start:Time, end:Time, date: Date, required: Bool, description: String?)
+    init(title:String, caption:String, pk: Int, start:Time, end:Time, date: Date, required: Bool, description: String?)
     {
         self.title = title
         self.caption = caption
@@ -49,7 +49,7 @@ struct Event:Hashable
         self.endTime = Time(hour: obj.value(forKeyPath: "endTimeHr") as! Int, minute: obj.value(forKeyPath: "endTimeMin") as! Int)
         self.required = obj.value(forKeyPath: "required") as! Bool
         self.date = obj.value(forKeyPath: "date") as! Date
-        self.pk = obj.value(forKeyPath: "pk") as! String
+        self.pk = obj.value(forKeyPath: "pk") as! Int
     }
     
 }
