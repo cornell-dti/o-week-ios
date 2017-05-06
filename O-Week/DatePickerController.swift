@@ -28,9 +28,7 @@ class DatePickerController: NSObject, UICollectionViewDataSource, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "dateCell", for: indexPath as IndexPath) as! DateCell
-        cell.weekDay.text = UserData.days[indexPath.row]
-        cell.date.text = UserData.dates[indexPath.row]
-        cell.view.layer.cornerRadius = cell.view.frame.width / 2
+        cell.configure(date: UserData.dates[indexPath.row])
         return cell
     }
     
