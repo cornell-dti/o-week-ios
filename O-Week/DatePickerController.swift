@@ -38,6 +38,8 @@ class DatePickerController: NSObject, UICollectionViewDataSource, UICollectionVi
         let cell = collectionView.cellForItem(at: indexPath) as! DateCell
         cell.selected(true)
         selectedCell = cell
+        
+        NotificationCenter.default.post(name: .reloadDateData, object: nil)
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -46,6 +48,7 @@ class DatePickerController: NSObject, UICollectionViewDataSource, UICollectionVi
             let dateCell = cell as! DateCell
             dateCell.selected(true)
             selectedCell = dateCell
+            NotificationCenter.default.post(name: .reloadDateData, object: nil)
         }
     }
     

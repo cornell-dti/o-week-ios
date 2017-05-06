@@ -91,7 +91,7 @@
                                             <constraint firstItem="rOt-1O-SXJ" firstAttribute="leading" secondItem="vJe-uD-eBs" secondAttribute="leading" id="xzi-M8-eoY"/>
                                         </constraints>
                                         <connections>
-                                            <outlet property="date" destination="4Dp-YZ-Mrj" id="Zwo-Us-9XS"/>
+                                            <outlet property="dayNum" destination="4Dp-YZ-Mrj" id="SaS-mh-agc"/>
                                             <outlet property="view" destination="u0Q-jO-Bgw" id="JT7-hR-r9K"/>
                                             <outlet property="weekDay" destination="SVT-fh-LDZ" id="Sye-1Z-enL"/>
                                         </connections>

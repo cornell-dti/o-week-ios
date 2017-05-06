@@ -25,16 +25,16 @@ class FeedCell:UITableViewCell
         eventCaption.text = event.caption
         eventStartTime.text = event.startTime.description
         eventEndTime.text = event.endTime.description
-        setButtonImage(UserData.selectedEvents.contains(self.event))
+        setButtonImage(UserData.selectedEventsContains(event))
     }
     
     @IBAction func addBttnPressed(_ sender: UIButton) {
-        if(UserData.selectedEvents.contains(event!)){
+        if(UserData.selectedEventsContains(event!)){
             setButtonImage(false)
-            UserData.selectedEvents.remove(event!)
+            UserData.removeFromSelectedEvents(event!)
         } else {
             setButtonImage(true)
-            UserData.selectedEvents.insert(event!)
+            UserData.insertToSelectedEvents(event!)
         }
     }
     

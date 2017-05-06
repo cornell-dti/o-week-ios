@@ -39,17 +39,17 @@ class DetailsVC: UIViewController {
         eventDescription.text = event.description
         startTime.text = event.startTime.description
         endTime.text = event.endTime.description
-        setButtonImage(UserData.selectedEvents.contains(event))
+        setButtonImage(UserData.selectedEventsContains(event))
         Internet.imageFrom("https://upload.wikimedia.org/wikipedia/commons/3/34/Cornell_University%2C_Ho_Plaza_and_Sage_Hall.jpg", imageView: eventImage)
     }
     
     @IBAction func add_button_pressed(_ sender: UIButton) {
-        if(UserData.selectedEvents.contains(event!)){
+        if(UserData.selectedEventsContains(event!)){
             setButtonImage(false)
-            UserData.selectedEvents.remove(event!)
+            UserData.removeFromSelectedEvents(event!)
         } else {
             setButtonImage(true)
-            UserData.selectedEvents.insert(event!)
+            UserData.insertToSelectedEvents(event!)
         }
         changed = true
         
