@@ -42,4 +42,13 @@ class DatePickerController: NSObject, UICollectionViewDataSource, UICollectionVi
         selectedCell = cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        //TODO: make first selection based on current day
+        if(selectedCell == nil){
+            let dateCell = cell as! DateCell
+            dateCell.selected(true)
+            selectedCell = dateCell
+        }
+    }
+    
 }
