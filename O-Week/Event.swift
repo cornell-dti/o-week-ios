@@ -19,7 +19,7 @@ struct Event:Hashable
     let endTime: Time
     let required: Bool
     let date: Date
-    let pk: String
+    let pk: Int
     
     //TODO: change hash function
     var hashValue: Int
@@ -52,7 +52,7 @@ struct Event:Hashable
         self.endTime = Time(hour: obj.value(forKeyPath: "endTimeHr") as! Int, minute: obj.value(forKeyPath: "endTimeMin") as! Int)
         self.required = obj.value(forKeyPath: "required") as! Bool
         self.date = obj.value(forKeyPath: "date") as! Date
-        self.pk = obj.value(forKeyPath: "pk") as! String
+        self.pk = obj.value(forKeyPath: "pk") as! Int
     }
     
     init?(json: [String:Any])
