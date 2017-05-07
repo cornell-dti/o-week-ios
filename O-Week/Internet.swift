@@ -15,24 +15,7 @@ import SystemConfiguration
  */
 class Internet
 {
-    /**
-     Enum containing all the URLs to be used for internet communication
-     */
-    private enum Urls:String
-    {
-        case regId = "http://nshsguide.newton.k12.ma.us/ajax/set-reg-id-ios.php"
-        case feedback = "http://nshsguide.newton.k12.ma.us/feedback.php"
-        case absentTeachers = "http://nshsguide.newton.k12.ma.us/ajax/absent-teachers.php"
-        case announcement = "http://nshsguide.newton.k12.ma.us/ajax/get-announcement.php"
-        case specialSchedule = "http://nshsguide.newton.k12.ma.us/ajax/special-schedule-list.php"
-        case teachersList = "http://nshsguide.newton.k12.ma.us/ajax/get-faculty.php"
-        case teacherRequest = "http://nshsguide.newton.k12.ma.us/ajax/set-teacher-request-ios.php"
-    }
-    /**
-     Enum containing keys for additional information POST'ed to the database or received from the database
-     */
-    /*enum Keys:String
-     {}*/
+    let DATABASE = "https://oweek.herokuapp.com"
     
     //suppress default constructor for noninstantiability
     private init(){}
@@ -42,11 +25,33 @@ class Internet
      - parameters:
      - jsonDictionary: JSON outputted by the server
      */
-    static func parseJSON(_ json:Any)
+    private static func parseJSON(_ json:Any)
     {
     }
     
-    static func imageFrom(_ urlString:String, imageView:UIImageView)
+    static func getEventsOn(_ day:Date) -> [Event]?
+    {
+        //TODO unfinished methods
+        //let date =
+        //post(url: "\(DATABASE)/feed/", keyValues: <#T##[(key: String, value: String)]?#>, completion: <#T##(() -> ())?##(() -> ())?##() -> ()#>)
+    }
+    static func getEventsOn(_ day:Date, category:String) -> [Event]?
+    {
+        
+    }
+    static func getEventOn(_ day:Date, pk:Int) -> Event?
+    {
+        
+    }
+    static func getImageFor(_ event:Event, imageView:UIImageView)
+    {
+        
+    }
+    static func getCategories() -> [String]?
+    {
+        
+    }
+    private static func imageFrom(_ urlString:String, imageView:UIImageView)
     {
         guard let url = URL(string: urlString) else {
             return
@@ -74,11 +79,11 @@ class Internet
      - keyValues: The key values to send along with the POST request. These will be read by the server
      - completionFunction: The function that will be run when the POST request is done
      */
-    private static func post(url:Urls, keyValues:[(key:String, value:String)]?, completion:(() -> ())?)
+    private static func post(url:String, keyValues:[(key:String, value:String)]?, completion:(() -> ())?)
     {
         let keyValuesString = keyValues == nil ? "" : keyValueToStringForPOST(keyValues!)
         
-        var request = URLRequest(url: URL(string: url.rawValue)!)
+        var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = "POST"
         request.httpBody = keyValuesString.data(using: .utf8)
         let task = URLSession.shared.dataTask(with: request, completionHandler:

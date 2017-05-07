@@ -73,27 +73,13 @@ struct Time:Hashable, CustomStringConvertible
         self.hour = hour
         minute = 0
     }
-    //expected format: "10:00 AM"
+    //expected format: "10:00"
     static func fromString(_ timeString:String) -> Time
     {
-        let hourAndMin = timeString.components(separatedBy: ":")    //"10", "00 AM"
-        guard hourAndMin.count == 2 else {
-            print("Time.fromString incorrect time: \(timeString)")
-            return Time(hour: 0, minute: 0)
-        }
-        
-        let minAndAMPM = hourAndMin[1].components(separatedBy: " ") //"00", "AM"
-        guard minAndAMPM.count == 2 else {
-            print("Time.fromString incorrect time: \(timeString)")
-            return Time(hour: 0, minute: 0)
-        }
-        
-        let hour12 = Int(hourAndMin[0])!
-        
-        let hour24 = minAndAMPM[1] == "AM" ? hour12 : hour12 + 12
-        let min = Int(minAndAMPM[0])!
-        
-        return Time(hour: hour24, minute: min)
+        let hourAndMin = timeString.components(separatedBy: ":")    //"10", "00"
+        let hour = hourAndMin[0] as! Int
+        let min = hourAndMin[1] as! Int
+        return Time(hour: hour, minute: min)
     }
     func toMinutes() -> Int
     {
