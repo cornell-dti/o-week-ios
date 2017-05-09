@@ -77,9 +77,9 @@ struct Time:Hashable, CustomStringConvertible
     static func fromString(_ timeString:String) -> Time
     {
         let hourAndMin = timeString.components(separatedBy: ":")    //"10", "00"
-        let hour = hourAndMin[0] as! Int
-        let min = hourAndMin[1] as! Int
-        return Time(hour: hour, minute: min)
+        let hour = Int(hourAndMin[0])
+        let min = Int(hourAndMin[1])
+        return Time(hour: hour!, minute: min!)
     }
     func toMinutes() -> Int
     {
