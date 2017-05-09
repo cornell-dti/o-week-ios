@@ -34,22 +34,23 @@ class Internet
         //TODO unfinished methods
         //let date =
         //post(url: "\(DATABASE)/feed/", keyValues: <#T##[(key: String, value: String)]?#>, completion: <#T##(() -> ())?##(() -> ())?##() -> ()#>)
+        return nil
     }
     static func getEventsOn(_ day:Date, category:String) -> [Event]?
     {
-        
+        return nil
     }
     static func getEventOn(_ day:Date, pk:Int) -> Event?
     {
-        
+        return nil
     }
     static func getImageFor(_ event:Event, imageView:UIImageView)
     {
-        
+        return
     }
     static func getCategories() -> [String]?
     {
-        
+        return nil
     }
     private static func imageFrom(_ urlString:String, imageView:UIImageView)
     {

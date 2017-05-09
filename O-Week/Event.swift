@@ -31,10 +31,11 @@ struct Event:Hashable
         return hash
     }
     
-    init(title:String, caption:String, category:String, pk: String, start:Time, end:Time, date: Date, required: Bool, description: String?)
+    init(title:String, caption:String, category:String, pk: Int, start:Time, end:Time, date: Date, required: Bool, description: String?)
     {
         self.title = title
         self.caption = caption
+        self.category = category
         self.description = description ?? "No description available at this time."
         self.date = date
         self.required = required
@@ -58,9 +59,9 @@ struct Event:Hashable
     init?(json: [String:Any])
     {
         guard let title = json["name"] as? String,
-                let pk = json["pk"] as? String,
+                let pk = json["pk"] as? Int,
                 let description = json["description"] as? String,
-                let location = json["location"] as String,
+                let location = json["location"] as? String,
                 let category = json["category"] as? String,
                 let startDate = json["start_date"] as? String,
                 let startTime = json["start_time"] as? String,
@@ -76,11 +77,16 @@ struct Event:Hashable
         self.category = category
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat("yyyy-MM-dd")
-        date = dateFormatter.date(from: startDate)
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        guard let date = dateFormatter.date(from: startDate) else {
+            return nil
+        }
+        self.date = date
         
         self.startTime = Time.fromString(startTime)
         self.endTime = Time.fromString(endTime)
+        //TODO: Change to actual required value
+        required = false
     }
 }
 
