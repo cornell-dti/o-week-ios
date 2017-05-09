@@ -151,6 +151,7 @@
 				DCDEBFF21EB4127B0014E028 /* Image.swift */,
 				067EC2E81E8C9FE20098ED94 /* Time.swift */,
 				DCC2FF8A1EB24EEA00624B4F /* Internet.swift */,
+				DC18B3171E76CBCE00C3FCD6 /* Assets.xcassets */,
 				DC23E0121EBD6F690060F24F /* Model */,
 				DC23E0141EBD6F850060F24F /* Control */,
 			);
@@ -178,7 +179,6 @@
 		DC23E0121EBD6F690060F24F /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				DC18B3171E76CBCE00C3FCD6 /* Assets.xcassets */,
 				DC9BD76F1EB6496C00552906 /* O-Week.xcdatamodeld */,
 				DCDEBFF61EB414BB0014E028 /* UserData.swift */,
 				067EC2E61E8C9F8D0098ED94 /* Event.swift */,
