@@ -16,6 +16,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
     @IBOutlet weak var myTableView: UITableView!
     @IBOutlet weak var myScrollView: UIScrollView!
     var contentView: UIView!
+    var containerViews = [UIView]()
     
     var selectedEvent: Event?
     var selectedDate: Date?
@@ -110,6 +111,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
         container.layer.borderColor = Color.RED.cgColor
         container.layer.borderWidth = EVENT_BORDER_WIDTH
         contentView.addSubview(container)
+        containerViews.append(container)
         drawTitleAndCaptionFor(container, event:event)
         //add gesture recognizer to container to segue to Details VC
         let gr = UITapGestureRecognizer(target: self, action: #selector(self.eventClicked(_:)))
@@ -275,9 +277,10 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
     }
     
     func updateSchedule(){
-        contentView.subviews.forEach({ $0.removeFromSuperview() })
+        containerViews.forEach({$0.removeFromSuperview()})
+        containerViews.removeAll()
+        contentView.setNeedsDisplay()
         myScrollView.layoutIfNeeded()
-        setUpContentView()
         drawTimeLines()
         drawCells()
     }
