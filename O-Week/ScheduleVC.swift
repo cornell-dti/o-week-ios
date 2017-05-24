@@ -279,8 +279,6 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
     func updateSchedule(){
         containerViews.forEach({$0.removeFromSuperview()})
         containerViews.removeAll()
-        contentView.setNeedsDisplay()
-        myScrollView.layoutIfNeeded()
         drawTimeLines()
         drawCells()
     }

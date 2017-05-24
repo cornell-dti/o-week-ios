@@ -19,6 +19,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setNavBarColor()
         checkForSettingsAndSet()
         UserData.loadData()
+        
+        //TODO remove bottom line (for testing only)
+        Internet.getCategories()
         return true
     }
     

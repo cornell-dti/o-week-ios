@@ -15,7 +15,7 @@ import SystemConfiguration
  */
 class Internet
 {
-    let DATABASE = "https://oweek.herokuapp.com"
+    static let DATABASE = "https://oweek.herokuapp.com"
     
     //suppress default constructor for noninstantiability
     private init(){}
@@ -27,30 +27,27 @@ class Internet
      */
     private static func parseJSON(_ json:Any)
     {
+        print(json)
     }
     
-    static func getEventsOn(_ day:Date) -> [Event]?
+    static func getEventsOn(_ day:Date)
     {
         //TODO unfinished methods
         //let date =
         //post(url: "\(DATABASE)/feed/", keyValues: <#T##[(key: String, value: String)]?#>, completion: <#T##(() -> ())?##(() -> ())?##() -> ()#>)
-        return nil
     }
-    static func getEventsOn(_ day:Date, category:String) -> [Event]?
+    static func getEventsOn(_ day:Date, category:String)
     {
-        return nil
     }
-    static func getEventOn(_ day:Date, pk:Int) -> Event?
+    static func getEventOn(_ day:Date, pk:Int)
     {
-        return nil
     }
     static func getImageFor(_ event:Event, imageView:UIImageView)
     {
-        return
     }
-    static func getCategories() -> [String]?
+    static func getCategories()
     {
-        return nil
+        get(url: "\(DATABASE)/event/3", completion: nil)
     }
     private static func imageFrom(_ urlString:String, imageView:UIImageView)
     {
@@ -74,19 +71,15 @@ class Internet
         task.resume()
     }
     /**
-     Sends a POST request to the given URL with the given keys, running the completion function when it is done. Always use this function to communicate with the server.
+     Sends a GET request to the given URL with the given keys, running the completion function when it is done. Always use this function to communicate with the server.
      - parameters:
-     - url: URL to send the POST request to
-     - keyValues: The key values to send along with the POST request. These will be read by the server
-     - completionFunction: The function that will be run when the POST request is done
+     - url: URL to send the GET request to
+     - completionFunction: The function that will be run when the GET request is done
      */
-    private static func post(url:String, keyValues:[(key:String, value:String)]?, completion:(() -> ())?)
+    private static func get(url:String, completion:(() -> ())?)
     {
-        let keyValuesString = keyValues == nil ? "" : keyValueToStringForPOST(keyValues!)
-        
         var request = URLRequest(url: URL(string: url)!)
-        request.httpMethod = "POST"
-        request.httpBody = keyValuesString.data(using: .utf8)
+        request.httpMethod = "GET"
         let task = URLSession.shared.dataTask(with: request, completionHandler:
         {
             data, response, error in
@@ -101,23 +94,13 @@ class Internet
                 }
                 catch
                 {
-                    print("unwrapping from JSON error")
+                    print("Internet: unwrapping from JSON error")
                 }
             }
             runAsyncFunction(completion)
             
         })
         task.resume()
-    }
-    /**
-     Converts the given key values to a form recognizable by the server, in the following format: "key1=value1&key2=value2..."
-     - parameter keyValues: The key values to convert
-     - returns: A string in the server-readable key value format
-     */
-    private static func keyValueToStringForPOST(_ keyValues:[(key:String, value:String)]) -> String
-    {
-        let combinedKeyValues = keyValues.map({"\($0.key)=\($0.value)"})
-        return combinedKeyValues.joined(separator: "&")
     }
     /**
      Runs the given function asynchronously. Used because Internet communications should not be done on the UI-thread.
