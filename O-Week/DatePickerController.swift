@@ -43,12 +43,28 @@ class DatePickerController: NSObject, UICollectionViewDataSource, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        //TODO: make first selection based on current day
-        if(selectedCell == nil){
+        
+        if (selectedCell == nil) {
             let dateCell = cell as! DateCell
-            dateCell.selected(true)
-            selectedCell = dateCell
-            NotificationCenter.default.post(name: .reloadDateData, object: nil)
+            
+            //Today is not a day of orientation, select the 1st date
+            if (!UserData.dates.contains(Date())) {
+                if (indexPath.row == 0) {
+                    dateCell.selected(true)
+                    selectedCell = dateCell
+                    NotificationCenter.default.post(name: .reloadDateData, object: nil)
+                }
+            }
+            else {
+                if let date = dateCell.date {
+                    if (UserData.userCalendar.isDateInToday(date)) {
+                        dateCell.selected(true)
+                        selectedCell = dateCell
+                        NotificationCenter.default.post(name: .reloadDateData, object: nil)
+                    }
+                }
+            }
+            
         }
     }
     

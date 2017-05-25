@@ -21,14 +21,9 @@ struct Event:Hashable
     let date: Date
     let pk: Int
     
-    //TODO: change hash function
     var hashValue: Int
     {
-        var hash = title.hashValue
-        hash = 31 &* caption.hashValue &+ hash      //overflow add and overflow multiply
-        hash = 31 &* startTime.hashValue &+ hash
-        hash = 31 &* endTime.hashValue &+ hash
-        return hash
+        return title.hashValue + 31 * startTime.hashValue
     }
     
     init(title:String, caption:String, category:String, pk: Int, start:Time, end:Time, date: Date, required: Bool, description: String?)

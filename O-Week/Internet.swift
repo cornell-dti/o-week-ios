@@ -15,7 +15,7 @@ import SystemConfiguration
  */
 class Internet
 {
-    static let DATABASE = "https://oweek.herokuapp.com"
+    static let DATABASE = "https://oweekapp.heroku.com/flow"
     
     //suppress default constructor for noninstantiability
     private init(){}

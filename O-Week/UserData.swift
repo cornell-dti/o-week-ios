@@ -24,7 +24,7 @@ class UserData {
     
     //Events
     static var allEvents = [Date: [Event]]()
-    static var selectedEvents = [Date: Set<Event>]()
+    static var selectedEvents = [Date: [Event]]()
     
     //Calendar 
     static let userCalendar = Calendar.current
@@ -62,19 +62,21 @@ class UserData {
     
     static func insertToSelectedEvents(_ event: Event){
         if selectedEvents[event.date] != nil {
-            selectedEvents[event.date]!.insert(event)
+            selectedEvents[event.date]!.append(event)
         } else {
-            selectedEvents[event.date] = Set()
-            selectedEvents[event.date]!.insert(event)
+            selectedEvents[event.date] = [Event]()
+            selectedEvents[event.date]!.append(event)
         }
     }
     
     static func removeFromSelectedEvents(_ event: Event){
-        if selectedEvents[event.date] != nil {
-            selectedEvents[event.date]!.remove(event)
-        } else {
-            print("Error: should not be removing event from nil Set")
+        if let array = selectedEvents[event.date] {
+            if let index = array.index(of: event) {
+                selectedEvents[event.date]!.remove(at: index)
+                return
+            }
         }
+        print("Error: removeFromSelectedEvents attempted on unselected event")
     }
     
     // MARK:- Core Data Helper Functions
@@ -153,7 +155,7 @@ class UserData {
                 dates.append(event.date)
                 //Initialize static vars if nil
                 if selectedEvents[event.date] == nil {
-                    selectedEvents[event.date] = Set()
+                    selectedEvents[event.date] = [Event]()
                 }
                 if allEvents[event.date] == nil {
                     allEvents[event.date] = []
