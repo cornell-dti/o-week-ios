@@ -172,6 +172,9 @@
                                                 </view>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eXf-CR-pzI">
                                                     <rect key="frame" x="325" y="35" width="22" height="45"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="22" id="juC-t4-W4V"/>
+                                                    </constraints>
                                                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <state key="normal" image="add_event"/>
                                                     <connections>
