@@ -44,6 +44,8 @@ class DatePickerController: NSObject, UICollectionViewDataSource, UICollectionVi
         cell.selected(true)
         selectedCell = cell
 		UserData.selectedDate = cell.date!
+		
+		//TODO: Fix bug where if we change selected dates in My Schedule, it doesn't change in Feed. We need NotificationCenter
         
         NotificationCenter.default.post(name: .reloadDateData, object: nil)
     }
