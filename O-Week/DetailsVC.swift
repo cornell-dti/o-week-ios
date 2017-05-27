@@ -21,13 +21,16 @@ class DetailsVC: UIViewController {
     var event: Event?
     var changed = false
     
-    override func viewDidLoad() {
+    override func viewDidLoad()
+	{
         super.viewDidLoad()
         configure(event: self.event!)
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        if(changed){
+    override func viewWillDisappear(_ animated: Bool)
+	{
+        if(changed)
+		{
             NotificationCenter.default.post(name: .reload, object: nil)
         }
     }
@@ -40,14 +43,18 @@ class DetailsVC: UIViewController {
         startTime.text = event.startTime.description
         endTime.text = event.endTime.description
         setButtonImage(UserData.selectedEventsContains(event))
-        //Internet.imageFrom("https://upload.wikimedia.org/wikipedia/commons/3/34/Cornell_University%2C_Ho_Plaza_and_Sage_Hall.jpg", imageView: eventImage)
+		Internet.getImageFor(event, imageView: eventImage)
     }
     
-    @IBAction func add_button_pressed(_ sender: UIButton) {
-        if(UserData.selectedEventsContains(event!)){
+    @IBAction func add_button_pressed(_ sender: UIButton)
+	{
+        if(UserData.selectedEventsContains(event!))
+		{
             setButtonImage(false)
             UserData.removeFromSelectedEvents(event!)
-        } else {
+        }
+		else
+		{
             setButtonImage(true)
             UserData.insertToSelectedEvents(event!)
         }
@@ -55,10 +62,14 @@ class DetailsVC: UIViewController {
         
     }
     
-    private func setButtonImage(_ added:Bool) {
-        if (added){
+    private func setButtonImage(_ added:Bool)
+	{
+        if (added)
+		{
             add_button.setImage(Image.imageAddedW, for: .normal)
-        } else {
+        }
+		else
+		{
             add_button.setImage(Image.imageNotAddedW, for: .normal)
         }
     }

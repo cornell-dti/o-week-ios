@@ -104,6 +104,25 @@ class UserData {
 		event.saveToCoreData(entity: entity, context: managedContext)
 		try? managedContext.save()
 	}
+	
+	static func saveImage(_ image:UIImage, event:Event)
+	{
+		let imageData = UIImagePNGRepresentation(image)
+		let url = documentURLForName("\(event.pk).png")
+		try? imageData?.write(to: url)
+	}
+	
+	static func loadImageFor(_ event:Event) -> UIImage?
+	{
+		let url = documentURLForName("\(event.pk).png")
+		return UIImage(contentsOfFile: url.path)
+	}
+	
+	private static func documentURLForName(_ name:String) -> URL
+	{
+		let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+		return urls[0].appendingPathComponent(name)
+	}
     
     // MARK:- Core Data Helper Functions
     
@@ -111,10 +130,6 @@ class UserData {
 	{
 		initDates()
 		
-        /* Fetching PKs of added events */
-        let defaults = UserDefaults.standard
-        let added = defaults.array(forKey: addedPKsName) as? [Int] ?? []
-        
         /* Fetching Core Data */
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.persistentContainer.viewContext
@@ -132,6 +147,10 @@ class UserData {
         }
 		else
 		{
+			/* Fetching PKs of added events */
+			let defaults = UserDefaults.standard
+			let added = defaults.object(forKey: addedPKsName) as? Set<Int> ?? Set<Int>()
+			
 			let unprocessedEvents = data.map({Event($0)}).filter({!allEventsContains($0)})
 			//add unprocessed events to list of all events
 			unprocessedEvents.forEach({appendToAllEvents($0)})
@@ -147,12 +166,8 @@ class UserData {
     static func savePKs()
 	{
         let defaults = UserDefaults.standard
-        var addedPks: [Int] = []
-        for setForDay in UserData.selectedEvents.values {
-            for event in setForDay {
-                addedPks.append(event.pk)
-            }
-        }
+        var addedPks = Set<Int>()
+		UserData.selectedEvents.values.flatMap({$0}).forEach({addedPks.insert($0.pk)})
         defaults.setValue(addedPks, forKey: UserData.addedPKsName)
     }
 	

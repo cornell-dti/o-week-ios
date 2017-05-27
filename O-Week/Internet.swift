@@ -63,12 +63,20 @@ class Internet
     }
     static func getImageFor(_ event:Event, imageView:UIImageView)
     {
+		if let image = UserData.loadImageFor(event)
+		{
+			imageView.image = image
+		}
+		else
+		{
+			imageFrom("\(DATABASE)event/\(event.pk)/image", imageView: imageView, event: event)
+		}
     }
     static func getCategories()
     {
         
     }
-    private static func imageFrom(_ urlString:String, imageView:UIImageView)
+	private static func imageFrom(_ urlString:String, imageView:UIImageView, event:Event)
     {
         guard let url = URL(string: urlString) else {
             return
@@ -84,6 +92,7 @@ class Internet
                 if let downloadedImage = UIImage(data: data!)
                 {
                     runAsyncFunction({imageView.image = downloadedImage})
+					UserData.saveImage(downloadedImage, event: event)
                 }
             }
         })
