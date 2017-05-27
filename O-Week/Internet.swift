@@ -15,31 +15,50 @@ import SystemConfiguration
  */
 class Internet
 {
-    static let DATABASE = "https://oweekapp.herokuapp.com/flow"
+    static let DATABASE = "https://oweekapp.herokuapp.com/flow/"
     
     //suppress default constructor for noninstantiability
     private init(){}
     
-    /**
-     Given a JSON dictionary outputted by the database, determines what to do with the information.
-     - parameters:
-     - jsonDictionary: JSON outputted by the server
-     */
-    private static func parseJSON(_ json:Any)
-    {
-        print(json)
-    }
-    
     static func getEventsOn(_ day:Date)
     {
-        //TODO unfinished methods
-        //let date =
-        //post(url: "\(DATABASE)/feed/", keyValues: <#T##[(key: String, value: String)]?#>, completion: <#T##(() -> ())?##(() -> ())?##() -> ()#>)
+		let components = UserData.userCalendar.dateComponents([.day], from: day)
+		get(url: "\(DATABASE)feed/\(components.day!)", handler:
+		{
+			json in
+			
+			print("Url: https://oweekapp.herokuapp.com/flow/feed/\(components.day!)")
+			
+			guard let events = json as? [[String:Any]] else {
+				return
+			}
+			
+			events.map({Event(json: $0)}).forEach({
+				event in
+				guard event != nil else {
+					print("getEventsOn: Unexpected event format")
+					return
+				}
+				UserData.saveEvent(event!)
+			})
+			
+			//if the day we're loading is the selected date
+			if (UserData.userCalendar.compare(day, to: UserData.selectedDate, toGranularity: .day) == .orderedSame)
+			{
+				runAsyncFunction(
+				{
+					() -> () in
+					NotificationCenter.default.post(name: .reload, object: nil)
+					NotificationCenter.default.post(name: .reloadDateData, object: nil)
+				})
+			}
+		})
     }
     static func getEventsOn(_ day:Date, category:String)
     {
+		
     }
-    static func getEventOn(_ day:Date, pk:Int)
+    static func getEventWith(_ pk:Int)
     {
     }
     static func getImageFor(_ event:Event, imageView:UIImageView)
@@ -47,7 +66,7 @@ class Internet
     }
     static func getCategories()
     {
-        get(url: "\(DATABASE)/event/3", completion: nil)
+        
     }
     private static func imageFrom(_ urlString:String, imageView:UIImageView)
     {
@@ -74,9 +93,9 @@ class Internet
      Sends a GET request to the given URL with the given keys, running the completion function when it is done. Always use this function to communicate with the server.
      - parameters:
      - url: URL to send the GET request to
-     - completionFunction: The function that will be run when the GET request is done
+     - handler: A function used to process the info returned from the database
      */
-    private static func get(url:String, completion:(() -> ())?)
+    private static func get(url:String, handler:((Any?) -> ())?)
     {
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = "GET"
@@ -90,15 +109,15 @@ class Internet
                 do
                 {
                     let info = try JSONSerialization.jsonObject(with: data!, options: .allowFragments)
-                    self.parseJSON(info)
+                    handler?(info)
+                    return
                 }
                 catch
                 {
                     print("Internet: unwrapping from JSON error")
                 }
             }
-            runAsyncFunction(completion)
-            
+            handler?(nil)
         })
         task.resume()
     }

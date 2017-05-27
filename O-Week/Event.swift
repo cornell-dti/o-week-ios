@@ -23,7 +23,7 @@ struct Event:Hashable
     
     var hashValue: Int
     {
-        return title.hashValue + 31 * startTime.hashValue
+        return (title.hashValue + 31 * startTime.hashValue) * 31 + date.hashValue
     }
     
     init(title:String, caption:String, category:String, pk: Int, start:Time, end:Time, date: Date, required: Bool, description: String?)
@@ -83,9 +83,25 @@ struct Event:Hashable
         //TODO: Change to actual required value
         required = false
     }
+	
+	func saveToCoreData(entity: NSEntityDescription, context: NSManagedObjectContext)
+	{
+		let obj = NSManagedObject(entity: entity, insertInto: context)
+		obj.setValue(title, forKeyPath: "title")
+		obj.setValue(caption, forKeyPath: "caption")
+		obj.setValue(description, forKeyPath: "eventDescription")
+		obj.setValue(pk, forKeyPath: "pk")
+		obj.setValue(startTime.hour, forKeyPath: "startTimeHr")
+		obj.setValue(startTime.minute, forKeyPath: "startTimeMin")
+		obj.setValue(endTime.hour, forKeyPath: "endTimeHr")
+		obj.setValue(endTime.minute, forKeyPath: "endTimeMin")
+		obj.setValue(required, forKeyPath: "required")
+		obj.setValue(date, forKeyPath: "date")
+		//TODO: Save category
+	}
 }
 
 func == (lhs:Event, rhs:Event) -> Bool
 {
-    return lhs.title == rhs.title && lhs.caption == rhs.caption && lhs.startTime == rhs.startTime && lhs.endTime == rhs.endTime && lhs.date == rhs.date
+    return lhs.title == rhs.title && lhs.startTime == rhs.startTime && lhs.date == rhs.date
 }

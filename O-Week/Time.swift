@@ -73,7 +73,7 @@ struct Time:Hashable, CustomStringConvertible
         self.hour = hour
         minute = 0
     }
-    //expected format: "10:00"
+    //expected format: "10:00:00"
     static func fromString(_ timeString:String) -> Time
     {
         let hourAndMin = timeString.components(separatedBy: ":")    //"10", "00"
