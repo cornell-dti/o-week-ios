@@ -149,7 +149,7 @@ class UserData {
 		{
 			/* Fetching PKs of added events */
 			let defaults = UserDefaults.standard
-			let added = defaults.object(forKey: addedPKsName) as? Set<Int> ?? Set<Int>()
+			let added = defaults.object(forKey: addedPKsName) as? [Int] ?? [Int]()
 			
 			let unprocessedEvents = data.map({Event($0)}).filter({!allEventsContains($0)})
 			//add unprocessed events to list of all events
@@ -166,9 +166,9 @@ class UserData {
     static func savePKs()
 	{
         let defaults = UserDefaults.standard
-        var addedPks = Set<Int>()
-		UserData.selectedEvents.values.flatMap({$0}).forEach({addedPks.insert($0.pk)})
-        defaults.setValue(addedPks, forKey: UserData.addedPKsName)
+        var addedPks = [Int]()
+		UserData.selectedEvents.values.flatMap({$0}).forEach({addedPks.append($0.pk)})
+        defaults.set(addedPks, forKey: UserData.addedPKsName)
     }
 	
 	private static func initDates()
