@@ -124,7 +124,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension Notification.Name {
     static let reload = Notification.Name("reload")
     static let reloadSettings = Notification.Name("reloadSettings")
-    static let reloadDateData = Notification.Name("reloadDateData")
 }
 
 enum Settings: String {

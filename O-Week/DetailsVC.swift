@@ -29,7 +29,7 @@ class DetailsVC: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool)
 	{
-        if(changed)
+        if (changed)
 		{
             NotificationCenter.default.post(name: .reload, object: nil)
         }

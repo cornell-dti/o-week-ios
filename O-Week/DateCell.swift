@@ -17,18 +17,23 @@ class DateCell: UICollectionViewCell {
     var date: Date?
     let days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
     
-    func configure(date: Date){
+    func configure(date: Date)
+	{
         view.layer.cornerRadius = view.frame.width / 2
         self.date = date
         self.weekDay.text = days[UserData.userCalendar.component(.weekday, from: date) - 1] //Index of day is between 1 and 7, subtract 1 to adjust index to 0 - 6
         self.dayNum.text = String(UserData.userCalendar.component(.day, from: date))
     }
     
-    func selected(_ selected: Bool){
-        if(selected){
+    func selected(_ selected: Bool)
+	{
+        if(selected)
+		{
             view.backgroundColor = UIColor.white
             dayNum.textColor = UIColor.black
-        } else {
+        }
+		else
+		{
             view.backgroundColor = Color.RED
             dayNum.textColor = UIColor.white
         }

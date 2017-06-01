@@ -17,14 +17,14 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource
     @IBOutlet weak var collectionView: UICollectionView!
     
     var selectedEvent: Event? = nil
-    var selectedDate: Date?
     var datePickerController: DatePickerController?
     
     let FEED_TABLEVIEW_ROW_HEIGHT:CGFloat = 86
     
     // MARK:- Setup
     
-    override func viewDidLoad(){
+    override func viewDidLoad()
+	{
         super.viewDidLoad()
         
         AppDelegate.setUpExtendedNavBar(navController: navigationController)
@@ -32,12 +32,17 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource
         setNotificationListener()
         
         datePickerController = DatePickerController(collectionView: collectionView)
-        
-        //Temporarily set date to first in UserData.dates array
-        selectedDate = UserData.dates[0]
     }
+	
+	override func viewWillAppear(_ animated: Bool)
+	{
+		super.viewWillAppear(animated)
+		//sync date in case ScheduleVC changed it
+		datePickerController?.syncSelectedDate()
+	}
     
-    func setUpHeightofFeedCell(){
+    func setUpHeightofFeedCell()
+	{
         feedTableView.rowHeight = UITableViewAutomaticDimension
         feedTableView.estimatedRowHeight = FEED_TABLEVIEW_ROW_HEIGHT
     }
@@ -46,25 +51,28 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return UserData.allEvents[selectedDate!]!.count
+        return UserData.allEvents[UserData.selectedDate]!.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         let cell = tableView.dequeueReusableCell(withIdentifier: "feedCell", for: indexPath) as! FeedCell
-        cell.configure(event: UserData.allEvents[selectedDate!]![indexPath.row])
+        cell.configure(event: UserData.allEvents[UserData.selectedDate]![indexPath.row])
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedEvent = UserData.allEvents[selectedDate!]![indexPath.row]
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+	{
+        selectedEvent = UserData.allEvents[UserData.selectedDate]![indexPath.row]
         performSegue(withIdentifier: "showEventDetails", sender: self)
     }
     
     // MARK:- Navigation
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showEventDetails" {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+	{
+        if (segue.identifier == "showEventDetails")
+		{
             if let destination = segue.destination as? DetailsVC {
                 destination.event = selectedEvent
             }
@@ -73,18 +81,12 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource
     
     // MARK:- Handle Updates
     
-    func setNotificationListener(){
+    func setNotificationListener()
+	{
         NotificationCenter.default.addObserver(self, selector: #selector(updateFeed), name: .reload, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(updateDate), name: .reloadDateData, object: nil)
     }
-    
-    func updateFeed(){
+    func updateFeed()
+	{
         feedTableView.reloadData()
     }
-    
-    func updateDate(){
-        selectedDate = datePickerController!.selectedCell!.date!
-        updateFeed()
-    }
-    
 }

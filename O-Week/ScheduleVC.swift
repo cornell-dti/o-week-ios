@@ -19,7 +19,6 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
     var containerViews = [UIView]()
     
     var selectedEvent: Event?
-    var selectedDate: Date?
     var datePickerController: DatePickerController?
     
     let hours = [Time(hour:7), Time(hour:8), Time(hour:9), Time(hour:10), Time(hour:11), Time(hour:12), Time(hour:13), Time(hour:14), Time(hour:15), Time(hour:16), Time(hour:17), Time(hour:18), Time(hour:19), Time(hour:20), Time(hour:21), Time(hour:22), Time(hour:23), Time(hour:0), Time(hour:1), Time(hour:2)] //Table view data
@@ -37,9 +36,6 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
         setNotificationListener()
         
         datePickerController = DatePickerController(collectionView: collectionView)
-        
-        //Temporarily set date to first in UserData.dates array
-        selectedDate = UserData.dates[0]
     }
     
     override func viewDidLayoutSubviews()
@@ -72,7 +68,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
     
     func drawCells() {
         //consider events that start earliest first
-        let sortedEvents = UserData.selectedEvents[selectedDate!]!.sorted(by: {$0.startTime < $1.startTime})
+        let sortedEvents = UserData.selectedEvents[UserData.selectedDate!]!.sorted(by: {$0.startTime < $1.startTime})
         guard !sortedEvents.isEmpty else {
             return
         }
@@ -271,9 +267,9 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
     
     // MARK:- Handle Updates
     
-    func setNotificationListener(){
+    func setNotificationListener()
+	{
         NotificationCenter.default.addObserver(self, selector: #selector(updateSchedule), name: .reload, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(updateDate), name: .reloadDateData, object: nil)
     }
     
     func updateSchedule(){
@@ -281,11 +277,6 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
         containerViews.removeAll()
         drawTimeLines()
         drawCells()
-    }
-    
-    func updateDate(){
-        selectedDate = datePickerController!.selectedCell!.date!
-        updateSchedule()
     }
     
 }

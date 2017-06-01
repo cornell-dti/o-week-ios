@@ -10,7 +10,6 @@ import UIKit
 
 class DatePickerController: NSObject, UICollectionViewDataSource, UICollectionViewDelegate
 {
-    
     let collectionView: UICollectionView
     
     var selectedCell: DateCell?
@@ -22,6 +21,24 @@ class DatePickerController: NSObject, UICollectionViewDataSource, UICollectionVi
         collectionView.delegate = self
         collectionView.dataSource = self
     }
+	
+	func syncSelectedDate()
+	{
+		guard selectedCell?.date != nil else {
+			return
+		}
+		
+		//if our currently selected cell doesn't correspond to the selected date
+		if (UserData.userCalendar.compare(selectedCell!.date!, to: UserData.selectedDate, toGranularity: .day) != .orderedSame)
+		{
+			let index = UserData.dates.index(of: UserData.selectedDate)!
+			
+			selectedCell?.selected(false)
+			let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as! DateCell
+			cell.selected(true)
+			selectedCell = cell
+		}
+	}
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
 	{
@@ -30,7 +47,6 @@ class DatePickerController: NSObject, UICollectionViewDataSource, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
 	{
-        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "dateCell", for: indexPath as IndexPath) as! DateCell
         cell.configure(date: UserData.dates[indexPath.row])
         return cell
@@ -44,15 +60,11 @@ class DatePickerController: NSObject, UICollectionViewDataSource, UICollectionVi
         cell.selected(true)
         selectedCell = cell
 		UserData.selectedDate = cell.date!
-		
-		//TODO: Fix bug where if we change selected dates in My Schedule, it doesn't change in Feed. We need NotificationCenter
-        
-        NotificationCenter.default.post(name: .reloadDateData, object: nil)
+        NotificationCenter.default.post(name: .reload, object: nil)
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath)
 	{
-        
         if (selectedCell == nil)
 		{
             let dateCell = cell as! DateCell
@@ -65,7 +77,7 @@ class DatePickerController: NSObject, UICollectionViewDataSource, UICollectionVi
 			{
 				dateCell.selected(true)
 				selectedCell = dateCell
-				NotificationCenter.default.post(name: .reloadDateData, object: nil)
+				NotificationCenter.default.post(name: .reload, object: nil)
 			}
         }
     }

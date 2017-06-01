@@ -159,7 +159,6 @@ class UserData {
 			
 			//Telling other classes to reload their data
 			NotificationCenter.default.post(name: .reload, object: nil)
-			NotificationCenter.default.post(name: .reloadDateData, object: nil)
 		}
     }
     
