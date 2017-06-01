@@ -10,22 +10,22 @@ import UIKit
 import CoreData
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate
+{
     
     var window: UIWindow?
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool
+	{
         // Override point for customization after application launch.
         setNavBarColor()
         checkForSettingsAndSet()
         UserData.loadData()
-        
-        //TODO remove bottom line (for testing only)
-        Internet.getCategories()
         return true
     }
     
-    static func setUpExtendedNavBar(navController: UINavigationController?){
+    static func setUpExtendedNavBar(navController: UINavigationController?)
+	{
         navController?.navigationBar.shadowImage = UIImage(named: "transparent_pixel")
         navController?.navigationBar.setBackgroundImage(UIImage(named: "pixel"), for: .default)
     }
@@ -40,12 +40,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navigationBarAppearence.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: UIFont(name: "AvenirNext-DemiBold", size: 14)!]
     }
     
-    private func checkForSettingsAndSet(){
+    private func checkForSettingsAndSet()
+	{
         let defaults = UserDefaults.standard
-        if(defaults.string(forKey: Settings.receiveRemindersFor.rawValue) == nil){
+        if (defaults.string(forKey: Settings.receiveRemindersFor.rawValue) == nil)
+		{
             defaults.set("No events", forKey: Settings.receiveRemindersFor.rawValue)
         }
-        if(defaults.string(forKey: Settings.notifyMe.rawValue) == nil){
+        if (defaults.string(forKey: Settings.notifyMe.rawValue) == nil)
+		{
             defaults.set("At time of event", forKey: Settings.notifyMe.rawValue)
         }
     }
