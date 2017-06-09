@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="-5 697 500 500" style="enable-background:new -5 697 500 500;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#FFFFFF;}
+	.st1{font-family:'ChalkboardSE-Regular';}
+	.st2{font-size:121.34px;}
+	.st3{fill:none;stroke:#FFFFFF;stroke-width:40;stroke-miterlimit:10;}
+	.st4{font-size:30px;}
+	.st5{display:none;fill:#FFFFFF;fill-opacity:0.67;}
+</style>
+<g id="Layer_1-2">
+	<text transform="matrix(1.27 0 0 1 191.8564 976.3145)" class="st0 st1 st2">w</text>
+	<ellipse class="st3" cx="247.4" cy="943.6" rx="116" ry="113.3"/>
+	<path class="st0" d="M247.5,774.6L247.5,774.6c-3.2,16.2-13,30.3-27,39c2.9,13.8,13.9,24,26.9,24s24-10.3,26.9-24.1
+		C260.3,804.8,250.6,790.7,247.5,774.6z"/>
+	<path class="st0" d="M247.3,1113.6L247.3,1113.6c3.2-16.2,13-30.3,27-39c-2.9-13.8-13.9-24-26.9-24s-24,10.3-26.9,24.1
+		C234.5,1083.4,244.2,1097.5,247.3,1113.6z"/>
+	<path class="st0" d="M74.9,944.1L74.9,944.1c16.2,3.2,30.3,12.9,39,26.9c13.8-3,24-13.9,24-27s-10.3-23.9-24.2-26.8
+		C105.1,931.2,91,940.9,74.9,944.1z"/>
+	<path class="st0" d="M419.9,943.6L419.9,943.6c-16.2-3.2-30.3-12.9-39-26.9c-13.8,3-24,13.9-24,27s10.3,24,24.2,26.9
+		C389.7,956.5,403.8,946.8,419.9,943.6z"/>
+</g>
+<text transform="matrix(1 0 0 1 238.1548 739.5544)" class="st0 st1 st4">N</text>
+<text transform="matrix(1 0 0 1 16.0162 953.0005)" class="st0 st1 st4">W</text>
+<text transform="matrix(1 0 0 1 452.2532 956.0002)" class="st0 st1 st4">E</text>
+<text transform="matrix(1 0 0 1 236.5486 1171.3384)" class="st0 st1 st4">S</text>
+<circle class="st0" cx="356.9" cy="757.5" r="5"/>
+<circle class="st0" cx="435.1" cy="836.6" r="5"/>
+<circle class="st0" cx="434.6" cy="1052.1" r="5"/>
+<circle class="st0" cx="354.6" cy="1131.1" r="5"/>
+<circle class="st0" cx="139.6" cy="1131.1" r="5"/>
+<circle class="st0" cx="59.2" cy="1051.9" r="5"/>
+<circle class="st0" cx="59.2" cy="835.3" r="5"/>
+<circle class="st0" cx="139.6" cy="755.9" r="5"/>
+<polygon class="st5" points="245,1163.2 136.9,1134.2 57.8,1055.1 28.8,947 57.8,838.9 136.9,759.8 245,730.8 353.1,759.8 
+	432.2,838.9 461.2,947 432.2,1055.1 353.1,1134.2 "/>
+</svg>
