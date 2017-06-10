@@ -34,7 +34,7 @@ class DateCell: UICollectionViewCell {
         }
 		else
 		{
-            view.backgroundColor = Color.RED
+            view.backgroundColor = Constants.Colors.RED
             dayNum.textColor = UIColor.white
         }
     }

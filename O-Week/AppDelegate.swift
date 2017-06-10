@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     {
         let navigationBarAppearence = UINavigationBar.appearance()
         
-        navigationBarAppearence.barTintColor = Color.RED
+        navigationBarAppearence.barTintColor = Constants.Colors.RED
         navigationBarAppearence.tintColor = UIColor.white   //back arrow is black
         navigationBarAppearence.isTranslucent = false
         navigationBarAppearence.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: UIFont(name: "AvenirNext-DemiBold", size: 14)!]
@@ -43,13 +43,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     private func checkForSettingsAndSet()
 	{
         let defaults = UserDefaults.standard
-        if (defaults.string(forKey: Settings.receiveRemindersFor.rawValue) == nil)
+        if (defaults.string(forKey: Constants.Settings.receiveRemindersFor.rawValue) == nil)
 		{
-            defaults.set("No events", forKey: Settings.receiveRemindersFor.rawValue)
+            defaults.set("No events", forKey: Constants.Settings.receiveRemindersFor.rawValue)
         }
-        if (defaults.string(forKey: Settings.notifyMe.rawValue) == nil)
+        if (defaults.string(forKey: Constants.Settings.notifyMe.rawValue) == nil)
 		{
-            defaults.set("At time of event", forKey: Settings.notifyMe.rawValue)
+            defaults.set("At time of event", forKey: Constants.Settings.notifyMe.rawValue)
         }
     }
     
@@ -122,15 +122,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate
             }
         }
     }
-}
-
-extension Notification.Name {
-    static let reload = Notification.Name("reload")
-    static let reloadSettings = Notification.Name("reloadSettings")
-}
-
-enum Settings: String {
-    case receiveRemindersFor = "Receive reminders for..."
-    case notifyMe = "Notify me..."
 }
 

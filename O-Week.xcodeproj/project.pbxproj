@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		0628E4851E7C82830066A308 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0628E4841E7C82830066A308 /* MapKit.framework */; };
 		0628E4871E7CA3260066A308 /* FeedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0628E4861E7CA3260066A308 /* FeedVC.swift */; };
-		0628E48B1E7CA4750066A308 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0628E48A1E7CA4750066A308 /* Color.swift */; };
 		067EC2E71E8C9F8D0098ED94 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067EC2E61E8C9F8D0098ED94 /* Event.swift */; };
 		067EC2E91E8C9FE20098ED94 /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067EC2E81E8C9FE20098ED94 /* Time.swift */; };
 		DC18B3111E76CBCE00C3FCD6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC18B3101E76CBCE00C3FCD6 /* AppDelegate.swift */; };
@@ -23,6 +22,7 @@
 		DC23E0111EBD6E780060F24F /* DatePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23E0101EBD6E780060F24F /* DatePickerController.swift */; };
 		DC2C02991E7DC25F00E9DDEF /* ScheduleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2C02981E7DC25F00E9DDEF /* ScheduleVC.swift */; };
 		DC3274621E7CB4F100CB3E22 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3274611E7CB4F100CB3E22 /* FeedCell.swift */; };
+		DC9307091EEC5D2F005AF445 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9307081EEC5D2F005AF445 /* Constants.swift */; };
 		DC9BD7711EB6496C00552906 /* O-Week.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DC9BD76F1EB6496C00552906 /* O-Week.xcdatamodeld */; };
 		DCB182381EB7936E0041EEBC /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB182371EB7936E0041EEBC /* SettingsVC.swift */; };
 		DCB1823A1EB799B70041EEBC /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB182391EB799B70041EEBC /* SettingsCell.swift */; };
@@ -30,7 +30,6 @@
 		DCB335D91EB7DB9B000C495E /* OptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB335D81EB7DB9B000C495E /* OptionsCell.swift */; };
 		DCC2FF8B1EB24EEA00624B4F /* Internet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC2FF8A1EB24EEA00624B4F /* Internet.swift */; };
 		DCD4464C1E76F941002D8F68 /* DetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD4464B1E76F941002D8F68 /* DetailsVC.swift */; };
-		DCDEBFF31EB4127B0014E028 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDEBFF21EB4127B0014E028 /* Image.swift */; };
 		DCDEBFF71EB414BB0014E028 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDEBFF61EB414BB0014E028 /* UserData.swift */; };
 /* End PBXBuildFile section */
 
@@ -54,7 +53,6 @@
 /* Begin PBXFileReference section */
 		0628E4841E7C82830066A308 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		0628E4861E7CA3260066A308 /* FeedVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedVC.swift; sourceTree = "<group>"; };
-		0628E48A1E7CA4750066A308 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		067EC2E61E8C9F8D0098ED94 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		067EC2E81E8C9FE20098ED94 /* Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
 		DC18B30D1E76CBCE00C3FCD6 /* O-Week.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "O-Week.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -74,6 +72,7 @@
 		DC23E0101EBD6E780060F24F /* DatePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerController.swift; sourceTree = "<group>"; };
 		DC2C02981E7DC25F00E9DDEF /* ScheduleVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleVC.swift; sourceTree = "<group>"; };
 		DC3274611E7CB4F100CB3E22 /* FeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
+		DC9307081EEC5D2F005AF445 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		DC9BD7701EB6496C00552906 /* O-Week.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "O-Week.xcdatamodel"; sourceTree = "<group>"; };
 		DCB182371EB7936E0041EEBC /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		DCB182391EB799B70041EEBC /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
@@ -81,7 +80,6 @@
 		DCB335D81EB7DB9B000C495E /* OptionsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsCell.swift; sourceTree = "<group>"; };
 		DCC2FF8A1EB24EEA00624B4F /* Internet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Internet.swift; sourceTree = "<group>"; };
 		DCD4464B1E76F941002D8F68 /* DetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsVC.swift; sourceTree = "<group>"; };
-		DCDEBFF21EB4127B0014E028 /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		DCDEBFF61EB414BB0014E028 /* UserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -147,13 +145,24 @@
 				DC18B3141E76CBCE00C3FCD6 /* Main.storyboard */,
 				DC18B31C1E76CBCE00C3FCD6 /* Info.plist */,
 				DC18B3101E76CBCE00C3FCD6 /* AppDelegate.swift */,
-				0628E48A1E7CA4750066A308 /* Color.swift */,
-				DCDEBFF21EB4127B0014E028 /* Image.swift */,
+				DC9307081EEC5D2F005AF445 /* Constants.swift */,
 				067EC2E81E8C9FE20098ED94 /* Time.swift */,
 				DCC2FF8A1EB24EEA00624B4F /* Internet.swift */,
+				067EC2E61E8C9F8D0098ED94 /* Event.swift */,
+				DCDEBFF61EB414BB0014E028 /* UserData.swift */,
+				DC23E0101EBD6E780060F24F /* DatePickerController.swift */,
+				DC23E00E1EBD63980060F24F /* DateCell.swift */,
+				0628E4861E7CA3260066A308 /* FeedVC.swift */,
+				DC3274611E7CB4F100CB3E22 /* FeedCell.swift */,
+				DC2C02981E7DC25F00E9DDEF /* ScheduleVC.swift */,
+				DC1E83181E85E635000CD56B /* ScheduleCell.swift */,
+				DCD4464B1E76F941002D8F68 /* DetailsVC.swift */,
+				DCB182371EB7936E0041EEBC /* SettingsVC.swift */,
+				DCB182391EB799B70041EEBC /* SettingsCell.swift */,
+				DCB335D61EB7DB86000C495E /* OptionsVC.swift */,
+				DCB335D81EB7DB9B000C495E /* OptionsCell.swift */,
 				DC18B3171E76CBCE00C3FCD6 /* Assets.xcassets */,
-				DC23E0121EBD6F690060F24F /* Model */,
-				DC23E0141EBD6F850060F24F /* Control */,
+				DC9BD76F1EB6496C00552906 /* O-Week.xcdatamodeld */,
 			);
 			path = "O-Week";
 			sourceTree = "<group>";
@@ -174,34 +183,6 @@
 				DC18B3321E76CBCE00C3FCD6 /* Info.plist */,
 			);
 			path = "O-WeekUITests";
-			sourceTree = "<group>";
-		};
-		DC23E0121EBD6F690060F24F /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				DC9BD76F1EB6496C00552906 /* O-Week.xcdatamodeld */,
-				DCDEBFF61EB414BB0014E028 /* UserData.swift */,
-				067EC2E61E8C9F8D0098ED94 /* Event.swift */,
-			);
-			name = Model;
-			sourceTree = "<group>";
-		};
-		DC23E0141EBD6F850060F24F /* Control */ = {
-			isa = PBXGroup;
-			children = (
-				DC23E0101EBD6E780060F24F /* DatePickerController.swift */,
-				DC23E00E1EBD63980060F24F /* DateCell.swift */,
-				0628E4861E7CA3260066A308 /* FeedVC.swift */,
-				DC3274611E7CB4F100CB3E22 /* FeedCell.swift */,
-				DC2C02981E7DC25F00E9DDEF /* ScheduleVC.swift */,
-				DC1E83181E85E635000CD56B /* ScheduleCell.swift */,
-				DCD4464B1E76F941002D8F68 /* DetailsVC.swift */,
-				DCB182371EB7936E0041EEBC /* SettingsVC.swift */,
-				DCB182391EB799B70041EEBC /* SettingsCell.swift */,
-				DCB335D61EB7DB86000C495E /* OptionsVC.swift */,
-				DCB335D81EB7DB9B000C495E /* OptionsCell.swift */,
-			);
-			name = Control;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -356,11 +337,10 @@
 				DC1E83191E85E635000CD56B /* ScheduleCell.swift in Sources */,
 				DCDEBFF71EB414BB0014E028 /* UserData.swift in Sources */,
 				DC18B3111E76CBCE00C3FCD6 /* AppDelegate.swift in Sources */,
-				0628E48B1E7CA4750066A308 /* Color.swift in Sources */,
 				DCD4464C1E76F941002D8F68 /* DetailsVC.swift in Sources */,
-				DCDEBFF31EB4127B0014E028 /* Image.swift in Sources */,
 				DC23E00F1EBD63980060F24F /* DateCell.swift in Sources */,
 				DC3274621E7CB4F100CB3E22 /* FeedCell.swift in Sources */,
+				DC9307091EEC5D2F005AF445 /* Constants.swift in Sources */,
 				DCB182381EB7936E0041EEBC /* SettingsVC.swift in Sources */,
 				DC23E0111EBD6E780060F24F /* DatePickerController.swift in Sources */,
 				DCB1823A1EB799B70041EEBC /* SettingsCell.swift in Sources */,

@@ -66,11 +66,11 @@ class DetailsVC: UIViewController {
 	{
         if (added)
 		{
-            add_button.setImage(Image.imageAddedW, for: .normal)
+            add_button.setImage(Constants.Images.whiteImageAdded, for: .normal)
         }
 		else
 		{
-            add_button.setImage(Image.imageNotAddedW, for: .normal)
+            add_button.setImage(Constants.Images.whiteImageNotAdded, for: .normal)
         }
     }
 }

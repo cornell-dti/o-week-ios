@@ -61,7 +61,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
         for hour in hours
         {
             let line = UIView(frame: CGRect(x: 0, y: yForStartTime(hour), width: fullCellWidth(), height: 0.5))
-            line.backgroundColor = Color.GRAY
+            line.backgroundColor = Constants.Colors.GRAY
             contentView.addSubview(line)
         }
     }
@@ -102,9 +102,9 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
         }
         
         let container = UIView(frame: CGRect(x: cellX(slot: slot, numSlots: newNumSlots), y: yForStartTime(event.startTime), width: cellWidth(event: event, slot: slot, numSlots: newNumSlots, eventForSlot: newEventForSlot), height: cellHeight(event: event)))
-        container.backgroundColor = Color.PINK
+        container.backgroundColor = Constants.Colors.PINK
         container.layer.cornerRadius = EVENT_CORNER_RADIUS
-        container.layer.borderColor = Color.RED.cgColor
+        container.layer.borderColor = Constants.Colors.RED.cgColor
         container.layer.borderWidth = EVENT_BORDER_WIDTH
         contentView.addSubview(container)
         containerViews.append(container)
@@ -130,7 +130,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
         title.numberOfLines = 0
         title.lineBreakMode = .byTruncatingTail
         title.font = UIFont(name: "AvenirNext-DemiBold", size: 12)
-        title.textColor = Color.RED
+        title.textColor = Constants.Colors.RED
         title.text = event.title
         title.translatesAutoresizingMaskIntoConstraints = false
         //title.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
@@ -142,7 +142,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
         caption.numberOfLines = 0
         caption.lineBreakMode = .byTruncatingTail
         caption.font = UIFont(name: "AvenirNext-Regular", size: 10)
-        caption.textColor = Color.RED
+        caption.textColor = Constants.Colors.RED
         caption.text = event.caption
         caption.translatesAutoresizingMaskIntoConstraints = false
         //caption.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)

@@ -50,7 +50,7 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(section == 0){
-            if(defaults!.string(forKey: Settings.receiveRemindersFor.rawValue) == "No events"){
+            if(defaults!.string(forKey: Constants.Settings.receiveRemindersFor.rawValue) == "No events"){
                 return 1
             }else {
                 return settings.count
@@ -77,7 +77,7 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         //Setting appearance of Section titles
         let header = view as! UITableViewHeaderFooterView
         header.textLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 14)
-        header.textLabel?.textColor = Color.RED
+        header.textLabel?.textColor = Constants.Colors.RED
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

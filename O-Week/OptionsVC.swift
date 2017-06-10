@@ -47,7 +47,7 @@ class OptionsVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "optionsCell") as! OptionsCell
         cell.label.text = setting!.options[indexPath.row]
         if(setting!.options[indexPath.row] == defaults?.string(forKey: setting!.name)){
-            cell.view.backgroundColor = Color.RED
+            cell.view.backgroundColor = Constants.Colors.RED
         } else {
             cell.view.backgroundColor = UIColor.white
         }

@@ -40,9 +40,9 @@ class FeedCell:UITableViewCell
     
     func setButtonImage(_ added: Bool){
         if (added){
-            eventButton.setImage(Image.imageAdded, for: .normal)
+            eventButton.setImage(Constants.Images.imageAdded, for: .normal)
         } else {
-            eventButton.setImage(Image.imageNotAdded, for: .normal)
+            eventButton.setImage(Constants.Images.imageNotAdded, for: .normal)
         }
     }
     
