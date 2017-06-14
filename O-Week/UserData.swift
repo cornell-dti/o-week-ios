@@ -62,7 +62,6 @@ class UserData {
 			print("appendToAllEvents: attempted to add event with date outside orientation")
 			return
 		}
-		
 		allEvents[event.date]!.append(event)
     }
 	
@@ -85,7 +84,6 @@ class UserData {
                 return
             }
         }
-        print("Error: removeFromSelectedEvents attempted on unselected event")
     }
 	
 	/**
