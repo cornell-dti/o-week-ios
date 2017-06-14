@@ -39,7 +39,7 @@ struct Constants
     }
     
     enum Settings: String {
-        case receiveRemindersFor = "Receive reminders for..."
+        case setFor = "Set for..."
         case notifyMe = "Notify me..."
     }
     

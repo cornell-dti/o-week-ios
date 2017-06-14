@@ -43,9 +43,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     private func checkForSettingsAndSet()
 	{
         let defaults = UserDefaults.standard
-        if (defaults.string(forKey: Constants.Settings.receiveRemindersFor.rawValue) == nil)
+        if (defaults.string(forKey: Constants.Settings.setFor.rawValue) == nil)
 		{
-            defaults.set("No events", forKey: Constants.Settings.receiveRemindersFor.rawValue)
+            defaults.set("No events", forKey: Constants.Settings.setFor.rawValue)
         }
         if (defaults.string(forKey: Constants.Settings.notifyMe.rawValue) == nil)
 		{
