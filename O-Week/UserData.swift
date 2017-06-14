@@ -19,9 +19,6 @@ class UserData {
     static let eventEntityName = "EventEntity"
     static let addedPKsName = "AddedPKs" //KeyPath used for accessing added PKs in User Defaults
     
-    //Settings
-    static let allSettings: [(name: String, options: [String])] = [(name: "Receive reminders for...", options: ["No events", "All my events", "Only required events"]), (name: "Notify me...", options: ["At time of event", "1 hour before", "2 hours before", "3 hours before", "5 hours before", "Morning of (7 am)", "1 day before", "2 days before"])]
-    
     //Events
     static var allEvents = [Date: [Event]]()
     static var selectedEvents = [Date: [Event]]()

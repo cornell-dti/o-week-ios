@@ -8,14 +8,13 @@
 
 import UIKit
 
-class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
-    @IBOutlet weak var tableView: UITableView!
+class SettingsVC: UITableViewController {
     
     let sectionTitles = ["Notifications", "Events"]
+    let settings: [(name: String, options: [String])] = [(name: "Receive reminders for...", options: ["No events", "All my events", "Only required events"]), (name: "Notify me...", options: ["At time of event", "1 hour before", "2 hours before", "3 hours before", "5 hours before", "Morning of (7 am)", "1 day before", "2 days before"])]
     let actions = ["Add all required events to my schedule" ,"Remove all events from my schedule"]
     
-    var settings: [(name: String, options: [String])] = []
+    //var settings: [(name: String, options: [String])] = []
     var chosenSetting: Int?
     
     var defaults: UserDefaults?
@@ -23,13 +22,8 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTableViewAppearance()
-        initializeVariables()
-        NotificationCenter.default.addObserver(self, selector: #selector(updateSettings), name: .reloadSettings, object: nil)
-    }
-    
-    func initializeVariables(){
-        settings = UserData.allSettings
         defaults = UserDefaults.standard
+        NotificationCenter.default.addObserver(self, selector: #selector(updateSettings), name: .reloadSettings, object: nil)
     }
     
     func setUpTableViewAppearance(){
@@ -40,47 +34,48 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     // MARK:- TableView Methods
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sectionTitles[section]
-    }
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        return sectionTitles[section]
+//    }
+//    
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        return sectionTitles.count
+//    }
+//    
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        if(section == 0){
+//            if(defaults!.string(forKey: Constants.Settings.receiveRemindersFor.rawValue) == "No events"){
+//                return 1
+//            }else {
+//                return settings.count
+//            }
+//        } else {
+//            return actions.count
+//        }
+//    }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return sectionTitles.count
-    }
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "settingsCell") as! SettingsCell
+//        if(indexPath.section == 0){
+//            cell.label.text = settings[indexPath.row].name
+//            cell.chosenOption.text = defaults!.string(forKey: settings[indexPath.row].name)
+//        } else {
+//            cell.label.text = actions[indexPath.row]
+//            cell.chosenOption.text = ""
+//        }
+//        return cell
+//    }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if(section == 0){
-            if(defaults!.string(forKey: Constants.Settings.receiveRemindersFor.rawValue) == "No events"){
-                return 1
-            }else {
-                return settings.count
-            }
-        } else {
-            return actions.count
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "settingsCell") as! SettingsCell
-        if(indexPath.section == 0){
-            cell.label.text = settings[indexPath.row].name
-            cell.chosenOption.text = defaults!.string(forKey: settings[indexPath.row].name)
-        } else {
-            cell.label.text = actions[indexPath.row]
-            cell.chosenOption.text = ""
-        }
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int)
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int)
     {
         //Setting appearance of Section titles
         let header = view as! UITableViewHeaderFooterView
         header.textLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 14)
         header.textLabel?.textColor = Constants.Colors.RED
+        header.textLabel?.text = sectionTitles[section]
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if(indexPath.section == 0){
             chosenSetting = indexPath.row
             performSegue(withIdentifier: "toOptions", sender: self)
