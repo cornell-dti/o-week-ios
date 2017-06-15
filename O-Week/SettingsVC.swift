@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SettingsVC: UITableViewController {
+class SettingsVC: UITableViewController{
     
     @IBOutlet weak var remindersSet: UISwitch!
     @IBOutlet weak var setForOption: UILabel!
@@ -41,6 +41,8 @@ class SettingsVC: UITableViewController {
         notifyMeOption.text = UserPreferences.notifyMeSetting.chosen ?? "Not set"
     }
     
+    // MARK:- Actions
+    
     @IBAction func switchChanged(_ sender: UISwitch) {
         if(!sender.isOn) {
             UserPreferences.setForSetting.chosen = nil
@@ -49,6 +51,51 @@ class SettingsVC: UITableViewController {
         hideSettings = !sender.isOn
         displaySettings()
         tableView.reloadData()
+    }
+    
+    @IBAction func visitWebsite(_ sender: UIButton) {
+        UIApplication.shared.open(URL(string: "http://www.cornellsatech.org")!)
+    }
+    
+    @IBAction func addAllRequired(_ sender: UIButton) {
+        let optionMenu = UIAlertController(title: nil, message: "Do you want to add all required events to your schedule?", preferredStyle: .actionSheet)
+        let addAll = UIAlertAction(title: "Add All Required Events", style: .default, handler: {
+            [weak self] (alert: UIAlertAction!) -> Void in
+            UserData.allEvents.forEach({date, events in events.forEach({
+                if $0.required {
+                    UserData.insertToSelectedEvents($0)
+                }
+            })})
+            NotificationCenter.default.post(name: .reload, object: nil)
+            _ = self?.navigationController?.popViewController(animated: true)
+        })
+        //TODO: Add alert actions for each individual college so only required events from a specific college are added
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+            return
+        })
+        optionMenu.addAction(addAll)
+        optionMenu.addAction(cancelAction)
+        self.present(optionMenu, animated: true, completion: nil)
+    }
+    
+    @IBAction func removeAll(_ sender: UIButton) {
+        let optionMenu = UIAlertController(title: nil, message: "Do you want to remove all events from your schedule?", preferredStyle: .actionSheet)
+        let deleteAction = UIAlertAction(title: "Remove All Events", style: .destructive, handler: {
+            [weak self] (alert: UIAlertAction!) -> Void in
+            UserData.selectedEvents.forEach({ (date, events) in
+                UserData.selectedEvents[date] = []
+            })
+            NotificationCenter.default.post(name: .reload, object: nil)
+            _ = self?.navigationController?.popViewController(animated: true)
+        })
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+            return
+        })
+        optionMenu.addAction(deleteAction)
+        optionMenu.addAction(cancelAction)
+        self.present(optionMenu, animated: true, completion: nil)
     }
     
     // MARK:- TableView Methods
