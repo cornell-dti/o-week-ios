@@ -539,7 +539,7 @@
             </objects>
             <point key="canvasLocation" x="-23" y="134"/>
         </scene>
-        <!--SettingsVC-->
+        <!--Settings-->
         <scene sceneID="sOy-7t-try">
             <objects>
                 <tableViewController id="hr7-Jz-ZuC" customClass="SettingsVC" customModule="O_Week" customModuleProvider="target" sceneMemberID="viewController">
@@ -700,6 +700,9 @@
                             <outlet property="delegate" destination="hr7-Jz-ZuC" id="eTJ-tM-n3e"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Settings" id="MeG-Bd-NnZ">
+                        <barButtonItem key="backBarButtonItem" title=" " id="H5z-HB-GTw"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="notifyMeOption" destination="e4v-tM-bSc" id="gXf-T6-MTF"/>
                         <outlet property="remindersSet" destination="2zw-03-le8" id="U27-yM-DAa"/>
@@ -708,6 +711,13 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vt1-9u-8hV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationBar contentMode="scaleToFill" id="6fz-gD-0Ce">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <items>
+                        <navigationItem title="Title" id="t7P-gj-w6E"/>
+                    </items>
+                </navigationBar>
             </objects>
             <point key="canvasLocation" x="748" y="134.48275862068968"/>
         </scene>
@@ -931,6 +941,6 @@
         <image name="settings" width="12" height="12"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Xcf-ub-FiZ"/>
+        <segue reference="mu3-We-PmB"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -19,9 +19,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate
 	{
         // Override point for customization after application launch.
         setNavBarColor()
-        checkForSettingsAndSet()
-        Notifications.requestPermissionForNotificationsIfNeeded()
+        LocalNotifications.requestPermissionForNotifications()
         UserData.loadData()
+        //LocalNotifications.addNotificationsForAll()
         return true
     }
     
@@ -39,19 +39,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         navigationBarAppearence.tintColor = UIColor.white   //back arrow is black
         navigationBarAppearence.isTranslucent = false
         navigationBarAppearence.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: UIFont(name: "AvenirNext-DemiBold", size: 14)!]
-    }
-    
-    private func checkForSettingsAndSet()
-	{
-        let defaults = UserDefaults.standard
-        if (defaults.string(forKey: Constants.Settings.setFor.rawValue) == nil)
-		{
-            defaults.set("No events", forKey: Constants.Settings.setFor.rawValue)
-        }
-        if (defaults.string(forKey: Constants.Settings.notifyMe.rawValue) == nil)
-		{
-            defaults.set("At time of event", forKey: Constants.Settings.notifyMe.rawValue)
-        }
     }
     
     func applicationWillResignActive(_ application: UIApplication) {

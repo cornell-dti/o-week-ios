@@ -15,8 +15,8 @@ class UserData {
     
     // MARK:- Properties
     
-    //Core Data
-    static let eventEntityName = "EventEntity"
+    //Persistent Data
+    static let eventEntityName = "EventEntity" //For Core Data
     static let addedPKsName = "AddedPKs" //KeyPath used for accessing added PKs in User Defaults
     
     //Events

@@ -12,18 +12,23 @@ class OptionsVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
-    var setting: (name: String, options: [String])?
-    
-    var defaults: UserDefaults?
+    var setting: (settingWOptions: Constants.Setting, stored_val: String?)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTableViewAppearance()
-        self.navigationItem.title = setting!.name //Dynamically set title of view based on which setting was chosen in Settings View
-        defaults = UserDefaults.standard
+        self.navigationItem.title = setting!.settingWOptions.name
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        switch setting!.settingWOptions.name {
+        case Constants.setForSetting.name:
+            LocalNotifications.setForSetting = setting!.stored_val
+        case Constants.notifyMeSetting.name:
+            LocalNotifications.notifyMeSetting = setting!.stored_val
+        default:
+            print("Error with switch statement in OptionsVC viewWillDisappear")
+        }
         NotificationCenter.default.post(name: .reloadSettings, object: nil)
     }
     
@@ -40,13 +45,13 @@ class OptionsVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return setting!.options.count
+        return setting!.settingWOptions.options.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "optionsCell") as! OptionsCell
-        cell.label.text = setting!.options[indexPath.row]
-        if(setting!.options[indexPath.row] == defaults?.string(forKey: setting!.name)){
+        cell.label.text = setting!.settingWOptions.options[indexPath.row]
+        if(setting!.stored_val == setting!.settingWOptions.options[indexPath.row]){
             cell.view.backgroundColor = Constants.Colors.RED
         } else {
             cell.view.backgroundColor = UIColor.white
@@ -57,8 +62,7 @@ class OptionsVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        defaults?.set(setting!.options[indexPath.row], forKey: setting!.name)
+        setting!.stored_val = setting!.settingWOptions.options[indexPath.row]
         tableView.reloadData()
     }
     

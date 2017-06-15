@@ -14,21 +14,20 @@ class SettingsVC: UITableViewController {
     @IBOutlet weak var setForOption: UILabel!
     @IBOutlet weak var notifyMeOption: UILabel!
     
-    
-    let settings: [(name: String, options: [String])] = [(name: "Set for...", options: ["All my events", "Only required events"]), (name: "Notify me...", options: ["At time of event", "1 hour before", "2 hours before", "3 hours before", "5 hours before", "Morning of (7 am)", "1 day before", "2 days before"])]
-    //let actions = ["Add all required events to my schedule" ,"Remove all events from my schedule"]
-    //var settings: [(name: String, options: [String])] = []
-    
-    var defaults: UserDefaults?
-    var chosenSetting: Int?
-    var hideSettings = true
+    var chosenSetting: (settingWOptions: Constants.Setting, stored_val: String?)?
+    var hideSettings = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        defaults = UserDefaults.standard
+        setUpSwitch()
         setUpTableViewAppearance()
         displaySettings()
         NotificationCenter.default.addObserver(self, selector: #selector(updateSettings), name: .reloadSettings, object: nil)
+    }
+    
+    func setUpSwitch(){
+        remindersSet.setOn(LocalNotifications.setForSetting != nil, animated: false)
+        hideSettings = !remindersSet.isOn
     }
     
     func setUpTableViewAppearance(){
@@ -38,15 +37,17 @@ class SettingsVC: UITableViewController {
     }
     
     func displaySettings(){
-        setForOption.text = defaults!.string(forKey: Constants.Settings.setFor.rawValue)
-        notifyMeOption.text = defaults?.string(forKey: Constants.Settings.notifyMe.rawValue)
+        setForOption.text = LocalNotifications.setForSetting ?? "Not set"
+        notifyMeOption.text = LocalNotifications.notifyMeSetting ?? "Not set"
     }
     
     @IBAction func switchChanged(_ sender: UISwitch) {
         if(!sender.isOn) {
-            defaults?.set("No events", forKey: Constants.Settings.setFor.rawValue)
+            LocalNotifications.setForSetting = nil
+            LocalNotifications.notifyMeSetting = nil
         }
         hideSettings = !sender.isOn
+        displaySettings()
         tableView.reloadData()
     }
     
@@ -69,8 +70,11 @@ class SettingsVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if(indexPath.section == 0 && indexPath.row != 0){
-            chosenSetting = indexPath.row
+        if(indexPath.section == 0 && indexPath.row == 1){
+            chosenSetting = (Constants.setForSetting, LocalNotifications.setForSetting)
+            performSegue(withIdentifier: "toOptions", sender: self)
+        } else if(indexPath.section == 0 && indexPath.row == 2){
+            chosenSetting = (Constants.notifyMeSetting, LocalNotifications.notifyMeSetting)
             performSegue(withIdentifier: "toOptions", sender: self)
         } else {
             //TODO: Implement functionality for 2nd section (add all events, add all required, etc)
@@ -82,7 +86,7 @@ class SettingsVC: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "toOptions"){
             let dest = segue.destination as! OptionsVC
-            dest.setting = settings[chosenSetting! - 1]
+            dest.setting = chosenSetting
         }
     }
     
@@ -90,7 +94,6 @@ class SettingsVC: UITableViewController {
     
     func updateSettings(){
         displaySettings()
-        tableView.reloadData()
     }
     
 }
