@@ -38,13 +38,6 @@ struct Constants
         private init(){}
     }
     
-    static let setForSetting = Setting(name: "Set for...", options: ["All my events", "Only required events"])
-    static let notifyMeSetting = Setting(name: "Notify me...", options: ["At time of event", "1 hour before", "2 hours before", "3 hours before", "5 hours before", "Morning of (7 am)", "1 day before", "2 days before"])
-    struct Setting {
-        let name: String
-        let options: [String]
-    }
-    
 }
 
 extension Notification.Name {

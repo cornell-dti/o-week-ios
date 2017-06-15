@@ -14,31 +14,6 @@ struct LocalNotifications {
     static let center = UNUserNotificationCenter.current()
     static let options: UNAuthorizationOptions = [.alert, .sound, .badge]
     
-    static var setForSetting: String? {
-        get {
-           return UserDefaults.standard.string(forKey: Constants.setForSetting.name)
-        }
-        set {
-            if newValue == nil {
-                UserDefaults.standard.removeObject(forKey: Constants.setForSetting.name)
-            }else {
-                UserDefaults.standard.set(newValue, forKey: Constants.setForSetting.name)
-            }
-        }
-    }
-    static var notifyMeSetting: String? {
-        get {
-            return UserDefaults.standard.string(forKey: Constants.notifyMeSetting.name)
-        }
-        set {
-            if newValue == nil {
-                UserDefaults.standard.removeObject(forKey: Constants.notifyMeSetting.name)
-            }else {
-                UserDefaults.standard.set(newValue, forKey: Constants.notifyMeSetting.name)
-            }
-        }
-    }
-    
     /*
     /*check permissions*/
     center.getNotificationSettings { (settings) in

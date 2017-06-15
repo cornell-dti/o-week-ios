@@ -14,7 +14,7 @@ class SettingsVC: UITableViewController {
     @IBOutlet weak var setForOption: UILabel!
     @IBOutlet weak var notifyMeOption: UILabel!
     
-    var chosenSetting: (settingWOptions: Constants.Setting, stored_val: String?)?
+    var chosenSetting: UserPreferences.NotificationSetting?
     var hideSettings = false
     
     override func viewDidLoad() {
@@ -26,7 +26,7 @@ class SettingsVC: UITableViewController {
     }
     
     func setUpSwitch(){
-        remindersSet.setOn(LocalNotifications.setForSetting != nil, animated: false)
+        remindersSet.setOn(UserPreferences.setForSetting.chosen != nil, animated: false)
         hideSettings = !remindersSet.isOn
     }
     
@@ -37,14 +37,14 @@ class SettingsVC: UITableViewController {
     }
     
     func displaySettings(){
-        setForOption.text = LocalNotifications.setForSetting ?? "Not set"
-        notifyMeOption.text = LocalNotifications.notifyMeSetting ?? "Not set"
+        setForOption.text = UserPreferences.setForSetting.chosen ?? "Not set"
+        notifyMeOption.text = UserPreferences.notifyMeSetting.chosen ?? "Not set"
     }
     
     @IBAction func switchChanged(_ sender: UISwitch) {
         if(!sender.isOn) {
-            LocalNotifications.setForSetting = nil
-            LocalNotifications.notifyMeSetting = nil
+            UserPreferences.setForSetting.chosen = nil
+            UserPreferences.notifyMeSetting.chosen = nil
         }
         hideSettings = !sender.isOn
         displaySettings()
@@ -70,11 +70,8 @@ class SettingsVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if(indexPath.section == 0 && indexPath.row == 1){
-            chosenSetting = (Constants.setForSetting, LocalNotifications.setForSetting)
-            performSegue(withIdentifier: "toOptions", sender: self)
-        } else if(indexPath.section == 0 && indexPath.row == 2){
-            chosenSetting = (Constants.notifyMeSetting, LocalNotifications.notifyMeSetting)
+        if(indexPath.section == 0 && indexPath.row != 0){
+            chosenSetting = indexPath.row == 1 ? UserPreferences.setForSetting : indexPath.row == 2 ? UserPreferences.notifyMeSetting : nil
             performSegue(withIdentifier: "toOptions", sender: self)
         } else {
             //TODO: Implement functionality for 2nd section (add all events, add all required, etc)
