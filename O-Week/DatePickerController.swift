@@ -60,7 +60,7 @@ class DatePickerController: NSObject, UICollectionViewDataSource, UICollectionVi
         cell.selected(true)
         selectedCell = cell
 		UserData.selectedDate = cell.date!
-        NotificationCenter.default.post(name: .reload, object: nil)
+        NotificationCenter.default.post(name: .reloadData, object: nil)
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath)
@@ -77,7 +77,7 @@ class DatePickerController: NSObject, UICollectionViewDataSource, UICollectionVi
 			{
 				dateCell.selected(true)
 				selectedCell = dateCell
-				NotificationCenter.default.post(name: .reload, object: nil)
+				NotificationCenter.default.post(name: .reloadData, object: nil)
 			}
         }
     }

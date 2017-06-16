@@ -41,6 +41,6 @@ struct Constants
 }
 
 extension Notification.Name {
-    static let reload = Notification.Name("reload")
+    static let reloadData = Notification.Name("reloadData")
     static let reloadSettings = Notification.Name("reloadSettings")
 }

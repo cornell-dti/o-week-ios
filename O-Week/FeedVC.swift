@@ -83,7 +83,7 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource
     
     func setNotificationListener()
 	{
-        NotificationCenter.default.addObserver(self, selector: #selector(updateFeed), name: .reload, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateFeed), name: .reloadData, object: nil)
     }
     func updateFeed()
 	{

@@ -45,7 +45,7 @@ class Internet
 			//if the day we're loading is the selected date
 			if (UserData.userCalendar.compare(day, to: UserData.selectedDate, toGranularity: .day) == .orderedSame)
 			{
-				runAsyncFunction({NotificationCenter.default.post(name: .reload, object: nil)})
+				runAsyncFunction({NotificationCenter.default.post(name: .reloadData, object: nil)})
 			}
 		})
     }

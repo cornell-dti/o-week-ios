@@ -51,6 +51,7 @@ class SettingsVC: UITableViewController{
         hideSettings = !sender.isOn
         displaySettings()
         tableView.reloadData()
+        LocalNotifications.updateNotifications()
     }
     
     @IBAction func visitWebsite(_ sender: UIButton) {
@@ -66,7 +67,7 @@ class SettingsVC: UITableViewController{
                     UserData.insertToSelectedEvents($0)
                 }
             })})
-            NotificationCenter.default.post(name: .reload, object: nil)
+            NotificationCenter.default.post(name: .reloadData, object: nil)
             _ = self?.navigationController?.popViewController(animated: true)
         })
         //TODO: Add alert actions for each individual college so only required events from a specific college are added
@@ -86,7 +87,7 @@ class SettingsVC: UITableViewController{
             UserData.selectedEvents.forEach({ (date, events) in
                 UserData.selectedEvents[date] = []
             })
-            NotificationCenter.default.post(name: .reload, object: nil)
+            NotificationCenter.default.post(name: .reloadData, object: nil)
             _ = self?.navigationController?.popViewController(animated: true)
         })
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
@@ -138,6 +139,7 @@ class SettingsVC: UITableViewController{
     
     func updateSettings(){
         displaySettings()
+        LocalNotifications.updateNotifications()
     }
     
 }

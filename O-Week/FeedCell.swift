@@ -32,9 +32,11 @@ class FeedCell:UITableViewCell
         if(UserData.selectedEventsContains(event!)){
             setButtonImage(false)
             UserData.removeFromSelectedEvents(event!)
+            LocalNotifications.removeNotification(for: event!)
         } else {
             setButtonImage(true)
             UserData.insertToSelectedEvents(event!)
+            LocalNotifications.addNotification(for: event!)
         }
     }
     

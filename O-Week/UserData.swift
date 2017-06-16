@@ -153,7 +153,7 @@ class UserData {
 			unprocessedEvents.filter({!selectedEventsContains($0)}).filter({added.contains($0.pk)}).forEach({insertToSelectedEvents($0)})
 			
 			//Telling other classes to reload their data
-			NotificationCenter.default.post(name: .reload, object: nil)
+			NotificationCenter.default.post(name: .reloadData, object: nil)
 		}
     }
     

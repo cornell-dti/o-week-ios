@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate
@@ -15,13 +16,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     
     var window: UIWindow?
     
+    //For local notifications to display while app is open
+    let notificationDelegate = LocalNotifications()
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool
 	{
-        // Override point for customization after application launch.
         setNavBarColor()
         LocalNotifications.requestPermissionForNotifications()
+        setDelegateForNotifications()
         UserData.loadData()
-        //LocalNotifications.addNotificationsForAll()
+        LocalNotifications.updateNotifications()
         return true
     }
     
@@ -39,6 +43,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         navigationBarAppearence.tintColor = UIColor.white   //back arrow is black
         navigationBarAppearence.isTranslucent = false
         navigationBarAppearence.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: UIFont(name: "AvenirNext-DemiBold", size: 14)!]
+    }
+    
+    private func setDelegateForNotifications(){
+        let center = UNUserNotificationCenter.current()
+        center.delegate = notificationDelegate
     }
     
     func applicationWillResignActive(_ application: UIApplication) {

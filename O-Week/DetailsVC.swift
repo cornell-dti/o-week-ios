@@ -31,7 +31,7 @@ class DetailsVC: UIViewController {
 	{
         if (changed)
 		{
-            NotificationCenter.default.post(name: .reload, object: nil)
+            NotificationCenter.default.post(name: .reloadData, object: nil)
         }
     }
     
@@ -52,11 +52,13 @@ class DetailsVC: UIViewController {
 		{
             setButtonImage(false)
             UserData.removeFromSelectedEvents(event!)
+            LocalNotifications.removeNotification(for: event!)
         }
 		else
 		{
             setButtonImage(true)
             UserData.insertToSelectedEvents(event!)
+            LocalNotifications.addNotification(for: event!)
         }
         changed = true
         

@@ -14,7 +14,15 @@ struct UserPreferences {
     
     // Notification Settings
     static var setForSetting = NotificationSetting(name: "Set for...", options: ["All my events", "Only required events"])
-    static var notifyMeSetting = NotificationSetting(name: "Notify me...", options: ["At time of event", "1 hour before", "2 hours before", "3 hours before", "5 hours before", "Morning of (7 am)", "1 day before", "2 days before"])
+    static var notifyMeSetting = NotificationSetting(name: "Notify me...", options: ["At time of event", "1 hour before", "2 hours before", "3 hours before", "5 hours before", "Morning of (7 am)", "1 day before"])
+    static var timeIntervalsForNotification = [
+        "At time of event" : TimeInterval(0),
+        "1 hour before" : TimeInterval(-3600),
+        "2 hours before" : TimeInterval(-7200),
+        "3 hours before" : TimeInterval(-10800),
+        "5 hours before" : TimeInterval(-18000),
+        "1 day before" : TimeInterval(-86400),
+    ]
 
     struct NotificationSetting {
         let name: String
