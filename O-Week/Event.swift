@@ -14,7 +14,7 @@ struct Event:Hashable
     let title: String
     let caption: String
     let description: String
-    let category: String
+    let category: Int
     let startTime: Time
     let endTime: Time
     let required: Bool
@@ -23,10 +23,10 @@ struct Event:Hashable
     
     var hashValue: Int
     {
-        return (title.hashValue + 31 * startTime.hashValue) * 31 + date.hashValue
+        return pk
     }
     
-    init(title:String, caption:String, category:String, pk: Int, start:Time, end:Time, date: Date, required: Bool, description: String?)
+    init(title:String, caption:String, category:Int, pk: Int, start:Time, end:Time, date: Date, required: Bool, description: String?)
     {
         self.title = title
         self.caption = caption
@@ -43,7 +43,7 @@ struct Event:Hashable
         self.title = obj.value(forKeyPath: "title") as! String
         self.caption = obj.value(forKeyPath: "caption") as! String
         self.description = obj.value(forKeyPath: "eventDescription") as? String ?? "No description available at this time"
-        category = "Default"
+        self.category = obj.value(forKey: "category") as! Int
         self.startTime = Time(hour: obj.value(forKeyPath: "startTimeHr") as! Int, minute: obj.value(forKeyPath: "startTimeMin") as! Int)
         self.endTime = Time(hour: obj.value(forKeyPath: "endTimeHr") as! Int, minute: obj.value(forKeyPath: "endTimeMin") as! Int)
         self.required = obj.value(forKeyPath: "required") as! Bool
@@ -57,10 +57,11 @@ struct Event:Hashable
                 let pk = json["pk"] as? Int,
                 let description = json["description"] as? String,
                 let location = json["location"] as? String,
-                let category = json["category"] as? String,
+                let category = json["category"] as? Int,
                 let startDate = json["start_date"] as? String,
                 let startTime = json["start_time"] as? String,
-                let endTime = json["end_time"] as? String
+                let endTime = json["end_time"] as? String,
+				let required = json["required"] as? Bool
         else {
             return nil
         }
@@ -70,6 +71,7 @@ struct Event:Hashable
         self.caption = location
         self.description = description
         self.category = category
+		self.required = required
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -80,8 +82,6 @@ struct Event:Hashable
         
         self.startTime = Time.fromString(startTime)
         self.endTime = Time.fromString(endTime)
-        //TODO: Change to actual required value
-        required = false
     }
 	
 	func saveToCoreData(entity: NSEntityDescription, context: NSManagedObjectContext)
@@ -97,11 +97,11 @@ struct Event:Hashable
 		obj.setValue(endTime.minute, forKeyPath: "endTimeMin")
 		obj.setValue(required, forKeyPath: "required")
 		obj.setValue(date, forKeyPath: "date")
-		//TODO: Save category
+		obj.setValue(category, forKey: "category")
 	}
 }
 
 func == (lhs:Event, rhs:Event) -> Bool
 {
-    return lhs.title == rhs.title && lhs.startTime == rhs.startTime && lhs.date == rhs.date
+    return lhs.pk == rhs.pk
 }

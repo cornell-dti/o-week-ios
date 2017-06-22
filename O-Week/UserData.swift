@@ -60,6 +60,8 @@ class UserData {
 	{
 		guard allEvents[event.date] != nil else {
 			print("appendToAllEvents: attempted to add event with date outside orientation")
+			print(event.date)
+			print(allEvents.keys.first)
 			return
 		}
 		allEvents[event.date]!.append(event)
