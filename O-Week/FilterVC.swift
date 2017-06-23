@@ -10,9 +10,7 @@ import UIKit
 
 class FilterVC: UITableViewController
 {
-    
     let sections = ["", "By Category"]
-    let defaultFilters = ["Show All Events", "Show Required Events"]
     
     var selectedCell: FilterCell?
     
@@ -22,18 +20,16 @@ class FilterVC: UITableViewController
 	{
         return sections[section]
     }
-    
     override func numberOfSections(in tableView: UITableView) -> Int
 	{
         return sections.count
     }
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
 	{
 		switch (section)
 		{
 		case 0:
-			return defaultFilters.count
+			return 2	//Show all events, show required events
 		case 1:
 			return UserData.categories.count
 		default:
@@ -41,24 +37,18 @@ class FilterVC: UITableViewController
 			return 0
 		}
     }
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
 	{
         let cell = tableView.dequeueReusableCell(withIdentifier: "filterCell") as! FilterCell
-		
-		let categoryText:String
 		switch (indexPath.section)
 		{
 		case 0:
-			categoryText = defaultFilters[indexPath.row]
+			indexPath.row == 0 ? cell.configureAllEvents() : cell.configureRequiredEvents()
 		case 1:
-			categoryText = UserData.categories[indexPath.row].name
+			cell.configure(category: UserData.categories[indexPath.row])
 		default:
-			categoryText = "Error"
+			print("FilterVC: Unexpected section number")
 		}
-        cell.label.text = categoryText
-        cell.label.layer.borderColor = Constants.Colors.GRAY.cgColor
-        cell.label.layer.borderWidth = 1
         return cell
     }
     
@@ -73,14 +63,10 @@ class FilterVC: UITableViewController
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
 	{
         //TODO: implement filtering
-        selectedCell?.label.backgroundColor = UIColor.white
-        selectedCell?.label.textColor = Constants.Colors.GRAY_FILTER
-        selectedCell?.label.layer.borderWidth = 1
+        selectedCell?.selected(false)
         
         let cell = tableView.cellForRow(at: indexPath) as! FilterCell
-        cell.label.backgroundColor = Constants.Colors.RED
-        cell.label.textColor = UIColor.white
-        cell.label.layer.borderWidth = 0
+		cell.selected(true)
         selectedCell = cell
     }
     
