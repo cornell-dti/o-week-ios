@@ -39,7 +39,8 @@ class Internet
 					print("getEventsOn: Unexpected event format")
 					return
 				}
-				UserData.saveEvent(event!)
+				UserData.appendToAllEvents(event!)
+				UserData.saveToCoreData(event!)
 			})
 			
 			//if the day we're loading is the selected date
@@ -69,7 +70,25 @@ class Internet
     }
     static func getCategories()
     {
-        
+        get(url: "\(DATABASE)categories")
+		{
+			json in
+			guard let categories = json as? [[String:Any]] else {
+				return
+			}
+			
+			categories.map({Category(json: $0)}).forEach({
+				category in
+				
+				guard category != nil else {
+					print("getCategories: Unexpected category format")
+					return
+				}
+				
+				UserData.saveToCoreData(category!)
+				UserData.appendToCategories(category!)
+			})
+		}
     }
 	private static func imageFrom(_ urlString:String, imageView:UIImageView, event:Event)
     {

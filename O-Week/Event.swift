@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-struct Event:Hashable
+struct Event:Hashable, CoreDataObject
 {
     let title: String
     let caption: String
@@ -25,6 +25,10 @@ struct Event:Hashable
     {
         return pk
     }
+	static var entityName: String
+	{
+		return "EventEntity"
+	}
     
     init(title:String, caption:String, category:Int, pk: Int, start:Time, end:Time, date: Date, required: Bool, description: String?)
     {
@@ -39,7 +43,8 @@ struct Event:Hashable
         endTime = end
     }
     
-    init(_ obj: NSManagedObject){
+    init(_ obj: NSManagedObject)
+	{
         self.title = obj.value(forKeyPath: "title") as! String
         self.caption = obj.value(forKeyPath: "caption") as! String
         self.description = obj.value(forKeyPath: "eventDescription") as? String ?? "No description available at this time"

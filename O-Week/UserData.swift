@@ -16,7 +16,6 @@ class UserData {
     // MARK:- Properties
     
     //Persistent Data
-    static let eventEntityName = "EventEntity" //For Core Data
     static let addedPKsName = "AddedPKs" //KeyPath used for accessing added PKs in User Defaults
     
     //Events
@@ -33,6 +32,9 @@ class UserData {
 	static let MONTH = 8
 	static let START_DAY = 19	//Dates range: [START_DAY, END_DAY], inclusive
 	static let END_DAY = 24
+	
+	//Categories
+	static var categories = [Category]()
     
     private init(){}
     
@@ -60,8 +62,6 @@ class UserData {
 	{
 		guard allEvents[event.date] != nil else {
 			print("appendToAllEvents: attempted to add event with date outside orientation")
-			print(event.date)
-			print(allEvents.keys.first)
 			return
 		}
 		allEvents[event.date]!.append(event)
@@ -88,17 +88,17 @@ class UserData {
         }
     }
 	
-	/**
-	 * Saves given event to CoreData and also appends it to the array of all events.
-	 */
-	static func saveEvent(_ event:Event)
+	static func appendToCategories(_ category:Category)
 	{
-		appendToAllEvents(event)
-		
+		categories.append(category)
+	}
+	
+	static func saveToCoreData(_ object:CoreDataObject)
+	{
 		let appDelegate = UIApplication.shared.delegate as! AppDelegate
 		let managedContext = appDelegate.persistentContainer.viewContext
-		let entity = NSEntityDescription.entity(forEntityName: UserData.eventEntityName, in: managedContext)!
-		event.saveToCoreData(entity: entity, context: managedContext)
+		let entity = NSEntityDescription.entity(forEntityName: type(of: object).entityName, in: managedContext)!
+		object.saveToCoreData(entity: entity, context: managedContext)
 		try? managedContext.save()
 	}
 	
@@ -120,25 +120,32 @@ class UserData {
 		let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
 		return urls[0].appendingPathComponent(name)
 	}
-    
+	
+	/**
+	 Attempts to fetch 
+	*/
+	private static func fetchFromCoreData(_ type:CoreDataObject.Type) -> [NSManagedObject]
+	{
+		let appDelegate = UIApplication.shared.delegate as! AppDelegate
+		let managedContext = appDelegate.persistentContainer.viewContext
+		let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: type.entityName)
+		let data = try? managedContext.fetch(fetchRequest)
+		return data!
+	}
+	
     // MARK:- Core Data Helper Functions
     
     static func loadData()
 	{
 		initDates()
 		
-        /* Fetching Core Data */
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: UserData.eventEntityName)
-		guard let data = try? managedContext.fetch(fetchRequest) else {
-			print("loadData: could not read from core data")
-			return
-		}
+		let eventData = fetchFromCoreData(Event)
+		let categoryData = fetchFromCoreData(Category)
 		
 		//TODO: Implement update
 		
-        if (data.isEmpty)
+		//handle events
+        if (eventData.isEmpty)
 		{
 			dates.forEach({Internet.getEventsOn($0)})
         }
@@ -148,7 +155,7 @@ class UserData {
 			let defaults = UserDefaults.standard
 			let added = defaults.object(forKey: addedPKsName) as? [Int] ?? [Int]()
 			
-			let unprocessedEvents = data.map({Event($0)}).filter({!allEventsContains($0)})
+			let unprocessedEvents = eventData.map({Event($0)}).filter({!allEventsContains($0)})
 			//add unprocessed events to list of all events
 			unprocessedEvents.forEach({appendToAllEvents($0)})
 			//add to selected events (if we saved this event before and said it was selected
@@ -156,6 +163,16 @@ class UserData {
 			
 			//Telling other classes to reload their data
 			NotificationCenter.default.post(name: .reloadData, object: nil)
+		}
+		
+		//handle categories
+		if (categoryData.isEmpty)
+		{
+			Internet.getCategories()
+		}
+		else
+		{
+			categories = categoryData.map({Category($0)})
 		}
     }
     

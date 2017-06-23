@@ -11,30 +11,52 @@ import UIKit
 class FilterVC: UITableViewController
 {
     
-    let sections = ["", "By College", "Other"]
-    let filters = [["Show All Events"],
-                   ["College of Agriculture and Life Sciences", "College of Architecture, Art and Planning", "College of Arts and Sciences", "College of Business", "College of Engineering", "College of Human Ecology", "School of Industrial and Labor Relations"],
-                   ["International Students", "Transfer Students"]]
+    let sections = ["", "By Category"]
+    let defaultFilters = ["Show All Events", "Show Required Events"]
     
     var selectedCell: FilterCell?
     
     // MARK:- TableView Methods
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?
+	{
         return sections[section]
     }
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int
+	{
         return sections.count
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filters[section].count
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+	{
+		switch (section)
+		{
+		case 0:
+			return defaultFilters.count
+		case 1:
+			return UserData.categories.count
+		default:
+			print("FilterVC: unexpected section number: \(section)")
+			return 0
+		}
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+	{
         let cell = tableView.dequeueReusableCell(withIdentifier: "filterCell") as! FilterCell
-        cell.label.text = filters[indexPath.section][indexPath.row]
+		
+		let categoryText:String
+		switch (indexPath.section)
+		{
+		case 0:
+			categoryText = defaultFilters[indexPath.row]
+		case 1:
+			categoryText = UserData.categories[indexPath.row].name
+		default:
+			categoryText = "Error"
+		}
+        cell.label.text = categoryText
         cell.label.layer.borderColor = Constants.Colors.GRAY.cgColor
         cell.label.layer.borderWidth = 1
         return cell
@@ -48,7 +70,8 @@ class FilterVC: UITableViewController
         header.textLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 14)
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+	{
         //TODO: implement filtering
         selectedCell?.label.backgroundColor = UIColor.white
         selectedCell?.label.textColor = Constants.Colors.GRAY_FILTER
