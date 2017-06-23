@@ -15,7 +15,8 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource
     
     @IBOutlet weak var feedTableView: UITableView!
     @IBOutlet weak var collectionView: UICollectionView!
-    
+	
+	var events = [Event]()
     var selectedEvent: Event? = nil
     var datePickerController: DatePickerController?
     
@@ -30,6 +31,7 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource
         AppDelegate.setUpExtendedNavBar(navController: navigationController)
         setUpHeightofFeedCell()
         setNotificationListener()
+		filter()
         
         datePickerController = DatePickerController(collectionView: collectionView)
     }
@@ -51,19 +53,19 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return UserData.allEvents[UserData.selectedDate]!.count
+        return events.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         let cell = tableView.dequeueReusableCell(withIdentifier: "feedCell", for: indexPath) as! FeedCell
-        cell.configure(event: UserData.allEvents[UserData.selectedDate]![indexPath.row])
+        cell.configure(event: events[indexPath.row])
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
 	{
-        selectedEvent = UserData.allEvents[UserData.selectedDate]![indexPath.row]
+        selectedEvent = events[indexPath.row]
         performSegue(withIdentifier: "showEventDetails", sender: self)
     }
     
@@ -81,12 +83,28 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource
     
     // MARK:- Handle Updates
     
-    func setNotificationListener()
+    private func setNotificationListener()
 	{
         NotificationCenter.default.addObserver(self, selector: #selector(updateFeed), name: .reloadData, object: nil)
     }
     func updateFeed()
 	{
+		filter()
         feedTableView.reloadData()
-    }
+	}
+	
+	private func filter()
+	{
+		var tempEvents = UserData.allEvents[UserData.selectedDate]!
+		if (FilterVC.filterRequired)
+		{
+			tempEvents = tempEvents.filter({$0.required})
+		}
+		else if (FilterVC.filterCategory != nil)
+		{
+			tempEvents = tempEvents.filter({$0.category == FilterVC.filterCategory!.pk})
+		}
+		
+		events = tempEvents
+	}
 }

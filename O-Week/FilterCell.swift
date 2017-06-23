@@ -11,13 +11,12 @@ import UIKit
 class FilterCell: UITableViewCell
 {
     @IBOutlet weak var label: UILabel!
-	private var category:Category?
-	private var allEvents = false
-	private var requiredEvents = false
+	private(set) var category:Category?
+	private(set) var requiredEvents = false
 	
-	override func layoutSubviews()
+	override func awakeFromNib()
 	{
-		super.layoutSubviews()
+		super.awakeFromNib()
 		setDefaultLook()
 		label.layer.borderColor = Constants.Colors.GRAY.cgColor
 	}
@@ -25,19 +24,18 @@ class FilterCell: UITableViewCell
 	{
 		self.category = category
 		label.text = category.name
-		allEvents = false
 		requiredEvents = false
 	}
 	func configureRequiredEvents()
 	{
+		category = nil
 		label.text = "Show Required Events"
-		allEvents = false
 		requiredEvents = true
 	}
 	func configureAllEvents()
 	{
+		category = nil
 		label.text = "Show All Events"
-		allEvents = true
 		requiredEvents = false
 	}
 	
