@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-struct Event:Hashable, CoreDataObject
+struct Event:Hashable, CoreDataObject, JSONObject
 {
     let title: String
     let caption: String
@@ -42,7 +42,6 @@ struct Event:Hashable, CoreDataObject
         startTime = start
         endTime = end
     }
-    
     init(_ obj: NSManagedObject)
 	{
         self.title = obj.value(forKeyPath: "title") as! String
@@ -55,10 +54,10 @@ struct Event:Hashable, CoreDataObject
         self.date = obj.value(forKeyPath: "date") as! Date
         self.pk = obj.value(forKeyPath: "pk") as! Int
     }
-    
-    init?(json: [String:Any])
+    init?(jsonOptional: [String:Any]?)
     {
-        guard let title = json["name"] as? String,
+        guard let json = jsonOptional,
+				let title = json["name"] as? String,
                 let pk = json["pk"] as? Int,
                 let description = json["description"] as? String,
                 let location = json["location"] as? String,
@@ -66,8 +65,7 @@ struct Event:Hashable, CoreDataObject
                 let startDate = json["start_date"] as? String,
                 let startTime = json["start_time"] as? String,
                 let endTime = json["end_time"] as? String,
-				let required = json["required"] as? Bool
-        else {
+				let required = json["required"] as? Bool else {
             return nil
         }
         
@@ -89,7 +87,7 @@ struct Event:Hashable, CoreDataObject
         self.endTime = Time.fromString(endTime)
     }
 	
-	func saveToCoreData(entity: NSEntityDescription, context: NSManagedObjectContext)
+	func saveToCoreData(entity: NSEntityDescription, context: NSManagedObjectContext) -> NSManagedObject
 	{
 		let obj = NSManagedObject(entity: entity, insertInto: context)
 		obj.setValue(title, forKeyPath: "title")
@@ -103,6 +101,7 @@ struct Event:Hashable, CoreDataObject
 		obj.setValue(required, forKeyPath: "required")
 		obj.setValue(date, forKeyPath: "date")
 		obj.setValue(category, forKey: "category")
+		return obj
 	}
 }
 

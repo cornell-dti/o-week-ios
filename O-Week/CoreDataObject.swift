@@ -12,6 +12,7 @@ import CoreData
 protocol CoreDataObject
 {
 	init(_ obj: NSManagedObject)
-	func saveToCoreData(entity: NSEntityDescription, context: NSManagedObjectContext)
+	@discardableResult
+	func saveToCoreData(entity: NSEntityDescription, context: NSManagedObjectContext) -> NSManagedObject
 	static var entityName:String { get }
 }

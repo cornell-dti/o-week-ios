@@ -19,7 +19,73 @@ class Internet
     
     //suppress default constructor for noninstantiability
     private init(){}
-    
+	
+	static func getUpdatesForVersion(_ version:Int, onCompletion finish:@escaping (() -> ()))
+	{
+		get(url: "\(DATABASE)version/\(version)", handler:
+		{
+			json in
+			
+			guard let data = json as? [String:Any],
+					let newestVersion = data["version"] as? Int,
+					let categories = data["categories"] as? [String:Any],
+					let changedCategories = categories["changed"] as? [Any],
+					let deletedCategories = categories["deleted"] as? [Int],
+					let events = data["events"] as? [String:Any],
+					let changedEvents = events["changed"] as? [Any],
+					let deletedEvents = events["deleted"] as? [Int] else {
+				return
+			}
+			
+			//note: flatMap can also remove nils
+			//update categories
+			changedCategories.map({Category(jsonOptional: $0 as? [String:Any])})
+				.flatMap({$0})
+				.forEach({UserData.updateCategory($0)})
+			//remove categories
+			var newCategories = [Category]()
+			for category in UserData.categories
+			{
+				if (deletedCategories.contains(category.pk))
+				{
+					UserData.removeFromCoreData(category)
+				}
+				else
+				{
+					newCategories.append(category)
+				}
+			}
+			UserData.categories = newCategories
+			
+			//update events
+			changedEvents.map({Event(jsonOptional: $0 as? [String:Any])})
+				.flatMap({$0})
+				.forEach({UserData.updateEvent($0)})
+			//delete events
+			for date in UserData.dates
+			{
+				var newEventsForDate = [Event]()
+				for event in UserData.allEvents[date]!
+				{
+					if (deletedEvents.contains(event.pk))
+					{
+						UserData.removeFromCoreData(event)
+					}
+					else
+					{
+						newEventsForDate.append(event)
+					}
+				}
+				UserData.allEvents[date] = newEventsForDate
+				UserData.selectedEvents[date] = UserData.selectedEvents[date]!.filter({!deletedEvents.contains($0.pk)})
+			}
+			
+			UserData.version = newestVersion
+			finish()
+			
+			runAsyncFunction({NotificationCenter.default.post(name: .reloadData, object: nil)})
+		})
+	}
     static func getEventsOn(_ day:Date)
     {
 		let components = UserData.userCalendar.dateComponents([.day], from: day)
@@ -33,7 +99,7 @@ class Internet
 				return
 			}
 			
-			events.map({Event(json: $0)}).forEach({
+			events.map({Event(jsonOptional: $0)}).forEach({
 				event in
 				guard event != nil else {
 					print("getEventsOn: Unexpected event format")
@@ -49,13 +115,6 @@ class Internet
 				runAsyncFunction({NotificationCenter.default.post(name: .reloadData, object: nil)})
 			}
 		})
-    }
-    static func getEventsOn(_ day:Date, category:String)
-    {
-		
-    }
-    static func getEventWith(_ pk:Int)
-    {
     }
     static func getImageFor(_ event:Event, imageView:UIImageView)
     {
@@ -77,7 +136,7 @@ class Internet
 				return
 			}
 			
-			categories.map({Category(json: $0)}).forEach({
+			categories.map({Category(jsonOptional: $0)}).forEach({
 				category in
 				
 				guard category != nil else {
@@ -86,7 +145,7 @@ class Internet
 				}
 				
 				UserData.saveToCoreData(category!)
-				UserData.appendToCategories(category!)
+				UserData.categories.append(category!)
 			})
 		}
     }
