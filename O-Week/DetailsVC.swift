@@ -35,7 +35,7 @@ class DetailsVC: UIViewController {
         }
     }
     
-    func configure(event:Event)
+    private func configure(event:Event)
     {
         eventTitle.text = event.title
         eventCaption.text = event.caption
@@ -69,14 +69,10 @@ class DetailsVC: UIViewController {
         UIView.animate(withDuration: 0.5) {
             self.add_button.alpha = 0
         }
-        if (added)
-		{
-            add_button.setImage(Constants.Images.whiteImageAdded, for: .normal)
-        }
-		else
-		{
-            add_button.setImage(Constants.Images.whiteImageNotAdded, for: .normal)
-        }
+        
+        let image = added ? Constants.Images.whiteImageAdded : Constants.Images.whiteImageNotAdded
+        add_button.setImage(image, for: .normal)
+        
         UIView.animate(withDuration: 0.5) {
             self.add_button.alpha = 1
         }
