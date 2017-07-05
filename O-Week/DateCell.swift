@@ -27,16 +27,19 @@ class DateCell: UICollectionViewCell {
     
     func selected(_ selected: Bool)
 	{
-        if(selected)
-		{
-            view.backgroundColor = UIColor.white
-            dayNum.textColor = UIColor.black
+        UIView.animate(withDuration: 0.25){
+            if(selected)
+            {
+                self.view.backgroundColor = UIColor.white
+                self.dayNum.textColor = UIColor.black
+            }
+            else
+            {
+                self.view.backgroundColor = Constants.Colors.RED
+                self.dayNum.textColor = UIColor.white
+            }
         }
-		else
-		{
-            view.backgroundColor = Constants.Colors.RED
-            dayNum.textColor = UIColor.white
-        }
+        
     }
     
 }
