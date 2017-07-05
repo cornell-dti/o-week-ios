@@ -68,12 +68,8 @@ class DetailsVC: UIViewController {
 	{
         UIView.animate(withDuration: 0.5) {
             self.add_button.alpha = 0
-        }
-        
-        let image = added ? Constants.Images.whiteImageAdded : Constants.Images.whiteImageNotAdded
-        add_button.setImage(image, for: .normal)
-        
-        UIView.animate(withDuration: 0.5) {
+            let image = added ? Constants.Images.whiteImageAdded : Constants.Images.whiteImageNotAdded
+            self.add_button.setImage(image, for: .normal)
             self.add_button.alpha = 1
         }
     }

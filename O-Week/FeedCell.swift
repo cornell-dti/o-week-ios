@@ -44,12 +44,8 @@ class FeedCell:UITableViewCell
     {
         UIView.animate(withDuration: 0.5) {
             self.eventButton.alpha = 0
-        }
-        
-        let image = added ? Constants.Images.imageAdded : Constants.Images.imageNotAdded
-        self.eventButton.setImage(image, for: .normal)
-        
-        UIView.animate(withDuration: 0.5) {
+            let image = added ? Constants.Images.imageAdded : Constants.Images.imageNotAdded
+            self.eventButton.setImage(image, for: .normal)
             self.eventButton.alpha = 1
         }
     }
