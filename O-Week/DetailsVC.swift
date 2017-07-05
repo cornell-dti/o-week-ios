@@ -66,6 +66,9 @@ class DetailsVC: UIViewController {
     
     private func setButtonImage(_ added:Bool)
 	{
+        UIView.animate(withDuration: 0.5) {
+            self.add_button.alpha = 0
+        }
         if (added)
 		{
             add_button.setImage(Constants.Images.whiteImageAdded, for: .normal)
@@ -73,6 +76,9 @@ class DetailsVC: UIViewController {
 		else
 		{
             add_button.setImage(Constants.Images.whiteImageNotAdded, for: .normal)
+        }
+        UIView.animate(withDuration: 0.5) {
+            self.add_button.alpha = 1
         }
     }
 }

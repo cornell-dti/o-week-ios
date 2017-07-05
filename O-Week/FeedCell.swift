@@ -41,10 +41,16 @@ class FeedCell:UITableViewCell
     }
     
     func setButtonImage(_ added: Bool){
+        UIView.animate(withDuration: 0.5) {
+            self.eventButton.alpha = 0
+        }
         if (added){
-            eventButton.setImage(Constants.Images.imageAdded, for: .normal)
+            self.eventButton.setImage(Constants.Images.imageAdded, for: .normal)
         } else {
-            eventButton.setImage(Constants.Images.imageNotAdded, for: .normal)
+            self.eventButton.setImage(Constants.Images.imageNotAdded, for: .normal)
+        }
+        UIView.animate(withDuration: 0.5) {
+            self.eventButton.alpha = 1
         }
     }
     
