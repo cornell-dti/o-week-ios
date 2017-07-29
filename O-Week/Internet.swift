@@ -86,36 +86,6 @@ class Internet
 			runAsyncFunction({NotificationCenter.default.post(name: .reloadData, object: nil)})
 		})
 	}
-    static func getEventsOn(_ day:Date)
-    {
-		let components = UserData.userCalendar.dateComponents([.day], from: day)
-		get(url: "\(DATABASE)feed/\(components.day!)", handler:
-		{
-			json in
-			
-			print("Url: https://oweekapp.herokuapp.com/flow/feed/\(components.day!)")
-			
-			guard let events = json as? [[String:Any]] else {
-				return
-			}
-			
-			events.map({Event(jsonOptional: $0)}).forEach({
-				event in
-				guard event != nil else {
-					print("getEventsOn: Unexpected event format")
-					return
-				}
-				UserData.appendToAllEvents(event!)
-				UserData.saveToCoreData(event!)
-			})
-			
-			//if the day we're loading is the selected date
-			if (UserData.userCalendar.compare(day, to: UserData.selectedDate, toGranularity: .day) == .orderedSame)
-			{
-				runAsyncFunction({NotificationCenter.default.post(name: .reloadData, object: nil)})
-			}
-		})
-    }
     static func getImageFor(_ event:Event, imageView:UIImageView)
     {
 		if let image = UserData.loadImageFor(event)
@@ -125,28 +95,6 @@ class Internet
 		else
 		{
 			imageFrom("\(DATABASE)event/\(event.pk)/image", imageView: imageView, event: event)
-		}
-    }
-    static func getCategories()
-    {
-        get(url: "\(DATABASE)categories")
-		{
-			json in
-			guard let categories = json as? [[String:Any]] else {
-				return
-			}
-			
-			categories.map({Category(jsonOptional: $0)}).forEach({
-				category in
-				
-				guard category != nil else {
-					print("getCategories: Unexpected category format")
-					return
-				}
-				
-				UserData.saveToCoreData(category!)
-				UserData.categories.append(category!)
-			})
 		}
     }
 	private static func imageFrom(_ urlString:String, imageView:UIImageView, event:Event)

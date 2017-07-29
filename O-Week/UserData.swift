@@ -31,8 +31,8 @@ class UserData {
 	static var selectedDate:Date!
 	static let YEAR = 2017
 	static let MONTH = 8
-	static let START_DAY = 19	//Dates range: [START_DAY, END_DAY], inclusive
-	static let END_DAY = 24
+	static let START_DAY = 18	//Dates range: [START_DAY, END_DAY], inclusive
+	static let END_DAY = 26
 	
 	//Categories
 	static var categories = [Category]()
@@ -185,17 +185,23 @@ class UserData {
 	static func saveToCoreData(_ object:CoreDataObject)
 	{
 		let appDelegate = UIApplication.shared.delegate as! AppDelegate
-		let managedContext = appDelegate.persistentContainer.viewContext
-		let entity = NSEntityDescription.entity(forEntityName: type(of: object).entityName, in: managedContext)!
-		object.saveToCoreData(entity: entity, context: managedContext)
-		try? managedContext.save()
+		appDelegate.persistentContainer.performBackgroundTask(
+		{
+			(context) in
+			let entity = NSEntityDescription.entity(forEntityName: type(of: object).entityName, in: context)!
+			object.saveToCoreData(entity: entity, context: context)
+			try? context.save()
+		})
 	}
 	static func removeFromCoreData(_ object:CoreDataObject)
 	{
 		let appDelegate = UIApplication.shared.delegate as! AppDelegate
-		let managedContext = appDelegate.persistentContainer.viewContext
-		let entity = NSEntityDescription.entity(forEntityName: type(of: object).entityName, in: managedContext)!
-		managedContext.delete(object.saveToCoreData(entity: entity, context: managedContext))
+		appDelegate.persistentContainer.performBackgroundTask(
+		{
+			(context) in
+			let entity = NSEntityDescription.entity(forEntityName: type(of: object).entityName, in: context)!
+			context.delete(object.saveToCoreData(entity: entity, context: context))
+		})
 	}
 	static func saveImage(_ image:UIImage, event:Event)
 	{
