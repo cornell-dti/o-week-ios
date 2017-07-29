@@ -19,6 +19,10 @@ struct Event:Hashable, CoreDataObject, JSONObject
     let endTime: Time
     let required: Bool
     let date: Date
+	let longitude: Double
+	let latitude: Double
+	let categoryRequired: Bool
+	let additional: String
     let pk: Int
     
     var hashValue: Int
@@ -30,7 +34,7 @@ struct Event:Hashable, CoreDataObject, JSONObject
 		return "EventEntity"
 	}
     
-    init(title:String, caption:String, category:Int, pk: Int, start:Time, end:Time, date: Date, required: Bool, description: String?)
+	init(title:String, caption:String, category:Int, pk: Int, start:Time, end:Time, date: Date, required: Bool, description: String?, longitude:Double, latitude:Double, categoryRequired:Bool, additional:String)
     {
         self.title = title
         self.caption = caption
@@ -41,18 +45,26 @@ struct Event:Hashable, CoreDataObject, JSONObject
         self.pk = pk
         startTime = start
         endTime = end
+		self.longitude = longitude
+		self.latitude = latitude
+		self.categoryRequired = categoryRequired
+		self.additional = additional
     }
     init(_ obj: NSManagedObject)
 	{
-        self.title = obj.value(forKeyPath: "title") as! String
-        self.caption = obj.value(forKeyPath: "caption") as! String
-        self.description = obj.value(forKeyPath: "eventDescription") as? String ?? "No description available at this time"
-        self.category = obj.value(forKey: "category") as! Int
-        self.startTime = Time(hour: obj.value(forKeyPath: "startTimeHr") as! Int, minute: obj.value(forKeyPath: "startTimeMin") as! Int)
-        self.endTime = Time(hour: obj.value(forKeyPath: "endTimeHr") as! Int, minute: obj.value(forKeyPath: "endTimeMin") as! Int)
-        self.required = obj.value(forKeyPath: "required") as! Bool
-        self.date = obj.value(forKeyPath: "date") as! Date
-        self.pk = obj.value(forKeyPath: "pk") as! Int
+        title = obj.value(forKeyPath: "title") as! String
+        caption = obj.value(forKeyPath: "caption") as! String
+        description = obj.value(forKeyPath: "eventDescription") as? String ?? "No description available at this time"
+        category = obj.value(forKey: "category") as! Int
+        startTime = Time(hour: obj.value(forKeyPath: "startTimeHr") as! Int, minute: obj.value(forKeyPath: "startTimeMin") as! Int)
+        endTime = Time(hour: obj.value(forKeyPath: "endTimeHr") as! Int, minute: obj.value(forKeyPath: "endTimeMin") as! Int)
+        required = obj.value(forKeyPath: "required") as! Bool
+        date = obj.value(forKeyPath: "date") as! Date
+        pk = obj.value(forKeyPath: "pk") as! Int
+		longitude = obj.value(forKey: "longitude") as! Double
+		latitude = obj.value(forKey: "latitude") as! Double
+		categoryRequired = obj.value(forKey: "categoryRequired") as! Bool
+		additional = obj.value(forKey: "additional") as! String
     }
     init?(jsonOptional: [String:Any]?)
     {
@@ -65,7 +77,15 @@ struct Event:Hashable, CoreDataObject, JSONObject
                 let startDate = json["start_date"] as? String,
                 let startTime = json["start_time"] as? String,
                 let endTime = json["end_time"] as? String,
-				let required = json["required"] as? Bool else {
+				let required = json["required"] as? Bool,
+			//convert first to String, then to Double. Converting directly to Double will create an error
+				let longitudeStr = json["longitude"] as? String,
+				let longitude = Double(longitudeStr),
+				let latitudeStr = json["latitude"] as? String,
+				let latitude = Double(latitudeStr),
+				let categoryRequired = json["category_required"] as? Bool,
+				let additional = json["additional"] as? String else {
+			print("Event.jsonOptional: incorrect JSON format")
             return nil
         }
         
@@ -75,6 +95,10 @@ struct Event:Hashable, CoreDataObject, JSONObject
         self.description = description
         self.category = category
 		self.required = required
+		self.longitude = longitude
+		self.latitude = latitude
+		self.categoryRequired = categoryRequired
+		self.additional = additional
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -101,6 +125,10 @@ struct Event:Hashable, CoreDataObject, JSONObject
 		obj.setValue(required, forKeyPath: "required")
 		obj.setValue(date, forKeyPath: "date")
 		obj.setValue(category, forKey: "category")
+		obj.setValue(longitude, forKey: "longitude")
+		obj.setValue(latitude, forKey: "latitude")
+		obj.setValue(categoryRequired, forKey: "categoryRequired")
+		obj.setValue(additional, forKey: "additional")
 		return obj
 	}
 }
