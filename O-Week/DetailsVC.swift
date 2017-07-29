@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import MapKit
 
-class DetailsVC: UIViewController {
-    
+class DetailsVC: UIViewController, MKMapViewDelegate
+{
     @IBOutlet weak var eventTitle: UILabel!
     @IBOutlet weak var eventCaption: UILabel!
     @IBOutlet weak var eventDescription: UILabel!
@@ -17,7 +18,10 @@ class DetailsVC: UIViewController {
     @IBOutlet weak var endTime: UILabel!
     @IBOutlet weak var eventImage: UIImageView!
     @IBOutlet weak var add_button: UIButton!
-    
+	@IBOutlet weak var additional: UILabel!
+	@IBOutlet weak var map: MKMapView!
+	
+	let DEFAULT_ZOOM = 0.005
     var event: Event?
     var changed = false
     
@@ -44,7 +48,33 @@ class DetailsVC: UIViewController {
         endTime.text = event.endTime.description
         setButtonImage(UserData.selectedEventsContains(event))
 		Internet.getImageFor(event, imageView: eventImage)
+		configureMap(event:event)
     }
+	
+	private func configureMap(event:Event)
+	{
+		map.delegate = self
+		
+		//set center & zoom
+		let center = CLLocationCoordinate2DMake(event.latitude, event.longitude)
+		let span = MKCoordinateSpanMake(DEFAULT_ZOOM, DEFAULT_ZOOM)
+		let region = MKCoordinateRegionMake(center, span)
+		map.setRegion(region, animated: false)
+		
+		//set marker
+		let marker = MKPointAnnotation()
+		marker.title = event.caption
+		marker.coordinate = center
+		map.addAnnotation(marker)
+	}
+	
+	func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView)
+	{
+		let center = CLLocationCoordinate2DMake(event!.latitude, event!.longitude)
+		let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: center))
+		mapItem.name = event!.caption
+		mapItem.openInMaps(launchOptions: nil)
+	}
     
     @IBAction func add_button_pressed(_ sender: UIButton)
 	{

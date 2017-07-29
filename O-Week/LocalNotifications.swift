@@ -27,13 +27,17 @@ class LocalNotifications: NSObject, UNUserNotificationCenterDelegate {
         }
     }
     
-    static func addNotification(for event: Event){
-        if let chosenOption = UserPreferences.setForSetting.chosen {
-            switch chosenOption {
+    static func addNotification(for event: Event)
+	{
+        if let chosenOption = UserPreferences.setForSetting.chosen
+		{
+            switch chosenOption
+			{
             case UserPreferences.setForSetting.options[0]: //"All my events"
                 createEventNotification(for: event)
             case UserPreferences.setForSetting.options[1]: //"Only required events"
-                if(event.required){
+                if(event.required)
+				{
                     createEventNotification(for: event)
                 }
             default:
@@ -43,16 +47,20 @@ class LocalNotifications: NSObject, UNUserNotificationCenterDelegate {
         }
     }
     
-    static func removeNotification(for event: Event){
+    static func removeNotification(for event: Event)
+	{
         center.removePendingNotificationRequests(withIdentifiers: [event.title])
     }
     
-    static private func createEventNotification(for event: Event){
+    static private func createEventNotification(for event: Event)
+	{
         let content = UNMutableNotificationContent()
         content.title = event.title
         content.sound = UNNotificationSound.default()
         var body = "at \(event.startTime.description)"
-        switch UserData.userCalendar.compare(Date(), to: event.date, toGranularity: .day) {
+		
+        switch UserData.userCalendar.compare(Date(), to: event.date, toGranularity: .day)
+		{
         case .orderedDescending:
             print("Error: Event in past")
         case .orderedSame:
@@ -75,14 +83,16 @@ class LocalNotifications: NSObject, UNUserNotificationCenterDelegate {
         })
     }
     
-    static private func getIntervalFor7AM(for date: Date) -> TimeInterval {
+    static private func getIntervalFor7AM(for date: Date) -> TimeInterval
+	{
         let comp = Calendar.current.dateComponents([.year, .month, .day], from: date)
         var newDate = Calendar.current.date(from: comp)
         newDate?.addTimeInterval(25200)
         return newDate!.timeIntervalSince(date) //Returns negative number for events after 7 AM for consistency with UserPreferences.timeIntervalsForNotification
     }
     
-    static func updateNotifications(){
+    static func updateNotifications()
+	{
         center.removeAllPendingNotificationRequests()
         UserData.selectedEvents.forEach({ (date, events) in
             events.forEach({

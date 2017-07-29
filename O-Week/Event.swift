@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-struct Event:Hashable, CoreDataObject, JSONObject
+struct Event:Hashable, Comparable, CoreDataObject, JSONObject
 {
     let title: String
     let caption: String
@@ -136,4 +136,24 @@ struct Event:Hashable, CoreDataObject, JSONObject
 func == (lhs:Event, rhs:Event) -> Bool
 {
     return lhs.pk == rhs.pk
+}
+func < (lhs:Event, rhs:Event) -> Bool
+{
+	let dateCompare = UserData.userCalendar.compare(lhs.date, to: rhs.date, toGranularity: .day)
+	if (dateCompare != .orderedSame)
+	{
+		return dateCompare == .orderedAscending
+	}
+	
+	//If lhs starts in the next day and rhs in the previous
+	if (lhs.startTime.hour <= ScheduleVC.END_HOUR && rhs.startTime.hour >= ScheduleVC.START_HOUR)
+	{
+		return false
+	}
+	//If lhs starts in the previous day and rhs in the next
+	if (lhs.startTime.hour >= ScheduleVC.START_HOUR && rhs.startTime.hour <= ScheduleVC.END_HOUR)
+	{
+		return true
+	}
+	return lhs.startTime.hour < rhs.startTime.hour
 }
