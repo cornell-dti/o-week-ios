@@ -34,9 +34,11 @@ class DatePickerController: NSObject, UICollectionViewDataSource, UICollectionVi
 			let index = UserData.dates.index(of: UserData.selectedDate)!
 			
 			selectedCell?.selected(false)
-			let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as! DateCell
-			cell.selected(true)
-			selectedCell = cell
+			if let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? DateCell
+			{
+				cell.selected(true)
+				selectedCell = cell
+			}
 		}
 	}
     
