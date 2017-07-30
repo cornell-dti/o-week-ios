@@ -169,6 +169,7 @@
                                                         <constraint firstItem="CIK-Al-ja9" firstAttribute="top" secondItem="MtZ-QM-Ncd" secondAttribute="top" id="X1e-oZ-GnR"/>
                                                         <constraint firstAttribute="bottom" secondItem="AqS-yf-u58" secondAttribute="bottom" id="kMr-A3-Rms"/>
                                                         <constraint firstItem="CIK-Al-ja9" firstAttribute="leading" secondItem="MtZ-QM-Ncd" secondAttribute="leading" id="xQc-VP-fV8"/>
+                                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="AqS-yf-u58" secondAttribute="trailing" id="yDe-Bg-L6I"/>
                                                     </constraints>
                                                 </view>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eXf-CR-pzI">
@@ -993,6 +994,6 @@
         <image name="settings" width="117" height="117"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="mu3-We-PmB"/>
+        <segue reference="Xcf-ub-FiZ"/>
     </inferredMetricsTieBreakers>
 </document>
