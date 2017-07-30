@@ -21,7 +21,7 @@ class DetailsVC: UIViewController, MKMapViewDelegate
 	@IBOutlet weak var additional: UILabel!
 	@IBOutlet weak var map: MKMapView!
 	
-	let DEFAULT_ZOOM = 0.005
+	let MAP_ZOOM = 0.001
     var event: Event?
     var changed = false
     
@@ -49,6 +49,10 @@ class DetailsVC: UIViewController, MKMapViewDelegate
         setButtonImage(UserData.selectedEventsContains(event))
 		Internet.getImageFor(event, imageView: eventImage)
 		configureMap(event:event)
+		if (!event.additional.isEmpty)
+		{
+			additional.attributedText = event.attributedAdditional()
+		}
     }
 	
 	private func configureMap(event:Event)
@@ -57,7 +61,7 @@ class DetailsVC: UIViewController, MKMapViewDelegate
 		
 		//set center & zoom
 		let center = CLLocationCoordinate2DMake(event.latitude, event.longitude)
-		let span = MKCoordinateSpanMake(DEFAULT_ZOOM, DEFAULT_ZOOM)
+		let span = MKCoordinateSpanMake(MAP_ZOOM, MAP_ZOOM)
 		let region = MKCoordinateRegionMake(center, span)
 		map.setRegion(region, animated: false)
 		

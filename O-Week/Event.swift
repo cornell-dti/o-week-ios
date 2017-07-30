@@ -6,7 +6,7 @@
 //  Copyright © 2017 Cornell SA Tech. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import CoreData
 
 struct Event:Hashable, Comparable, CoreDataObject, JSONObject
@@ -130,6 +130,53 @@ struct Event:Hashable, Comparable, CoreDataObject, JSONObject
 		obj.setValue(categoryRequired, forKey: "categoryRequired")
 		obj.setValue(additional, forKey: "additional")
 		return obj
+	}
+	
+	//assumes additional is non empty and is formatted like so:
+	// ## HEADER ## ____BULLET # INFO ____BULLET # INFO
+	func attributedAdditional() -> NSAttributedString
+	{
+		let TEXT_SIZE:CGFloat = 12
+		let TAB_STOP:CGFloat = 64
+		
+		let string = NSMutableAttributedString()
+		let headerAndRemaining = additional.components(separatedBy: "##")
+		let header = "\(headerAndRemaining[1].trimmingCharacters(in: .whitespacesAndNewlines))\n"
+		let remaining = headerAndRemaining[2].trimmingCharacters(in: .whitespacesAndNewlines)
+		
+		//set header
+		let headerAttributes = [NSFontAttributeName: UIFont(name: "AvenirNext-DemiBold", size: TEXT_SIZE)!]
+		let attributedHeader = NSAttributedString(string: header, attributes: headerAttributes)
+		string.append(attributedHeader)
+		
+		let sections = remaining.components(separatedBy: "____")
+		for section in sections
+		{
+			guard !section.isEmpty else {
+				continue
+			}
+			let bulletAndInfo = section.trimmingCharacters(in: .whitespacesAndNewlines).components(separatedBy: " # ")
+			let bullet = "\(bulletAndInfo[0])\t"
+			let info = "\(bulletAndInfo[1])\n"
+			let start = string.length
+			
+			//set bullet
+			let bulletAttributes = [NSFontAttributeName: UIFont(name: "AvenirNext-DemiBold", size: TEXT_SIZE)!, NSForegroundColorAttributeName:Constants.Colors.RED]
+			let attributedBullet = NSAttributedString(string:bullet, attributes:bulletAttributes)
+			string.append(attributedBullet)
+			
+			//set info
+			let attributedInfo = NSAttributedString(string: info)
+			string.append(attributedInfo)
+			
+			//set paragraph style
+			let infoParagraphStyle = NSMutableParagraphStyle()
+			infoParagraphStyle.headIndent = TAB_STOP
+			infoParagraphStyle.tabStops = [NSTextTab(textAlignment: .left, location: TAB_STOP)]
+			string.addAttribute(NSParagraphStyleAttributeName, value: infoParagraphStyle, range: NSRange(location: start, length: bullet.characters.count + info.characters.count))
+		}
+		
+		return string
 	}
 }
 
