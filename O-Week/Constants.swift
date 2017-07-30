@@ -17,7 +17,7 @@ struct Constants
     //  Holds static instances of app's colors
     struct Colors
     {
-        static let RED = UIColor(red: 215/255, green: 35/255, blue: 53/255, alpha: 1)
+        static let RED = UIColor(red: 229/255, green: 43/255, blue: 54/255, alpha: 1)
         static let GRAY = UIColor(red: 151/255, green: 151/255, blue: 151/255, alpha: 0.52)
         static let PINK = UIColor(red: 255/255, green: 204/255, blue: 204/255, alpha: 1)
         static let GRAY_FILTER = UIColor(red: 155/255, green: 155/255, blue: 155/255, alpha: 1)
