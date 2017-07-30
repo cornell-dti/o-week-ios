@@ -225,8 +225,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
     
     private func yForStartTime(_ startTime:Time) -> CGFloat
 	{
-        //TODO: Special treatment past midnight
-		let timeFrom7 = Time.length(startTime: Time(hour: ScheduleVC.START_HOUR), endTime: startTime)
+		let timeFrom7 = minutesBetween(Time(hour: ScheduleVC.START_HOUR), and: startTime)
         return CGFloat(timeFrom7) * myTableView.rowHeight / 60 + (myTableView.rowHeight / 2)
     }
     
@@ -276,7 +275,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
     
     private func canUseSlot(_ slot:Int, event:Event, eventForSlot:[Int:Event]) -> Bool
 	{
-        return eventForSlot[slot] == nil || eventForSlot[slot]!.startTime >= event.endTime || eventForSlot[slot]!.endTime <= event.startTime
+        return eventForSlot[slot] == nil || minutesBetween(event.endTime, and: eventForSlot[slot]!.startTime) >= 0 || minutesBetween(eventForSlot[slot]!.endTime, and: event.startTime) >= 0
     }
     
     private func fullCellWidth() -> CGFloat
@@ -287,8 +286,26 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
     private func cellHeight(event:Event) -> CGFloat
 	{
         //60 min = 1 rowHeight
-        return CGFloat(Time.length(startTime: event.startTime, endTime: event.endTime)) / 60 * myTableView.rowHeight
+        return CGFloat(minutesBetween(event.startTime, and: event.endTime)) / 60 * myTableView.rowHeight
     }
+	
+	//return minutes between 2 times, taking into account crossing over midnight.
+	private func minutesBetween(_ startTime:Time, and endTime:Time) -> Int
+	{
+		//check if we're crossing over the midnight mark. If we are, reverse the minutes
+		if (endTime.hour < ScheduleVC.START_HOUR && startTime.hour >= ScheduleVC.START_HOUR)
+		{
+			return 24*60 - Time.length(startTime:endTime, endTime:startTime)
+		}
+		else if (startTime.hour < ScheduleVC.START_HOUR && endTime.hour >= ScheduleVC.START_HOUR)
+		{
+			return Time.length(startTime:endTime, endTime:startTime)
+		}
+		else
+		{
+			return Time.length(startTime:startTime, endTime:endTime)
+		}
+	}
     
     // MARK:- Navigation
     

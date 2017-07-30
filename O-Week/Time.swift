@@ -99,11 +99,7 @@ struct Time:Comparable, Hashable, CustomStringConvertible
     }
     static func length(startTime:Time, endTime:Time) -> Int
     {
-        let startTimeInMinutes = startTime.toMinutes()
-        let endTimeInMinutes = endTime.toMinutes()
-        let length = endTimeInMinutes - startTimeInMinutes
-        //wrap around to the next day. 1440 = 24 * 60
-        return (length < 0) ? (length + 1440) : length
+		return endTime.toMinutes() - startTime.toMinutes()
     }
 }
 
