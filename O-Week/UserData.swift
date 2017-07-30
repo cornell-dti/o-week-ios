@@ -81,6 +81,8 @@ class UserData {
 		categories = categoryData.map({Category($0)})
 			.filter({!categories.contains($0)})
 		
+		sortEventsAndCategories()
+		
 		//access database for updates
 		Internet.getUpdatesForVersion(version, onCompletion:
 		{
@@ -91,6 +93,9 @@ class UserData {
 				.filter({addedPKs.contains($0.pk)})
 				.filter({!selectedEventsArray.contains($0)})
 				.forEach({insertToSelectedEvents($0)})
+			
+			//sort again since database may have updated things
+			sortEventsAndCategories()
 		})
 	}
 	
@@ -230,6 +235,14 @@ class UserData {
 		let managedContext = appDelegate.persistentContainer.viewContext
 		let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: type.entityName)
 		return try! managedContext.fetch(fetchRequest)
+	}
+	private static func sortEventsAndCategories()
+	{
+		for (date, events) in allEvents
+		{
+			allEvents[date] = events.sorted()
+		}
+		categories = categories.sorted()
 	}
 	
 	// MARK:- UserDefaults interactions

@@ -32,6 +32,7 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource
         setUpHeightofFeedCell()
         setNotificationListener()
 		filter()
+		scrollToNextEvent()
         
         datePickerController = DatePickerController(collectionView: collectionView)
     }
@@ -106,5 +107,25 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource
 		}
 		
 		events = tempEvents
+	}
+	
+	private func scrollToNextEvent()
+	{
+		let date = Date()
+		let now = Time()
+		
+		guard UserData.userCalendar.compare(date, to: UserData.selectedDate!, toGranularity: .day) == .orderedSame else {
+			return
+		}
+		
+		for i in 0..<events.count
+		{
+			let event = events[i]
+			if (event.startTime >= now)
+			{
+				feedTableView.scrollToRow(at: IndexPath(row: i, section: 0), at: .top, animated: false)
+				return
+			}
+		}
 	}
 }

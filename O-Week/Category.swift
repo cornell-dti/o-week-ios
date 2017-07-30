@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-struct Category:Hashable, CoreDataObject, JSONObject
+struct Category:Hashable, Comparable, CoreDataObject, JSONObject
 {
 	let pk:Int
 	let name:String
@@ -58,4 +58,8 @@ struct Category:Hashable, CoreDataObject, JSONObject
 func == (lhs:Category, rhs:Category) -> Bool
 {
 	return lhs.pk == rhs.pk
+}
+func < (lhs:Category, rhs:Category) -> Bool
+{
+	return lhs.name.compare(rhs.name) == .orderedAscending
 }

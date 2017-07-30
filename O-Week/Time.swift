@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Time:Hashable, CustomStringConvertible
+struct Time:Comparable, Hashable, CustomStringConvertible
 {
     let hour:Int
     let minute:Int
