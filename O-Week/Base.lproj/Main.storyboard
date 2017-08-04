@@ -229,7 +229,7 @@
                         <leftBarButtonItems>
                             <barButtonItem id="Tom-zb-V4W">
                                 <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="iPb-Xd-IdT">
-                                    <rect key="frame" x="16" y="11" width="20" height="20"/>
+                                    <rect key="frame" x="16" y="12" width="20" height="20"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <state key="normal" image="settings"/>
                                     <connections>
@@ -700,7 +700,7 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Cornell SA Tech" id="KLC-g6-sPb">
+                            <tableViewSection headerTitle="Resources" id="KLC-g6-sPb">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="zjS-cJ-z9H">
                                         <rect key="frame" x="0.0" y="367" width="375" height="44"/>
@@ -709,10 +709,10 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nz7-LS-e4P">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nz7-LS-e4P">
                                                     <rect key="frame" x="8" y="0.0" width="359" height="43.5"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
-                                                    <state key="normal" title="About Us">
+                                                    <state key="normal" title="Campus Map">
                                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
@@ -725,6 +725,84 @@
                                                 <constraint firstAttribute="trailing" secondItem="nz7-LS-e4P" secondAttribute="trailing" constant="8" id="MOo-g1-qab"/>
                                                 <constraint firstAttribute="bottom" secondItem="nz7-LS-e4P" secondAttribute="bottom" id="iU3-HF-yVD"/>
                                                 <constraint firstItem="nz7-LS-e4P" firstAttribute="leading" secondItem="e8i-mq-hyP" secondAttribute="leading" constant="8" id="xiu-Gg-PN2"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="eh4-GM-yXI">
+                                        <rect key="frame" x="0.0" y="411" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eh4-GM-yXI" id="Yr2-M9-6MV">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ghf-fW-kxn">
+                                                    <rect key="frame" x="8" y="0.0" width="359" height="43.5"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
+                                                    <state key="normal" title="Orientation PDF">
+                                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="visitWebsite:" destination="hr7-Jz-ZuC" eventType="touchUpInside" id="qcH-Qn-wsh"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="Ghf-fW-kxn" secondAttribute="bottom" id="3qg-O3-LvR"/>
+                                                <constraint firstItem="Ghf-fW-kxn" firstAttribute="leading" secondItem="Yr2-M9-6MV" secondAttribute="leading" constant="8" id="fPm-Oq-UQb"/>
+                                                <constraint firstAttribute="trailing" secondItem="Ghf-fW-kxn" secondAttribute="trailing" constant="8" id="h5B-LA-1Yi"/>
+                                                <constraint firstItem="Ghf-fW-kxn" firstAttribute="top" secondItem="Yr2-M9-6MV" secondAttribute="top" id="iva-Zo-QqR"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="Wm5-Yv-Wmo">
+                                        <rect key="frame" x="0.0" y="455" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Wm5-Yv-Wmo" id="HoD-IU-haF">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jsk-L0-aOS">
+                                                    <rect key="frame" x="8" y="0.0" width="359" height="43.5"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
+                                                    <state key="normal" title="New Students Orientation Website">
+                                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="visitWebsite:" destination="hr7-Jz-ZuC" eventType="touchUpInside" id="eoC-BD-NBk"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Jsk-L0-aOS" firstAttribute="top" secondItem="HoD-IU-haF" secondAttribute="top" id="8q8-Kw-UHo"/>
+                                                <constraint firstItem="Jsk-L0-aOS" firstAttribute="leading" secondItem="HoD-IU-haF" secondAttribute="leading" constant="8" id="Amj-Cy-4zZ"/>
+                                                <constraint firstAttribute="bottom" secondItem="Jsk-L0-aOS" secondAttribute="bottom" id="BYn-Ad-X9x"/>
+                                                <constraint firstAttribute="trailing" secondItem="Jsk-L0-aOS" secondAttribute="trailing" constant="8" id="gyl-Tr-dGY"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="iaI-VN-M75">
+                                        <rect key="frame" x="0.0" y="499" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iaI-VN-M75" id="wFz-0D-WqK">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uwd-dD-6wI">
+                                                    <rect key="frame" x="8" y="0.0" width="359" height="43.5"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
+                                                    <state key="normal" title="Cornell Rescuer App">
+                                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="visitWebsite:" destination="hr7-Jz-ZuC" eventType="touchUpInside" id="TRJ-MX-AZh"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Uwd-dD-6wI" firstAttribute="top" secondItem="wFz-0D-WqK" secondAttribute="top" id="HTa-td-a3y"/>
+                                                <constraint firstAttribute="bottom" secondItem="Uwd-dD-6wI" secondAttribute="bottom" id="J83-cU-hax"/>
+                                                <constraint firstItem="Uwd-dD-6wI" firstAttribute="leading" secondItem="wFz-0D-WqK" secondAttribute="leading" constant="8" id="mLL-df-nqw"/>
+                                                <constraint firstAttribute="trailing" secondItem="Uwd-dD-6wI" secondAttribute="trailing" constant="8" id="nV2-5G-sf2"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>

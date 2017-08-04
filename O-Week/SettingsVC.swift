@@ -55,7 +55,22 @@ class SettingsVC: UITableViewController{
     }
     
     @IBAction func visitWebsite(_ sender: UIButton) {
-        UIApplication.shared.open(URL(string: "http://www.cornellsatech.org")!)
+        let url : String
+        switch sender.tag {
+        case 0: // Campus Map
+            url = "https://www.cornell.edu/about/maps/cornell-campus-map-2015.pdf"
+        case 1: // Official Orientation PDF
+            url = "http://ccengagement.cornell.edu/sites/ccengagement.cornell.edu/files/a3c/cornell_orientation_guide_08_2017.pdf"
+        case 2: // New Students Orientation Website
+            url = "https://newstudents.cornell.edu/fall-2017/first-year/cornell-orientation-august-18-21-2017"
+        case 3: // Cornell Rescuer App
+            url = "https://itunes.apple.com/us/app/cornell-rescuer/id1209164387?mt=8"
+        default:
+            url = ""
+        }
+        if let url = URL(string: url) {
+            UIApplication.shared.open(url)
+        }
     }
     
     @IBAction func addAllRequired(_ sender: UIButton) {
