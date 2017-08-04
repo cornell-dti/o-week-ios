@@ -70,7 +70,6 @@ class SettingsVC: UITableViewController{
             NotificationCenter.default.post(name: .reloadData, object: nil)
             _ = self?.navigationController?.popViewController(animated: true)
         })
-        //TODO: Add alert actions for each individual college so only required events from a specific college are added
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
             (alert: UIAlertAction!) -> Void in
             return
@@ -121,8 +120,6 @@ class SettingsVC: UITableViewController{
         if(indexPath.section == 0 && indexPath.row != 0){
             chosenSetting = indexPath.row == 1 ? UserPreferences.setForSetting : indexPath.row == 2 ? UserPreferences.notifyMeSetting : nil
             performSegue(withIdentifier: "toOptions", sender: self)
-        } else {
-            //TODO: Implement functionality for 2nd section (add all events, add all required, etc)
         }
     }
     
