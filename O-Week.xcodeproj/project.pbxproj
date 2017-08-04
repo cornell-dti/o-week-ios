@@ -121,19 +121,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0614E61D1F2CBDD70080EA2B /* models */ = {
+		0614E61D1F2CBDD70080EA2B /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				067EC2E61E8C9F8D0098ED94 /* Event.swift */,
 				06E738F41EFCA06E00DFF73E /* Category.swift */,
+				067EC2E61E8C9F8D0098ED94 /* Event.swift */,
+				067EC2E81E8C9FE20098ED94 /* Time.swift */,
 				06E738F61EFCA34C00DFF73E /* CoreDataObject.swift */,
 				06E309731EFDE8AA00F37D7F /* JSONObject.swift */,
-				067EC2E81E8C9FE20098ED94 /* Time.swift */,
 			);
-			name = models;
+			name = Models;
 			sourceTree = "<group>";
 		};
-		0614E61E1F2CBDFF0080EA2B /* util */ = {
+		0614E61E1F2CBDFF0080EA2B /* Util */ = {
 			isa = PBXGroup;
 			children = (
 				DC9307081EEC5D2F005AF445 /* Constants.swift */,
@@ -141,7 +141,7 @@
 				DC92BCDE1EF2229F009B4A8F /* UserPreferences.swift */,
 				DCD492211EF0D98100F4F93C /* LocalNotifications.swift */,
 			);
-			name = util;
+			name = Util;
 			sourceTree = "<group>";
 		};
 		0628E4831E7C82830066A308 /* Frameworks */ = {
@@ -176,8 +176,8 @@
 		DC18B30F1E76CBCE00C3FCD6 /* O-Week */ = {
 			isa = PBXGroup;
 			children = (
-				0614E61E1F2CBDFF0080EA2B /* util */,
-				0614E61D1F2CBDD70080EA2B /* models */,
+				0614E61E1F2CBDFF0080EA2B /* Util */,
+				0614E61D1F2CBDD70080EA2B /* Models */,
 				DC18B3191E76CBCE00C3FCD6 /* LaunchScreen.storyboard */,
 				DC18B3141E76CBCE00C3FCD6 /* Main.storyboard */,
 				DC18B31C1E76CBCE00C3FCD6 /* Info.plist */,

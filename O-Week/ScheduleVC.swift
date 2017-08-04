@@ -182,7 +182,6 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
     // MARK:- Event Actions
     
     func eventClicked(_ sender: UITapGestureRecognizer){
-        //TODO: Clean up code
         //Subview[0] must be UILabel corresponding to Title
         //If above parameter is changed, update comment where UILabel is made and added to its parent view
         if let titleLabel = sender.view?.subviews[0] as! UILabel! {
