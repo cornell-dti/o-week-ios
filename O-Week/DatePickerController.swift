@@ -61,8 +61,15 @@ class DatePickerController: NSObject, UICollectionViewDataSource, UICollectionVi
         let cell = collectionView.cellForItem(at: indexPath) as! DateCell
         cell.selected(true)
         selectedCell = cell
-		UserData.selectedDate = cell.date!
-        NotificationCenter.default.post(name: .reloadData, object: nil)
+        let prevDate = UserData.selectedDate
+        UserData.selectedDate = cell.date!
+        if (UserData.userCalendar.compare(cell.date!, to: prevDate!, toGranularity: .day) == .orderedAscending)
+        {
+            NotificationCenter.default.post(name: .reloadAfterMovedEarlier, object: nil)
+        } else {
+            NotificationCenter.default.post(name: .reloadAfterMovedLater, object: nil)
+        }
+		
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath)

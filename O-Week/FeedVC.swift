@@ -87,13 +87,24 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource
     private func setNotificationListener()
 	{
         NotificationCenter.default.addObserver(self, selector: #selector(updateFeed), name: .reloadData, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(movedToLaterDate), name: .reloadAfterMovedLater, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(movedToEarlierDate), name: .reloadAfterMovedEarlier, object: nil)
     }
     func updateFeed()
 	{
 		filter()
         feedTableView.reloadData()
 	}
-	
+    func movedToLaterDate()
+    {
+        filter()
+        feedTableView.reloadSections([0], with: .left)
+    }
+    func movedToEarlierDate()
+    {
+        filter()
+        feedTableView.reloadSections([0], with: .right)
+    }
 	private func filter()
 	{
 		var tempEvents = UserData.allEvents[UserData.selectedDate]!
