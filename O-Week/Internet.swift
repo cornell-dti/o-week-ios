@@ -57,10 +57,16 @@ class Internet
 			}
 			UserData.categories = newCategories
 			
+			//keep track of all changed events to notify the user
+			var changedEventsTitles = [String]()
 			//update events
 			changedEvents.map({Event(jsonOptional: $0 as? [String:Any])})
 				.flatMap({$0})
-				.forEach({UserData.updateEvent($0)})
+				.forEach({
+					event in
+					changedEventsTitles.append(event.title)
+					UserData.updateEvent(event)
+				})
 			//delete events
 			for date in UserData.dates
 			{
@@ -69,6 +75,7 @@ class Internet
 				{
 					if (deletedEvents.contains(event.pk))
 					{
+						changedEventsTitles.append(event.title)
 						UserData.removeFromCoreData(event)
 					}
 					else
@@ -84,6 +91,8 @@ class Internet
 			finish()
 			
 			runAsyncFunction({NotificationCenter.default.post(name: .reloadData, object: nil)})
+			print(changedEventsTitles)
+			LocalNotifications.addNotification(for: changedEventsTitles)
 		})
 	}
     static func getImageFor(_ event:Event, imageView:UIImageView)

@@ -25,6 +25,20 @@ class LocalNotifications: NSObject, UNUserNotificationCenterDelegate {
             }
         }
     }
+	
+	static func addNotification(for updatedEvents:[String])
+	{
+		guard !updatedEvents.isEmpty else {
+			return
+		}
+		
+		print("setting up notification")
+		let content = UNMutableNotificationContent()
+		content.title = "Orientation events have been updated"
+		content.body = "The following events were changed: " + updatedEvents.joined(separator: ", ")
+		let request = UNNotificationRequest(identifier: content.title, content: content, trigger: nil)
+		center.add(request, withCompletionHandler: nil)
+	}
     
     static func addNotification(for event: Event)
 	{
@@ -66,7 +80,7 @@ class LocalNotifications: NSObject, UNUserNotificationCenterDelegate {
         let trigger = UNCalendarNotificationTrigger(dateMatching: updatedComponents, repeats: false)
         
         let request = UNNotificationRequest(identifier: event.title, content: content, trigger: trigger)
-        center.add(request, withCompletionHandler: { (error) in return })
+        center.add(request, withCompletionHandler: nil)
     }
     
     static private func getIntervalFor7AM(from time: Time) -> TimeInterval
