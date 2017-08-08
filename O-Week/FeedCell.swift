@@ -16,16 +16,35 @@ class FeedCell:UITableViewCell
     @IBOutlet weak var eventTitle: UILabel!
     @IBOutlet weak var eventCaption: UILabel!
     @IBOutlet weak var eventButton: UIButton!
+	@IBOutlet weak var requiredText: UITextField!
+	@IBOutlet weak var categoryRequired: UILabel!
     
     var event:Event!
-    
-    func configure(event:Event) {
+	
+	override func awakeFromNib()
+	{
+		requiredText.layer.cornerRadius = requiredText.frame.width / 2
+	}
+    func configure(event:Event)
+	{
         self.event = event
         eventTitle.text = event.title
         eventCaption.text = event.caption
         eventStartTime.text = event.startTime.description
         eventEndTime.text = event.endTime.description
         setButtonImage(UserData.selectedEventsContains(event))
+		
+		requiredText.isHidden = !event.required
+		
+		if (event.categoryRequired)
+		{
+			categoryRequired.text = UserData.categoryFor(event.category)?.name
+			categoryRequired.isHidden = false
+		}
+		else
+		{
+			categoryRequired.isHidden = true
+		}
     }
     
     @IBAction func addBttnPressed(_ sender: UIButton) {

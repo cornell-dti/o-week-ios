@@ -162,6 +162,10 @@ class UserData {
 		}
 		return false
 	}
+	static func categoryFor(_ pk:Int) -> Category?
+	{
+		return categories.first(where: {$0.pk == pk})
+	}
 	static func updateEvent(_ event:Event)
 	{
 		removeFromAllEvents(event)

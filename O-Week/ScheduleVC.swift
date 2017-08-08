@@ -323,7 +323,9 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource  
     
     func setNotificationListener()
 	{
-        NotificationCenter.default.addObserver(self, selector: #selector(updateSchedule), name: .reloadData, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateSchedule), name: .reloadAfterMovedLater, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(updateSchedule), name: .reloadAfterMovedEarlier, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(updateSchedule), name: .reloadData, object: nil)
     }
     
     func updateSchedule()

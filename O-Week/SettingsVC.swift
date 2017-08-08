@@ -64,7 +64,7 @@ class SettingsVC: UITableViewController{
         case 2: // New Students Orientation Website
             url = "https://newstudents.cornell.edu/fall-2017/first-year/cornell-orientation-august-18-21-2017"
         case 3: // Cornell Rescuer App
-            url = "https://itunes.apple.com/us/app/cornell-rescuer/id1209164387?mt=8"
+            url = "itms-apps://itunes.apple.com/us/app/cornell-rescuer/id1209164387?mt=8"
         default:
             url = ""
         }
