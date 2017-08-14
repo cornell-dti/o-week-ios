@@ -170,6 +170,7 @@ class UserData {
 	{
 		removeFromAllEvents(event)
 		appendToAllEvents(event)
+		removeFromCoreData(event)
 		saveToCoreData(event)
 		
 		//if the event was selected, make sure it still is. Otherwise, we don't care.

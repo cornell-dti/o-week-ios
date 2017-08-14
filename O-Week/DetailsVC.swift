@@ -28,7 +28,7 @@ class DetailsVC: UIViewController, MKMapViewDelegate
     override func viewDidLoad()
 	{
         super.viewDidLoad()
-        configure(event: self.event!)
+        configure(event: event!)
     }
     
     override func viewWillDisappear(_ animated: Bool)
