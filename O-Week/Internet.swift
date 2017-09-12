@@ -1,25 +1,53 @@
 //
 //  Internet.swift
-//  O-Week
 //
 //  Created by David Chu on 2017/4/23.
-//  Copyright © 2017 Cornell SA Tech. All rights reserved.
+//  Copyright © 2017 Cornell D&TI. All rights reserved.
 //
-//  Handles all communications with the database, sending and receiving information.
+
 import UIKit
 import SystemConfiguration
 
 /**
- Handles all communications with the database, sending and receiving information.
- - important: No over-the-web connections should be made outside of this class
+ Handles ALL web-related activities for this app.
+ - important: No over-the-web connections should be made outside of this class.
  */
 class Internet
 {
+	//Link to the website where all event info is stored.
     static let DATABASE = "https://oweekapp.herokuapp.com/flow/"
     
     //suppress default constructor for noninstantiability
     private init(){}
 	
+	/**
+	
+	Downloads all events and categories to update the app to the database's newest version.
+	The `onCompletion` provided will be executed when the data has been processed.
+	
+	- Note: `UserData.selectedEvents` will not be updated by this method.
+	- Requires: `UserData.categories` and `UserData.allEvents` should already be filled with events loaded from `CoreData`.
+	
+	Expected JSON structure:
+	
+		{
+	 		version: Int,
+			categories:
+			{
+				changed: [Category.init(jsonOptional:[String:Any]), category2, ...],
+				deleted: [Category.pk, pk2, ...]
+			},
+			events:
+			{
+				changed: [Event.init(jsonOptional:[String:Any])}, event2, ...],
+				deleted: [Event.pk, pk2, ...]
+			}
+		}
+	
+	- Parameters:
+		- version: Current version of database on file. Should be 0 if never downloaded from database.
+		- finish: Function to execute when data is processed.
+	*/
 	static func getUpdatesForVersion(_ version:Int, onCompletion finish:@escaping (() -> ()))
 	{
 		get(url: "\(DATABASE)version/\(version)", handler:
@@ -34,6 +62,11 @@ class Internet
 					let events = data["events"] as? [String:Any],
 					let changedEvents = events["changed"] as? [Any],
 					let deletedEvents = events["deleted"] as? [Int] else {
+				return
+			}
+			
+			//quick exit if version # did not change
+			guard version != newestVersion else {
 				return
 			}
 			
@@ -68,7 +101,7 @@ class Internet
 					UserData.updateEvent(event)
 				})
 			//delete events
-			for date in UserData.dates
+			for date in UserData.DATES
 			{
 				var newEventsForDate = [Event]()
 				for event in UserData.allEvents[date]!
@@ -90,11 +123,19 @@ class Internet
 			UserData.version = newestVersion
 			finish()
 			
+			//notify classes that need to know when events were udpated
 			runAsyncFunction({NotificationCenter.default.post(name: .reloadData, object: nil)})
 			print(changedEventsTitles)
 			LocalNotifications.addNotification(for: changedEventsTitles)
 		})
 	}
+	/**
+	Sets an image corresponding to `event` into `imageView`. Attempts to retrieve image from saved files first, then attempts to downlaod image if no saved file exists.
+	
+	- Parameters:
+		- event: Event whose image we must fetch.
+		- imageView: View to display the image.
+	*/
     static func getImageFor(_ event:Event, imageView:UIImageView)
     {
 		if let image = UserData.loadImageFor(event)
@@ -106,6 +147,14 @@ class Internet
 			imageFrom("\(DATABASE)event/\(event.pk)/image", imageView: imageView, event: event)
 		}
     }
+	/**
+	Downloads an image from the url, then sets the image downloaded to `imageView` and saves the image such that it can be retreived from disk with `event` next time the image is requested.
+	- Note: The download is done asynchronously as required for all internet connections in iOS. This undoubtedly means the user may see some "lag" while the image is downloading.
+	- Parameters:
+		- urlString: URL of image to download.
+		- imageView: View to display the image.
+		- event: Event that will be associated with the image once it is saved.
+	*/
 	private static func imageFrom(_ urlString:String, imageView:UIImageView, event:Event)
     {
         guard let url = URL(string: urlString) else {
@@ -129,10 +178,10 @@ class Internet
         task.resume()
     }
     /**
-     Sends a GET request to the given URL with the given keys, running the completion function when it is done. Always use this function to communicate with the server.
-     - parameters:
-     - url: URL to send the GET request to
-     - handler: A function used to process the info returned from the database
+     Sends a GET request to the`url` with the given keys, retrieves a JSON object, then runs `handler` with the JSON object when it is done. Always use this function to communicate with the server.
+     - Parameters:
+     	- url: URL to send the GET request to
+     	- handler: A function used to process the info returned from the database
      */
     private static func get(url:String, handler:((Any?) -> ())?)
     {
@@ -161,7 +210,7 @@ class Internet
         task.resume()
     }
     /**
-     Runs the given function asynchronously. Used because Internet communications should not be done on the UI-thread.
+     Runs `function` asynchronously. Use when attempting to modify UI from functions that involve internet connections. This is required because the UI thread must be independent from the internet threads in iOS, and not using this function will result in an exception.
      - parameter function: Function to run
      */
     private static func runAsyncFunction(_ function:(() -> ())?)

@@ -3,14 +3,30 @@
 //  O-Week
 //
 //  Created by David Chu on 2017/3/29.
-//  Copyright © 2017 Cornell SA Tech. All rights reserved.
+//  Copyright © 2017 Cornell D&TI. All rights reserved.
 //
 
 import UIKit
 import CoreData
 
+/**
+	Data-type that holds all information about an event. Designed to be immutable. This will be downloaded from the database via methods in `Internet`, where new events will be compared with saved ones.
+
+	Notable fields are explained below:
+
+	`category`: The `Category.pk` of the `Category` this event belongs to.
+	`date`: The date in which this event BEGINS. If this event crosses over midnight, the date is that of the 1st day.
+	`categoryRequired`: True if this event is required by its category.
+	`additional`: Additional information to display in a special format. Formatted like so:
+			## HEADER ## ____BULLET # INFO ____BULLET # INFO
+
+	- Important: Since events can cross over midnight, the `endTime` may not be "after" the `#startTime`. Calculations should take this into account.
+
+	- Note: see `Category`
+*/
 struct Event:Hashable, Comparable, CoreDataObject, JSONObject
 {
+	static let entityName = "EventEntity"
     let title: String
     let caption: String
     let description: String
@@ -29,11 +45,24 @@ struct Event:Hashable, Comparable, CoreDataObject, JSONObject
     {
         return pk
     }
-	static var entityName: String
-	{
-		return "EventEntity"
-	}
-    
+	
+	/**
+		Creates an event object in-app. This should never be done organically (without initial input from the database in some form), or else we risk becoming out-of-sync with the database.
+		- parameters:
+			- title: For example, "New Student Check-In"
+			- caption: For example, "Bartels Hall"
+			- description: For example, "You are required to attend New Student Check-In to pick up..."
+			- category: See class description.
+			- date: For example, 7/19/2017
+			- start: For example, 8:00 AM
+			- end: For example, 4:00 PM
+			- required: Whether this event is required for new students.
+			- categoryRequired: Whether this event is required for its category.
+			- additional: For example, ## All new students are required to attend this program at the following times: ## ____3:30pm # Residents of Balch, Jameson, Risley, Just About Music, Ecology House, and Latino Living Center; on-campus transfers in Call Alumni Auditorium ____5:30pm # Residents of Dickson, McLLU, Donlon, High Rise 5, and Ujamaa; off-campus transfers in Call Alumni Auditorium ____8:00pm # Residents of Townhouses, Low Rises, Court-Kay-Bauer, Mews, Holland International Living Center, and Akwe:kon
+			- longitude: For example, -76.4785000
+			- latitude: For example, 42.4439000
+			- pk: Unique positive ID given to each event starting from 1.
+	*/
 	init(title:String, caption:String, category:Int, pk: Int, start:Time, end:Time, date: Date, required: Bool, description: String?, longitude:Double, latitude:Double, categoryRequired:Bool, additional:String)
     {
         self.title = title
@@ -50,6 +79,28 @@ struct Event:Hashable, Comparable, CoreDataObject, JSONObject
 		self.categoryRequired = categoryRequired
 		self.additional = additional
     }
+	/**
+		Creates an event from saved `CoreData`.
+		
+		- important: Should have value fields synced with `O-week.xcdatamodeld` and function `saveToCoreData`.
+		
+		- parameter obj: Object retrieved from `CoreData`. Expects fields:
+				title  => String
+				caption => String
+				pk => int
+				eventDescription => String
+				category => int
+				startTimeHr => int
+				startTimeMin => int
+				endTimeHr => int
+				endTimeMin => int
+				required => bool
+				date => Date
+				longitude => Double
+				latitude => Double
+				categoryRequired => boolean
+				additional => String
+	*/
     init(_ obj: NSManagedObject)
 	{
         title = obj.value(forKeyPath: "title") as! String
@@ -66,6 +117,24 @@ struct Event:Hashable, Comparable, CoreDataObject, JSONObject
 		categoryRequired = obj.value(forKey: "categoryRequired") as! Bool
 		additional = obj.value(forKey: "additional") as! String
     }
+	/**
+		Creates an event object using data downloaded from the database.
+		
+		- parameter jsonOptional: JSON with the expected keys and values:
+				name  => String
+				location => String
+				pk => int
+				description => String
+				category => int
+				start_time => Time. See `Time.fromString()`
+				end_time => Time. See `Time.fromString()`
+				required => bool
+				start_date => Date, formatted as "yyyy-MM-dd"
+				longitude => Double
+				latitude => Double
+				category_required => boolean
+				additional => String
+	*/
     init?(jsonOptional: [String:Any]?)
     {
         guard let json = jsonOptional,
@@ -110,7 +179,15 @@ struct Event:Hashable, Comparable, CoreDataObject, JSONObject
         self.startTime = Time.fromString(startTime)
         self.endTime = Time.fromString(endTime)
     }
-	
+	/**
+		Sets this event to the `CoreData` context given; for saving events.
+		
+		- important: Should have value fields synced with `O-week.xcdatamodeld` and function `init(obj)`.
+		
+		- parameters:
+			- entity: Core data magic.
+			- context: Core data magic.
+	*/
 	func saveToCoreData(entity: NSEntityDescription, context: NSManagedObjectContext) -> NSManagedObject
 	{
 		let obj = NSManagedObject(entity: entity, insertInto: context)
@@ -132,8 +209,13 @@ struct Event:Hashable, Comparable, CoreDataObject, JSONObject
 		return obj
 	}
 	
-	//assumes additional is non empty and is formatted like so:
-	// ## HEADER ## ____BULLET # INFO ____BULLET # INFO
+	/**
+		Returns the formatted additional text, with headers and bullets.
+		String is like so: ## HEADER ## ____BULLET # INFO ____BULLET # INFO.
+		- important: Check that `additional` is not empty before calling this method.
+		
+		- returns: Formatted text
+	*/
 	func attributedAdditional() -> NSAttributedString
 	{
 		let TEXT_SIZE:CGFloat = 12
@@ -161,7 +243,7 @@ struct Event:Hashable, Comparable, CoreDataObject, JSONObject
 			let start = string.length
 			
 			//set bullet
-			let bulletAttributes = [NSFontAttributeName: UIFont(name: "AvenirNext-DemiBold", size: TEXT_SIZE)!, NSForegroundColorAttributeName:Constants.Colors.RED]
+			let bulletAttributes = [NSFontAttributeName: UIFont(name: "AvenirNext-DemiBold", size: TEXT_SIZE)!, NSForegroundColorAttributeName:Colors.RED]
 			let attributedBullet = NSAttributedString(string:bullet, attributes:bulletAttributes)
 			string.append(attributedBullet)
 			
@@ -179,11 +261,24 @@ struct Event:Hashable, Comparable, CoreDataObject, JSONObject
 		return string
 	}
 }
-
+/**
+	Returns whether lhs == rhs. True if `pk`s are identical.
+	- parameters:
+		- lhs: `Event` on left of ==
+		- rhs: `Event` on right of ==
+	- returns: See description.
+*/
 func == (lhs:Event, rhs:Event) -> Bool
 {
     return lhs.pk == rhs.pk
 }
+/**
+	Returns whether lhs < rhs. Ordering is based on start time, taking into account events that may start after midnight.
+	- parameters:
+		- lhs: `Event` on left of <
+		- rhs: `Event` on right of <
+	- returns: True if lhs < rhs.
+*/
 func < (lhs:Event, rhs:Event) -> Bool
 {
 	let dateCompare = UserData.userCalendar.compare(lhs.date, to: rhs.date, toGranularity: .day)

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="2pU-qI-3r5">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="2pU-qI-3r5">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -553,8 +553,8 @@
                     <navigationItem key="navigationItem" title="My Schedule" id="ID6-5Z-Krl"/>
                     <connections>
                         <outlet property="collectionView" destination="CpH-Dc-YWx" id="XOO-he-qyY"/>
-                        <outlet property="myScrollView" destination="KyL-C5-vw0" id="Zd1-zW-KLh"/>
-                        <outlet property="myTableView" destination="mTJ-5S-Tbp" id="Klh-WP-BuB"/>
+                        <outlet property="scrollView" destination="KyL-C5-vw0" id="HPP-EE-leU"/>
+                        <outlet property="tableView" destination="mTJ-5S-Tbp" id="F42-CF-oHH"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="showDetailsVC" id="mu3-We-PmB"/>
                     </connections>
                 </viewController>
@@ -1091,6 +1091,6 @@
         <image name="settings" width="117" height="117"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Xcf-ub-FiZ"/>
+        <segue reference="mu3-We-PmB"/>
     </inferredMetricsTieBreakers>
 </document>

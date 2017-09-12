@@ -3,13 +3,14 @@
 //  O-Week
 //
 //  Created by Vicente Caycedo on 6/13/17.
-//  Copyright © 2017 Cornell SA Tech. All rights reserved.
+//  Copyright © 2017 Cornell D&TI. All rights reserved.
 //
 
 import Foundation
 import UserNotifications
 
-class LocalNotifications: NSObject, UNUserNotificationCenterDelegate {
+class LocalNotifications: NSObject, UNUserNotificationCenterDelegate
+{
     
     static let center = UNUserNotificationCenter.current()
     static let options: UNAuthorizationOptions = [.alert, .sound, .badge]

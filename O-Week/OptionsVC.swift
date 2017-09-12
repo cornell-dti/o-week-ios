@@ -3,7 +3,7 @@
 //  O-Week
 //
 //  Created by Vicente Caycedo on 5/1/17.
-//  Copyright © 2017 Cornell SA Tech. All rights reserved.
+//  Copyright © 2017 Cornell D&TI. All rights reserved.
 //
 
 import UIKit
@@ -52,7 +52,7 @@ class OptionsVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "optionsCell") as! OptionsCell
         cell.label.text = setting!.options[indexPath.row]
         if(setting!.chosen == setting!.options[indexPath.row]){
-            cell.view.backgroundColor = Constants.Colors.RED
+            cell.view.backgroundColor = Colors.RED
         } else {
             cell.view.backgroundColor = UIColor.white
         }

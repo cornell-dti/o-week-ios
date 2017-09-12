@@ -3,11 +3,16 @@
 //  O-Week
 //
 //  Created by Vicente Caycedo on 3/17/17.
-//  Copyright © 2017 Cornell SA Tech. All rights reserved.
+//  Copyright © 2017 Cornell D&TI. All rights reserved.
 //
 
 import UIKit
 
+/**
+	Holds data and reference pointers to `View`s for an `Event`.
+	`event`: The event that this object currently represents.
+	- seeAlso: `FeedVC`
+*/
 class FeedCell:UITableViewCell
 {
     
@@ -21,10 +26,17 @@ class FeedCell:UITableViewCell
     
     var event:Event!
 	
+	/**
+		Turns the background of "RQ" to a circle.
+	*/
 	override func awakeFromNib()
 	{
 		requiredText.layer.cornerRadius = requiredText.frame.width / 2
 	}
+	/**
+		Sets the current event to display.
+		- parameter event: The `Event` that this cell will represent.
+	*/
     func configure(event:Event)
 	{
         self.event = event
@@ -46,24 +58,36 @@ class FeedCell:UITableViewCell
 			categoryRequired.isHidden = true
 		}
     }
-    
-    @IBAction func addBttnPressed(_ sender: UIButton) {
-        if(UserData.selectedEventsContains(event!)){
+	
+	/**
+		'+' button pressed. Add/remove the event from selected events.
+		- parameter sender: Button that was pressed.
+	*/
+    @IBAction func addBttnPressed(_ sender: UIButton)
+	{
+        if (UserData.selectedEventsContains(event!))
+		{
             setButtonImage(false)
             UserData.removeFromSelectedEvents(event!)
             LocalNotifications.removeNotification(for: event!)
-        } else {
+        }
+		else
+		{
             setButtonImage(true)
             UserData.insertToSelectedEvents(event!)
             LocalNotifications.addNotification(for: event!)
         }
     }
-    
+	
+	/**
+		Set the '+' button to an image that represents whether the event is selected.
+		- parameter added: True if the event should be displayed as "selected".
+	*/
     private func setButtonImage(_ added: Bool)
     {
         UIView.animate(withDuration: 0.5) {
             self.eventButton.alpha = 0
-            let image = added ? Constants.Images.imageAdded : Constants.Images.imageNotAdded
+            let image = added ? Images.imageAdded : Images.imageNotAdded
             self.eventButton.setImage(image, for: .normal)
             self.eventButton.alpha = 1
         }

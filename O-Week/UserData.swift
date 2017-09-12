@@ -3,19 +3,26 @@
 //  O-Week
 //
 //  Created by Vicente Caycedo on 4/28/17.
-//  Copyright © 2017 Cornell SA Tech. All rights reserved.
+//  Copyright © 2017 Cornell D&TI. All rights reserved.
 //
-//  Holds a variety of user data
 
 import Foundation
 import CoreData
 import UIKit
 
-class UserData {
-    
-    // MARK:- Properties
-    
-    //UserDefaults
+/**
+	Handles all data shared between classes. Many of these variables have associated `NotificationCenter` events that should be fired when they are changed, so do so when changing their values.
+
+	`allEvents`: All events on disk, sorted by date.
+	`selectedEvents`: All events selected by the user, sorted by date.
+	`categories`: All categories on disk.
+	`DATES`: Dates of the orientation. Determined from `YEAR`, `MONTH`, `START_DAY`,
+	and `END_DAY`.
+	`selectedDate`: The date to display events for.
+*/
+class UserData
+{
+    //UserDefaults keys
     static let addedPKsName = "AddedPKs" //KeyPath used for accessing added PKs
 	static let versionName = "version" //KeyPath used for accessing local version to compare with database
     
@@ -23,22 +30,25 @@ class UserData {
     static var allEvents = [Date: [Event]]()
     static var selectedEvents = [Date: [Event]]()
     
-    //Calendar 
+    //Calendar for manipulating dates. You can use this throughout the app.
     static let userCalendar = Calendar.current
     
     //Dates
-    static var dates = [Date]()
+    static var DATES = [Date]()
 	static var selectedDate:Date!
 	static let YEAR = 2017
 	static let MONTH = 8
 	static let START_DAY = 18	//Dates range: [START_DAY, END_DAY], inclusive
-	static let END_DAY = 26
+	static let END_DAY = 26		//Note: END_DAY must > START_DAY
 	
 	//Categories
 	static var categories = [Category]()
 	
     private init(){}
 	
+	/**
+		Initialize `DATES` and lists for dictionaries of events
+	*/
 	private static func initDates()
 	{
 		let today = Date()
@@ -53,7 +63,7 @@ class UserData {
 		while (dateComponents.day! <= END_DAY)
 		{
 			let date = UserData.userCalendar.date(from: dateComponents)!
-			dates.append(date)
+			DATES.append(date)
 			selectedEvents[date] = []
 			allEvents[date] = []
 			dateComponents.day! += 1
@@ -65,7 +75,15 @@ class UserData {
 		}
 	}
 	/**
-		Instantiates all necessary events, categories, and dates by reading from CoreData and interacting with the database. Should be called whenever the app enters foreground or is launched.
+		Instantiates `allEvents`, `selectedEvents`, `categories` by reading from CoreData and interacting with the database.
+	
+		- note: Call whenever the app enters foreground or is launched.
+	
+		1. Retrieves all events and categories from `CoreData`, adding them to `allEvents`, `categories`.
+		2. Sorts all events and categories. This is because downloading is done in the background, and before we've finished downloading, the UI may already need to display events & categories.
+		3. Downloads updates from the database.
+		4. Retrieves selected events. Note that after events and categories are saved here, the lists they belong in should not be mutated any further by another function.
+		5. Sort again with updated events.
 	*/
 	static func loadData()
 	{
@@ -98,9 +116,25 @@ class UserData {
 			sortEventsAndCategories()
 		})
 	}
+	/**
+		Sorts `allEvents` and `categories`.
+	*/
+	private static func sortEventsAndCategories()
+	{
+		for (date, events) in allEvents
+		{
+			allEvents[date] = events.sorted()
+		}
+		categories = categories.sorted()
+	}
 	
     // MARK:- Search Functions
-    
+
+	/**
+		Returns whether or not the event is in `allEvents`.
+		- parameter event: Event to check.
+		- returns: True if `allEvents` already holds a copy of the given event.
+	*/
     static func allEventsContains(_ event: Event) -> Bool
 	{
         if let eventsForDate = allEvents[event.date] {
@@ -109,6 +143,11 @@ class UserData {
             return false
         }
     }
+	/**
+		Returns true if the event is selected.
+		- parameter event: The event that we want to check is selected.
+		- returns: See method description.
+	*/
     static func selectedEventsContains(_ event: Event) -> Bool
 	{
         if let setForDate = selectedEvents[event.date] {
@@ -117,6 +156,11 @@ class UserData {
             return false
         }
     }
+	/**
+		Adds event to `allEvents` for the correct date according to `event.date`.
+		The date should match a date in `DATES`.
+		- parameter event: Event to add.
+	*/
     static func appendToAllEvents(_ event: Event)
 	{
 		guard allEvents[event.date] != nil else {
@@ -125,6 +169,11 @@ class UserData {
 		}
 		allEvents[event.date]!.append(event)
     }
+	/**
+		Adds event to `selectedEvents`. The date should match a date in `DATES`.
+		- parameter event: Event to add.
+		- returns: True if the event was added
+	*/
     static func insertToSelectedEvents(_ event: Event)
 	{
 		guard selectedEvents[event.date] != nil else {
@@ -133,7 +182,11 @@ class UserData {
 		}
 		selectedEvents[event.date]!.append(event)
     }
-	//Returns true if an event was actually removed
+	/**
+		Removes event from `selectedEvents`.
+		- parameter event: Event to remove.
+		- returns: True IFF an event was actually removed.
+	*/
 	@discardableResult
     static func removeFromSelectedEvents(_ event: Event) -> Bool
 	{
@@ -147,6 +200,11 @@ class UserData {
         }
 		return false
     }
+	/**
+		Removes event from `allEvents`.
+		- parameter event: Event to remove.
+		- returns: True IFF an event was actually removed.
+	*/
 	@discardableResult
 	static func removeFromAllEvents(_ event:Event) -> Bool
 	{
@@ -162,10 +220,27 @@ class UserData {
 		}
 		return false
 	}
+	/**
+		Linear search for a category given its pk value.
+		- parameter pk: `Category.pk`
+		- returns: Category, nil if no match was found.
+	*/
 	static func categoryFor(_ pk:Int) -> Category?
 	{
 		return categories.first(where: {$0.pk == pk})
 	}
+	/**
+		Updates an event that might've been already on disk with one from the database. Performs the following actions:
+	
+		1. Removes old event from list (`removeFromAllEvents()` matches event by equality, which is based on `pk`, and since an updated event should have the same `pk` as the old event, calling `removeFromAllEvents(newEvent)` should remove the old event).
+		2. Adds new event.
+		3. Removes old event from `CoreData` (again, using the `pk`. Look at `removeFromCoreData()` for details).
+		4. Saves new event to `CoreData`.
+		5. Attempt to remove old event from selected events. If we did remove something, that means the old event was selected, so we should then select the new updated event. `removeFromSelected()` also matches event by equality, which is based on `pk`.
+	
+		- note: Pictures CANNOT be updated with this method (for now). To update an event's picture, the best way would be to delete the event and add a new one (both done on the database), with a different pk.
+		- parameter event: Updated event. Should have same `pk` as old event, if old event exists.
+	*/
 	static func updateEvent(_ event:Event)
 	{
 		removeFromAllEvents(event)
@@ -179,6 +254,15 @@ class UserData {
 			insertToSelectedEvents(event)
 		}
 	}
+	/**
+		Updates a category that might've been already on disk with one from the database. Performs the following actions:
+	
+		1. Checks to see if there exists an old category to be replaced. If there is, then remove the old one from the list and from `CoreData`.
+		2. Adds new category.
+		3. Saves new category to `CoreData`.
+		
+		- parameter category: Updated category. Should have same `pk` as old category, if old category exists.
+	*/
 	static func updateCategory(_ category:Category)
 	{
 		if let indexToRemove = categories.index(of: category)
@@ -192,6 +276,10 @@ class UserData {
 	
 	// MARK:- Core Data interactions
 	
+	/**
+		Saves the given object to `CoreData` asynchronously.
+		- parameter object: Object to save. Should implement `CoreDataObject` protocol.
+	*/
 	static func saveToCoreData(_ object:CoreDataObject)
 	{
 		let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -203,37 +291,32 @@ class UserData {
 			try? context.save()
 		})
 	}
+	/**
+		Removes an object with the same `pk` as the given object from `CoreData`.
+		
+		- important: This method depends on only the `pk` of the given object. For example, if you wanted to remove the saved version of an event before you update it, you could call this method with the new event, and since the new event's `pk` will be identical to the saved event's `pk`, the saved event will be removed.
+	
+		TL;DR: `removeFromCoreData(newEvent)` will remove `savedEvent` with same `pk` as `newEvent`.
+	
+		- parameter object: Object that has the same `pk` as the object you wish to remove.
+	*/
 	static func removeFromCoreData(_ object:CoreDataObject)
 	{
 		let appDelegate = UIApplication.shared.delegate as! AppDelegate
 		appDelegate.persistentContainer.performBackgroundTask(
 		{
 			(context) in
-			let entity = NSEntityDescription.entity(forEntityName: type(of: object).entityName, in: context)!
-			context.delete(object.saveToCoreData(entity: entity, context: context))
+			let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: type(of: object).entityName)
+			fetchRequest.predicate = NSPredicate(format: "pk = %@", argumentArray: [object.pk])
+			let fetchedResults = try? context.fetch(fetchRequest)
+			fetchedResults?.forEach({context.delete($0 as! NSManagedObject)})
 		})
 	}
-	static func saveImage(_ image:UIImage, event:Event)
-	{
-		let imageData = UIImagePNGRepresentation(image)
-		let url = documentURLForName("\(event.pk).png")
-		try? imageData?.write(to: url)
-	}
-	static func removeImageOf(_ event:Event)
-	{
-		let url = documentURLForName("\(event.pk).png")
-		try? FileManager.default.removeItem(at: url)
-	}
-	static func loadImageFor(_ event:Event) -> UIImage?
-	{
-		let url = documentURLForName("\(event.pk).png")
-		return UIImage(contentsOfFile: url.path)
-	}
-	private static func documentURLForName(_ name:String) -> URL
-	{
-		let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-		return urls[0].appendingPathComponent(name)
-	}
+	/**
+		Returns an array of `NSManagedObjects` from `CoreData` of the given type.
+		- parameter type: The entity type of the objects you want to read.
+		- returns: Array of `NSManagedObjects` of the entity type given.
+	*/
 	private static func fetchFromCoreData(_ type:CoreDataObject.Type) -> [NSManagedObject]
 	{
 		let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -241,22 +324,69 @@ class UserData {
 		let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: type.entityName)
 		return try! managedContext.fetch(fetchRequest)
 	}
-	private static func sortEventsAndCategories()
+	
+	// MARK:- Image saving, reading, and deletion.
+	
+	/**
+		Saves the given `UIImage` on the iPhone with a `.png` extension.
+		
+		- parameters:
+			- image: Image to save.
+			- event: The event this image belongs to. The image will be saved with the `event.pk` as its name so we can access it next time using the event.
+	*/
+	static func saveImage(_ image:UIImage, event:Event)
 	{
-		for (date, events) in allEvents
-		{
-			allEvents[date] = events.sorted()
-		}
-		categories = categories.sorted()
+		let imageData = UIImagePNGRepresentation(image)
+		let url = documentURLForName("\(event.pk).png")
+		try? imageData?.write(to: url)
 	}
+	/**
+		Deletes the image of the given event from disk.
+	
+		- parameter event: Event whose image we wish to delete.
+	*/
+	static func removeImageOf(_ event:Event)
+	{
+		let url = documentURLForName("\(event.pk).png")
+		try? FileManager.default.removeItem(at: url)
+	}
+	/**
+		Reads from disk an image for the given event.
+	
+		- parameter event: Event whose image we wish to read from disk.
+		- returns: Image if one was found, nil otherwise.
+	*/
+	static func loadImageFor(_ event:Event) -> UIImage?
+	{
+		let url = documentURLForName("\(event.pk).png")
+		return UIImage(contentsOfFile: url.path)
+	}
+	/**
+		Provides a path to the file for the given file name.
+		- parameter name: Name of the file.
+		- returns: Path to the file.
+	*/
+	private static func documentURLForName(_ name:String) -> URL
+	{
+		let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+		return urls[0].appendingPathComponent(name)
+	}
+	
 	
 	// MARK:- UserDefaults interactions
 	
+	/**
+		Retrieves from `UserDefaults` a list of `event.pk`s of events the user has selected.
+		- returns: List of `pk`s belonging to selected events.
+	*/
 	static func getAddedPKs() -> [Int]
 	{
 		let defaults = UserDefaults.standard
 		return defaults.object(forKey: addedPKsName) as? [Int] ?? [Int]()
 	}
+	/**
+		Saves to `UserDefaults` the `event.pk`s of events the user has selected.
+	*/
     static func saveAddedPKs()
 	{
         let defaults = UserDefaults.standard
@@ -264,6 +394,9 @@ class UserData {
 		UserData.selectedEvents.values.flatMap({$0}).forEach({addedPks.append($0.pk)})
         defaults.set(addedPks, forKey: UserData.addedPKsName)
     }
+	/**
+		The version of the database we have saved on this phone. This value is passed to the database to determine what needs to be updated. This value is then synchronized with the database's current version.
+	*/
 	static var version:Int {
 		get
 		{

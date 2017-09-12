@@ -3,17 +3,23 @@
 //  O-Week
 //
 //  Created by Vicente Caycedo on 3/24/17.
-//  Copyright © 2017 Cornell SA Tech. All rights reserved.
+//  Copyright © 2017 Cornell D&TI. All rights reserved.
 //
 
 import UIKit
 
-class ScheduleCell: UITableViewCell {
-    
+/**
+	Displays the hour on the left of `ScheduleVC`.
+*/
+class ScheduleCell: UITableViewCell
+{
     @IBOutlet weak var label: UILabel!
-    
-    func configure(title: String){
+	
+	/**
+		Set the hour text to display.
+	*/
+    func configure(title: String)
+	{
         label.text = title
     }
-    
 }

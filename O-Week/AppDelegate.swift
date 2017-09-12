@@ -3,22 +3,21 @@
 //  O-Week
 //
 //  Created by Vicente Caycedo on 3/13/17.
-//  Copyright © 2017 Cornell SA Tech. All rights reserved.
+//  Copyright © 2017 Cornell D&TI. All rights reserved.
 //
 
 import UIKit
 import CoreData
 import UserNotifications
 
+/**
+	First class that is accessed when app first launches. Responsible for setting up stylistic themes, notifications, and handling app life cycle events.
+*/
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate
 {
-    
     var window: UIWindow?
-    
-    //For local notifications to display while app is open
-    let notificationDelegate = LocalNotifications()
-    
+	
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool
 	{
         setNavBarColor()
@@ -28,26 +27,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         LocalNotifications.updateNotifications()
         return true
     }
-    
+	
+	/**
+		Sets the navigation bar so that it merges seamlessly with the `DatePickerController` directly below it. Should be called by ViewControllers that use date pickers.
+		- parameter navController: A reference to the ViewController's navigation bar controller.
+	*/
     static func setUpExtendedNavBar(navController: UINavigationController?)
 	{
         navController?.navigationBar.shadowImage = UIImage(named: "transparent_pixel")
         navController?.navigationBar.setBackgroundImage(UIImage(named: "pixel"), for: .default)
     }
-    
+	
+	/**
+		Changes the navigation bar's style to our theme color, and changes the text so that it's AvenirNext.
+	*/
     private func setNavBarColor()
     {
         let navigationBarAppearence = UINavigationBar.appearance()
         
-        navigationBarAppearence.barTintColor = Constants.Colors.RED
+        navigationBarAppearence.barTintColor = Colors.RED
         navigationBarAppearence.tintColor = UIColor.white   //back arrow is black
         navigationBarAppearence.isTranslucent = false
         navigationBarAppearence.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: UIFont(name: "AvenirNext-DemiBold", size: 14)!]
     }
     
-    private func setDelegateForNotifications(){
+    private func setDelegateForNotifications()
+	{
         let center = UNUserNotificationCenter.current()
-        center.delegate = notificationDelegate
+        center.delegate = LocalNotifications()
     }
     
     func applicationWillResignActive(_ application: UIApplication) {

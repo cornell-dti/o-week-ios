@@ -3,13 +3,13 @@
 //  O-Week
 //
 //  Created by Vicente Caycedo on 5/1/17.
-//  Copyright © 2017 Cornell SA Tech. All rights reserved.
+//  Copyright © 2017 Cornell D&TI. All rights reserved.
 //
 
 import UIKit
 
-class SettingsVC: UITableViewController{
-    
+class SettingsVC: UITableViewController
+{
     @IBOutlet weak var remindersSet: UISwitch!
     @IBOutlet weak var setForOption: UILabel!
     @IBOutlet weak var notifyMeOption: UILabel!
@@ -128,7 +128,7 @@ class SettingsVC: UITableViewController{
         //Setting appearance of Section titles
         let header = view as! UITableViewHeaderFooterView
         header.textLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 14)
-        header.textLabel?.textColor = Constants.Colors.RED
+        header.textLabel?.textColor = Colors.RED
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
