@@ -1,8 +1,8 @@
 O-Week v1.0
 ======
-An **iOS** app for incoming freshmen to use during their first week as a Cornell student. The **Android** branch can be found [here](https://github.com/Cornell-SA-Tech/o-week-android).
+An **iOS** app for incoming freshmen to use during their first week as a Cornell student. The **Android** branch can be found [here](https://github.com/cornell-dti/o-week-android).
 
-<img src="http://www.cornellsatech.org/img/oweek1.png" width="250px">  <img src="http://www.cornellsatech.org/img/oweek2.png" width="250px">  <img src="http://www.cornellsatech.org/img/oweek3.png" width="250px">
+<img src="https://raw.githubusercontent.com/cornell-dti/o-week-ios/master/Resources/1.PNG" width="250px">  <img src="https://raw.githubusercontent.com/cornell-dti/o-week-ios/master/Resources/2.PNG" width="250px">  <img src="https://raw.githubusercontent.com/cornell-dti/o-week-ios/master/Resources/3.PNG" width="250px">
 
 Getting Started
 ------
@@ -16,4 +16,6 @@ Contributors
  * **Vicente Caycedo** - Front-End Developer
  * **Arnav Ghosh** - Back-End Developer
  
-We are a team within **Cornell SA Tech**, a project team affiliated with Cornell Undergraduate Student Assembly led by Alice Pham. For more information, see its website [here](http://www.cornellsatech.org/).
+We are a team within **Cornell Design & Tech Initiative**, a project team affiliated with Cornell Undergraduate Student Assembly led by Alice Pham. For more information, see its website [here](http://cornelldti.org/).
+
+<img src="http://cornelldti.org/img/logos/cornelldti-dark.png">
