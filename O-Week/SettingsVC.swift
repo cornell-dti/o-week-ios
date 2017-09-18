@@ -13,11 +13,12 @@ class SettingsVC: UITableViewController
     @IBOutlet weak var remindersSet: UISwitch!
     @IBOutlet weak var setForOption: UILabel!
     @IBOutlet weak var notifyMeOption: UILabel!
-    
-    var chosenSetting: UserPreferences.NotificationSetting?
+	
+	var chosenSetting:ListPreference?
     var hideSettings = false
     
-    override func viewDidLoad() {
+    override func viewDidLoad()
+	{
         super.viewDidLoad()
         setUpSwitch()
         setUpTableViewAppearance()
@@ -25,28 +26,32 @@ class SettingsVC: UITableViewController
         NotificationCenter.default.addObserver(self, selector: #selector(updateSettings), name: .reloadSettings, object: nil)
     }
     
-    func setUpSwitch(){
-        remindersSet.setOn(UserPreferences.setForSetting.chosen != nil, animated: false)
+    func setUpSwitch()
+	{
+        remindersSet.setOn(ListPreference.Notify.get() != .None, animated: false)
         hideSettings = !remindersSet.isOn
     }
     
-    func setUpTableViewAppearance(){
+    func setUpTableViewAppearance()
+	{
         //Removes gray background from TableView's grouped style
         tableView.backgroundView = nil
         tableView.backgroundColor = UIColor.white
     }
     
-    func displaySettings(){
-        setForOption.text = UserPreferences.setForSetting.chosen ?? "Not set"
-        notifyMeOption.text = UserPreferences.notifyMeSetting.chosen ?? "Not set"
+    func displaySettings()
+	{
+        setForOption.text = ListPreference.Notify.get().rawValue
+        notifyMeOption.text = ListPreference.NotifyTime.get().rawValue
     }
     
     // MARK:- Actions
     
-    @IBAction func switchChanged(_ sender: UISwitch) {
-        if(!sender.isOn) {
-            UserPreferences.setForSetting.chosen = nil
-            UserPreferences.notifyMeSetting.chosen = nil
+    @IBAction func switchChanged(_ sender: UISwitch)
+	{
+        if (!sender.isOn)
+		{
+			ListPreference.Notify.set(.None)
         }
         hideSettings = !sender.isOn
         displaySettings()
@@ -54,9 +59,11 @@ class SettingsVC: UITableViewController
         LocalNotifications.updateNotifications()
     }
     
-    @IBAction func visitWebsite(_ sender: UIButton) {
+    @IBAction func visitWebsite(_ sender: UIButton)
+	{
         let url : String
-        switch sender.tag {
+        switch sender.tag
+		{
         case 0: // Campus Map
             url = "https://www.cornell.edu/about/maps/cornell-campus-map-2015.pdf"
         case 1: // Official Orientation PDF
@@ -68,17 +75,20 @@ class SettingsVC: UITableViewController
         default:
             url = ""
         }
-        if let url = URL(string: url) {
+        if let url = URL(string: url)
+		{
             UIApplication.shared.open(url)
         }
     }
     
-    @IBAction func addAllRequired(_ sender: UIButton) {
+    @IBAction func addAllRequired(_ sender: UIButton)
+	{
         let optionMenu = UIAlertController(title: nil, message: "Do you want to add all required events to your schedule?", preferredStyle: .actionSheet)
         let addAll = UIAlertAction(title: "Add All Required Events", style: .default, handler: {
             [weak self] (alert: UIAlertAction!) -> Void in
             UserData.allEvents.forEach({date, events in events.forEach({
-                if $0.required {
+                if $0.required
+				{
                     UserData.insertToSelectedEvents($0)
                 }
             })})
@@ -94,7 +104,8 @@ class SettingsVC: UITableViewController
         self.present(optionMenu, animated: true, completion: nil)
     }
     
-    @IBAction func removeAll(_ sender: UIButton) {
+    @IBAction func removeAll(_ sender: UIButton)
+ {
         let optionMenu = UIAlertController(title: nil, message: "Do you want to remove all events from your schedule?", preferredStyle: .actionSheet)
         let deleteAction = UIAlertAction(title: "Remove All Events", style: .destructive, handler: {
             [weak self] (alert: UIAlertAction!) -> Void in
@@ -115,10 +126,14 @@ class SettingsVC: UITableViewController
     
     // MARK:- TableView Methods
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if(section == 0){
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+	{
+        if (section == 0)
+		{
             return hideSettings ? 1 : 3
-        } else {
+        }
+		else
+		{
             return super.tableView(tableView, numberOfRowsInSection: section)
         }
     }
@@ -131,25 +146,37 @@ class SettingsVC: UITableViewController
         header.textLabel?.textColor = Colors.RED
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if(indexPath.section == 0 && indexPath.row != 0){
-            chosenSetting = indexPath.row == 1 ? UserPreferences.setForSetting : indexPath.row == 2 ? UserPreferences.notifyMeSetting : nil
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+	{
+        if (indexPath.section == 0 && indexPath.row != 0)
+		{
+			if (indexPath.row == 1)
+			{
+				chosenSetting = ListPreference.Notify
+			}
+			else
+			{
+				chosenSetting = ListPreference.NotifyTime
+			}
             performSegue(withIdentifier: "toOptions", sender: self)
         }
     }
     
     // MARK:- Navigation
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if(segue.identifier == "toOptions"){
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+	{
+        if (segue.identifier == "toOptions")
+		{
             let dest = segue.destination as! OptionsVC
-            dest.setting = chosenSetting
+            dest.settingType = chosenSetting
         }
     }
     
     // MARK:- Helper Functions
     
-    func updateSettings(){
+    func updateSettings()
+	{
         displaySettings()
         LocalNotifications.updateNotifications()
     }

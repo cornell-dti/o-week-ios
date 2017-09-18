@@ -26,7 +26,7 @@
 		DC23E0111EBD6E780060F24F /* DatePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23E0101EBD6E780060F24F /* DatePickerController.swift */; };
 		DC2C02991E7DC25F00E9DDEF /* ScheduleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2C02981E7DC25F00E9DDEF /* ScheduleVC.swift */; };
 		DC3274621E7CB4F100CB3E22 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3274611E7CB4F100CB3E22 /* FeedCell.swift */; };
-		DC92BCDF1EF2229F009B4A8F /* UserPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC92BCDE1EF2229F009B4A8F /* UserPreferences.swift */; };
+		DC92BCDF1EF2229F009B4A8F /* ListPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC92BCDE1EF2229F009B4A8F /* ListPreference.swift */; };
 		DC9307091EEC5D2F005AF445 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9307081EEC5D2F005AF445 /* Constants.swift */; };
 		DC9BD7711EB6496C00552906 /* O-Week.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DC9BD76F1EB6496C00552906 /* O-Week.xcdatamodeld */; };
 		DCB182381EB7936E0041EEBC /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB182371EB7936E0041EEBC /* SettingsVC.swift */; };
@@ -83,7 +83,7 @@
 		DC23E0101EBD6E780060F24F /* DatePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DatePickerController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		DC2C02981E7DC25F00E9DDEF /* ScheduleVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleVC.swift; sourceTree = "<group>"; };
 		DC3274611E7CB4F100CB3E22 /* FeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = FeedCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		DC92BCDE1EF2229F009B4A8F /* UserPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserPreferences.swift; sourceTree = "<group>"; };
+		DC92BCDE1EF2229F009B4A8F /* ListPreference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListPreference.swift; sourceTree = "<group>"; };
 		DC9307081EEC5D2F005AF445 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Constants.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		DC9BD7701EB6496C00552906 /* O-Week.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "O-Week.xcdatamodel"; sourceTree = "<group>"; };
 		DCB182371EB7936E0041EEBC /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
@@ -140,7 +140,7 @@
 			children = (
 				DC9307081EEC5D2F005AF445 /* Constants.swift */,
 				DCC2FF8A1EB24EEA00624B4F /* Internet.swift */,
-				DC92BCDE1EF2229F009B4A8F /* UserPreferences.swift */,
+				DC92BCDE1EF2229F009B4A8F /* ListPreference.swift */,
 				DCD492211EF0D98100F4F93C /* LocalNotifications.swift */,
 				06B779471F65964F00943582 /* Alert.swift */,
 			);
@@ -382,7 +382,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DCD492221EF0D98100F4F93C /* LocalNotifications.swift in Sources */,
-				DC92BCDF1EF2229F009B4A8F /* UserPreferences.swift in Sources */,
+				DC92BCDF1EF2229F009B4A8F /* ListPreference.swift in Sources */,
 				0628E4871E7CA3260066A308 /* FeedVC.swift in Sources */,
 				06B779481F65964F00943582 /* Alert.swift in Sources */,
 				067EC2E71E8C9F8D0098ED94 /* Event.swift in Sources */,

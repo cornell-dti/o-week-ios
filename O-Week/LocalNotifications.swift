@@ -9,12 +9,20 @@
 import Foundation
 import UserNotifications
 
+/**
+	Manages local notifications.
+	`center`: Reference to notification center.
+	`options`: The ways in which notifications will be presented to the user.
+*/
 class LocalNotifications: NSObject, UNUserNotificationCenterDelegate
 {
     
     static let center = UNUserNotificationCenter.current()
     static let options: UNAuthorizationOptions = [.alert, .sound, .badge]
 
+	/**
+		Ask user for permission to send notifications.
+	*/
     static func requestPermissionForNotifications()
     {
         center.requestAuthorization(options: options)
@@ -26,7 +34,10 @@ class LocalNotifications: NSObject, UNUserNotificationCenterDelegate
             }
         }
     }
-	
+	/**
+		Send a notification for orientation events that were updated.
+		- paramter updatedEvents: Names of events that were updated. These event names will be displayed in the notification.
+	*/
 	static func addNotification(for updatedEvents:[String])
 	{
 		guard !updatedEvents.isEmpty else {
@@ -43,21 +54,22 @@ class LocalNotifications: NSObject, UNUserNotificationCenterDelegate
     
     static func addNotification(for event: Event)
 	{
-        if let chosenOption = UserPreferences.setForSetting.chosen, UserPreferences.notifyMeSetting.chosen != nil
+		let notify = ListPreference.Notify.get()
+		
+		switch notify
 		{
-            switch chosenOption
+		case .AllMyEvents:
+			createEventNotification(for: event)
+		case .OnlyRequiredEvents:
+			if (event.required)
 			{
-            case UserPreferences.setForSetting.options[0]: //"All my events"
-                createEventNotification(for: event)
-            case UserPreferences.setForSetting.options[1]: //"Only required events"
-                if(event.required)
-				{
-                    createEventNotification(for: event)
-                }
-            default:
-                print("Unrecognized setForSetting")
-            }
-        }
+				createEventNotification(for: event)
+			}
+		case .None:
+			print("addNotification() called with invalid SettingNotify")
+		default:
+			print("ListPreference.Notify case not caught in addNotification()")
+		}
     }
     
     static func removeNotification(for event: Event)
@@ -67,12 +79,13 @@ class LocalNotifications: NSObject, UNUserNotificationCenterDelegate
     
     static private func createEventNotification(for event: Event)
 	{
+		let notifyMeTime = ListPreference.Notify.get()
         let content = UNMutableNotificationContent()
         content.title = event.title
         content.sound = UNNotificationSound.default()
-        content.body = UserPreferences.notifyMeSetting.chosen == "1 day before" ? "Tomorrow at \(event.startTime.description)" : "Today at \(event.startTime.description)"
+        content.body = notifyMeTime == .OneDayBefore ? "Tomorrow at \(event.startTime.description)" : "Today at \(event.startTime.description)"
 
-        let interval = UserPreferences.timeIntervalsForNotification[UserPreferences.notifyMeSetting.chosen!] ?? getIntervalFor7AM(from: event.startTime)
+        let interval = notifyMeTime.timeInterval() ?? getIntervalFor7AM(from: event.startTime)
         var componentsForTrigger = UserData.userCalendar.dateComponents([.year,.month,.day], from: event.date)
         componentsForTrigger.hour = event.startTime.hour
         componentsForTrigger.minute = event.startTime.minute
@@ -88,7 +101,10 @@ class LocalNotifications: NSObject, UNUserNotificationCenterDelegate
 	{
         return TimeInterval(25200 - (time.toMinutes() * 60)) //Returns negative number for events after 7 AM for consistency with UserPreferences.timeIntervalsForNotification
     }
-    
+	
+	/**
+		Removes and re-adds all notifications.
+	*/
     static func updateNotifications()
 	{
         center.removeAllPendingNotificationRequests()
@@ -98,11 +114,16 @@ class LocalNotifications: NSObject, UNUserNotificationCenterDelegate
             })
         })
     }
-    
-    //Allows local notifications to show while app is open
-    func userNotificationCenter(_ center: UNUserNotificationCenter,
-                                willPresent notification: UNNotification,
-                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+	
+	/**
+		Catches local notifications while app is open and displays them.
+		- parameters:
+			- center: Same as global variable.
+			- notification: The notification that will be shown.
+			- completionHandler: Function to run asynchronously (I think).
+	*/
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void)
+	{
         // Play sound and show alert to the user
         completionHandler([.alert,.sound])
     }

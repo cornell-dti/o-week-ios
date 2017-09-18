@@ -8,31 +8,35 @@
 
 import UIKit
 
-class OptionsVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    
+class OptionsVC: UIViewController, UITableViewDataSource, UITableViewDelegate
+{
     @IBOutlet weak var tableView: UITableView!
-    
-    var setting: UserPreferences.NotificationSetting?
-    
-    override func viewDidLoad() {
+	
+	var settingType:ListPreference!
+	var options:[ListPreference.Option]!
+	var chosenOption:ListPreference.Option!
+	
+    override func viewDidLoad()
+	{
         super.viewDidLoad()
         setUpTableViewAppearance()
-        self.navigationItem.title = setting!.name
+		
+		guard settingType != nil else {
+			fatalError("OptionsVC started without setting settingType")
+		}
+		
+		self.navigationItem.title = settingType.rawValue
+		options = ListPreference.OPTIONS[settingType]!
+		chosenOption = settingType.get()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        switch setting!.name {
-        case UserPreferences.setForSetting.name:
-            UserPreferences.setForSetting.chosen = setting!.chosen
-        case UserPreferences.notifyMeSetting.name:
-            UserPreferences.notifyMeSetting.chosen = setting!.chosen
-        default:
-            print("Error with switch statement in OptionsVC viewWillDisappear")
-        }
+    override func viewWillDisappear(_ animated: Bool)
+	{
         NotificationCenter.default.post(name: .reloadSettings, object: nil)
     }
     
-    func setUpTableViewAppearance(){
+    func setUpTableViewAppearance()
+	{
         //Removes gray background from TableView's grouped style
         tableView.backgroundView = nil
         tableView.backgroundColor = UIColor.white
@@ -40,30 +44,34 @@ class OptionsVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     // MARK:- TableView Methods
     
-    func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int
+	{
         return 1
     }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return setting!.options.count
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+	{
+        return ListPreference.OPTIONS[settingType!]!.count
     }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+	{
         let cell = tableView.dequeueReusableCell(withIdentifier: "optionsCell") as! OptionsCell
-        cell.label.text = setting!.options[indexPath.row]
-        if(setting!.chosen == setting!.options[indexPath.row]){
+        cell.label.text = options[indexPath.row].rawValue
+        if (chosenOption == options[indexPath.row])
+		{
             cell.view.backgroundColor = Colors.RED
-        } else {
+        }
+		else
+		{
             cell.view.backgroundColor = UIColor.white
         }
         cell.view.layer.cornerRadius = cell.view.frame.width / 2
         cell.selectionStyle = UITableViewCellSelectionStyle.none
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        setting!.chosen = setting!.options[indexPath.row]
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+	{
+		chosenOption = options[indexPath.row]
+		settingType.set(chosenOption)
         tableView.reloadData()
     }
-    
 }
