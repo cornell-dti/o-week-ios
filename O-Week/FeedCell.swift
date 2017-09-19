@@ -75,7 +75,7 @@ class FeedCell:UITableViewCell
 		{
             setButtonImage(true)
             UserData.insertToSelectedEvents(event!)
-            LocalNotifications.addNotification(for: event!)
+            LocalNotifications.createEventNotification(for: event!)
         }
     }
 	

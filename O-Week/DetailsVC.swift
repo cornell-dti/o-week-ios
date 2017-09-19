@@ -122,10 +122,9 @@ class DetailsVC: UIViewController, MKMapViewDelegate
 		{
             setButtonImage(true)
             UserData.insertToSelectedEvents(event!)
-            LocalNotifications.addNotification(for: event!)
+			LocalNotifications.createEventNotification(for: event!)
         }
         changed = true
-        
     }
     /**
 		Animate the add button changing.

@@ -51,35 +51,23 @@ class LocalNotifications: NSObject, UNUserNotificationCenterDelegate
 		let request = UNNotificationRequest(identifier: content.title, content: content, trigger: nil)
 		center.add(request, withCompletionHandler: nil)
 	}
-    
-    static func addNotification(for event: Event)
-	{
-		let notify = ListPreference.Notify.get()
-		
-		switch notify
-		{
-		case .AllMyEvents:
-			createEventNotification(for: event)
-		case .OnlyRequiredEvents:
-			if (event.required)
-			{
-				createEventNotification(for: event)
-			}
-		case .None:
-			print("addNotification() called with invalid SettingNotify")
-		default:
-			print("ListPreference.Notify case not caught in addNotification()")
-		}
-    }
-    
+	
+	/**
+		Removes notifications for the given event.
+		- parameter event: Event to remove notifications for.
+	*/
     static func removeNotification(for event: Event)
 	{
         center.removePendingNotificationRequests(withIdentifiers: [event.title])
     }
-    
-    static private func createEventNotification(for event: Event)
+	
+	/**
+		Creates a notification for the given event, setting up its time according to saved preferences.
+		- parameter event: Event to create notifications for.
+	*/
+    static func createEventNotification(for event: Event)
 	{
-		let notifyMeTime = ListPreference.Notify.get()
+		let notifyMeTime = ListPreference.NotifyTime.get()
         let content = UNMutableNotificationContent()
         content.title = event.title
         content.sound = UNNotificationSound.default()
@@ -96,8 +84,13 @@ class LocalNotifications: NSObject, UNUserNotificationCenterDelegate
         let request = UNNotificationRequest(identifier: event.title, content: content, trigger: trigger)
         center.add(request, withCompletionHandler: nil)
     }
-    
-    static private func getIntervalFor7AM(from time: Time) -> TimeInterval
+	
+	/**
+		Returns the amount of time between the given `Time` and 7AM of that day.
+		- parameter time: Time of event.
+		- returns: Time from 7AM to given time.
+	*/
+    private static func getIntervalFor7AM(from time: Time) -> TimeInterval
 	{
         return TimeInterval(25200 - (time.toMinutes() * 60)) //Returns negative number for events after 7 AM for consistency with UserPreferences.timeIntervalsForNotification
     }
@@ -108,9 +101,14 @@ class LocalNotifications: NSObject, UNUserNotificationCenterDelegate
     static func updateNotifications()
 	{
         center.removeAllPendingNotificationRequests()
+		
+		//only resend notifications if the user wants us to
+		guard BoolPreference.Reminder.get() else {
+			return
+		}
         UserData.selectedEvents.forEach({ (date, events) in
             events.forEach({
-                addNotification(for: $0)
+                createEventNotification(for: $0)
             })
         })
     }

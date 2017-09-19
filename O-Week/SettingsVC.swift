@@ -8,61 +8,56 @@
 
 import UIKit
 
+/**
+	Displays settings to the user and a list of links to external resources.
+*/
 class SettingsVC: UITableViewController
 {
     @IBOutlet weak var remindersSet: UISwitch!
-    @IBOutlet weak var setForOption: UILabel!
     @IBOutlet weak var notifyMeOption: UILabel!
+	@IBOutlet weak var notifyMeCell: UITableViewCell!
 	
-	var chosenSetting:ListPreference?
-    var hideSettings = false
-    
+	/**
+		Set up table view appearance, link saved values to displayed settings.
+	*/
     override func viewDidLoad()
 	{
         super.viewDidLoad()
-        setUpSwitch()
         setUpTableViewAppearance()
-        displaySettings()
-        NotificationCenter.default.addObserver(self, selector: #selector(updateSettings), name: .reloadSettings, object: nil)
+		
+		remindersSet.setOn(BoolPreference.Reminder.get(), animated: false)
+        notifyMeOption.text = ListPreference.NotifyTime.get().rawValue
     }
-    
-    func setUpSwitch()
-	{
-        remindersSet.setOn(ListPreference.Notify.get() != .None, animated: false)
-        hideSettings = !remindersSet.isOn
-    }
-    
+	
+	/**
+		Removes gray background from TableView's grouped style
+	*/
     func setUpTableViewAppearance()
 	{
-        //Removes gray background from TableView's grouped style
         tableView.backgroundView = nil
         tableView.backgroundColor = UIColor.white
     }
-    
-    func displaySettings()
-	{
-        setForOption.text = ListPreference.Notify.get().rawValue
-        notifyMeOption.text = ListPreference.NotifyTime.get().rawValue
-    }
-    
+	
     // MARK:- Actions
-    
+	
+	/**
+		Listener to a change in the "reminder" switch. Save new data, disabling `notifyMeCell` if the switch if set to off.
+		- parameter sender: Switch.
+	*/
     @IBAction func switchChanged(_ sender: UISwitch)
 	{
-        if (!sender.isOn)
-		{
-			ListPreference.Notify.set(.None)
-        }
-        hideSettings = !sender.isOn
-        displaySettings()
-        tableView.reloadData()
+		BoolPreference.Reminder.set(sender.isOn)
         LocalNotifications.updateNotifications()
+		disableNotifyme(!sender.isOn)
     }
-    
+    /**
+		Listener to buttons that will redirect the user to an external site/app.
+		- parameter sender: Button that was selected. Should have its tag set in Storyboard.
+	*/
     @IBAction func visitWebsite(_ sender: UIButton)
 	{
-        let url : String
-        switch sender.tag
+        let url:String
+        switch (sender.tag)
 		{
         case 0: // Campus Map
             url = "https://www.cornell.edu/about/maps/cornell-campus-map-2015.pdf"
@@ -73,7 +68,8 @@ class SettingsVC: UITableViewController
         case 3: // Cornell Rescuer App
             url = "itms-apps://itunes.apple.com/us/app/cornell-rescuer/id1209164387?mt=8"
         default:
-            url = ""
+			print("visitWebsite() called with unidentified sender")
+            return
         }
         if let url = URL(string: url)
 		{
@@ -81,104 +77,66 @@ class SettingsVC: UITableViewController
         }
     }
     
-    @IBAction func addAllRequired(_ sender: UIButton)
-	{
-        let optionMenu = UIAlertController(title: nil, message: "Do you want to add all required events to your schedule?", preferredStyle: .actionSheet)
-        let addAll = UIAlertAction(title: "Add All Required Events", style: .default, handler: {
-            [weak self] (alert: UIAlertAction!) -> Void in
-            UserData.allEvents.forEach({date, events in events.forEach({
-                if $0.required
-				{
-                    UserData.insertToSelectedEvents($0)
-                }
-            })})
-            NotificationCenter.default.post(name: .reloadData, object: nil)
-            _ = self?.navigationController?.popViewController(animated: true)
-        })
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
-            (alert: UIAlertAction!) -> Void in
-            return
-        })
-        optionMenu.addAction(addAll)
-        optionMenu.addAction(cancelAction)
-        self.present(optionMenu, animated: true, completion: nil)
-    }
-    
-    @IBAction func removeAll(_ sender: UIButton)
- {
-        let optionMenu = UIAlertController(title: nil, message: "Do you want to remove all events from your schedule?", preferredStyle: .actionSheet)
-        let deleteAction = UIAlertAction(title: "Remove All Events", style: .destructive, handler: {
-            [weak self] (alert: UIAlertAction!) -> Void in
-            UserData.selectedEvents.forEach({ (date, events) in
-                UserData.selectedEvents[date] = []
-            })
-            NotificationCenter.default.post(name: .reloadData, object: nil)
-            _ = self?.navigationController?.popViewController(animated: true)
-        })
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
-            (alert: UIAlertAction!) -> Void in
-            return
-        })
-        optionMenu.addAction(deleteAction)
-        optionMenu.addAction(cancelAction)
-        self.present(optionMenu, animated: true, completion: nil)
-    }
-    
     // MARK:- TableView Methods
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
-	{
-        if (section == 0)
-		{
-            return hideSettings ? 1 : 3
-        }
-		else
-		{
-            return super.tableView(tableView, numberOfRowsInSection: section)
-        }
-    }
-    
+	/**
+		Customize appearance of headers.
+		- parameters:
+			- tableView: Reference to table.
+			- view: Header view.
+			- section: Section header view belongs to.
+	*/
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int)
     {
-        //Setting appearance of Section titles
         let header = view as! UITableViewHeaderFooterView
         header.textLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 14)
         header.textLabel?.textColor = Colors.RED
     }
-    
+	/**
+		Show notify me options when the cell is selected.
+		- parameters:
+			- tableView: Reference to table.
+			- indexPath: IndexPath of selected cell.
+	*/
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
 	{
-        if (indexPath.section == 0 && indexPath.row != 0)
+        if let notifyMeIndexPath = tableView.indexPath(for: notifyMeCell)
 		{
-			if (indexPath.row == 1)
+			if (notifyMeIndexPath == indexPath)
 			{
-				chosenSetting = ListPreference.Notify
+				showNotifyMeActionSheet()
+				//deselect row w/o animation, otherwise action sheet takes a long time to show up
+				tableView.deselectRow(at: indexPath, animated: false)
 			}
-			else
-			{
-				chosenSetting = ListPreference.NotifyTime
-			}
-            performSegue(withIdentifier: "toOptions", sender: self)
-        }
+		}
     }
-    
-    // MARK:- Navigation
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+	
+	/**
+		Shows an action sheet with all the options for what time to notify the user before an event starts. Includes a dismissable cancel button. If an option is selected, `notifyMeOption` is updated with the new selection, the new selection is saved, and notifications are updated.
+	*/
+    private func showNotifyMeActionSheet()
 	{
-        if (segue.identifier == "toOptions")
-		{
-            let dest = segue.destination as! OptionsVC
-            dest.settingType = chosenSetting
-        }
-    }
-    
-    // MARK:- Helper Functions
-    
-    func updateSettings()
+		let actionSheet = UIAlertController(title: nil, message: ListPreference.NotifyTime.rawValue, preferredStyle: .actionSheet)
+		ListPreference.OPTIONS[.NotifyTime]?.forEach({
+			option -> () in
+			let action = UIAlertAction(title: option.rawValue, style: .default, handler: {
+				_ in
+				self.notifyMeOption.text = option.rawValue
+				ListPreference.NotifyTime.set(option)
+				LocalNotifications.updateNotifications()
+			})
+			actionSheet.addAction(action)
+		})
+		actionSheet.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
+		present(actionSheet, animated: true, completion: nil)
+	}
+	/**
+		Disables/enables `notifyMeCell` based on the parameter. Changes color of its text to reflect changes.
+		- important: This assumes all subviews of the cell are `UILabel`s. The app will crash otherwise.
+		- parameter disable: True to disable `notifyMeCell`, False to enable it.
+	*/
+	private func disableNotifyme(_ disable:Bool)
 	{
-        displaySettings()
-        LocalNotifications.updateNotifications()
-    }
-    
+		notifyMeCell.isUserInteractionEnabled = !disable
+		notifyMeCell.contentView.subviews.map({$0 as! UILabel}).forEach({$0.textColor = disable ? Colors.GRAY : UIColor.black})
+	}
 }
