@@ -24,7 +24,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         LocalNotifications.requestPermissionForNotifications()
         setDelegateForNotifications()
         UserData.loadData()
-        LocalNotifications.updateNotifications()
         return true
     }
 	

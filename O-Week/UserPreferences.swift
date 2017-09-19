@@ -35,9 +35,8 @@ enum ListPreference:String
 		case OneHourBefore = "1 hour before"
 		case TwoHoursBefore = "2 hours before"
 		case FiveHoursBefore = "5 hours before"
-		case MorningOf = "Morning of (7 am)"
 		case OneDayBefore = "1 day before"
-		static let NotifyTimeOption:[Option] = [.AtTimeOfEvent, .OneHourBefore, .TwoHoursBefore, .FiveHoursBefore, .MorningOf, .OneDayBefore]
+		static let NotifyTimeOption:[Option] = [.AtTimeOfEvent, .OneHourBefore, .TwoHoursBefore, .FiveHoursBefore, .OneDayBefore]
 		
 		/**
 		Returns how many milliseconds ahead of time we should notify the user of an event.
@@ -48,7 +47,7 @@ enum ListPreference:String
 			switch self
 			{
 			case .AtTimeOfEvent:
-				return TimeInterval(0)
+				return TimeInterval()
 			case .OneHourBefore:
 				return TimeInterval(-3600)
 			case .TwoHoursBefore:
@@ -57,8 +56,6 @@ enum ListPreference:String
 				return TimeInterval(-18000)
 			case .OneDayBefore:
 				return TimeInterval(-86400)
-			default:
-				return nil
 			}
 		}
 	}
@@ -105,8 +102,7 @@ enum BoolPreference:String
 		- important: Will crash if `DEFAULT` does not contain an entry for key `self`.
 		- returns: Saved value.
 	*/
-
-	func get() -> Bool
+	func isTrue() -> Bool
 	{
 		return (UserDefaults.standard.object(forKey: rawValue) as? Bool) ?? BoolPreference.DEFAULT[self]!
 	}

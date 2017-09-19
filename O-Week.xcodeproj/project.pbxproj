@@ -120,6 +120,7 @@
 		0614E61D1F2CBDD70080EA2B /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				DC92BCDE1EF2229F009B4A8F /* UserPreferences.swift */,
 				06E738F41EFCA06E00DFF73E /* Category.swift */,
 				067EC2E61E8C9F8D0098ED94 /* Event.swift */,
 				067EC2E81E8C9FE20098ED94 /* Time.swift */,
@@ -134,7 +135,6 @@
 			children = (
 				DC9307081EEC5D2F005AF445 /* Constants.swift */,
 				DCC2FF8A1EB24EEA00624B4F /* Internet.swift */,
-				DC92BCDE1EF2229F009B4A8F /* UserPreferences.swift */,
 				DCD492211EF0D98100F4F93C /* LocalNotifications.swift */,
 			);
 			name = Util;
@@ -177,8 +177,8 @@
 				DC18B3191E76CBCE00C3FCD6 /* LaunchScreen.storyboard */,
 				DC18B3141E76CBCE00C3FCD6 /* Main.storyboard */,
 				DC18B31C1E76CBCE00C3FCD6 /* Info.plist */,
-				DC18B3101E76CBCE00C3FCD6 /* AppDelegate.swift */,
 				DCDEBFF61EB414BB0014E028 /* UserData.swift */,
+				DC18B3101E76CBCE00C3FCD6 /* AppDelegate.swift */,
 				DC23E0101EBD6E780060F24F /* DatePickerController.swift */,
 				DC23E00E1EBD63980060F24F /* DateCell.swift */,
 				0628E4861E7CA3260066A308 /* FeedVC.swift */,

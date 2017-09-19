@@ -25,7 +25,7 @@ class SettingsVC: UITableViewController
         super.viewDidLoad()
         setUpTableViewAppearance()
 		
-		remindersSet.setOn(BoolPreference.Reminder.get(), animated: false)
+		remindersSet.setOn(BoolPreference.Reminder.isTrue(), animated: false)
         notifyMeOption.text = ListPreference.NotifyTime.get().rawValue
     }
 	
@@ -126,7 +126,7 @@ class SettingsVC: UITableViewController
 			})
 			actionSheet.addAction(action)
 		})
-		actionSheet.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
+		actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 		present(actionSheet, animated: true, completion: nil)
 	}
 	/**

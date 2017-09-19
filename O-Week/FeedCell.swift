@@ -69,13 +69,13 @@ class FeedCell:UITableViewCell
 		{
             setButtonImage(false)
             UserData.removeFromSelectedEvents(event!)
-            LocalNotifications.removeNotification(for: event!)
+            LocalNotifications.removeNotification(for: event!.pk)
         }
 		else
 		{
             setButtonImage(true)
             UserData.insertToSelectedEvents(event!)
-            LocalNotifications.createEventNotification(for: event!)
+            LocalNotifications.createNotification(for: event!)
         }
     }
 	

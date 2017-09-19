@@ -22,8 +22,7 @@ class Internet
 	
 	/**
 	
-	Downloads all events and categories to update the app to the database's newest version.
-	The `onCompletion` provided will be executed when the data has been processed.
+	Downloads all events and categories to update the app to the database's newest version. The `onCompletion` provided will be executed when the data has been processed. If the user has reminders turned on, remove all deleted events' notifications, and update the updated events' notifications.
 	
 	- Note: `UserData.selectedEvents` will not be updated by this method.
 	- Requires: `UserData.categories` and `UserData.allEvents` should already be filled with events loaded from `CoreData`.
@@ -57,11 +56,11 @@ class Internet
 			guard let data = json as? [String:Any],
 					let newestVersion = data["version"] as? Int,
 					let categories = data["categories"] as? [String:Any],
-					let changedCategories = categories["changed"] as? [Any],
-					let deletedCategories = categories["deleted"] as? [Int],
+					let changedCategoriesJSON = categories["changed"] as? [Any],
+					let deletedCategoriesPK = categories["deleted"] as? [Int],
 					let events = data["events"] as? [String:Any],
-					let changedEvents = events["changed"] as? [Any],
-					let deletedEvents = events["deleted"] as? [Int] else {
+					let changedEventsJSON = events["changed"] as? [Any],
+					let deletedEventsPK = events["deleted"] as? [Int] else {
 				return
 			}
 			
@@ -72,61 +71,40 @@ class Internet
 			
 			//note: flatMap can also remove nils
 			//update categories
-			changedCategories.map({Category(jsonOptional: $0 as? [String:Any])})
+			changedCategoriesJSON.map({Category(jsonOptional: $0 as? [String:Any])})
 				.flatMap({$0})
 				.forEach({UserData.updateCategory($0)})
 			//remove categories
-			var newCategories = [Category]()
-			for category in UserData.categories
-			{
-				if (deletedCategories.contains(category.pk))
-				{
-					UserData.removeFromCoreData(category)
-				}
-				else
-				{
-					newCategories.append(category)
-				}
-			}
-			UserData.categories = newCategories
+			deletedCategoriesPK.forEach({UserData.removeFromCoreData(entityName: Category.entityName, pk: $0)})
+			UserData.categories = UserData.categories.filter({!deletedCategoriesPK.contains($0.pk)})
 			
-			//keep track of all changed events to notify the user
-			var changedEventsTitles = [String]()
 			//update events
-			changedEvents.map({Event(jsonOptional: $0 as? [String:Any])})
-				.flatMap({$0})
-				.forEach({
-					event in
-					changedEventsTitles.append(event.title)
-					UserData.updateEvent(event)
-				})
+			let changedEvents = changedEventsJSON.map({Event(jsonOptional: $0 as? [String:Any])}).flatMap({$0})
+			changedEvents.forEach({UserData.updateEvent($0)})
 			//delete events
+			deletedEventsPK.forEach({
+				eventPk in
+				UserData.removeFromCoreData(entityName: Event.entityName, pk: eventPk)
+				UserData.removeImageOf(eventPk)
+			})
 			for date in UserData.DATES
 			{
-				var newEventsForDate = [Event]()
-				for event in UserData.allEvents[date]!
-				{
-					if (deletedEvents.contains(event.pk))
-					{
-						changedEventsTitles.append(event.title)
-						UserData.removeFromCoreData(event)
-					}
-					else
-					{
-						newEventsForDate.append(event)
-					}
-				}
-				UserData.allEvents[date] = newEventsForDate
-				UserData.selectedEvents[date] = UserData.selectedEvents[date]!.filter({!deletedEvents.contains($0.pk)})
+				UserData.allEvents[date] = UserData.allEvents[date]!.filter({!deletedEventsPK.contains($0.pk)})
+				UserData.selectedEvents[date] = UserData.selectedEvents[date]!.filter({!deletedEventsPK.contains($0.pk)})
 			}
 			
 			UserData.version = newestVersion
 			finish()
 			
-			//notify classes that need to know when events were udpated
+			//notify classes that need to know when events were updated
 			runAsyncFunction({NotificationCenter.default.post(name: .reloadData, object: nil)})
-			print(changedEventsTitles)
-			LocalNotifications.addNotification(for: changedEventsTitles)
+			
+			//manage notifications
+			if (BoolPreference.Reminder.isTrue())
+			{
+				deletedEventsPK.forEach({LocalNotifications.removeNotification(for: $0)})
+				changedEvents.forEach({LocalNotifications.createNotification(for: $0)})
+			}
 		})
 	}
 	/**
@@ -138,7 +116,7 @@ class Internet
 	*/
     static func getImageFor(_ event:Event, imageView:UIImageView)
     {
-		if let image = UserData.loadImageFor(event)
+		if let image = UserData.loadImageFor(event.pk)
 		{
 			imageView.image = image
 		}
@@ -171,7 +149,7 @@ class Internet
                 if let downloadedImage = UIImage(data: data!)
                 {
                     runAsyncFunction({imageView.image = downloadedImage})
-					UserData.saveImage(downloadedImage, event: event)
+					UserData.saveImage(downloadedImage, eventPk: event.pk)
                 }
             }
         })

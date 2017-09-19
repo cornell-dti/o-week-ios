@@ -112,17 +112,17 @@ class DetailsVC: UIViewController, MKMapViewDelegate
 	*/
     @IBAction func add_button_pressed(_ sender: UIButton)
 	{
-        if(UserData.selectedEventsContains(event!))
+        if (UserData.selectedEventsContains(event!))
 		{
             setButtonImage(false)
             UserData.removeFromSelectedEvents(event!)
-            LocalNotifications.removeNotification(for: event!)
+            LocalNotifications.removeNotification(for: event!.pk)
         }
 		else
 		{
             setButtonImage(true)
             UserData.insertToSelectedEvents(event!)
-			LocalNotifications.createEventNotification(for: event!)
+			LocalNotifications.createNotification(for: event!)
         }
         changed = true
     }

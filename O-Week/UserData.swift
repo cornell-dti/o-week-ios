@@ -213,8 +213,6 @@ class UserData
 			if let index = array.index(of: event)
 			{
 				allEvents[event.date]!.remove(at: index)
-				removeFromCoreData(event)
-				removeImageOf(event)
 				return true
 			}
 		}
@@ -245,7 +243,7 @@ class UserData
 	{
 		removeFromAllEvents(event)
 		appendToAllEvents(event)
-		removeFromCoreData(event)
+		removeFromCoreData(entityName: Event.entityName, pk: event.pk)
 		saveToCoreData(event)
 		
 		//if the event was selected, make sure it still is. Otherwise, we don't care.
@@ -268,7 +266,7 @@ class UserData
 		if let indexToRemove = categories.index(of: category)
 		{
 			categories.remove(at: indexToRemove)
-			removeFromCoreData(category)
+			removeFromCoreData(entityName: Category.entityName, pk: category.pk)
 		}
 		categories.append(category)
 		saveToCoreData(category)
@@ -292,22 +290,19 @@ class UserData
 		})
 	}
 	/**
-		Removes an object with the same `pk` as the given object from `CoreData`.
-		
-		- important: This method depends on only the `pk` of the given object. For example, if you wanted to remove the saved version of an event before you update it, you could call this method with the new event, and since the new event's `pk` will be identical to the saved event's `pk`, the saved event will be removed.
-	
-		TL;DR: `removeFromCoreData(newEvent)` will remove `savedEvent` with same `pk` as `newEvent`.
-	
-		- parameter object: Object that has the same `pk` as the object you wish to remove.
+		Removes an object with the `pk` from `CoreData`.
+		- parameters:
+ 			- entityName: Type of object.
+			- pk: Unique id of object.
 	*/
-	static func removeFromCoreData(_ object:CoreDataObject)
+	static func removeFromCoreData(entityName:String, pk:Int)
 	{
 		let appDelegate = UIApplication.shared.delegate as! AppDelegate
 		appDelegate.persistentContainer.performBackgroundTask(
 		{
 			(context) in
-			let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: type(of: object).entityName)
-			fetchRequest.predicate = NSPredicate(format: "pk = %@", argumentArray: [object.pk])
+			let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+			fetchRequest.predicate = NSPredicate(format: "pk = %@", argumentArray: [pk])
 			let fetchedResults = try? context.fetch(fetchRequest)
 			fetchedResults?.forEach({context.delete($0 as! NSManagedObject)})
 		})
@@ -332,12 +327,12 @@ class UserData
 		
 		- parameters:
 			- image: Image to save.
-			- event: The event this image belongs to. The image will be saved with the `event.pk` as its name so we can access it next time using the event.
+			- event: The pk of the event this image belongs to. The image will be saved with the `event.pk` as its name so we can access it next time using the event.
 	*/
-	static func saveImage(_ image:UIImage, event:Event)
+	static func saveImage(_ image:UIImage, eventPk:Int)
 	{
 		let imageData = UIImagePNGRepresentation(image)
-		let url = documentURLForName("\(event.pk).png")
+		let url = documentURLForName("\(eventPk).png")
 		try? imageData?.write(to: url)
 	}
 	/**
@@ -345,9 +340,9 @@ class UserData
 	
 		- parameter event: Event whose image we wish to delete.
 	*/
-	static func removeImageOf(_ event:Event)
+	static func removeImageOf(_ eventPk:Int)
 	{
-		let url = documentURLForName("\(event.pk).png")
+		let url = documentURLForName("\(eventPk).png")
 		try? FileManager.default.removeItem(at: url)
 	}
 	/**
@@ -356,9 +351,9 @@ class UserData
 		- parameter event: Event whose image we wish to read from disk.
 		- returns: Image if one was found, nil otherwise.
 	*/
-	static func loadImageFor(_ event:Event) -> UIImage?
+	static func loadImageFor(_ eventPk:Int) -> UIImage?
 	{
-		let url = documentURLForName("\(event.pk).png")
+		let url = documentURLForName("\(eventPk).png")
 		return UIImage(contentsOfFile: url.path)
 	}
 	/**
