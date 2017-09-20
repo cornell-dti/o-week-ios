@@ -6,13 +6,13 @@ An **iOS** app for incoming freshmen to use during their first week as a Cornell
 
 Getting Started
 ------
-You will need **Xcode 8.3.2** to run the latest version of this app, which uses Swift 3 compiled for iOS 10.2. Xcode can be downloaded from the Mac App Store. Make sure you are not running a beta version of macOS, as Apple will prevent you from publishing to the App Store if you do.
+You will need **Xcode 9** to run the latest version of this app, which uses Swift 4 compiled for iOS 11. Xcode can be downloaded from the Mac App Store. Make sure you are not running a beta version of macOS, as Apple will prevent you from publishing to the App Store if you do.
 
 Contributors
 ------
  * **Julia Kruk** - Project Manager
  * **Juhwan Park** - Project Manager
- * **David Chu** - Front-End Developer
+ * **David Chu** - Project Manager, Front-End Developer
  * **Vicente Caycedo** - Front-End Developer
  * **Arnav Ghosh** - Back-End Developer
  
