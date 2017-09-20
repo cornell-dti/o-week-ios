@@ -25,8 +25,10 @@ class SettingsVC: UITableViewController
         super.viewDidLoad()
         setUpTableViewAppearance()
 		
-		remindersSet.setOn(BoolPreference.Reminder.isTrue(), animated: false)
+		let remindersOn = BoolPreference.Reminder.isTrue()
+		remindersSet.setOn(remindersOn, animated: false)
         notifyMeOption.text = ListPreference.NotifyTime.get().rawValue
+		disableNotifyme(!remindersOn)
     }
 	
 	/**

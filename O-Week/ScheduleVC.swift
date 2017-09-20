@@ -375,7 +375,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource
 		Starts segue to `DetailsVC` when event is clicked.
 		- parameter sender: Touch event that contains the view that was touched.
 	*/
-    func eventClicked(_ sender: UITapGestureRecognizer)
+    @objc func eventClicked(_ sender: UITapGestureRecognizer)
 	{
 		guard let eventView = sender.view,
 			let event = eventViews[eventView] else {
@@ -440,7 +440,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     /**
 		Redraw the selected events.
 	*/
-    func updateSchedule()
+    @objc func updateSchedule()
 	{
         eventViews.keys.forEach({$0.removeFromSuperview()})
         eventViews.removeAll()

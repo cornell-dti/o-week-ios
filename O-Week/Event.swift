@@ -227,7 +227,7 @@ struct Event:Hashable, Comparable, CoreDataObject, JSONObject
 		let remaining = headerAndRemaining[2].trimmingCharacters(in: .whitespacesAndNewlines)
 		
 		//set header
-		let headerAttributes = [NSFontAttributeName: UIFont(name: "AvenirNext-DemiBold", size: TEXT_SIZE)!]
+		let headerAttributes = [NSAttributedStringKey.font: UIFont(name: "AvenirNext-DemiBold", size: TEXT_SIZE)!]
 		let attributedHeader = NSAttributedString(string: header, attributes: headerAttributes)
 		string.append(attributedHeader)
 		
@@ -243,7 +243,7 @@ struct Event:Hashable, Comparable, CoreDataObject, JSONObject
 			let start = string.length
 			
 			//set bullet
-			let bulletAttributes = [NSFontAttributeName: UIFont(name: "AvenirNext-DemiBold", size: TEXT_SIZE)!, NSForegroundColorAttributeName:Colors.RED]
+			let bulletAttributes = [NSAttributedStringKey.font: UIFont(name: "AvenirNext-DemiBold", size: TEXT_SIZE)!, NSAttributedStringKey.foregroundColor:Colors.RED]
 			let attributedBullet = NSAttributedString(string:bullet, attributes:bulletAttributes)
 			string.append(attributedBullet)
 			
@@ -255,7 +255,7 @@ struct Event:Hashable, Comparable, CoreDataObject, JSONObject
 			let infoParagraphStyle = NSMutableParagraphStyle()
 			infoParagraphStyle.headIndent = TAB_STOP
 			infoParagraphStyle.tabStops = [NSTextTab(textAlignment: .left, location: TAB_STOP)]
-			string.addAttribute(NSParagraphStyleAttributeName, value: infoParagraphStyle, range: NSRange(location: start, length: bullet.characters.count + info.characters.count))
+			string.addAttribute(NSAttributedStringKey.paragraphStyle, value: infoParagraphStyle, range: NSRange(location: start, length: bullet.characters.count + info.characters.count))
 		}
 		
 		return string

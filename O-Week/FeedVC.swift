@@ -119,7 +119,7 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource
 	/**
 		Regather data from `UserData.allEvents`, filter, and reload the table.
 	*/
-    func updateFeed()
+    @objc func updateFeed()
 	{
 		filter()
         feedTableView.reloadData()
@@ -127,7 +127,7 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource
 	/**
 		Like `updateFeed()`, but if the user selected a date LATER than the current date, then animate the table accordingly.
 	*/
-    func movedToLaterDate()
+    @objc func movedToLaterDate()
     {
         filter()
         feedTableView.reloadSections([0], with: .left)
@@ -135,7 +135,7 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource
 	/**
 	Like `updateFeed()`, but if the user selected a date EARLIER than the current date, then animate the table accordingly.
 	*/
-    func movedToEarlierDate()
+    @objc func movedToEarlierDate()
     {
         filter()
         feedTableView.reloadSections([0], with: .right)

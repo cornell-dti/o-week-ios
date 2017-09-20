@@ -47,7 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         navigationBarAppearence.barTintColor = Colors.RED
         navigationBarAppearence.tintColor = UIColor.white   //back arrow is black
         navigationBarAppearence.isTranslucent = false
-        navigationBarAppearence.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: UIFont(name: "AvenirNext-DemiBold", size: 14)!]
+        navigationBarAppearence.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont(name: "AvenirNext-DemiBold", size: 14)!]
     }
     
     private func setDelegateForNotifications()
