@@ -22,10 +22,10 @@ class Internet
 	
 	/**
 	
-	Downloads all events and categories to update the app to the database's newest version. The `onCompletion` provided will be executed when the data has been processed. If the user has reminders turned on, remove all deleted events' notifications, and update the updated events' notifications.
+	Downloads all events and categories to update the app to the database's newest version. The `onCompletion` provided will be executed when the data has been processed. If the user has reminders turned on, remove all deleted events' notifications, and update the updated events' notifications. Then send a notification notifying the user of chagnes to their selected events.
 	
 	- Note: `UserData.selectedEvents` will not be updated by this method.
-	- Requires: `UserData.categories` and `UserData.allEvents` should already be filled with events loaded from `CoreData`.
+	- Requires: `UserData.categories` and `UserData.allEvents` should already be filled with events loaded from `CoreData`. `UserData.selectedEvents` is to be updated within `onCompletion` so we may notify the user of updates to their selected events.
 	
 	Expected JSON structure:
 	
@@ -101,10 +101,13 @@ class Internet
 			
 			//manage notifications
 			if (BoolPreference.Reminder.isTrue())
-			{
-				deletedEventsPK.forEach({LocalNotifications.removeNotification(for: $0)})
+			{	deletedEventsPK.forEach({LocalNotifications.removeNotification(for: $0)})
 				changedEvents.forEach({LocalNotifications.createNotification(for: $0)})
 			}
+			
+			//notify user of event updates. Requires that UserData.selectedEvents has been set.
+			let selectedChangedEvents = changedEvents.filter({UserData.selectedEventsContains($0)})
+			LocalNotifications.addNotification(for: selectedChangedEvents)
 		})
 	}
 	/**

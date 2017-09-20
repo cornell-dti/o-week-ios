@@ -11,12 +11,17 @@ import UserNotifications
 
 /**
 	Manages local notifications.
+	`EVENT_UPDATE_CATEGORY`: Identifier for category for all event update notifications.
+	`EVENT_ACTION`: Identifier for notification actions that, once clicked, open to a specific event.
+	`EVENT_ACTION_TITLE`: Text shown in button shown in a notification that opens to a specific event.
 	`center`: Reference to notification center.
 	`options`: The ways in which notifications will be presented to the user.
 */
 class LocalNotifications: NSObject, UNUserNotificationCenterDelegate
 {
-    
+	static let EVENT_UPDATE_CATEGORY = "EVENT_UPDATED"
+    static let EVENT_ACTION = "EVENT_ACTION"
+	static let EVENT_ACTION_TITLE = "Show Event"
     static let center = UNUserNotificationCenter.current()
     static let options: UNAuthorizationOptions = [.alert, .sound, .badge]
 
@@ -38,18 +43,22 @@ class LocalNotifications: NSObject, UNUserNotificationCenterDelegate
 		Send a notification for orientation events that were updated.
 		- paramter updatedEvents: Names of events that were updated. These event names will be displayed in the notification.
 	*/
-	static func addNotification(for updatedEvents:[String])
+	static func addNotification(for updatedEvents:[Event])
 	{
 		guard !updatedEvents.isEmpty else {
 			return
 		}
 		
-		print("setting up notification")
-		let content = UNMutableNotificationContent()
-		content.title = "Orientation events have been updated"
-		content.body = "The following events were changed: " + updatedEvents.joined(separator: ", ")
-		let request = UNNotificationRequest(identifier: content.title, content: content, trigger: nil)
-		center.add(request, withCompletionHandler: nil)
+		updatedEvents.forEach({
+			let content = UNMutableNotificationContent()
+			content.title = "\"\($0.title)\" has been updated"
+			let request = UNNotificationRequest(identifier: "change\($0.pk)", content: content, trigger: nil)
+			/*let action = UNNotificationAction(identifier: LocalNotifications.EVENT_ACTION, title: EVENT_ACTION_TITLE, options: .foreground)
+			let category = UNNotificationCategory(identifier: EVENT_UPDATE_CATEGORY, actions: [action], intentIdentifiers: [], options: UNNotificationCategoryOptions(rawValue: 0))
+			center.setNotificationCategories([category])*/
+			center.add(request, withCompletionHandler: nil)
+			print("notification added")
+		})
 	}
 	
 	/**
@@ -121,7 +130,22 @@ class LocalNotifications: NSObject, UNUserNotificationCenterDelegate
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void)
 	{
         // Play sound and show alert to the user
+		//TODO don't do this for category updates
         completionHandler([.alert,.sound])
     }
-    
+	/**
+		Responds when the user clicks on a nofitication action. Should open `DetailsVC` if the user presses an updated event notification.
+		- parameters:
+			- center: Same as global variable.
+			- response: Contains info about the action & notification the user selected.
+			- completionHandler: Function to run asynchronously (I think)
+	*/
+	func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void)
+	{
+		if (response.notification.request.content.categoryIdentifier == LocalNotifications.EVENT_UPDATE_CATEGORY)
+		{
+			print("title match!")
+			
+		}
+	}
 }

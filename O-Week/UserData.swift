@@ -115,6 +115,10 @@ class UserData
 			//sort again since database may have updated things
 			sortEventsAndCategories()
 		})
+		
+		//TODO: testing
+		LocalNotifications.addNotification(for: [UserData.allEvents[UserData.DATES[0]]!.first!])
+		print("testing")
 	}
 	/**
 		Sorts `allEvents` and `categories`.
