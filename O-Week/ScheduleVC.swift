@@ -49,7 +49,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource
 	static let END_HOUR = 2
     let TITLE_CAPTION_MARGIN:CGFloat = 14
     let CONTAINER_RIGHT_MARGIN:CGFloat = 20
-    let EVENT_CORNER_RADIUS:CGFloat = 3
+    let EVENT_CORNER_RADIUS:CGFloat = 5
     let EVENT_BORDER_WIDTH: CGFloat = 1
 	
     // MARK:- Setup

@@ -19,8 +19,10 @@ class DetailsVC: UIViewController, MKMapViewDelegate
     @IBOutlet weak var eventTitle: UILabel!
     @IBOutlet weak var eventCaption: UILabel!
     @IBOutlet weak var eventDescription: UILabel!
-    @IBOutlet weak var startTime: UILabel!
-    @IBOutlet weak var endTime: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
+	@IBOutlet weak var requiredDescription: UILabel!
+	@IBOutlet weak var requiredText: UITextField!
+	@IBOutlet weak var requiredSection: UIStackView!
     @IBOutlet weak var eventImage: UIImageView!
     @IBOutlet weak var add_button: UIButton!
 	@IBOutlet weak var additional: UILabel!
@@ -63,15 +65,33 @@ class DetailsVC: UIViewController, MKMapViewDelegate
         eventTitle.text = event.title
         eventCaption.text = event.caption
         eventDescription.text = event.description
-        startTime.text = event.startTime.description
-        endTime.text = event.endTime.description
+		timeLabel.text = "\(dayOfWeek())  |  \(event.startTime) - \(event.endTime)"
         setButtonImage(UserData.selectedEventsContains(event))
 		Internet.getImageFor(event, imageView: eventImage)
 		configureMap(event:event)
-		if (!event.additional.isEmpty)
+		
+		//required
+		if (!(event.required || event.categoryRequired))
 		{
-			additional.attributedText = event.attributedAdditional()
+			requiredSection.isHidden = true
 		}
+		else
+		{
+			requiredText.layer.cornerRadius = requiredText.frame.width / 2
+			if (event.required)
+				{requiredDescription.text = "Required for All Students"}
+			else	//category required
+			{
+				if let category = UserData.categoryFor(event.category)
+					{requiredDescription.text = "Required for \(category.name) Students"}
+			}
+		}
+		
+		//additional text
+		if (!event.additional.isEmpty)
+			{additional.attributedText = event.attributedAdditional()}
+		else
+			{additional.isHidden = true}
     }
 	/**
 		Set up the map such that it displays the location of the event with a marker.
@@ -105,6 +125,12 @@ class DetailsVC: UIViewController, MKMapViewDelegate
 		let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: center))
 		mapItem.name = event!.caption
 		mapItem.openInMaps(launchOptions: nil)
+	}
+	private func dayOfWeek() -> String
+	{
+		let formatter = DateFormatter()
+		formatter.dateFormat = "EEEE"
+		return formatter.string(from: event!.date)
 	}
 	/**
 		Handle user selection of the event's add button. Adds/Removes `event` from selected events accordingly.
