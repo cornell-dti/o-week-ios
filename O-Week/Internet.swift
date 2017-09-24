@@ -22,10 +22,9 @@ class Internet
 	
 	/**
 	
-	Downloads all events and categories to update the app to the database's newest version. The `onCompletion` provided will be executed when the data has been processed. If the user has reminders turned on, remove all deleted events' notifications, and update the updated events' notifications. Then send a notification notifying the user of chagnes to their selected events.
+	Downloads all events and categories to update the app to the database's newest version. The `onCompletion` provided will be executed, provided with the new data as arguments. Then, classes that care about such updates will be updated
 	
-	- Note: `UserData.selectedEvents` will not be updated by this method.
-	- Requires: `UserData.categories` and `UserData.allEvents` should already be filled with events loaded from `CoreData`. `UserData.selectedEvents` is to be updated within `onCompletion` so we may notify the user of updates to their selected events.
+	- important: `onCompletion` will not be executed if the database does not contain a newer version. One should not depend on its execution.
 	
 	Expected JSON structure:
 	
@@ -47,7 +46,7 @@ class Internet
 		- version: Current version of database on file. Should be 0 if never downloaded from database.
 		- finish: Function to execute when data is processed.
 	*/
-	static func getUpdatesForVersion(_ version:Int, onCompletion finish:@escaping (() -> ()))
+	static func getUpdatesForVersion(_ version:Int, onCompletion finish:@escaping ((Int, [Category], [Int], [Event], [Int]) -> ()))
 	{
 		get(url: "\(DATABASE)version/\(version)", handler:
 		{
@@ -70,44 +69,12 @@ class Internet
 			}
 			
 			//note: flatMap can also remove nils
-			//update categories
-			changedCategoriesJSON.map({Category(jsonOptional: $0 as? [String:Any])})
-				.flatMap({$0})
-				.forEach({UserData.updateCategory($0)})
-			//remove categories
-			deletedCategoriesPK.forEach({UserData.removeFromCoreData(entityName: Category.entityName, pk: $0)})
-			UserData.categories = UserData.categories.filter({!deletedCategoriesPK.contains($0.pk)})
-			
-			//update events
+			let changedCategories = changedCategoriesJSON.map({Category(jsonOptional: $0 as? [String:Any])}).flatMap({$0})
 			let changedEvents = changedEventsJSON.map({Event(jsonOptional: $0 as? [String:Any])}).flatMap({$0})
-			changedEvents.forEach({UserData.updateEvent($0)})
-			//delete events
-			deletedEventsPK.forEach({
-				eventPk in
-				UserData.removeFromCoreData(entityName: Event.entityName, pk: eventPk)
-				UserData.removeImageOf(eventPk)
-			})
-			for date in UserData.DATES
-			{
-				UserData.allEvents[date] = UserData.allEvents[date]!.filter({!deletedEventsPK.contains($0.pk)})
-				UserData.selectedEvents[date] = UserData.selectedEvents[date]!.filter({!deletedEventsPK.contains($0.pk)})
-			}
-			
-			UserData.version = newestVersion
-			finish()
+			finish(newestVersion, changedCategories, deletedCategoriesPK, changedEvents, deletedEventsPK)
 			
 			//notify classes that need to know when events were updated
 			runAsyncFunction({NotificationCenter.default.post(name: .reloadData, object: nil)})
-			
-			//manage notifications
-			if (BoolPreference.Reminder.isTrue())
-			{	deletedEventsPK.forEach({LocalNotifications.removeNotification(for: $0)})
-				changedEvents.forEach({LocalNotifications.createNotification(for: $0)})
-			}
-			
-			//notify user of event updates. Requires that UserData.selectedEvents has been set.
-			let selectedChangedEvents = changedEvents.filter({UserData.selectedEventsContains($0)})
-			LocalNotifications.addNotification(for: selectedChangedEvents)
 		})
 	}
 	/**

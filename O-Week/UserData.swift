@@ -81,9 +81,12 @@ class UserData
 	
 		1. Retrieves all events and categories from `CoreData`, adding them to `allEvents`, `categories`.
 		2. Sorts all events and categories. This is because downloading is done in the background, and before we've finished downloading, the UI may already need to display events & categories.
-		3. Downloads updates from the database.
-		4. Retrieves selected events. Note that after events and categories are saved here, the lists they belong in should not be mutated any further by another function.
-		5. Sort again with updated events.
+		3. Downloads updates from the database; updates categories & events.
+		4. Retrieves selected events.
+		5. If the user has reminders turned on, remove all deleted events' notifications, and update the updated events' notifications.
+		6. Tell the user which of their selected events have been updated.
+		7. Sort again with updated events.
+		8. Save new database version.
 	*/
 	static func loadData()
 	{
@@ -104,6 +107,26 @@ class UserData
 		//access database for updates
 		Internet.getUpdatesForVersion(version, onCompletion:
 		{
+			newVersion, changedCategories, deletedCategoryPks, changedEvents, deletedEventPks in
+			
+			//update categories
+			changedCategories.forEach({updateCategory($0)})
+			deletedCategoryPks.forEach({removeFromCoreData(entityName: Category.entityName, pk: $0)})
+			categories = categories.filter({!deletedCategoryPks.contains($0.pk)})
+			
+			//update events
+			changedEvents.forEach({updateEvent($0)})
+			deletedEventPks.forEach({
+				eventPk in
+				UserData.removeFromCoreData(entityName: Event.entityName, pk: eventPk)
+				UserData.removeImageOf(eventPk)
+			})
+			for date in DATES
+			{
+				allEvents[date] = allEvents[date]!.filter({!deletedEventPks.contains($0.pk)})
+				selectedEvents[date] = selectedEvents[date]!.filter({!deletedEventPks.contains($0.pk)})
+			}
+			
 			//all version updates have been processed. Now, load events that the user has selected into selectedEvents.
 			let addedPKs = getAddedPKs()
 			let selectedEventsArray = selectedEvents.values.flatMap({$0})
@@ -112,13 +135,23 @@ class UserData
 				.filter({!selectedEventsArray.contains($0)})
 				.forEach({insertToSelectedEvents($0)})
 			
-			//sort again since database may have updated things
+			//delete and resend notifications
+			let changedSelectedEvents = changedEvents.filter({addedPKs.contains($0.pk)})
+			if (BoolPreference.Reminder.isTrue())
+			{
+				deletedEventPks.forEach({LocalNotifications.removeNotification(for: $0)})
+				changedSelectedEvents.forEach({LocalNotifications.createNotification(for: $0)})
+			}
+			
+			//notify user of event updates
+			LocalNotifications.addNotification(for: changedSelectedEvents)
+			
+			//sort again after updates
 			sortEventsAndCategories()
+			
+			//save updated database version
+			version = newVersion
 		})
-		
-		//TODO: testing
-		LocalNotifications.addNotification(for: [UserData.allEvents[UserData.DATES[0]]!.first!])
-		print("testing")
 	}
 	/**
 		Sorts `allEvents` and `categories`.
