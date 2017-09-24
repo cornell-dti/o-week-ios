@@ -47,10 +47,10 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource
 	}()//Table view data
 	static let START_HOUR = 7
 	static let END_HOUR = 2
-    let TITLE_CAPTION_MARGIN:CGFloat = 16
+    let TITLE_CAPTION_MARGIN:CGFloat = 14
     let CONTAINER_RIGHT_MARGIN:CGFloat = 20
     let EVENT_CORNER_RADIUS:CGFloat = 3
-    let EVENT_BORDER_WIDTH: CGFloat = 1.25
+    let EVENT_BORDER_WIDTH: CGFloat = 1
 	
     // MARK:- Setup
 	
@@ -160,9 +160,9 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         }
         
         let container = UIView(frame: CGRect(x: cellX(slot: slot, numSlots: newNumSlots), y: yForStartTime(event.startTime), width: cellWidth(event: event, slot: slot, numSlots: newNumSlots, eventForSlot: newEventForSlot), height: cellHeight(event: event)))
-        container.backgroundColor = Colors.PINK
+        container.backgroundColor = Colors.RED
         container.layer.cornerRadius = EVENT_CORNER_RADIUS
-        container.layer.borderColor = Colors.RED.cgColor
+        container.layer.borderColor = UIColor.white.cgColor
         container.layer.borderWidth = EVENT_BORDER_WIDTH
         contentView.addSubview(container)
         eventViews[container] = event
@@ -193,8 +193,8 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         let title = UILabel()
         title.numberOfLines = 0
         title.lineBreakMode = .byTruncatingTail
-        title.font = UIFont(name: "AvenirNext-DemiBold", size: 12)
-        title.textColor = Colors.RED
+        title.font = UIFont(name: "AvenirNext-DemiBold", size: 14)
+        title.textColor = UIColor.white
         title.text = event.title
         title.translatesAutoresizingMaskIntoConstraints = false
         //title.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
@@ -206,7 +206,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         caption.numberOfLines = 0
         caption.lineBreakMode = .byTruncatingTail
         caption.font = UIFont(name: "AvenirNext-Regular", size: 10)
-        caption.textColor = Colors.RED
+        caption.textColor = UIColor.white
         caption.text = event.caption
         caption.translatesAutoresizingMaskIntoConstraints = false
         //caption.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
