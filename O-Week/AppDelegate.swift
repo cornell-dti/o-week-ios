@@ -16,7 +16,8 @@ import UserNotifications
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate
 {
-    var window: UIWindow?
+	var delegate:LocalNotifications!
+    var window:UIWindow?
 	
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool
 	{
@@ -49,11 +50,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         navigationBarAppearence.isTranslucent = false
         navigationBarAppearence.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont(name: "AvenirNext-DemiBold", size: 14)!]
     }
-    
+	
     private func setDelegateForNotifications()
 	{
         let center = UNUserNotificationCenter.current()
-        center.delegate = LocalNotifications()
+		delegate = LocalNotifications(window:window!)
+        center.delegate = delegate
     }
     
     func applicationWillResignActive(_ application: UIApplication) {

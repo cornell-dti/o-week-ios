@@ -223,6 +223,15 @@ class UserData
 		return false
 	}
 	/**
+		Linear search for a event given its pk value.
+		- parameter pk: `Event.pk`
+		- returns: Event, nil if no match was found.
+	*/
+	static func eventFor(_ pk:Int) -> Event?
+	{
+		return allEvents.flatMap({$0.value}).first(where: {$0.pk == pk})
+	}
+	/**
 		Linear search for a category given its pk value.
 		- parameter pk: `Category.pk`
 		- returns: Category, nil if no match was found.

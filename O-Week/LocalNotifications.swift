@@ -6,25 +6,26 @@
 //  Copyright © 2017 Cornell D&TI. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import UserNotifications
 
 /**
 	Manages local notifications.
-	`EVENT_UPDATE_CATEGORY`: Identifier for category for all event update notifications.
-	`EVENT_ACTION`: Identifier for notification actions that, once clicked, open to a specific event.
-	`EVENT_ACTION_TITLE`: Text shown in button shown in a notification that opens to a specific event.
+	`EVENT_UPDATED_ID`: An event updated notification is to have the identifier with this as prefix to the pk value.
 	`center`: Reference to notification center.
 	`options`: The ways in which notifications will be presented to the user.
 */
 class LocalNotifications: NSObject, UNUserNotificationCenterDelegate
 {
-	static let EVENT_UPDATE_CATEGORY = "EVENT_UPDATED"
-    static let EVENT_ACTION = "EVENT_ACTION"
-	static let EVENT_ACTION_TITLE = "Show Event"
+	static let EVENT_UPDATED_ID = "change"
     static let center = UNUserNotificationCenter.current()
     static let options: UNAuthorizationOptions = [.alert, .sound, .badge]
+	let window:UIWindow
 
+	init(window:UIWindow)
+	{
+		self.window = window
+	}
 	/**
 		Ask user for permission to send notifications.
 	*/
@@ -53,11 +54,7 @@ class LocalNotifications: NSObject, UNUserNotificationCenterDelegate
 			let content = UNMutableNotificationContent()
 			content.title = "\"\($0.title)\" has been updated"
 			let request = UNNotificationRequest(identifier: "change\($0.pk)", content: content, trigger: nil)
-			/*let action = UNNotificationAction(identifier: LocalNotifications.EVENT_ACTION, title: EVENT_ACTION_TITLE, options: .foreground)
-			let category = UNNotificationCategory(identifier: EVENT_UPDATE_CATEGORY, actions: [action], intentIdentifiers: [], options: UNNotificationCategoryOptions(rawValue: 0))
-			center.setNotificationCategories([category])*/
 			center.add(request, withCompletionHandler: nil)
-			print("notification added")
 		})
 	}
 	
@@ -114,9 +111,7 @@ class LocalNotifications: NSObject, UNUserNotificationCenterDelegate
 			return
 		}
         UserData.selectedEvents.forEach({ (date, events) in
-            events.forEach({
-                createNotification(for: $0)
-            })
+            events.forEach({createNotification(for: $0)})
         })
     }
 	
@@ -142,10 +137,19 @@ class LocalNotifications: NSObject, UNUserNotificationCenterDelegate
 	*/
 	func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void)
 	{
-		if (response.notification.request.content.categoryIdentifier == LocalNotifications.EVENT_UPDATE_CATEGORY)
+		//check if updated event is actionable
+		let id = response.notification.request.identifier
+		if (id.contains(LocalNotifications.EVENT_UPDATED_ID))
 		{
-			print("title match!")
-			
+			let pk = Int(id.components(separatedBy: LocalNotifications.EVENT_UPDATED_ID)[1])
+			if let event = UserData.eventFor(pk!)
+			{
+				let storyboard = UIStoryboard(name: "Main", bundle: nil)
+				let detailsVC = storyboard.instantiateViewController(withIdentifier: "detailsVC") as! DetailsVC
+				detailsVC.event = event
+				let navigationController = window.rootViewController as! UINavigationController
+				navigationController.pushViewController(detailsVC, animated: true)
+			}
 		}
 	}
 }
