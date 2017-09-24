@@ -46,7 +46,7 @@ class FeedCell:UITableViewCell
         eventEndTime.text = event.endTime.description
         setButtonImage(UserData.selectedEventsContains(event))
 		
-		requiredText.isHidden = !event.required
+		requiredText.isHidden = !(event.required || event.categoryRequired)
 		
 		if (event.categoryRequired)
 		{

@@ -20,8 +20,6 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource
     var selectedEvent: Event? = nil
     var datePickerController: DatePickerController?
     
-    static let FEED_TABLEVIEW_ROW_HEIGHT:CGFloat = 86
-    
     // MARK:- Setup
 	
 	/**
@@ -32,7 +30,6 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource
         super.viewDidLoad()
         
         AppDelegate.setUpExtendedNavBar(navController: navigationController)
-        setUpHeightofFeedCell()
         setNotificationListener()
 		filter()
 		scrollToNextEvent()
@@ -50,15 +47,6 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource
 		datePickerController?.syncSelectedDate()
 	}
 	
-	/**
-		Sets row height of feed cells.
-	*/
-    private func setUpHeightofFeedCell()
-	{
-        feedTableView.rowHeight = UITableViewAutomaticDimension
-        feedTableView.estimatedRowHeight = FeedVC.FEED_TABLEVIEW_ROW_HEIGHT
-    }
-    
     // MARK:- Table View Methods
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
