@@ -219,7 +219,6 @@ struct Event:Hashable, Comparable, CoreDataObject, JSONObject
 	func attributedAdditional() -> NSAttributedString
 	{
 		let TEXT_SIZE:CGFloat = 12
-		let TAB_STOP:CGFloat = 64
 		
 		let string = NSMutableAttributedString()
 		let headerAndRemaining = additional.components(separatedBy: "##")
@@ -240,7 +239,6 @@ struct Event:Hashable, Comparable, CoreDataObject, JSONObject
 			let bulletAndInfo = section.trimmingCharacters(in: .whitespacesAndNewlines).components(separatedBy: " # ")
 			let bullet = "\(bulletAndInfo[0])\t"
 			let info = "\(bulletAndInfo[1])\n"
-			let start = string.length
 			
 			//set bullet
 			let bulletAttributes = [NSAttributedStringKey.font: UIFont(name: "AvenirNext-DemiBold", size: TEXT_SIZE)!, NSAttributedStringKey.foregroundColor:Colors.RED]
@@ -250,12 +248,6 @@ struct Event:Hashable, Comparable, CoreDataObject, JSONObject
 			//set info
 			let attributedInfo = NSAttributedString(string: info)
 			string.append(attributedInfo)
-			
-			//set paragraph style
-			let infoParagraphStyle = NSMutableParagraphStyle()
-			infoParagraphStyle.headIndent = TAB_STOP
-			infoParagraphStyle.tabStops = [NSTextTab(textAlignment: .left, location: TAB_STOP)]
-			string.addAttribute(NSAttributedStringKey.paragraphStyle, value: infoParagraphStyle, range: NSRange(location: start, length: bullet.characters.count + info.characters.count))
 		}
 		
 		return string
