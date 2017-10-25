@@ -11,14 +11,15 @@
 		0628E4871E7CA3260066A308 /* FeedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0628E4861E7CA3260066A308 /* FeedVC.swift */; };
 		067EC2E71E8C9F8D0098ED94 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067EC2E61E8C9F8D0098ED94 /* Event.swift */; };
 		067EC2E91E8C9FE20098ED94 /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067EC2E81E8C9FE20098ED94 /* Time.swift */; };
+		06DA69B61F9FEE1800873F39 /* DatePageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06DA69B51F9FEE1800873F39 /* DatePageVC.swift */; };
 		06E309741EFDE8AA00F37D7F /* JSONObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E309731EFDE8AA00F37D7F /* JSONObject.swift */; };
 		06E738F51EFCA06E00DFF73E /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E738F41EFCA06E00DFF73E /* Category.swift */; };
 		06E738F71EFCA34C00DFF73E /* CoreDataObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E738F61EFCA34C00DFF73E /* CoreDataObject.swift */; };
+		06F7D92D1F8DB454009EC077 /* DateTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F7D92C1F8DB454009EC077 /* DateTabBar.swift */; };
 		1EAA0BD2099219947F10D17D /* Pods_O_WeekTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C45EF3666707CE5869071BEC /* Pods_O_WeekTests.framework */; };
 		8131F4C854FE4EBC4970F6ED /* Pods_O_WeekUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC4DC7F5593F0FE2A28A79F1 /* Pods_O_WeekUITests.framework */; };
 		81D80FD806CBE0E9CC128F8E /* Pods_O_Week.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B7E869E216F14755BD6288E /* Pods_O_Week.framework */; };
 		DC18B3111E76CBCE00C3FCD6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC18B3101E76CBCE00C3FCD6 /* AppDelegate.swift */; };
-		DC18B3161E76CBCE00C3FCD6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC18B3141E76CBCE00C3FCD6 /* Main.storyboard */; };
 		DC18B3181E76CBCE00C3FCD6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC18B3171E76CBCE00C3FCD6 /* Assets.xcassets */; };
 		DC18B31B1E76CBCE00C3FCD6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC18B3191E76CBCE00C3FCD6 /* LaunchScreen.storyboard */; };
 		DC18B3261E76CBCE00C3FCD6 /* O_WeekTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC18B3251E76CBCE00C3FCD6 /* O_WeekTests.swift */; };
@@ -62,9 +63,11 @@
 		0628E4861E7CA3260066A308 /* FeedVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = FeedVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		067EC2E61E8C9F8D0098ED94 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Event.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		067EC2E81E8C9FE20098ED94 /* Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
+		06DA69B51F9FEE1800873F39 /* DatePageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePageVC.swift; sourceTree = "<group>"; };
 		06E309731EFDE8AA00F37D7F /* JSONObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = JSONObject.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		06E738F41EFCA06E00DFF73E /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Category.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		06E738F61EFCA34C00DFF73E /* CoreDataObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CoreDataObject.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		06F7D92C1F8DB454009EC077 /* DateTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTabBar.swift; sourceTree = "<group>"; };
 		680698CA55279B36FAC481E8 /* Pods-O-Week.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-O-Week.release.xcconfig"; path = "Pods/Target Support Files/Pods-O-Week/Pods-O-Week.release.xcconfig"; sourceTree = "<group>"; };
 		68228961B2FB9FB4B6D82E11 /* Pods-O-WeekTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-O-WeekTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-O-WeekTests/Pods-O-WeekTests.debug.xcconfig"; sourceTree = "<group>"; };
 		8B7E869E216F14755BD6288E /* Pods_O_Week.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_O_Week.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -76,7 +79,6 @@
 		D0640BFB5C2E40B3CB9F5023 /* Pods-O-WeekUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-O-WeekUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-O-WeekUITests/Pods-O-WeekUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		DC18B30D1E76CBCE00C3FCD6 /* O-Week.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "O-Week.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC18B3101E76CBCE00C3FCD6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppDelegate.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		DC18B3151E76CBCE00C3FCD6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DC18B3171E76CBCE00C3FCD6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DC18B31A1E76CBCE00C3FCD6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DC18B31C1E76CBCE00C3FCD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -207,10 +209,11 @@
 				0614E61E1F2CBDFF0080EA2B /* Util */,
 				0614E61D1F2CBDD70080EA2B /* Models */,
 				DC18B3191E76CBCE00C3FCD6 /* LaunchScreen.storyboard */,
-				DC18B3141E76CBCE00C3FCD6 /* Main.storyboard */,
 				DC18B31C1E76CBCE00C3FCD6 /* Info.plist */,
 				DCDEBFF61EB414BB0014E028 /* UserData.swift */,
 				DC18B3101E76CBCE00C3FCD6 /* AppDelegate.swift */,
+				06DA69B51F9FEE1800873F39 /* DatePageVC.swift */,
+				06F7D92C1F8DB454009EC077 /* DateTabBar.swift */,
 				DC23E0101EBD6E780060F24F /* DatePickerController.swift */,
 				DC23E00E1EBD63980060F24F /* DateCell.swift */,
 				0628E4861E7CA3260066A308 /* FeedVC.swift */,
@@ -323,7 +326,7 @@
 				TargetAttributes = {
 					DC18B30C1E76CBCE00C3FCD6 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 82HRX58VPA;
+						DevelopmentTeam = UJQ88SCQSQ;
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -378,7 +381,6 @@
 			files = (
 				DC18B31B1E76CBCE00C3FCD6 /* LaunchScreen.storyboard in Resources */,
 				DC18B3181E76CBCE00C3FCD6 /* Assets.xcassets in Resources */,
-				DC18B3161E76CBCE00C3FCD6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -547,9 +549,12 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-O-Week/Pods-O-Week-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/PureLayout/PureLayout.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PureLayout.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -574,6 +579,7 @@
 				DCC2FF8B1EB24EEA00624B4F /* Internet.swift in Sources */,
 				06E738F51EFCA06E00DFF73E /* Category.swift in Sources */,
 				DC1E83191E85E635000CD56B /* ScheduleCell.swift in Sources */,
+				06DA69B61F9FEE1800873F39 /* DatePageVC.swift in Sources */,
 				06E738F71EFCA34C00DFF73E /* CoreDataObject.swift in Sources */,
 				DCDEBFF71EB414BB0014E028 /* UserData.swift in Sources */,
 				DCF15FFD1EEF0EB800793D04 /* FilterCell.swift in Sources */,
@@ -583,6 +589,7 @@
 				DCF15FFB1EEF0E9200793D04 /* FilterVC.swift in Sources */,
 				DC3274621E7CB4F100CB3E22 /* FeedCell.swift in Sources */,
 				DC9307091EEC5D2F005AF445 /* Constants.swift in Sources */,
+				06F7D92D1F8DB454009EC077 /* DateTabBar.swift in Sources */,
 				DCB182381EB7936E0041EEBC /* SettingsVC.swift in Sources */,
 				DC23E0111EBD6E780060F24F /* DatePickerController.swift in Sources */,
 			);
@@ -620,14 +627,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		DC18B3141E76CBCE00C3FCD6 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				DC18B3151E76CBCE00C3FCD6 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		DC18B3191E76CBCE00C3FCD6 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -747,13 +746,13 @@
 			baseConfigurationReference = 917B7A99D1405A3BB60EEB5E /* Pods-O-Week.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 82HRX58VPA;
+				DEVELOPMENT_TEAM = UJQ88SCQSQ;
 				INFOPLIST_FILE = "O-Week/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cornellsatech.O-Week";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
@@ -763,13 +762,13 @@
 			baseConfigurationReference = 680698CA55279B36FAC481E8 /* Pods-O-Week.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 82HRX58VPA;
+				DEVELOPMENT_TEAM = UJQ88SCQSQ;
 				INFOPLIST_FILE = "O-Week/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cornellsatech.O-Week";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};
 			name = Release;

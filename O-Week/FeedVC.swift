@@ -10,17 +10,26 @@ import UIKit
 
 /**
 	Displays a list of events, ordered chronologically.
+	`date`: Must be set by whomever instantiates this.
 */
-class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource
+class FeedVC:UITableViewController
 {
-    @IBOutlet weak var feedTableView: UITableView!
-	@IBOutlet weak var collectionView: UICollectionView! //Date picker
-	
+	var date:Date!
 	var events = [Event]()
     var selectedEvent: Event? = nil
-    var datePickerController: DatePickerController?
+	let FEED_CELL_ID = "feedCell"
     
     // MARK:- Setup
+	
+	/**
+		Initialize FeedVC to the given date.
+		- parameter date: Date this FeedVC will show events for.
+	*/
+	convenience init(date:Date)
+	{
+		self.init(nibName: nil, bundle: nil)
+		self.date = date
+	}
 	
 	/**
 		Sets up views, notification listeners, and events with the appropriate filter. Scrolls to the event that will be next chronologically.
@@ -28,35 +37,27 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource
     override func viewDidLoad()
 	{
         super.viewDidLoad()
-        
-        AppDelegate.setUpExtendedNavBar(navController: navigationController)
+		
+		tableView.register(FeedCell.self, forCellReuseIdentifier: FEED_CELL_ID)
         setNotificationListener()
 		filter()
 		scrollToNextEvent()
-        
-        datePickerController = DatePickerController(collectionView: collectionView)
     }
 	
-	/**
-		Resync data on reappearance.
-		- parameter animated: Ignored.
-	*/
-	override func viewWillAppear(_ animated: Bool)
-	{
-		super.viewWillAppear(animated)
-		datePickerController?.syncSelectedDate()
-	}
-	
     // MARK:- Table View Methods
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
+	{
+		return 96
+	}
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         return events.count
     }
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "feedCell", for: indexPath) as! FeedCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: FEED_CELL_ID, for: indexPath) as! FeedCell
         cell.configure(event: events[indexPath.row])
+		cell.updateConstraintsIfNeeded()
         return cell
     }
     /**
@@ -66,7 +67,7 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource
 			- tableView: Reference to the `UITableView` in which the `FeedCell` was selected. Should be identical to the global variable.
 			- indexPath: Index of the cell that was selected.
 	*/
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
 	{
         selectedEvent = events[indexPath.row]
         performSegue(withIdentifier: "showEventDetails", sender: self)
@@ -101,8 +102,6 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource
     private func setNotificationListener()
 	{
         NotificationCenter.default.addObserver(self, selector: #selector(updateFeed), name: .reloadData, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(movedToLaterDate), name: .reloadAfterMovedLater, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(movedToEarlierDate), name: .reloadAfterMovedEarlier, object: nil)
     }
 	/**
 		Regather data from `UserData.allEvents`, filter, and reload the table.
@@ -110,24 +109,8 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource
     @objc func updateFeed()
 	{
 		filter()
-        feedTableView.reloadData()
+        tableView.reloadData()
 	}
-	/**
-		Like `updateFeed()`, but if the user selected a date LATER than the current date, then animate the table accordingly.
-	*/
-    @objc func movedToLaterDate()
-    {
-        filter()
-        feedTableView.reloadSections([0], with: .left)
-    }
-	/**
-	Like `updateFeed()`, but if the user selected a date EARLIER than the current date, then animate the table accordingly.
-	*/
-    @objc func movedToEarlierDate()
-    {
-        filter()
-        feedTableView.reloadSections([0], with: .right)
-    }
 	/**
 		Retrieve events from `UserData.allEvents`, then apply a filter according to `FilterVC`.
 	
@@ -135,7 +118,7 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource
 	*/
 	private func filter()
 	{
-		var tempEvents = UserData.allEvents[UserData.selectedDate]!
+		var tempEvents = UserData.allEvents[date]!
 		if (FilterVC.filterRequired)
 		{
 			tempEvents = tempEvents.filter({$0.required})
@@ -155,7 +138,7 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource
 		let date = Date()
 		let now = Time()
 		
-		guard UserData.userCalendar.compare(date, to: UserData.selectedDate!, toGranularity: .day) == .orderedSame else {
+		guard UserData.userCalendar.compare(date, to: date, toGranularity: .day) == .orderedSame else {
 			return
 		}
 		
@@ -164,7 +147,7 @@ class FeedVC:UIViewController, UITableViewDelegate, UITableViewDataSource
 			let event = events[i]
 			if (event.startTime >= now)
 			{
-				feedTableView.scrollToRow(at: IndexPath(row: i, section: 0), at: .top, animated: false)
+				tableView.scrollToRow(at: IndexPath(row: i, section: 0), at: .top, animated: false)
 				return
 			}
 		}

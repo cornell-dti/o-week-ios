@@ -15,82 +15,108 @@ import UIKit
 */
 class FeedCell:UITableViewCell
 {
+    let eventStartTime = UILabel.newAutoLayout()
+    let eventEndTime = UILabel.newAutoLayout()
+    let eventTitle = UILabel.newAutoLayout()
+    let eventCaption = UILabel.newAutoLayout()
+	let requiredText = UITextField.newAutoLayout()
     
-    @IBOutlet weak var eventStartTime: UILabel!
-    @IBOutlet weak var eventEndTime: UILabel!
-    @IBOutlet weak var eventTitle: UILabel!
-    @IBOutlet weak var eventCaption: UILabel!
-    @IBOutlet weak var eventButton: UIButton!
-	@IBOutlet weak var requiredText: UITextField!
-	@IBOutlet weak var categoryRequired: UILabel!
-    
-    var event:Event!
+    var event:Event?
+	
+	required init?(coder aDecoder: NSCoder) {
+		super.init(coder: aDecoder)
+	}
 	
 	/**
-		Turns the background of "RQ" to a circle.
+		Sets up all subviews of the FeedCell.
+		|								|
+		| 	10:30 Move-in		(RQ)	|
+		| 	 4:00 RPCC					|
+		|								|
 	*/
-	override func awakeFromNib()
+	override init(style: UITableViewCellStyle, reuseIdentifier: String?)
 	{
-		requiredText.layer.cornerRadius = requiredText.frame.width / 2
+		super.init(style: style, reuseIdentifier: reuseIdentifier)
+		
+		// [ ~~~ ] StackView to hold everything
+		let horizStack = UIStackView()
+		contentView.addSubview(horizStack)
+		horizStack.axis = .horizontal
+		horizStack.alignment = .center
+		horizStack.spacing = Layout.MARGIN
+		horizStack.distribution = .fill
+		horizStack.autoPinEdgesToSuperviewMargins()
+		
+		// 10:30 ~~~ ~ StackView to hold time
+		//  1:00 ~~~ ~
+		let timeStack = UIStackView()
+		horizStack.addArrangedSubview(timeStack)
+		timeStack.axis = .vertical
+		timeStack.alignment = .trailing
+		timeStack.spacing = Layout.TEXT_VERTICAL_SPACING
+		timeStack.distribution = .equalSpacing
+		timeStack.autoSetDimension(.width, toSize: 56)
+		
+		eventStartTime.textAlignment = .right
+		eventStartTime.textColor = UIColor.black
+		eventStartTime.alpha = 0.5
+		eventStartTime.font = UIFont(name: Font.REGULAR, size: 12)
+		timeStack.addArrangedSubview(eventStartTime)
+		
+		eventEndTime.textAlignment = .right
+		eventEndTime.textColor = UIColor.black
+		eventEndTime.alpha = 0.5
+		eventEndTime.font = UIFont(name: Font.REGULAR, size: 12)
+		timeStack.addArrangedSubview(eventEndTime)
+		
+		// ~~ Event name	~ StackView to hold event title & caption
+		// ~~ Event caption ~
+		let eventNameStack = UIStackView()
+		horizStack.addArrangedSubview(eventNameStack)
+		eventNameStack.axis = .vertical
+		eventNameStack.alignment = .leading
+		eventNameStack.spacing = Layout.TEXT_VERTICAL_SPACING
+		eventNameStack.distribution = .equalSpacing
+		
+		eventTitle.textAlignment = .left
+		eventTitle.textColor = UIColor.black
+		eventTitle.alpha = 0.8
+		eventTitle.font = UIFont(name: Font.BOLD, size: 16)
+		eventTitle.lineBreakMode = .byTruncatingTail
+		eventTitle.setContentHuggingPriority(.defaultLow, for: .horizontal)
+		eventTitle.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+		eventNameStack.addArrangedSubview(eventTitle)
+		
+		eventCaption.textAlignment = .left
+		eventCaption.textColor = UIColor.black
+		eventCaption.alpha = 0.5
+		eventCaption.font = UIFont(name: Font.REGULAR, size: 12)
+		eventCaption.setContentHuggingPriority(.defaultLow, for: .horizontal)
+		eventCaption.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+		eventNameStack.addArrangedSubview(eventCaption)
+		
+		// ~ ~~~ (RQ)	"RQ" label
+		requiredText.textAlignment = .center
+		requiredText.textColor = UIColor.white
+		requiredText.backgroundColor = Colors.RED
+		requiredText.text = "RQ"
+		requiredText.font = UIFont(name: Font.BOLD, size: 12)
+		requiredText.isUserInteractionEnabled = false
+		requiredText.autoSetDimensions(to: CGSize(width: 24, height: 24))
+		requiredText.layer.cornerRadius = 12
+		horizStack.addArrangedSubview(requiredText)
 	}
+	
 	/**
 		Sets the current event to display.
 		- parameter event: The `Event` that this cell will represent.
 	*/
     func configure(event:Event)
 	{
-        self.event = event
-        eventTitle.text = event.title
-        eventCaption.text = event.caption
-        eventStartTime.text = event.startTime.description
-        eventEndTime.text = event.endTime.description
-        setButtonImage(UserData.selectedEventsContains(event))
-		
+		eventTitle.text = event.title
+		eventCaption.text = event.caption
+		eventStartTime.text = event.startTime.description
+		eventEndTime.text = event.endTime.description
 		requiredText.isHidden = !(event.required || event.categoryRequired)
-		
-		if (event.categoryRequired)
-		{
-			categoryRequired.text = UserData.categoryFor(event.category)?.name
-			categoryRequired.isHidden = false
-		}
-		else
-		{
-			categoryRequired.isHidden = true
-		}
     }
-	
-	/**
-		'+' button pressed. Add/remove the event from selected events.
-		- parameter sender: Button that was pressed.
-	*/
-    @IBAction func addBttnPressed(_ sender: UIButton)
-	{
-        if (UserData.selectedEventsContains(event!))
-		{
-            setButtonImage(false)
-            UserData.removeFromSelectedEvents(event!)
-            LocalNotifications.removeNotification(for: event!.pk)
-        }
-		else
-		{
-            setButtonImage(true)
-            UserData.insertToSelectedEvents(event!)
-            LocalNotifications.createNotification(for: event!)
-        }
-    }
-	
-	/**
-		Set the '+' button to an image that represents whether the event is selected.
-		- parameter added: True if the event should be displayed as "selected".
-	*/
-    private func setButtonImage(_ added: Bool)
-    {
-        UIView.animate(withDuration: 0.5) {
-            self.eventButton.alpha = 0
-            let image = added ? Images.imageAdded : Images.imageNotAdded
-            self.eventButton.setImage(image, for: .normal)
-            self.eventButton.alpha = 1
-        }
-    }
-    
 }

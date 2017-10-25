@@ -16,15 +16,18 @@ import UserNotifications
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate
 {
+	var window: UIWindow?
 	var delegate:LocalNotifications!
-    var window:UIWindow?
 	
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool
 	{
+		window = UIWindow(frame: UIScreen.main.bounds)
         setNavBarColor()
         LocalNotifications.requestPermissionForNotifications()
         setDelegateForNotifications()
         UserData.loadData()
+		startFirstVC()
+		
         return true
     }
 	
@@ -50,6 +53,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         navigationBarAppearence.isTranslucent = false
         navigationBarAppearence.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont(name: "AvenirNext-DemiBold", size: 14)!]
     }
+	
+	/**
+		Starts the initial view controller.
+	*/
+	private func startFirstVC()
+	{
+		let datePageVC = DatePageVC()
+		window!.rootViewController = datePageVC
+		window!.makeKeyAndVisible()
+	}
 	
     private func setDelegateForNotifications()
 	{

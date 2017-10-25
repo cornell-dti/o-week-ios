@@ -32,6 +32,24 @@ enum Images
 }
 
 /**
+	Layout values, like dimens.xml in Android.
+*/
+enum Layout
+{
+	static let MARGIN:CGFloat = 24
+	static let TEXT_VERTICAL_SPACING:CGFloat = 2
+}
+
+/**
+	Font names.
+*/
+enum Font
+{
+	static let REGULAR = "AvenirNext-Regular"
+	static let BOLD = "AvenirNext-DemiBold"
+}
+
+/**
 	Names for custom notifications. Classes interested in receiving notifications for a particular event should subscribe to the event's corresponding notification. Another class generates notifications for the particular event.
 */
 extension Notification.Name
