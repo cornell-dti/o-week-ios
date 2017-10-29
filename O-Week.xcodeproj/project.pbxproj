@@ -15,7 +15,6 @@
 		06E309741EFDE8AA00F37D7F /* JSONObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E309731EFDE8AA00F37D7F /* JSONObject.swift */; };
 		06E738F51EFCA06E00DFF73E /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E738F41EFCA06E00DFF73E /* Category.swift */; };
 		06E738F71EFCA34C00DFF73E /* CoreDataObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E738F61EFCA34C00DFF73E /* CoreDataObject.swift */; };
-		06F7D92D1F8DB454009EC077 /* DateTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F7D92C1F8DB454009EC077 /* DateTabBar.swift */; };
 		1EAA0BD2099219947F10D17D /* Pods_O_WeekTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C45EF3666707CE5869071BEC /* Pods_O_WeekTests.framework */; };
 		8131F4C854FE4EBC4970F6ED /* Pods_O_WeekUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC4DC7F5593F0FE2A28A79F1 /* Pods_O_WeekUITests.framework */; };
 		81D80FD806CBE0E9CC128F8E /* Pods_O_Week.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B7E869E216F14755BD6288E /* Pods_O_Week.framework */; };
@@ -67,7 +66,6 @@
 		06E309731EFDE8AA00F37D7F /* JSONObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = JSONObject.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		06E738F41EFCA06E00DFF73E /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Category.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		06E738F61EFCA34C00DFF73E /* CoreDataObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CoreDataObject.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		06F7D92C1F8DB454009EC077 /* DateTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTabBar.swift; sourceTree = "<group>"; };
 		680698CA55279B36FAC481E8 /* Pods-O-Week.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-O-Week.release.xcconfig"; path = "Pods/Target Support Files/Pods-O-Week/Pods-O-Week.release.xcconfig"; sourceTree = "<group>"; };
 		68228961B2FB9FB4B6D82E11 /* Pods-O-WeekTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-O-WeekTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-O-WeekTests/Pods-O-WeekTests.debug.xcconfig"; sourceTree = "<group>"; };
 		8B7E869E216F14755BD6288E /* Pods_O_Week.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_O_Week.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -213,7 +211,6 @@
 				DCDEBFF61EB414BB0014E028 /* UserData.swift */,
 				DC18B3101E76CBCE00C3FCD6 /* AppDelegate.swift */,
 				06DA69B51F9FEE1800873F39 /* DatePageVC.swift */,
-				06F7D92C1F8DB454009EC077 /* DateTabBar.swift */,
 				DC23E0101EBD6E780060F24F /* DatePickerController.swift */,
 				DC23E00E1EBD63980060F24F /* DateCell.swift */,
 				0628E4861E7CA3260066A308 /* FeedVC.swift */,
@@ -589,7 +586,6 @@
 				DCF15FFB1EEF0E9200793D04 /* FilterVC.swift in Sources */,
 				DC3274621E7CB4F100CB3E22 /* FeedCell.swift in Sources */,
 				DC9307091EEC5D2F005AF445 /* Constants.swift in Sources */,
-				06F7D92D1F8DB454009EC077 /* DateTabBar.swift in Sources */,
 				DCB182381EB7936E0041EEBC /* SettingsVC.swift in Sources */,
 				DC23E0111EBD6E780060F24F /* DatePickerController.swift in Sources */,
 			);

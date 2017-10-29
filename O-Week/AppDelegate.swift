@@ -60,7 +60,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate
 	private func startFirstVC()
 	{
 		let datePageVC = DatePageVC()
-		window!.rootViewController = datePageVC
+		let navController = UINavigationController(rootViewController: datePageVC)
+		navController.navigationBar.topItem?.title = "Orientation Events"
+		AppDelegate.setUpExtendedNavBar(navController: navController)
+		window!.rootViewController = navController
 		window!.makeKeyAndVisible()
 	}
 	

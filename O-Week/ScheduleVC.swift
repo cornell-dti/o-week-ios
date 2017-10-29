@@ -63,7 +63,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         AppDelegate.setUpExtendedNavBar(navController: navigationController)
         setNotificationListener()
         
-        datePickerController = DatePickerController(collectionView: collectionView)
+        datePickerController = DatePickerController()
     }
     /**
 		Set up the scroll view and draw time lines and events.
@@ -433,8 +433,6 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource
 	*/
     func setNotificationListener()
 	{
-        NotificationCenter.default.addObserver(self, selector: #selector(updateSchedule), name: .reloadAfterMovedLater, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(updateSchedule), name: .reloadAfterMovedEarlier, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(updateSchedule), name: .reloadData, object: nil)
     }
     /**

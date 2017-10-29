@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import PureLayout
 
 /**
 	Holds data and reference pointers to `View`s for an `Event`.
@@ -23,6 +24,7 @@ class FeedCell:UITableViewCell
     
     var event:Event?
 	
+	//must be written since we provided `init()`. Will not be used.
 	required init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
 	}

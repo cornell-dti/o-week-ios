@@ -38,6 +38,7 @@ enum Layout
 {
 	static let MARGIN:CGFloat = 24
 	static let TEXT_VERTICAL_SPACING:CGFloat = 2
+	static let DATE_SIZE:CGFloat = 64
 }
 
 /**
@@ -55,7 +56,5 @@ enum Font
 extension Notification.Name
 {
     static let reloadData = Notification.Name("reloadData")
-    static let reloadAfterMovedEarlier = Notification.Name("reloadEarlier")
-    static let reloadAfterMovedLater = Notification.Name("reloadLater")
     static let reloadSettings = Notification.Name("reloadSettings")
 }

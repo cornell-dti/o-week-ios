@@ -15,24 +15,26 @@ import UIKit
 
 	- seeAlso: `DateCell`
 */
-class DatePickerController: NSObject, UICollectionViewDataSource, UICollectionViewDelegate
+class DatePickerController: UICollectionViewController, UICollectionViewDelegateFlowLayout
 {
-    let collectionView: UICollectionView
-    
+	let DATE_CELL_ID = "dateCell"
     var selectedCell: DateCell?
 	
-	/**
-		Initializes the `collectionView` to hold the dates an sets the source and delegate to itself.
-		- parameter collectionView: A reference to the `UICollectionView` where the date picker is placed.
-	*/
-    init(collectionView: UICollectionView)
+	//must be written since we provided `init()`. Will not be used.
+	required init?(coder aDecoder: NSCoder) {super.init(coder: aDecoder)}
+	init()
 	{
-        self.collectionView = collectionView
-        super.init()
-        collectionView.delegate = self
-        collectionView.dataSource = self
-    }
-	
+		let layout = UICollectionViewFlowLayout()
+		layout.scrollDirection = .horizontal
+		super.init(collectionViewLayout: layout)
+	}
+	override func viewDidLoad()
+	{
+		super.viewDidLoad()
+		collectionView?.delegate = self
+		collectionView?.register(DateCell.self, forCellWithReuseIdentifier: DATE_CELL_ID)
+		collectionView?.backgroundColor = Colors.RED
+	}
 	/**
 		Synchronize the selected `DateCell` with `UserData.selectedDate`, which could've been changed by other classes.
 	*/
@@ -48,21 +50,24 @@ class DatePickerController: NSObject, UICollectionViewDataSource, UICollectionVi
 			let index = UserData.DATES.index(of: UserData.selectedDate)!
 			
 			selectedCell?.selected(false)
-			if let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? DateCell
+			if let cell = collectionView!.cellForItem(at: IndexPath(item: index, section: 0)) as? DateCell
 			{
 				cell.selected(true)
 				selectedCell = cell
 			}
 		}
 	}
-	
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
+	{
+		return CGSize(width: Layout.DATE_SIZE, height: Layout.DATE_SIZE)
+	}
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
 	{
         return UserData.DATES.count
     }
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
 	{
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "dateCell", for: indexPath as IndexPath) as! DateCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DATE_CELL_ID, for: indexPath as IndexPath) as! DateCell
         cell.configure(date: UserData.DATES[indexPath.row])
         return cell
     }
@@ -73,22 +78,15 @@ class DatePickerController: NSObject, UICollectionViewDataSource, UICollectionVi
 			- collectionView: Reference to the `UICollectionView` in which the `DateCell` was selected. Should be identical to the global variable.
 			- indexPath: Index of cell that was selected.
 	*/
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
 	{
         selectedCell?.selected(false)
         
         let cell = collectionView.cellForItem(at: indexPath) as! DateCell
         cell.selected(true)
         selectedCell = cell
-        let prevDate = UserData.selectedDate
         UserData.selectedDate = cell.date!
-        if (UserData.userCalendar.compare(cell.date!, to: prevDate!, toGranularity: .day) == .orderedAscending)
-        {
-            NotificationCenter.default.post(name: .reloadAfterMovedEarlier, object: nil)
-        } else {
-            NotificationCenter.default.post(name: .reloadAfterMovedLater, object: nil)
-        }
-		
+		NotificationCenter.default.post(name: .reloadData, object: nil)
     }
 	
 	/**
@@ -98,7 +96,7 @@ class DatePickerController: NSObject, UICollectionViewDataSource, UICollectionVi
 			- cell: The cell that will appear. Should be of type `DateCell`.
 			- indexPath: Index of cell that will appear.
 	*/
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath)
+    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath)
 	{
         if (selectedCell == nil)
 		{
@@ -112,7 +110,6 @@ class DatePickerController: NSObject, UICollectionViewDataSource, UICollectionVi
 			{
 				dateCell.selected(true)
 				selectedCell = dateCell
-				NotificationCenter.default.post(name: .reloadData, object: nil)
 			}
         }
     }
