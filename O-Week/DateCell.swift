@@ -47,9 +47,10 @@ class DateCell: UICollectionViewCell
 		contentView.addSubview(verticalStack)
 		verticalStack.axis = .vertical
 		verticalStack.alignment = .center
-		verticalStack.spacing = Layout.MARGIN
 		verticalStack.distribution = .equalSpacing
-		verticalStack.autoPinEdgesToSuperviewMargins()
+		verticalStack.spacing = 2
+		verticalStack.autoAlignAxis(toSuperviewAxis: .horizontal)
+		verticalStack.autoAlignAxis(toSuperviewAxis: .vertical)
 		
 		weekDay.textAlignment = .center
 		weekDay.textColor = UIColor.white

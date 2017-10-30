@@ -57,4 +57,5 @@ extension Notification.Name
 {
     static let reloadData = Notification.Name("reloadData")
     static let reloadSettings = Notification.Name("reloadSettings")
+	static let dateChanged = Notification.Name("dateChanged")
 }

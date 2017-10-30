@@ -12,9 +12,9 @@ import UIKit
 	Displays a list of events, ordered chronologically.
 	`date`: Must be set by whomever instantiates this.
 */
-class FeedVC:UITableViewController
+class FeedVC:UITableViewController, DateContainer
 {
-	var date:Date!
+	private(set) var date:Date!
 	var events = [Event]()
     var selectedEvent: Event? = nil
 	let FEED_CELL_ID = "feedCell"

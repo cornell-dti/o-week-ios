@@ -10,9 +10,9 @@ import UIKit
 
 /**
 	Holds a reference to all `FeedVC`s, one for each day of orientation. Allows swiping between them.
-	`pages`: All the `FeedVC`s
+	`pages`: All the `FeedVC`s or `ScheduleVC`s. Whatever these are, they must implement the `DateContainer` protocol in order to change `UserData.selectedDate` on page change.
 */
-class DatePageVC:UIPageViewController, UIPageViewControllerDataSource
+class DatePageVC:UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate
 {
 	var datePicker:DatePickerController?
 	var pages = [UIViewController]()
@@ -40,22 +40,26 @@ class DatePageVC:UIPageViewController, UIPageViewControllerDataSource
 		}
 		
 		UserData.DATES.forEach({pages.append(FeedVC(date: $0))})
-		setViewControllers([pageForToday()], direction: .forward, animated: true, completion: nil)
+		let pageToShow = pages[UserData.DATES.index(of: UserData.selectedDate)!]
+		setViewControllers([pageToShow], direction: .forward, animated: true, completion: nil)
 		dataSource = self
+		delegate = self
 		view.backgroundColor = UIColor.white
+		NotificationCenter.default.addObserver(self, selector: #selector(syncSelectedDate), name: .dateChanged, object: nil)
 	}
-	override func viewDidAppear(_ animated: Bool)
+	/**
+		Create the date picker.
+	*/
+	override func viewWillAppear(_ animated: Bool)
 	{
-		super.viewDidAppear(animated)
-		setUpDatePicker()
-	}
-	private func setUpDatePicker()
-	{
+		super.viewWillAppear(animated)
+		
 		//make sure this function only runs once
 		guard datePicker == nil else {
 			return
 		}
 		
+		//get rid of shadow under nav bar
 		AppDelegate.setUpExtendedNavBar(navController: navigationController)
 		
 		datePicker = DatePickerController()
@@ -63,6 +67,19 @@ class DatePageVC:UIPageViewController, UIPageViewControllerDataSource
 		datePicker!.view.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: Layout.DATE_SIZE)
 		view.addSubview(datePicker!.view)
 		datePicker!.didMove(toParentViewController: self)
+	}
+	@objc func syncSelectedDate()
+	{
+		guard let currentVC = viewControllers?[0] as? DateContainer else {
+			return
+		}
+		guard UserData.selectedDate != currentVC.date else {
+			return
+		}
+		
+		let newPage = pages[UserData.DATES.index(of: UserData.selectedDate)!]
+		let direction:UIPageViewControllerNavigationDirection = (UserData.userCalendar.compare(currentVC.date, to: UserData.selectedDate, toGranularity: .day) == .orderedAscending) ? .forward : .reverse
+		setViewControllers([newPage], direction: direction, animated: true, completion: nil)
 	}
 	/**
 		Returns the `UIViewController` that comes before the one given, nil if the one given has no preceding page.
@@ -91,14 +108,21 @@ class DatePageVC:UIPageViewController, UIPageViewControllerDataSource
 		return index < pages.count - 1 ? pages[index+1] : nil
 	}
 	/**
-		Returns the `UIViewController` which contains a date corresponding to today's date. Returns the view controller at `page[0]` if there is no match.
-		- Requires: `pages` is populated with UIViewControllers corresponding to `UserData.DATES`, in order.
-		- Returns: UIViewController.
+		If the user swipes to a new page, notify other classes about the change.
+		- parameters:
+			- pageViewController: Reference to self.
+			- finished: Whether the animation has finished.
+			- previousViewControllers: The viewController the user swiped FROM.
+			- completed: Whether the user swiped to a new page (or stayed on the same).
 	*/
-	private func pageForToday() -> UIViewController
+	func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool)
 	{
-		let date = Date()
-		let index = UserData.DATES.index(where: {UserData.userCalendar.compare($0, to: date, toGranularity: .day) == .orderedSame})
-		return index == nil ? pages[0] : pages[index!]
+		guard completed else {
+			return
+		}
+		
+		let currentVC = viewControllers![0] as! DateContainer
+		UserData.selectedDate = currentVC.date
+		NotificationCenter.default.post(name: .dateChanged, object: nil)
 	}
 }

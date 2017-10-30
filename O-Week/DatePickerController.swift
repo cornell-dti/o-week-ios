@@ -34,11 +34,12 @@ class DatePickerController: UICollectionViewController, UICollectionViewDelegate
 		collectionView?.delegate = self
 		collectionView?.register(DateCell.self, forCellWithReuseIdentifier: DATE_CELL_ID)
 		collectionView?.backgroundColor = Colors.RED
+		NotificationCenter.default.addObserver(self, selector: #selector(syncSelectedDate), name: .dateChanged, object: nil)
 	}
 	/**
 		Synchronize the selected `DateCell` with `UserData.selectedDate`, which could've been changed by other classes.
 	*/
-	func syncSelectedDate()
+	@objc func syncSelectedDate()
 	{
 		guard selectedCell?.date != nil else {
 			return
@@ -50,10 +51,13 @@ class DatePickerController: UICollectionViewController, UICollectionViewDelegate
 			let index = UserData.DATES.index(of: UserData.selectedDate)!
 			
 			selectedCell?.selected(false)
-			if let cell = collectionView!.cellForItem(at: IndexPath(item: index, section: 0)) as? DateCell
+			
+			let indexPath = IndexPath(item: index, section: 0)
+			if let cell = collectionView!.cellForItem(at: indexPath) as? DateCell
 			{
 				cell.selected(true)
 				selectedCell = cell
+				collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
 			}
 		}
 	}
@@ -86,7 +90,8 @@ class DatePickerController: UICollectionViewController, UICollectionViewDelegate
         cell.selected(true)
         selectedCell = cell
         UserData.selectedDate = cell.date!
-		NotificationCenter.default.post(name: .reloadData, object: nil)
+		collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+		NotificationCenter.default.post(name: .dateChanged, object: nil)
     }
 	
 	/**
