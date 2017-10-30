@@ -49,19 +49,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         let navigationBarAppearence = UINavigationBar.appearance()
         
         navigationBarAppearence.barTintColor = Colors.RED
-        navigationBarAppearence.tintColor = UIColor.white   //back arrow is black
+        navigationBarAppearence.tintColor = UIColor.white   //back arrow is white
         navigationBarAppearence.isTranslucent = false
-        navigationBarAppearence.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont(name: "AvenirNext-DemiBold", size: 14)!]
+        navigationBarAppearence.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont(name: Font.BOLD, size: 16)!]
     }
 	
 	/**
-		Starts the initial view controller.
+		Starts the initial view controller with a navigation bar.
 	*/
 	private func startFirstVC()
 	{
 		let datePageVC = DatePageVC()
 		let navController = UINavigationController(rootViewController: datePageVC)
-		navController.navigationBar.topItem?.title = "Orientation Events"
+		navController.navigationBar.topItem?.title = "Browse Events"
+		navController.navigationBar.topItem?.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: nil)
+		navController.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "filter")!, style: .plain, target: self, action: nil)
 		AppDelegate.setUpExtendedNavBar(navController: navController)
 		window!.rootViewController = navController
 		window!.makeKeyAndVisible()

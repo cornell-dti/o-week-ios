@@ -36,7 +36,7 @@ enum Images
 */
 enum Layout
 {
-	static let MARGIN:CGFloat = 24
+	static let MARGIN:CGFloat = 20
 	static let TEXT_VERTICAL_SPACING:CGFloat = 2
 	static let DATE_SIZE:CGFloat = 64
 }
@@ -46,6 +46,7 @@ enum Layout
 */
 enum Font
 {
+	static let MEDIUM = "AvenirNext-Medium"
 	static let REGULAR = "AvenirNext-Regular"
 	static let BOLD = "AvenirNext-DemiBold"
 }

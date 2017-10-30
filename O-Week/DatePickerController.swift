@@ -22,12 +22,20 @@ class DatePickerController: UICollectionViewController, UICollectionViewDelegate
 	
 	//must be written since we provided `init()`. Will not be used.
 	required init?(coder aDecoder: NSCoder) {super.init(coder: aDecoder)}
+	
+	/**
+		Creates a date picker that scrolls horizontally and has margins at the left and right sides.
+	*/
 	init()
 	{
 		let layout = UICollectionViewFlowLayout()
 		layout.scrollDirection = .horizontal
+		layout.sectionInset = UIEdgeInsets(top: 0, left: Layout.DATE_SIZE / 3, bottom: 0, right: Layout.DATE_SIZE / 3)
 		super.init(collectionViewLayout: layout)
 	}
+	/**
+		Sets initial view properties and listeners.
+	*/
 	override func viewDidLoad()
 	{
 		super.viewDidLoad()

@@ -24,7 +24,7 @@ struct Time:Comparable, Hashable, CustomStringConvertible
         //from 24HR format to 12HR format
         if (hour > 12)
         {
-            return String(format: "\(hour - 12):%02d PM", minute)
+            return String(format: "%02d:%02d PM", hour - 12, minute)
         }
         else if (hour == 12)
         {
@@ -36,7 +36,7 @@ struct Time:Comparable, Hashable, CustomStringConvertible
         }
         else
         {
-            return String(format: "\(hour):%02d AM", minute)
+            return String(format: "%02d:%02d AM", hour, minute)
         }
     }
 	/**

@@ -48,19 +48,19 @@ class DateCell: UICollectionViewCell
 		verticalStack.axis = .vertical
 		verticalStack.alignment = .center
 		verticalStack.distribution = .equalSpacing
-		verticalStack.spacing = 2
+		verticalStack.spacing = 2.6
 		verticalStack.autoAlignAxis(toSuperviewAxis: .horizontal)
 		verticalStack.autoAlignAxis(toSuperviewAxis: .vertical)
 		
 		weekDay.textAlignment = .center
 		weekDay.textColor = UIColor.white
-		weekDay.font = UIFont(name: Font.REGULAR, size: 12)
+		weekDay.font = UIFont(name: Font.MEDIUM, size: 12)
 		verticalStack.addArrangedSubview(weekDay)
 		
 		dayNum.autoSetDimensions(to: CGSize(width: 32, height: 32))
 		dayNum.textAlignment = .center
 		dayNum.textColor = UIColor.white
-		dayNum.font = UIFont(name: Font.REGULAR, size: 18)
+		dayNum.font = UIFont(name: Font.MEDIUM, size: 18)
 		verticalStack.addArrangedSubview(dayNum)
 		
 		verticalStack.addSubview(dayBackground)
