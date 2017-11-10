@@ -13,9 +13,9 @@ import UIKit
 */
 class SettingsVC: UITableViewController
 {
-    @IBOutlet weak var remindersSet: UISwitch!
-    @IBOutlet weak var notifyMeOption: UILabel!
-	@IBOutlet weak var notifyMeCell: UITableViewCell!
+    let remindersSet = UISwitch.newAutoLayout()
+    let notifyMeOption = UILabel.newAutoLayout()
+	let notifyMeCell = UITableViewCell.newAutoLayout()
 	
 	/**
 		Set up table view appearance, link saved values to displayed settings.

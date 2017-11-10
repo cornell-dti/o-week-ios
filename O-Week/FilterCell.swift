@@ -16,7 +16,7 @@ import UIKit
 */
 class FilterCell: UITableViewCell
 {
-    @IBOutlet weak var label: UILabel!
+    let label = UILabel.newAutoLayout()
 	private(set) var category:Category?
 	private(set) var requiredEvents = false
 	

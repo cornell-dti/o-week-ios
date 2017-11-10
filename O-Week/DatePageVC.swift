@@ -9,23 +9,41 @@
 import UIKit
 
 /**
-	Holds a reference to all `FeedVC`s, one for each day of orientation. Allows swiping between them.
+	Holds a reference to all `FeedVC`s and `ScheduleVC`s, one for each day of orientation. Allows swiping between them.
 	`pages`: All the `FeedVC`s or `ScheduleVC`s. Whatever these are, they must implement the `DateContainer` protocol in order to change `UserData.selectedDate` on page change.
 */
 class DatePageVC:UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate
 {
 	var datePicker:DatePickerController?
 	var pages = [UIViewController]()
+	var style:Style!
+	
+	
+	static func createWithNavBar(with style:Style) -> UINavigationController
+	{
+		let datePageVC = DatePageVC(with: style)
+		let navController = UINavigationController(rootViewController: datePageVC)
+		switch style
+		{
+		case .feed:
+			navController.navigationBar.topItem?.title = "Browse Events"
+		case .schedule:
+			navController.navigationBar.topItem?.title = "My Schedule"
+		}
+		navController.navigationBar.topItem?.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: nil)
+		navController.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "filter")!, style: .plain, target: self, action: nil)
+		AppDelegate.setUpExtendedNavBar(navController: navController)
+		return navController
+	}
 	
 	/**
 		Creates a `UIPageViewController` that transitions as expected (instead of transitioning through page flips).
 	*/
-	init()
+	convenience init(with style:Style)
 	{
-		super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
+		self.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
+		self.style = style
 	}
-	//must be written since we provided `init()`. Will not be used.
-	required init?(coder aDecoder: NSCoder) {super.init(coder: aDecoder)}
 	
 	/**
 		Sets up the `FeedVC`s, once for each day in orientation. Sets the first page to the one for the appropriate day.
@@ -39,7 +57,15 @@ class DatePageVC:UIPageViewController, UIPageViewControllerDataSource, UIPageVie
 			return
 		}
 		
-		UserData.DATES.forEach({pages.append(FeedVC(date: $0))})
+		if (style == .feed)
+		{
+			UserData.DATES.forEach({pages.append(FeedVC(date: $0))})
+		}
+		else if (style == .schedule)
+		{
+			UserData.DATES.forEach({pages.append(ScheduleVC(date: $0))})
+		}
+		
 		let pageToShow = pages[UserData.DATES.index(of: UserData.selectedDate)!]
 		setViewControllers([pageToShow], direction: .forward, animated: true, completion: nil)
 		dataSource = self
@@ -58,9 +84,6 @@ class DatePageVC:UIPageViewController, UIPageViewControllerDataSource, UIPageVie
 		guard datePicker == nil else {
 			return
 		}
-		
-		//get rid of shadow under nav bar
-		AppDelegate.setUpExtendedNavBar(navController: navigationController)
 		
 		datePicker = DatePickerController()
 		addChildViewController(datePicker!)
@@ -124,5 +147,23 @@ class DatePageVC:UIPageViewController, UIPageViewControllerDataSource, UIPageVie
 		let currentVC = viewControllers![0] as! DateContainer
 		UserData.selectedDate = currentVC.date
 		NotificationCenter.default.post(name: .dateChanged, object: nil)
+	}
+	
+	/**
+		Creates space at the top of the table where the `DatePickerController` will be displayed. Will be called by `FeedVC` and `ScheduleVC`.
+	*/
+	static func makeSpaceForDatePicker(in scrollable:UIScrollView)
+	{
+		let topMargin = UIEdgeInsets(top: Layout.DATE_SIZE, left: 0, bottom: 0, right: 0)
+		scrollable.contentInset = topMargin
+		scrollable.scrollIndicatorInsets = topMargin
+	}
+	
+	/**
+		Determines whether `DatePageVC` will display events as a feed or a user's personalized schedule.
+	*/
+	enum Style
+	{
+		case feed, schedule
 	}
 }

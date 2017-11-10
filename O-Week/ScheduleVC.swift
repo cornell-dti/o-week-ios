@@ -11,24 +11,20 @@ import UIKit
 /**
 	Displays `Event`s with height proportional to the event's length, laying them side by side should their times overlap.
 
-	`collectionView`: Date picker
-	`tableView`: Table of hours to the left of events. Should match to time lines.
 	`contentView`: Holds all events and time lines. Direct child of `scrollView`. `UIScrollView`s should only have one child (its content), so this acts as a container for all events.
 	`eventViews`: Holds a reference to each event view, so they can be destroyed on redraw. Each event view has its value as the corresponding event so the event can be passed to `DetailsVC` on click. Time lines are not redrawn so no reference to them is skept.
 	`HOURS`: List of hours to display. Should be the full range of start/end times for events. Hours range: [START_HOUR, END_HOUR], inclusive. Hours wrap around, from 7~23, then 0~2.
 	`START_HOUR`: The earliest hour an event can start.
 	`END_HOUR`: The latest hour an event can end. Note that this is in AM; END_HOUR must < START_HOUR.
 */
-class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource
+class ScheduleVC: UIViewController, DateContainer
 {
-    @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var scrollView: UIScrollView!
-    var contentView: UIView!
+    let scrollView = UIScrollView.newAutoLayout()
+    let contentView = UIView.newAutoLayout()
 	var eventViews = [UIView:Event]()
-    
+	
+	private(set) var date:Date!
     var selectedEvent: Event?
-    var datePickerController: DatePickerController?
     
 	static let HOURS = {
 		() -> [Time] in
@@ -47,23 +43,25 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource
 	}()//Table view data
 	static let START_HOUR = 7
 	static let END_HOUR = 2
-    let TITLE_CAPTION_MARGIN:CGFloat = 14
-    let CONTAINER_RIGHT_MARGIN:CGFloat = 20
-    let EVENT_CORNER_RADIUS:CGFloat = 5
-    let EVENT_BORDER_WIDTH: CGFloat = 1
 	
     // MARK:- Setup
 	
 	/**
-		Set up nav bar and date picker, start listening for changes in events.
+		Initialize to the given date.
+		- parameter date: Date this `ScheduleVC` will show events for.
+	*/
+	convenience init(date:Date)
+	{
+		self.init(nibName: nil, bundle: nil)
+		self.date = date
+	}
+	/**
+		Start listening for changes in events.
 	*/
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        AppDelegate.setUpExtendedNavBar(navController: navigationController)
         setNotificationListener()
-        
-        datePickerController = DatePickerController()
     }
     /**
 		Set up the scroll view and draw time lines and events.
@@ -71,23 +69,27 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     override func viewDidLayoutSubviews()
     {
         super.viewDidLayoutSubviews()
-        scrollView.layoutIfNeeded()
-        setUpContentView()
+        setUpScrollView()
+		scrollView.layoutIfNeeded()
         drawTimeLines()
-        drawAllEvents()
+        //drawAllEvents()
     }
     /**
-		Sets up `contentView`, which is the primary child view of `scrollView`.
+		Sets up `scrollView` and `contentView`, which is the primary child view of `scrollView`.
 	*/
-    private func setUpContentView()
+    private func setUpScrollView()
 	{
-        let frame = scrollView.frame
-        let newHeight = CGFloat(ScheduleVC.HOURS.count) * tableView.rowHeight
-        let newFrame = CGRect(x:0, y: 0, width: frame.width, height: newHeight)
+		view.addSubview(scrollView)
+		scrollView.autoPinEdgesToSuperviewEdges()
+		DatePageVC.makeSpaceForDatePicker(in: scrollView)
+		
+        let newHeight = CGFloat(ScheduleVC.HOURS.count) * Layout.HOUR_HEIGHT
+        let newSize = CGSize(width: view.frame.width, height: newHeight)
         
-        contentView = UIView(frame: newFrame)
+        contentView.autoSetDimensions(to: newSize)
         scrollView.addSubview(contentView)
-        scrollView.contentSize = CGSize(width: frame.width, height: newHeight)
+		contentView.autoPinEdgesToSuperviewEdges()
+        scrollView.contentSize = newSize
     }
     /**
 		Draw all the time lines, one line for each hour in `HOURS`.
@@ -96,9 +98,25 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource
 	{
         for hour in ScheduleVC.HOURS
         {
-            let line = UIView(frame: CGRect(x: 0, y: yForStartTime(hour), width: fullCellWidth(), height: 0.5))
+			let hourText = UILabel.newAutoLayout()
+			let line = UIView.newAutoLayout()
+			contentView.addSubview(hourText)
+			contentView.addSubview(line)
+			
+			hourText.textAlignment = .right
+			hourText.font = UIFont(name: Font.REGULAR, size: 12)
+			hourText.text = hour.hourDescription
+			hourText.alpha = 0.5
             line.backgroundColor = Colors.GRAY
-            contentView.addSubview(line)
+			
+			// TODO: find a way not to hard-code this
+			hourText.autoSetDimension(.width, toSize: 40)
+			hourText.autoPinEdge(toSuperviewEdge: .left, withInset: 14)
+			line.autoPinEdge(.left, to: .right, of: hourText, withOffset: 18)
+			line.autoPinEdge(toSuperviewEdge: .right, withInset: 20)
+			line.autoSetDimension(.height, toSize: 0.5)
+			line.autoPinEdge(toSuperviewEdge: .top, withInset: yForStartTime(hour))
+			hourText.autoAlignAxis(.horizontal, toSameAxisOf: line)
         }
     }
     /**
@@ -161,9 +179,9 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         
         let container = UIView(frame: CGRect(x: cellX(slot: slot, numSlots: newNumSlots), y: yForStartTime(event.startTime), width: cellWidth(event: event, slot: slot, numSlots: newNumSlots, eventForSlot: newEventForSlot), height: cellHeight(event: event)))
         container.backgroundColor = Colors.RED
-        container.layer.cornerRadius = EVENT_CORNER_RADIUS
+        container.layer.cornerRadius = 3
         container.layer.borderColor = UIColor.white.cgColor
-        container.layer.borderWidth = EVENT_BORDER_WIDTH
+        container.layer.borderWidth = 2
         contentView.addSubview(container)
         eventViews[container] = event
         drawTitleAndCaptionFor(container, event:event)
@@ -190,36 +208,28 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     func drawTitleAndCaptionFor(_ container:UIView, event:Event)
 	{
         //First subview of "container" must be UILabel corresponding to Title for eventClicked func to work
-        let title = UILabel()
+        let title = UILabel.newAutoLayout()
         title.numberOfLines = 0
         title.lineBreakMode = .byTruncatingTail
-        title.font = UIFont(name: "AvenirNext-DemiBold", size: 14)
+        title.font = UIFont(name: Font.BOLD, size: 14)
         title.textColor = UIColor.white
         title.text = event.title
-        title.translatesAutoresizingMaskIntoConstraints = false
-        //title.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
-        //title.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)*/
-        
         container.addSubview(title)
+		title.autoPinEdge(toSuperviewEdge: .left, withInset: 12)
+		title.autoPinEdge(toSuperviewEdge: .top, withInset: 12)
+		title.autoPinEdge(toSuperviewEdge: .right, withInset: 12, relation: .greaterThanOrEqual)
         
-        let caption = UILabel()
+        let caption = UILabel.newAutoLayout()
         caption.numberOfLines = 0
         caption.lineBreakMode = .byTruncatingTail
-        caption.font = UIFont(name: "AvenirNext-Regular", size: 10)
+        caption.font = UIFont(name: Font.REGULAR, size: 12)
         caption.textColor = UIColor.white
         caption.text = event.caption
-        caption.translatesAutoresizingMaskIntoConstraints = false
-        //caption.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
-        //caption.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, for: .vertical)
         container.addSubview(caption)
-        
-        let titleHoriz = NSLayoutConstraint.constraints(withVisualFormat: "H:|-(margin)-[title]-(margin)-|", options: [], metrics: ["margin":TITLE_CAPTION_MARGIN], views: ["title":title])
-        let captionHoriz = NSLayoutConstraint.constraints(withVisualFormat: "H:|-(margin)-[caption]-(margin)-|", options: [], metrics: ["margin":TITLE_CAPTION_MARGIN], views: ["caption":caption])
-        let vert = NSLayoutConstraint.constraints(withVisualFormat: "V:|-(14@750)-[title]-0-[caption]-(>=14)-|", options: [], metrics: nil, views: ["title":title, "caption":caption])
-        
-        container.addConstraints(titleHoriz)
-        container.addConstraints(captionHoriz)
-        container.addConstraints(vert)
+		caption.autoPinEdge(.top, to: .bottom, of: title)
+		caption.autoPinEdge(toSuperviewEdge: .left, withInset: 12)
+		caption.autoPinEdge(toSuperviewEdge: .right, withInset: 12, relation: .greaterThanOrEqual)
+		
     }
 	/**
 		Distance from the top for a given view based on its start time. The view should either be an event view or a time line.
@@ -229,7 +239,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource
 	private func yForStartTime(_ startTime:Time) -> CGFloat
 	{
 		let timeFrom7 = minutesBetween(Time(hour: ScheduleVC.START_HOUR), and: startTime)
-		return CGFloat(timeFrom7) * tableView.rowHeight / 60 + (tableView.rowHeight / 2)
+		return CGFloat(timeFrom7) * Layout.HOUR_HEIGHT / 60 + (Layout.HOUR_HEIGHT / 2)
 	}
 	/**
 		Distance from the left for a given event view based on its slot and the total number of slots.
@@ -333,7 +343,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource
 	*/
 	private func fullCellWidth() -> CGFloat
 	{
-		return scrollView.frame.width - CONTAINER_RIGHT_MARGIN
+		return scrollView.frame.width - Layout.MARGIN
 	}
 	/**
 		Returns how tall an event should be based on its length.
@@ -342,8 +352,8 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource
 	*/
 	private func cellHeight(event:Event) -> CGFloat
 	{
-		//60 min = 1 rowHeight
-		return CGFloat(minutesBetween(event.startTime, and: event.endTime)) / 60 * tableView.rowHeight
+		//60 min = 1 HOUR_HEIGHT
+		return CGFloat(minutesBetween(event.startTime, and: event.endTime)) / 60 * Layout.HOUR_HEIGHT
 	}
 	/**
 		Returns the number of minutes between 2 given times. Note that this accounts for events that cross over midnight. An event that begins at 11PM and ends at 2AM lasts 3 hours, not -21.
@@ -384,26 +394,6 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource
 		}
 		selectedEvent = event
 		performSegue(withIdentifier: "showDetailsVC", sender: self)
-    }
-    
-    // MARK:- Table View
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
-	{
-        return ScheduleVC.HOURS.count
-    }
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
-	{
-        let cell = tableView.dequeueReusableCell(withIdentifier: "scheduleCell", for: indexPath) as! ScheduleCell
-        cell.configure(title: ScheduleVC.HOURS[indexPath.row].hourDescription)
-        return cell
-    }
-    
-    //synchronize scrolling between table & scroll view
-    func scrollViewDidScroll(_ scrollView: UIScrollView)
-	{
-        let viewToSyncScrolling = (scrollView == self.scrollView) ? tableView : self.scrollView
-        viewToSyncScrolling?.contentOffset = scrollView.contentOffset
     }
     
     // MARK:- Navigation

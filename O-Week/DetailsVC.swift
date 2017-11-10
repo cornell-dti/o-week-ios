@@ -16,17 +16,17 @@ import MapKit
 */
 class DetailsVC: UIViewController, MKMapViewDelegate
 {
-    @IBOutlet weak var eventTitle: UILabel!
-    @IBOutlet weak var eventCaption: UILabel!
-    @IBOutlet weak var eventDescription: UILabel!
-    @IBOutlet weak var timeLabel: UILabel!
-	@IBOutlet weak var requiredDescription: UILabel!
-	@IBOutlet weak var requiredText: UITextField!
-	@IBOutlet weak var requiredSection: UIStackView!
-    @IBOutlet weak var eventImage: UIImageView!
-    @IBOutlet weak var add_button: UIButton!
-	@IBOutlet weak var additional: UILabel!
-	@IBOutlet weak var map: MKMapView!
+    let eventTitle = UILabel.newAutoLayout()
+    let eventCaption = UILabel.newAutoLayout()
+    let eventDescription = UILabel.newAutoLayout()
+    let timeLabel = UILabel.newAutoLayout()
+	let requiredDescription = UILabel.newAutoLayout()
+	let requiredText = UITextField.newAutoLayout()
+	let requiredSection = UIStackView.newAutoLayout()
+    let eventImage = UIImageView.newAutoLayout()
+	let addButton = UIButton.newAutoLayout()
+	let additional = UILabel.newAutoLayout()
+	let map = MKMapView.newAutoLayout()
 	
 	let MAP_ZOOM = 0.001
     var event: Event?
@@ -159,10 +159,10 @@ class DetailsVC: UIViewController, MKMapViewDelegate
     private func setButtonImage(_ added:Bool)
 	{
         UIView.animate(withDuration: 0.5) {
-            self.add_button.alpha = 0
+            self.addButton.alpha = 0
             let image = added ? Images.whiteImageAdded : Images.whiteImageNotAdded
-            self.add_button.setImage(image, for: .normal)
-            self.add_button.alpha = 1
+            self.addButton.setImage(image, for: .normal)
+            self.addButton.alpha = 1
         }
     }
 }

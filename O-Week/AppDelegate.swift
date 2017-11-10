@@ -59,13 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
 	*/
 	private func startFirstVC()
 	{
-		let datePageVC = DatePageVC()
-		let navController = UINavigationController(rootViewController: datePageVC)
-		navController.navigationBar.topItem?.title = "Browse Events"
-		navController.navigationBar.topItem?.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: nil)
-		navController.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "filter")!, style: .plain, target: self, action: nil)
-		AppDelegate.setUpExtendedNavBar(navController: navController)
-		window!.rootViewController = navController
+		window!.rootViewController = TabBarVC()
 		window!.makeKeyAndVisible()
 	}
 	

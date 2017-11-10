@@ -39,6 +39,7 @@ enum Layout
 	static let MARGIN:CGFloat = 20
 	static let TEXT_VERTICAL_SPACING:CGFloat = 2
 	static let DATE_SIZE:CGFloat = 64
+	static let HOUR_HEIGHT:CGFloat = 50		//distance between each hour in `ScheduleVC`
 }
 
 /**

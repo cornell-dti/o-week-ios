@@ -12,6 +12,7 @@
 		067EC2E71E8C9F8D0098ED94 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067EC2E61E8C9F8D0098ED94 /* Event.swift */; };
 		067EC2E91E8C9FE20098ED94 /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067EC2E81E8C9FE20098ED94 /* Time.swift */; };
 		06B787D11FA65AEA00534D6E /* DateContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B787D01FA65AEA00534D6E /* DateContainer.swift */; };
+		06B787D31FA6CEE300534D6E /* TabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B787D21FA6CEE300534D6E /* TabBarVC.swift */; };
 		06DA69B61F9FEE1800873F39 /* DatePageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06DA69B51F9FEE1800873F39 /* DatePageVC.swift */; };
 		06E309741EFDE8AA00F37D7F /* JSONObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E309731EFDE8AA00F37D7F /* JSONObject.swift */; };
 		06E738F51EFCA06E00DFF73E /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E738F41EFCA06E00DFF73E /* Category.swift */; };
@@ -24,7 +25,6 @@
 		DC18B31B1E76CBCE00C3FCD6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC18B3191E76CBCE00C3FCD6 /* LaunchScreen.storyboard */; };
 		DC18B3261E76CBCE00C3FCD6 /* O_WeekTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC18B3251E76CBCE00C3FCD6 /* O_WeekTests.swift */; };
 		DC18B3311E76CBCE00C3FCD6 /* O_WeekUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC18B3301E76CBCE00C3FCD6 /* O_WeekUITests.swift */; };
-		DC1E83191E85E635000CD56B /* ScheduleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E83181E85E635000CD56B /* ScheduleCell.swift */; };
 		DC23E00F1EBD63980060F24F /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23E00E1EBD63980060F24F /* DateCell.swift */; };
 		DC23E0111EBD6E780060F24F /* DatePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23E0101EBD6E780060F24F /* DatePickerController.swift */; };
 		DC2C02991E7DC25F00E9DDEF /* ScheduleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2C02981E7DC25F00E9DDEF /* ScheduleVC.swift */; };
@@ -64,6 +64,7 @@
 		067EC2E61E8C9F8D0098ED94 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Event.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		067EC2E81E8C9FE20098ED94 /* Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
 		06B787D01FA65AEA00534D6E /* DateContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateContainer.swift; sourceTree = "<group>"; };
+		06B787D21FA6CEE300534D6E /* TabBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarVC.swift; sourceTree = "<group>"; };
 		06DA69B51F9FEE1800873F39 /* DatePageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePageVC.swift; sourceTree = "<group>"; };
 		06E309731EFDE8AA00F37D7F /* JSONObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = JSONObject.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		06E738F41EFCA06E00DFF73E /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Category.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -88,7 +89,6 @@
 		DC18B32C1E76CBCE00C3FCD6 /* O-WeekUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "O-WeekUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC18B3301E76CBCE00C3FCD6 /* O_WeekUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O_WeekUITests.swift; sourceTree = "<group>"; };
 		DC18B3321E76CBCE00C3FCD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DC1E83181E85E635000CD56B /* ScheduleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleCell.swift; sourceTree = "<group>"; };
 		DC23E00E1EBD63980060F24F /* DateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DateCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		DC23E0101EBD6E780060F24F /* DatePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DatePickerController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		DC2C02981E7DC25F00E9DDEF /* ScheduleVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleVC.swift; sourceTree = "<group>"; };
@@ -213,13 +213,13 @@
 				DC18B31C1E76CBCE00C3FCD6 /* Info.plist */,
 				DCDEBFF61EB414BB0014E028 /* UserData.swift */,
 				DC18B3101E76CBCE00C3FCD6 /* AppDelegate.swift */,
+				06B787D21FA6CEE300534D6E /* TabBarVC.swift */,
 				06DA69B51F9FEE1800873F39 /* DatePageVC.swift */,
 				DC23E0101EBD6E780060F24F /* DatePickerController.swift */,
 				DC23E00E1EBD63980060F24F /* DateCell.swift */,
 				0628E4861E7CA3260066A308 /* FeedVC.swift */,
 				DC3274611E7CB4F100CB3E22 /* FeedCell.swift */,
 				DC2C02981E7DC25F00E9DDEF /* ScheduleVC.swift */,
-				DC1E83181E85E635000CD56B /* ScheduleCell.swift */,
 				DCD4464B1E76F941002D8F68 /* DetailsVC.swift */,
 				DCB182371EB7936E0041EEBC /* SettingsVC.swift */,
 				DCF15FFA1EEF0E9200793D04 /* FilterVC.swift */,
@@ -578,8 +578,8 @@
 				DC2C02991E7DC25F00E9DDEF /* ScheduleVC.swift in Sources */,
 				DC9BD7711EB6496C00552906 /* O-Week.xcdatamodeld in Sources */,
 				DCC2FF8B1EB24EEA00624B4F /* Internet.swift in Sources */,
+				06B787D31FA6CEE300534D6E /* TabBarVC.swift in Sources */,
 				06E738F51EFCA06E00DFF73E /* Category.swift in Sources */,
-				DC1E83191E85E635000CD56B /* ScheduleCell.swift in Sources */,
 				06DA69B61F9FEE1800873F39 /* DatePageVC.swift in Sources */,
 				06E738F71EFCA34C00DFF73E /* CoreDataObject.swift in Sources */,
 				DCDEBFF71EB414BB0014E028 /* UserData.swift in Sources */,

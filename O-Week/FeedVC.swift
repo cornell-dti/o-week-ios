@@ -39,20 +39,11 @@ class FeedVC:UITableViewController, DateContainer
         super.viewDidLoad()
 		
 		tableView.register(FeedCell.self, forCellReuseIdentifier: FEED_CELL_ID)
-		makeSpaceForDatePicker()
+		DatePageVC.makeSpaceForDatePicker(in: tableView)
         setNotificationListener()
 		filter()
 		scrollToNextEvent()
     }
-	/**
-		Creates space at the top of the table where the `DatePickerController` will be displayed.
-	*/
-	private func makeSpaceForDatePicker()
-	{
-		let topMargin = UIEdgeInsets(top: Layout.DATE_SIZE, left: 0, bottom: 0, right: 0)
-		tableView.contentInset = topMargin
-		tableView.scrollIndicatorInsets = topMargin
-	}
 	
     // MARK:- Table View Methods
 	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
