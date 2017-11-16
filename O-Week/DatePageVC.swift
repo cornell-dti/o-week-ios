@@ -17,7 +17,7 @@ class DatePageVC:UIPageViewController, UIPageViewControllerDataSource, UIPageVie
 	var datePicker:DatePickerController?
 	var pages = [UIViewController]()
 	var style:Style!
-	
+	var detailsVC:DetailsVC!
 	
 	static func createWithNavBar(with style:Style) -> UINavigationController
 	{
@@ -57,17 +57,19 @@ class DatePageVC:UIPageViewController, UIPageViewControllerDataSource, UIPageVie
 			return
 		}
 		
+		detailsVC = DetailsVC(nibName: nil, bundle: nil)
 		if (style == .feed)
 		{
-			UserData.DATES.forEach({pages.append(FeedVC(date: $0))})
+			UserData.DATES.forEach({pages.append(FeedVC(date: $0, detailsVC: detailsVC))})
 		}
 		else if (style == .schedule)
 		{
-			UserData.DATES.forEach({pages.append(ScheduleVC(date: $0))})
+			UserData.DATES.forEach({pages.append(ScheduleVC(date: $0, detailsVC: detailsVC))})
 		}
 		
 		let pageToShow = pages[UserData.DATES.index(of: UserData.selectedDate)!]
 		setViewControllers([pageToShow], direction: .forward, animated: true, completion: nil)
+		
 		dataSource = self
 		delegate = self
 		view.backgroundColor = UIColor.white
@@ -157,6 +159,8 @@ class DatePageVC:UIPageViewController, UIPageViewControllerDataSource, UIPageVie
 		let topMargin = UIEdgeInsets(top: Layout.DATE_SIZE, left: 0, bottom: 0, right: 0)
 		scrollable.contentInset = topMargin
 		scrollable.scrollIndicatorInsets = topMargin
+		//scroll to top
+		scrollable.setContentOffset(CGPoint(x: 0, y: -Layout.DATE_SIZE), animated: false)
 	}
 	
 	/**

@@ -24,6 +24,7 @@ class ScheduleVC: UIViewController, DateContainer
 	var eventViews = [UIView:Event]()
 	
 	private(set) var date:Date!
+	var detailsVC:DetailsVC!
     var selectedEvent: Event?
     
 	static let HOURS = {
@@ -48,12 +49,15 @@ class ScheduleVC: UIViewController, DateContainer
 	
 	/**
 		Initialize to the given date.
-		- parameter date: Date this `ScheduleVC` will show events for.
+		- parameters:
+			- date: Date this `ScheduleVC` will show events for.
+			- detailsVC: Reference to DetailsVC to segue to.
 	*/
-	convenience init(date:Date)
+	convenience init(date:Date, detailsVC:DetailsVC)
 	{
 		self.init(nibName: nil, bundle: nil)
 		self.date = date
+		
 	}
 	/**
 		Start listening for changes in events.
@@ -72,7 +76,7 @@ class ScheduleVC: UIViewController, DateContainer
         setUpScrollView()
 		scrollView.layoutIfNeeded()
         drawTimeLines()
-        //drawAllEvents()
+        drawAllEvents()
     }
     /**
 		Sets up `scrollView` and `contentView`, which is the primary child view of `scrollView`.

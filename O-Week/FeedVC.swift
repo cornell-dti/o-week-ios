@@ -15,6 +15,7 @@ import UIKit
 class FeedVC:UITableViewController, DateContainer
 {
 	private(set) var date:Date!
+	var detailsVC:DetailsVC!
 	var events = [Event]()
     var selectedEvent: Event? = nil
 	let FEED_CELL_ID = "feedCell"
@@ -23,12 +24,15 @@ class FeedVC:UITableViewController, DateContainer
 	
 	/**
 		Initialize FeedVC to the given date.
-		- parameter date: Date this FeedVC will show events for.
+		- parameters:
+			- date: Date this FeedVC will show events for.
+			- detailsVC: Reference to DetailsVC to segue to.
 	*/
-	convenience init(date:Date)
+	convenience init(date:Date, detailsVC:DetailsVC)
 	{
 		self.init(nibName: nil, bundle: nil)
 		self.date = date
+		self.detailsVC = detailsVC
 	}
 	
 	/**
@@ -71,25 +75,8 @@ class FeedVC:UITableViewController, DateContainer
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
 	{
         selectedEvent = events[indexPath.row]
-        performSegue(withIdentifier: "showEventDetails", sender: self)
-    }
-    
-    // MARK:- Navigation
-	
-	/**
-		Called automatically before segues. Sets `DetailsVC.selectedEvent` to the event that the user has selected.
-		- parameters:
-			- segue: Contains data about segue.
-			- sender: Ignored.
-	*/
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
-	{
-        if (segue.identifier == "showEventDetails")
-		{
-            if let destination = segue.destination as? DetailsVC {
-                destination.event = selectedEvent
-            }
-        }
+		detailsVC.configure(event: selectedEvent!)
+		navigationController?.pushViewController(detailsVC, animated: true)
     }
     
     // MARK:- Handle Updates

@@ -252,6 +252,17 @@ struct Event:Hashable, Comparable, CoreDataObject, JSONObject
 		
 		return string
 	}
+	
+	/**
+		Returns the date as "DayOfWeek, Month DayOfMonth".
+		For example, "Saturday, Aug 18".
+	*/
+	func readableDate() -> String
+	{
+		let dateFormatter = DateFormatter()
+		dateFormatter.dateFormat = "EEEE, MMM d"
+		return dateFormatter.string(from: date)
+	}
 }
 /**
 	Returns whether lhs == rhs. True if `pk`s are identical.

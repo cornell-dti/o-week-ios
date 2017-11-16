@@ -13,9 +13,12 @@ import MapKit
 	Displays a user-selected event.
 	`event`: The event displayed to the user.
 	`changed`: Indicates if the user selected/deselected the event. When this view is exiting, if this is true, then we must notify listeners for event reloads.
+	`configure(event)`: Method to configure this VC to display the given event. Must be called before presenting to the user.
 */
 class DetailsVC: UIViewController, MKMapViewDelegate
 {
+	let scrollView = UIScrollView.newAutoLayout()
+	let scrollContent = UIView.newAutoLayout()
     let eventTitle = UILabel.newAutoLayout()
     let eventCaption = UILabel.newAutoLayout()
     let eventDescription = UILabel.newAutoLayout()
@@ -38,12 +41,6 @@ class DetailsVC: UIViewController, MKMapViewDelegate
     override func viewDidLoad()
 	{
         super.viewDidLoad()
-		guard event != nil else {
-			print("DetailsVC loaded without an event provided")
-			return
-		}
-		
-        configure(event: event!)
     }
     /**
 		Notify listeners if the event's selection has been changed by the user.
@@ -56,12 +53,37 @@ class DetailsVC: UIViewController, MKMapViewDelegate
             NotificationCenter.default.post(name: .reloadData, object: nil)
         }
     }
+	/**
+		Sets contraints for all subviews.
+	*/
+	override func viewDidLayoutSubviews()
+	{
+		super.viewDidLayoutSubviews()
+		
+		view.addSubview(scrollView)
+		scrollView.autoPinEdgesToSuperviewEdges()
+		scrollView.addSubview(scrollContent)
+		scrollContent.autoPinEdgesToSuperviewEdges()
+		
+		scrollContent.addSubview(eventImage)
+		eventImage.autoPinEdge(toSuperviewEdge: .top)
+		eventImage.autoPinEdge(toSuperviewEdge: .left)
+		eventImage.autoPinEdge(toSuperviewEdge: .right)
+		eventImage.autoMatch(.width, to: .width, of: view)
+		eventImage.autoMatch(.height, to: .width, of: eventImage, withMultiplier: 3/4)
+		
+		//TODO set content size of scrollView?
+	}
     /**
-		Shows the event's data on screen. Attempts to retrieve an image from the database or from saved files.
+		Shows the event's data on screen. Attempts to retrieve an image from the database or from saved files. This method must be called before this VC is shown to the user.
 		- parameter event: Same as the global variable, but not nil.
 	*/
-    private func configure(event:Event)
+    func configure(event:Event)
     {
+		self.event = event
+		
+		title = event.readableDate()
+		
         eventTitle.text = event.title
         eventCaption.text = event.caption
         eventDescription.text = event.description
