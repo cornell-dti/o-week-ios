@@ -310,15 +310,10 @@ class DetailsVC: UIViewController, MKMapViewDelegate
 		configureMap(event:event)
 		configureRequired(event: event)
 		configureDescription(event: event)
-		
-		//additional text
-		if (!event.additional.isEmpty)
-			{additional.attributedText = event.attributedAdditional()}
-		else
-			{additional.isHidden = true}
     }
 	/**
 		Truncates `eventDescription` and shows `moreButton` and `moreButtonGradient` depending on how long the event's description is.
+		Show additional info if there is any available.
 		- parameter event: Same as the global variable, but not nil.
 	*/
 	private func configureDescription(event:Event)
@@ -338,6 +333,16 @@ class DetailsVC: UIViewController, MKMapViewDelegate
 			moreButton.isHidden = true
 			moreButtonGradient.isHidden = true
 			eventDescription.numberOfLines = 0
+		}
+		
+		if (!event.additional.isEmpty)
+		{
+			additional.attributedText = event.attributedAdditional()
+			additional.isHidden = false
+		}
+		else
+		{
+			additional.isHidden = true
 		}
 	}
 	/**

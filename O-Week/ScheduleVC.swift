@@ -43,6 +43,9 @@ class ScheduleVC: UIViewController, DateContainer
 	}()//Table view data
 	static let START_HOUR = 7
 	static let END_HOUR = 2
+	//a time line's distance from the left. Change (somehow) once hour has dynamic width.
+	//14 (hour's left margin) + 40 (hour's width) + 18 (hour's right margin) = 72
+	let LEFT_MARGIN:CGFloat = 72
 	
     // MARK:- Setup
 	
@@ -254,7 +257,7 @@ class ScheduleVC: UIViewController, DateContainer
 	*/
 	private func cellX(slot:Int, numSlots:Int) -> CGFloat
 	{
-		return fullCellWidth() / CGFloat(numSlots) * CGFloat(slot)
+		return LEFT_MARGIN + fullCellWidth() / CGFloat(numSlots) * CGFloat(slot)
 	}
 	/**
 		Returns the best slot for a given event based on the events that were already placed.
@@ -345,7 +348,7 @@ class ScheduleVC: UIViewController, DateContainer
 	*/
 	private func fullCellWidth() -> CGFloat
 	{
-		return scrollView.frame.width - Layout.MARGIN
+		return scrollView.frame.width - Layout.MARGIN - LEFT_MARGIN
 	}
 	/**
 		Returns how tall an event should be based on its length.
@@ -402,9 +405,8 @@ class ScheduleVC: UIViewController, DateContainer
     // MARK:- Handle Updates
 	/**
 		Begin listening for events that will change what needs to be displayed. Specifically:
-		1. Whether an event is selected (can be changed by `DetailsVC`)
-		2. Which day we're showing (can be changed by `DatePickerController`)
-		3. Content of events we're showing (can be changed by updates from `Internet`)
+		1. Whether an event is selected (can be changed by `DetailsVC`))
+		2. Content of events we're showing (can be changed by updates from `Internet`)
 	*/
     func setNotificationListener()
 	{

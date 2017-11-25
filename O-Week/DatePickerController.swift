@@ -41,7 +41,7 @@ class DatePickerController: UICollectionViewController, UICollectionViewDelegate
 		super.viewDidLoad()
 		collectionView?.delegate = self
 		collectionView?.register(DateCell.self, forCellWithReuseIdentifier: DATE_CELL_ID)
-		collectionView?.backgroundColor = Colors.RED
+		collectionView?.backgroundColor = Colors.BRIGHT_RED
 		NotificationCenter.default.addObserver(self, selector: #selector(syncSelectedDate), name: .dateChanged, object: nil)
 	}
 	/**

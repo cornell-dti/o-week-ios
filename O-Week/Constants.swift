@@ -13,6 +13,7 @@ import UIKit
 enum Colors
 {
 	static let RED = UIColor(red: 208/255, green: 2/255, blue: 27/255, alpha: 1)
+	static let BRIGHT_RED = UIColor(red: 215/255, green: 35/255, blue: 53/255, alpha: 1)
 	static let GRAY = UIColor(red: 229/255, green: 229/255, blue:229/255, alpha: 1)
 	static let LIGHT_GRAY = UIColor(red: 74/255, green: 74/255, blue: 74/255, alpha: 1)
 	static let PINK = UIColor(red: 255/255, green: 204/255, blue: 204/255, alpha: 1)
