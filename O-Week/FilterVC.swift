@@ -93,20 +93,6 @@ class FilterVC: UITableViewController
 		
         return cell
     }
-    
-    /**
-		Sets appearance of section titles.
-		- parameters:
-			- tableView: Reference to table.
-			- view: Header.
-			- section: Section number. Starts from 0.
-	*/
-    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int)
-    {
-        let header = view as! UITableViewHeaderFooterView
-        header.contentView.backgroundColor = UIColor.white
-        header.textLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 14)
-    }
     /**
 		Set the correct global variables when a filter is selected, and notify listeners. Deselects the previously selected cell (if that exists).
 		- parameters:

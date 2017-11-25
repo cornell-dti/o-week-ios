@@ -32,10 +32,10 @@ class DatePageVC:UIPageViewController, UIPageViewControllerDataSource, UIPageVie
 		{
 		case .feed:
 			navController.navigationBar.topItem?.title = "Browse Events"
+			navController.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "filter")!, style: .plain, target: self, action: nil)
 		case .schedule:
 			navController.navigationBar.topItem?.title = "My Schedule"
 		}
-		navController.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "filter")!, style: .plain, target: self, action: nil)
 		AppDelegate.setUpExtendedNavBar(navController: navController)
 		return navController
 	}
