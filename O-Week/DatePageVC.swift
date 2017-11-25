@@ -19,6 +19,11 @@ class DatePageVC:UIPageViewController, UIPageViewControllerDataSource, UIPageVie
 	var style:Style!
 	var detailsVC:DetailsVC!
 	
+	/**
+		Creates a `DatePageVC` with a navigation bar that holds either `FeedVC`s or `ScheduleVC`s based on the style given.
+		- parameter style: ViewController type.
+		- returns: NavigationController container `DatePageVC`.
+	*/
 	static func createWithNavBar(with style:Style) -> UINavigationController
 	{
 		let datePageVC = DatePageVC(with: style)
@@ -30,7 +35,6 @@ class DatePageVC:UIPageViewController, UIPageViewControllerDataSource, UIPageVie
 		case .schedule:
 			navController.navigationBar.topItem?.title = "My Schedule"
 		}
-		navController.navigationBar.topItem?.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: nil)
 		navController.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "filter")!, style: .plain, target: self, action: nil)
 		AppDelegate.setUpExtendedNavBar(navController: navController)
 		return navController

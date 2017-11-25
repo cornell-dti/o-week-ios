@@ -16,9 +16,13 @@ class TabBarVC:UITabBarController
 	override func viewDidLoad()
 	{
 		let schedulePageVC = DatePageVC.createWithNavBar(with: .schedule)
-		schedulePageVC.tabBarItem = UITabBarItem(title: "Calendar", image: nil, tag: 0)
+		schedulePageVC.tabBarItem = UITabBarItem(title: "Calendar", image: UIImage(named: "tab_calendar"), tag: 0)
 		let feedPageVC = DatePageVC.createWithNavBar(with: .feed)
-		feedPageVC.tabBarItem = UITabBarItem(title: "Browse", image: nil, tag: 1)
-		viewControllers = [schedulePageVC, feedPageVC]
+		feedPageVC.tabBarItem = UITabBarItem(title: "Browse", image: UIImage(named: "tab_browse"), tag: 1)
+		let searchVC = SearchVC.createWithNavBar()
+		searchVC.tabBarItem = UITabBarItem(title: "Search", image: UIImage(named: "tab_search"), tag: 2)
+		
+		viewControllers = [schedulePageVC, feedPageVC, searchVC]
+		tabBar.tintColor = Colors.RED
 	}
 }

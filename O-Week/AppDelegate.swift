@@ -40,7 +40,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         navController?.navigationBar.shadowImage = UIImage(named: "transparent_pixel")
         navController?.navigationBar.setBackgroundImage(UIImage(named: "pixel"), for: .default)
     }
-	
 	/**
 		Changes the navigation bar's style to our theme color, and changes the text so that it's AvenirNext.
 	*/

@@ -118,7 +118,7 @@ class ScheduleVC: UIViewController, DateContainer
 			return
 		}
 		
-		scrollView.contentOffset = CGPoint(x: 0, y: yForStartTime(now))
+		scrollView.contentOffset = CGPoint(x: 0, y: yForStartTime(now) - Layout.DATE_SIZE)
 	}
     /**
 		Draw all the time lines, one line for each hour in `HOURS`.
