@@ -189,7 +189,7 @@ class DetailsVC: UIViewController, MKMapViewDelegate
 		requiredLabel.autoPinEdge(toSuperviewEdge: .left)
 		requiredLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
 		requiredLabel.autoSetDimensions(to: CGSize(width: 32, height: 32))
-		requiredLabel.backgroundColor = Colors.RED
+		requiredLabel.isUserInteractionEnabled = false
 		requiredLabel.textAlignment = .center
 		requiredLabel.textColor = UIColor.white
 		requiredLabel.text = "RQ"
@@ -360,6 +360,9 @@ class DetailsVC: UIViewController, MKMapViewDelegate
 		{
 			requiredContainer.isHidden = false
 			requiredDivider.isHidden = false
+			
+			//change color of RQ label based on whether or not it's required for this user
+			requiredLabel.backgroundColor = UserData.requiredForUser(event: event) ? Colors.RED : Colors.GRAY
 			
 			if (event.required)
 			{

@@ -171,6 +171,17 @@ class UserData
 		categories = categories.sorted()
 	}
 	
+	/**
+		Returns true if the event is required for the user based on the user's identity.
+		- parameter event: The event to check.
+		- returns: True if the event is required for this user in particular, false otherwise.
+	*/
+	//TODO: Change to integrate sign-in page & saved data
+	static func requiredForUser(event: Event) -> Bool
+	{
+		return event.required || event.categoryRequired
+	}
+	
     // MARK:- Search Functions
 
 	/**

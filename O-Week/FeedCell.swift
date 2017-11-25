@@ -118,7 +118,6 @@ class FeedCell:UITableViewCell
 		eventCaption.text = event.caption
 		eventStartTime.text = event.startTime.description
 		eventEndTime.text = event.endTime.description
-		//TODO change algorithm to check whether this event is required for the user in particular
-		requiredText.isHidden = !(event.required || event.categoryRequired)
+		requiredText.isHidden = !UserData.requiredForUser(event: event)
     }
 }

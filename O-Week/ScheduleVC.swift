@@ -16,6 +16,7 @@ import UIKit
 	`HOURS`: List of hours to display. Should be the full range of start/end times for events. Hours range: [START_HOUR, END_HOUR], inclusive. Hours wrap around, from 7~23, then 0~2.
 	`START_HOUR`: The earliest hour an event can start.
 	`END_HOUR`: The latest hour an event can end. Note that this is in AM; END_HOUR must < START_HOUR.
+	`didLayout`: True if layout of subviews was completed. Used to ensure layout initialization is only done once.
 */
 class ScheduleVC: UIViewController, DateContainer
 {
@@ -47,6 +48,8 @@ class ScheduleVC: UIViewController, DateContainer
 	//14 (hour's left margin) + 40 (hour's width) + 18 (hour's right margin) = 72
 	let LEFT_MARGIN:CGFloat = 72
 	
+	var didLayout = false
+	
     // MARK:- Setup
 	
 	/**
@@ -75,10 +78,18 @@ class ScheduleVC: UIViewController, DateContainer
     override func viewDidLayoutSubviews()
     {
         super.viewDidLayoutSubviews()
+		
+		guard !didLayout else {
+			scrollToNow()
+			return
+		}
+		didLayout = true
+		
         setUpScrollView()
 		scrollView.layoutIfNeeded()
         drawTimeLines()
         drawAllEvents()
+		scrollToNow()
     }
     /**
 		Sets up `scrollView` and `contentView`, which is the primary child view of `scrollView`.
@@ -97,6 +108,18 @@ class ScheduleVC: UIViewController, DateContainer
 		contentView.autoPinEdgesToSuperviewEdges()
         scrollView.contentSize = newSize
     }
+	/**
+		Positions the scroll view to show the current hour. Does nothing if the current hour is out of range.
+	*/
+	private func scrollToNow()
+	{
+		let now = Time()
+		guard minutesBetween(ScheduleVC.HOURS.first!, and: now) >= 0 && minutesBetween(now, and: ScheduleVC.HOURS.last!) >= 0 else {
+			return
+		}
+		
+		scrollView.contentOffset = CGPoint(x: 0, y: yForStartTime(now))
+	}
     /**
 		Draw all the time lines, one line for each hour in `HOURS`.
 	*/
@@ -184,13 +207,19 @@ class ScheduleVC: UIViewController, DateContainer
         }
         
         let container = UIView(frame: CGRect(x: cellX(slot: slot, numSlots: newNumSlots), y: yForStartTime(event.startTime), width: cellWidth(event: event, slot: slot, numSlots: newNumSlots, eventForSlot: newEventForSlot), height: cellHeight(event: event)))
-        container.backgroundColor = Colors.RED
+		
+		//events that aren't occurring right now will be faded out
+		let now = Time()
+		let eventIsOngoing = minutesBetween(event.startTime, and: now) >= 0 && minutesBetween(now, and: event.endTime) >= 0
+		container.alpha = eventIsOngoing ? 1 : 0.6
+		
+		container.backgroundColor = Colors.BRIGHT_RED
         container.layer.cornerRadius = 3
-        container.layer.borderColor = UIColor.white.cgColor
+        container.layer.borderColor = Colors.BRIGHT_RED.withAlphaComponent(0.6).cgColor
         container.layer.borderWidth = 2
         contentView.addSubview(container)
         eventViews[container] = event
-        drawTitleAndCaptionFor(container, event:event)
+        drawEvent(event, container: container)
         //add gesture recognizer to container to segue to Details VC
         container.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.eventClicked(_:))))
         container.isUserInteractionEnabled = true
@@ -205,24 +234,61 @@ class ScheduleVC: UIViewController, DateContainer
         return (numSlots:newNumSlots, eventForSlot:parentEventForSlot)
     }
     /**
-		Draws event title and caption, setting up margins within the given container.
+		Draws event title, caption, time, and RQ, setting up margins within the given container.
 		- parameters:
 			- container: View that the event is displayed as.
 			- event: Event whose info is displayed.
 	*/
-    func drawTitleAndCaptionFor(_ container:UIView, event:Event)
+    func drawEvent(_ event:Event, container:UIView)
 	{
-        //First subview of "container" must be UILabel corresponding to Title for eventClicked func to work
+		let MARGIN:CGFloat = 12
+		
+		let paddedContainer = UIView.newAutoLayout()
+		container.addSubview(paddedContainer)
+		paddedContainer.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: MARGIN, left: MARGIN, bottom: MARGIN, right: MARGIN))
+		
+		let time = UILabel.newAutoLayout()
+		time.numberOfLines = 1
+		time.lineBreakMode = .byTruncatingTail
+		time.font = UIFont(name: Font.MEDIUM, size: 14)
+		time.textColor = UIColor.white
+		time.text = "\(event.startTime) - \(event.endTime)"
+		paddedContainer.addSubview(time)
+		time.autoPinEdge(toSuperviewEdge: .left)
+		time.autoPinEdge(toSuperviewEdge: .top)
+		
+		if (UserData.requiredForUser(event: event))
+		{
+			let requiredLabel = UITextField.newAutoLayout()
+			paddedContainer.addSubview(requiredLabel)
+			requiredLabel.autoPinEdge(toSuperviewEdge: .right)
+			requiredLabel.autoPinEdge(toSuperviewEdge: .top)
+			requiredLabel.autoSetDimensions(to: CGSize(width: 24, height: 24))
+			requiredLabel.isUserInteractionEnabled = false
+			requiredLabel.backgroundColor = UIColor.white
+			requiredLabel.textAlignment = .center
+			requiredLabel.textColor = Colors.RED
+			requiredLabel.text = "RQ"
+			requiredLabel.font = UIFont(name: Font.BOLD, size: 10)
+			requiredLabel.layer.cornerRadius = 12
+			
+			time.autoPinEdge(.right, to: .left, of: requiredLabel, withOffset: MARGIN)
+		}
+		else
+		{
+			time.autoPinEdge(toSuperviewEdge: .right)
+		}
+		
         let title = UILabel.newAutoLayout()
         title.numberOfLines = 0
         title.lineBreakMode = .byTruncatingTail
         title.font = UIFont(name: Font.BOLD, size: 14)
         title.textColor = UIColor.white
         title.text = event.title
-        container.addSubview(title)
-		title.autoPinEdge(toSuperviewEdge: .left, withInset: 12)
-		title.autoPinEdge(toSuperviewEdge: .top, withInset: 12)
-		title.autoPinEdge(toSuperviewEdge: .right, withInset: 12, relation: .greaterThanOrEqual)
+        paddedContainer.addSubview(title)
+		title.autoPinEdge(toSuperviewEdge: .left)
+		title.autoPinEdge(.top, to: .bottom, of: time)
+		title.autoPinEdge(toSuperviewEdge: .right)
         
         let caption = UILabel.newAutoLayout()
         caption.numberOfLines = 0
@@ -230,10 +296,10 @@ class ScheduleVC: UIViewController, DateContainer
         caption.font = UIFont(name: Font.REGULAR, size: 12)
         caption.textColor = UIColor.white
         caption.text = event.caption
-        container.addSubview(caption)
+        paddedContainer.addSubview(caption)
 		caption.autoPinEdge(.top, to: .bottom, of: title)
-		caption.autoPinEdge(toSuperviewEdge: .left, withInset: 12)
-		caption.autoPinEdge(toSuperviewEdge: .right, withInset: 12, relation: .greaterThanOrEqual)
+		caption.autoPinEdge(toSuperviewEdge: .left)
+		caption.autoPinEdge(toSuperviewEdge: .right)
 		
     }
 	/**
