@@ -17,6 +17,8 @@
 		06E309741EFDE8AA00F37D7F /* JSONObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E309731EFDE8AA00F37D7F /* JSONObject.swift */; };
 		06E738F51EFCA06E00DFF73E /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E738F41EFCA06E00DFF73E /* Category.swift */; };
 		06E738F71EFCA34C00DFF73E /* CoreDataObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E738F61EFCA34C00DFF73E /* CoreDataObject.swift */; };
+		06FD2BD91FC91BC800E9AEC7 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06FD2BD81FC91BC800E9AEC7 /* GradientView.swift */; };
+		06FD2BDB1FC9266800E9AEC7 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06FD2BDA1FC9266800E9AEC7 /* Extensions.swift */; };
 		1EAA0BD2099219947F10D17D /* Pods_O_WeekTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C45EF3666707CE5869071BEC /* Pods_O_WeekTests.framework */; };
 		8131F4C854FE4EBC4970F6ED /* Pods_O_WeekUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC4DC7F5593F0FE2A28A79F1 /* Pods_O_WeekUITests.framework */; };
 		81D80FD806CBE0E9CC128F8E /* Pods_O_Week.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B7E869E216F14755BD6288E /* Pods_O_Week.framework */; };
@@ -69,6 +71,8 @@
 		06E309731EFDE8AA00F37D7F /* JSONObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = JSONObject.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		06E738F41EFCA06E00DFF73E /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Category.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		06E738F61EFCA34C00DFF73E /* CoreDataObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CoreDataObject.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		06FD2BD81FC91BC800E9AEC7 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		06FD2BDA1FC9266800E9AEC7 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		680698CA55279B36FAC481E8 /* Pods-O-Week.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-O-Week.release.xcconfig"; path = "Pods/Target Support Files/Pods-O-Week/Pods-O-Week.release.xcconfig"; sourceTree = "<group>"; };
 		68228961B2FB9FB4B6D82E11 /* Pods-O-WeekTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-O-WeekTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-O-WeekTests/Pods-O-WeekTests.debug.xcconfig"; sourceTree = "<group>"; };
 		8B7E869E216F14755BD6288E /* Pods_O_Week.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_O_Week.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -144,6 +148,7 @@
 				06E738F61EFCA34C00DFF73E /* CoreDataObject.swift */,
 				06E309731EFDE8AA00F37D7F /* JSONObject.swift */,
 				06B787D01FA65AEA00534D6E /* DateContainer.swift */,
+				06FD2BD81FC91BC800E9AEC7 /* GradientView.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -154,6 +159,7 @@
 				DC9307081EEC5D2F005AF445 /* Constants.swift */,
 				DCC2FF8A1EB24EEA00624B4F /* Internet.swift */,
 				DCD492211EF0D98100F4F93C /* LocalNotifications.swift */,
+				06FD2BDA1FC9266800E9AEC7 /* Extensions.swift */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -589,7 +595,9 @@
 				DC23E00F1EBD63980060F24F /* DateCell.swift in Sources */,
 				DCF15FFB1EEF0E9200793D04 /* FilterVC.swift in Sources */,
 				DC3274621E7CB4F100CB3E22 /* FeedCell.swift in Sources */,
+				06FD2BDB1FC9266800E9AEC7 /* Extensions.swift in Sources */,
 				DC9307091EEC5D2F005AF445 /* Constants.swift in Sources */,
+				06FD2BD91FC91BC800E9AEC7 /* GradientView.swift in Sources */,
 				DCB182381EB7936E0041EEBC /* SettingsVC.swift in Sources */,
 				DC23E0111EBD6E780060F24F /* DatePickerController.swift in Sources */,
 			);

@@ -102,6 +102,13 @@ class UserData
 		categories = categoryData.map({Category($0)})
 			.filter({!categories.contains($0)})
 		
+		let addedPKs = getAddedPKs()
+		let selectedEventsArray = selectedEvents.values.flatMap({$0})
+		allEvents.values.flatMap({$0})
+			.filter({addedPKs.contains($0.pk)})
+			.filter({!selectedEventsArray.contains($0)})
+			.forEach({insertToSelectedEvents($0)})
+		
 		sortEventsAndCategories()
 		
 		//access database for updates
@@ -127,8 +134,7 @@ class UserData
 				selectedEvents[date] = selectedEvents[date]!.filter({!deletedEventPks.contains($0.pk)})
 			}
 			
-			//all version updates have been processed. Now, load events that the user has selected into selectedEvents.
-			let addedPKs = getAddedPKs()
+			//all version updates have been processed. Now, load events that the user has selected into selectedEvents (again).
 			let selectedEventsArray = selectedEvents.values.flatMap({$0})
 			allEvents.values.flatMap({$0})
 				.filter({addedPKs.contains($0.pk)})
@@ -431,9 +437,8 @@ class UserData
     static func saveAddedPKs()
 	{
         let defaults = UserDefaults.standard
-        var addedPks = [Int]()
-		UserData.selectedEvents.values.flatMap({$0}).forEach({addedPks.append($0.pk)})
-        defaults.set(addedPks, forKey: UserData.addedPKsName)
+        let addedPks = selectedEvents.values.flatMap({$0}).map({$0.pk})
+        defaults.set(addedPks, forKey: addedPKsName)
     }
 	/**
 		The version of the database we have saved on this phone. This value is passed to the database to determine what needs to be updated. This value is then synchronized with the database's current version.

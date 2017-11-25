@@ -25,7 +25,6 @@ class ScheduleVC: UIViewController, DateContainer
 	
 	private(set) var date:Date!
 	var detailsVC:DetailsVC!
-    var selectedEvent: Event?
     
 	static let HOURS = {
 		() -> [Time] in
@@ -57,7 +56,7 @@ class ScheduleVC: UIViewController, DateContainer
 	{
 		self.init(nibName: nil, bundle: nil)
 		self.date = date
-		
+		self.detailsVC = detailsVC
 	}
 	/**
 		Start listening for changes in events.
@@ -190,8 +189,7 @@ class ScheduleVC: UIViewController, DateContainer
         eventViews[container] = event
         drawTitleAndCaptionFor(container, event:event)
         //add gesture recognizer to container to segue to Details VC
-        let gr = UITapGestureRecognizer(target: self, action: #selector(self.eventClicked(_:)))
-        container.addGestureRecognizer(gr)
+        container.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.eventClicked(_:))))
         container.isUserInteractionEnabled = true
         
         //the parent event wants to know if any new events have been added to the right of it, but not beneath it. Therefore, only let the parent know of slots that are added, not replaced. This way it expands to the right by the correct value.
@@ -396,26 +394,9 @@ class ScheduleVC: UIViewController, DateContainer
 			print("Unknown object was clicked")
 			return
 		}
-		selectedEvent = event
-		performSegue(withIdentifier: "showDetailsVC", sender: self)
-    }
-    
-    // MARK:- Navigation
-	/**
-		Called automatically before segues. Sets `DetailsVC.selectedEvent` to the event that the user has selected.
-		- parameters:
-			- segue: Contains data about segue.
-			- sender: Ignored.
-	*/
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
-	{
-        if segue.identifier == "showDetailsVC"
-		{
-            if let destination = segue.destination as? DetailsVC
-			{
-                destination.event = selectedEvent
-            }
-        }
+		
+		detailsVC.configure(event: event)
+		navigationController?.pushViewController(detailsVC, animated: true)
     }
     
     // MARK:- Handle Updates

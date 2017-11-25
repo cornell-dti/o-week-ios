@@ -17,7 +17,6 @@ class FeedVC:UITableViewController, DateContainer
 	private(set) var date:Date!
 	var detailsVC:DetailsVC!
 	var events = [Event]()
-    var selectedEvent: Event? = nil
 	let FEED_CELL_ID = "feedCell"
     
     // MARK:- Setup
@@ -74,8 +73,7 @@ class FeedVC:UITableViewController, DateContainer
 	*/
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
 	{
-        selectedEvent = events[indexPath.row]
-		detailsVC.configure(event: selectedEvent!)
+		detailsVC.configure(event: events[indexPath.row])
 		navigationController?.pushViewController(detailsVC, animated: true)
     }
     

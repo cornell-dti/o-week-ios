@@ -12,10 +12,10 @@ import UIKit
 */
 enum Colors
 {
-	static let RED = UIColor(red: 230/255, green: 37/255, blue: 48/255, alpha: 1)
-	static let GRAY = UIColor(red: 151/255, green: 151/255, blue: 151/255, alpha: 0.52)
+	static let RED = UIColor(red: 208/255, green: 2/255, blue: 27/255, alpha: 1)
+	static let GRAY = UIColor(red: 229/255, green: 229/255, blue:229/255, alpha: 1)
+	static let LIGHT_GRAY = UIColor(red: 74/255, green: 74/255, blue: 74/255, alpha: 1)
 	static let PINK = UIColor(red: 255/255, green: 204/255, blue: 204/255, alpha: 1)
-	static let GRAY_FILTER = UIColor(red: 155/255, green: 155/255, blue: 155/255, alpha: 1)
 }
 
 /**

@@ -35,7 +35,7 @@ class FilterCell: UITableViewCell
 	private func setDefaultLook()
 	{
 		label.backgroundColor = UIColor.white
-		label.textColor = Colors.GRAY_FILTER
+		label.textColor = Colors.LIGHT_GRAY
 		label.layer.borderWidth = 1
 	}
 	
