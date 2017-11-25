@@ -23,7 +23,7 @@ class SettingsVC: UITableViewController
 	let campusMap = UITableViewCell.newAutoLayout()
 	let orientationWebsite = UITableViewCell.newAutoLayout()
 	let rescuerApp = UITableViewCell.newAutoLayout()
-	let URLS = ["https://www.cornell.edu/about/maps/Cornell-campus-map-072213.pdf", "http://ccengagement.cornell.edu/sites/ccengagement.cornell.edu/files/a3c/cornell_orientation_guide_08_2017.pdf", "https://newstudents.cornell.edu/fall-2017/first-year/cornell-orientation-august-18-21-2017", "itms-apps://itunes.apple.com/us/app/cornell-rescuer/id1209164387?mt=8"]
+	let URLS = ["http://ccengagement.cornell.edu/sites/ccengagement.cornell.edu/files/a3c/cornell_orientation_guide_08_2017.pdf", "https://www.cornell.edu/about/maps/Cornell-campus-map-072213.pdf", "https://newstudents.cornell.edu/fall-2017/first-year/cornell-orientation-august-18-21-2017", "itms-apps://itunes.apple.com/us/app/cornell-rescuer/id1209164387?mt=8"]
 	
 	lazy var tableSections = [(name:"Notifications", rows:[remindersCell, notifyMeCell]), (name:"Resources", rows:[orientationPdf, campusMap, orientationWebsite, rescuerApp])]
 	
@@ -90,6 +90,7 @@ class SettingsVC: UITableViewController
 		notifyMeOption.alpha = 0.6
 		notifyMeOption.text = ListPreference.NotifyTime.get().rawValue
 		
+		//Resources
 		orientationPdf.textLabel?.text = "Orientation PDF"
 		campusMap.textLabel?.text = "Campus Map"
 		orientationWebsite.textLabel?.text = "New Students Orientation Website"
