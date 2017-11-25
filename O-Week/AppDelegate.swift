@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool
 	{
 		window = UIWindow(frame: UIScreen.main.bounds)
-        setNavBarColor()
+        setStyles()
         LocalNotifications.requestPermissionForNotifications()
         setDelegateForNotifications()
         UserData.loadData()
@@ -41,16 +41,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         navController?.navigationBar.setBackgroundImage(UIImage(named: "pixel"), for: .default)
     }
 	/**
-		Changes the navigation bar's style to our theme color, and changes the text so that it's AvenirNext.
+		Changes appearances of UI elements to match the theme.
 	*/
-    private func setNavBarColor()
+    private func setStyles()
     {
         let navigationBarAppearence = UINavigationBar.appearance()
         
-        navigationBarAppearence.barTintColor = Colors.RED
+        navigationBarAppearence.barTintColor = Colors.BRIGHT_RED
         navigationBarAppearence.tintColor = UIColor.white   //back arrow is white
         navigationBarAppearence.isTranslucent = false
         navigationBarAppearence.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont(name: Font.BOLD, size: 16)!]
+		
+		let switchAppearance = UISwitch.appearance()
+		switchAppearance.onTintColor = Colors.RED
     }
 	
 	/**

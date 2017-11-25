@@ -10,105 +10,152 @@ import UIKit
 
 /**
 	Displays settings to the user and a list of links to external resources.
+
+	`URLS`: An array of URLs matching each cell in the resources section. Should be updated often.
+	`tableSections`: An array of sections of cells in Settings. Each element has a name, which is the section's header, and rows, an array of cells within the section.
 */
 class SettingsVC: UITableViewController
 {
-    let remindersSet = UISwitch.newAutoLayout()
-    let notifyMeOption = UILabel.newAutoLayout()
+	let remindersCell = UITableViewCell.newAutoLayout()
 	let notifyMeCell = UITableViewCell.newAutoLayout()
 	
+	let orientationPdf = UITableViewCell.newAutoLayout()
+	let campusMap = UITableViewCell.newAutoLayout()
+	let orientationWebsite = UITableViewCell.newAutoLayout()
+	let rescuerApp = UITableViewCell.newAutoLayout()
+	let URLS = ["https://www.cornell.edu/about/maps/Cornell-campus-map-072213.pdf", "http://ccengagement.cornell.edu/sites/ccengagement.cornell.edu/files/a3c/cornell_orientation_guide_08_2017.pdf", "https://newstudents.cornell.edu/fall-2017/first-year/cornell-orientation-august-18-21-2017", "itms-apps://itunes.apple.com/us/app/cornell-rescuer/id1209164387?mt=8"]
+	
+	lazy var tableSections = [(name:"Notifications", rows:[remindersCell, notifyMeCell]), (name:"Resources", rows:[orientationPdf, campusMap, orientationWebsite, rescuerApp])]
+	
+    let remindersSwitch = UISwitch.newAutoLayout()
+    let notifyMeOption = UILabel.newAutoLayout()
+	
+	var didLayout = false
+	
+	/**
+		Create a `SettingsVC` with a NavigationController as its parent and its title 	set.
+		- returns: NavigationController with a `SettingsVC` child.
+	*/
+	static func createWithNavBar() -> UINavigationController
+	{
+		let navController = UINavigationController(rootViewController: SettingsVC())
+		navController.navigationBar.topItem?.title = "Settings"
+		return navController
+	}
+	/**
+		Create a grouped table view.
+	*/
+	convenience init()
+	{
+		self.init(style: .grouped)
+	}
 	/**
 		Set up table view appearance, link saved values to displayed settings.
 	*/
     override func viewDidLoad()
 	{
         super.viewDidLoad()
-        setUpTableViewAppearance()
+		configureCells()
 		
 		let remindersOn = BoolPreference.Reminder.isTrue()
-		remindersSet.setOn(remindersOn, animated: false)
+		remindersSwitch.setOn(remindersOn, animated: false)
         notifyMeOption.text = ListPreference.NotifyTime.get().rawValue
 		disableNotifyme(!remindersOn)
     }
-	
-	/**
-		Removes gray background from TableView's grouped style
-	*/
-    func setUpTableViewAppearance()
+	private func configureCells()
 	{
-        tableView.backgroundView = nil
-        tableView.backgroundColor = UIColor.white
-    }
+		guard !didLayout else {
+			return
+		}
+		didLayout = true
+		
+		//
+		// Reminders			[switch]
+		//
+		remindersCell.textLabel?.text = BoolPreference.Reminder.rawValue
+		remindersCell.contentView.addSubview(remindersSwitch)
+		remindersSwitch.autoPinEdge(toSuperviewMargin: .right)
+		remindersSwitch.autoAlignAxis(toSuperviewAxis: .horizontal)
+		remindersSwitch.addTarget(self, action: #selector(switchChanged), for: .touchUpInside)
+		
+		//
+		// Notify me…		1 hour before
+		//
+		notifyMeCell.textLabel?.text = ListPreference.NotifyTime.rawValue
+		notifyMeCell.contentView.addSubview(notifyMeOption)
+		notifyMeOption.autoPinEdge(toSuperviewMargin: .right)
+		notifyMeOption.autoAlignAxis(toSuperviewAxis: .horizontal)
+		notifyMeOption.textAlignment = .right
+		notifyMeOption.font = UIFont.systemFont(ofSize: 14)
+		notifyMeOption.alpha = 0.6
+		notifyMeOption.text = ListPreference.NotifyTime.get().rawValue
+		
+		orientationPdf.textLabel?.text = "Orientation PDF"
+		campusMap.textLabel?.text = "Campus Map"
+		orientationWebsite.textLabel?.text = "New Students Orientation Website"
+		rescuerApp.textLabel?.text = "Cornell Rescuer App"
+	}
 	
     // MARK:- Actions
 	
 	/**
 		Listener to a change in the "reminder" switch. Save new data, disabling `notifyMeCell` if the switch if set to off.
-		- parameter sender: Switch.
 	*/
-    @IBAction func switchChanged(_ sender: UISwitch)
+	@objc func switchChanged()
 	{
-		BoolPreference.Reminder.set(sender.isOn)
+		BoolPreference.Reminder.set(remindersSwitch.isOn)
         LocalNotifications.updateNotifications()
-		disableNotifyme(!sender.isOn)
-    }
-    /**
-		Listener to buttons that will redirect the user to an external site/app.
-		- parameter sender: Button that was selected. Should have its tag set in Storyboard.
-	*/
-    @IBAction func visitWebsite(_ sender: UIButton)
-	{
-        let url:String
-        switch (sender.tag)
-		{
-        case 0: // Campus Map
-            url = "https://www.cornell.edu/about/maps/cornell-campus-map-2015.pdf"
-        case 1: // Official Orientation PDF
-            url = "http://ccengagement.cornell.edu/sites/ccengagement.cornell.edu/files/a3c/cornell_orientation_guide_08_2017.pdf"
-        case 2: // New Students Orientation Website
-            url = "https://newstudents.cornell.edu/fall-2017/first-year/cornell-orientation-august-18-21-2017"
-        case 3: // Cornell Rescuer App
-            url = "itms-apps://itunes.apple.com/us/app/cornell-rescuer/id1209164387?mt=8"
-        default:
-			print("visitWebsite() called with unidentified sender")
-            return
-        }
-        if let url = URL(string: url)
-		{
-            UIApplication.shared.open(url)
-        }
+		disableNotifyme(!remindersSwitch.isOn)
     }
     
     // MARK:- TableView Methods
+	
+	//the following methods should NOT be changed; change `tableSecgtions` instead.
+	override func numberOfSections(in tableView: UITableView) -> Int
+	{
+		return tableSections.count
+	}
+	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?
+	{
+		return tableSections[section].name
+	}
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+	{
+		return tableSections[section].rows.count
+	}
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+	{
+		return tableSections[indexPath.section].rows[indexPath.row]
+	}
 	/**
-		Customize appearance of headers.
-		- parameters:
-			- tableView: Reference to table.
-			- view: Header view.
-			- section: Section header view belongs to.
-	*/
-    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int)
-    {
-        let header = view as! UITableViewHeaderFooterView
-        header.textLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 14)
-        header.textLabel?.textColor = Colors.RED
-    }
-	/**
-		Show notify me options when the cell is selected.
+		Perform different actions based on the selected cell.
+		1. Reminders: Change reminders switch
+		2. Notify me: Show notify time options
+		3. Resources: Open website links
 		- parameters:
 			- tableView: Reference to table.
 			- indexPath: IndexPath of selected cell.
 	*/
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
 	{
-        if let notifyMeIndexPath = tableView.indexPath(for: notifyMeCell)
+		switch (indexPath.section, indexPath.row)
 		{
-			if (notifyMeIndexPath == indexPath)
+		case (0, 0):	//selected reminders
+			remindersSwitch.setOn(!remindersSwitch.isOn, animated: true)
+			switchChanged()
+			tableView.deselectRow(at: indexPath, animated: true)
+		case (0, 1):	//selected notify me
+			showNotifyMeActionSheet()
+			//deselect row w/o animation, otherwise action sheet takes a long time to show up
+			tableView.deselectRow(at: indexPath, animated: false)
+		case let (1, row):	//selected something in resources
+			tableView.deselectRow(at: indexPath, animated: true)
+			if let url = URL(string: URLS[row])
 			{
-				showNotifyMeActionSheet()
-				//deselect row w/o animation, otherwise action sheet takes a long time to show up
-				tableView.deselectRow(at: indexPath, animated: false)
+				UIApplication.shared.open(url)
 			}
+		default:
+			print("SettingsVC: tableview unknown indexPath selected: \(indexPath)")
 		}
     }
 	

@@ -21,8 +21,10 @@ class TabBarVC:UITabBarController
 		feedPageVC.tabBarItem = UITabBarItem(title: "Browse", image: UIImage(named: "tab_browse"), tag: 1)
 		let searchVC = SearchVC.createWithNavBar()
 		searchVC.tabBarItem = UITabBarItem(title: "Search", image: UIImage(named: "tab_search"), tag: 2)
+		let settingsVC = SettingsVC.createWithNavBar()
+		settingsVC.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(named: "tab_settings"), tag: 3)
 		
-		viewControllers = [schedulePageVC, feedPageVC, searchVC]
-		tabBar.tintColor = Colors.RED
+		viewControllers = [schedulePageVC, feedPageVC, searchVC, settingsVC]
+		tabBar.tintColor = Colors.BRIGHT_RED
 	}
 }

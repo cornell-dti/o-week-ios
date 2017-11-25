@@ -23,7 +23,7 @@ import Foundation
 */
 enum ListPreference:String
 {
-	case NotifyTime = "Notify me..."
+	case NotifyTime = "Notify me…"
 	
 	static let DEFAULT:[ListPreference:Option] = [.NotifyTime:.OneHourBefore]
 	static let OPTIONS:[ListPreference:[Option]] = [.NotifyTime:Option.NotifyTimeOption]
