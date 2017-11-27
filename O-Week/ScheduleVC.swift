@@ -109,10 +109,15 @@ class ScheduleVC: UIViewController, DateContainer
         scrollView.contentSize = newSize
     }
 	/**
-		Positions the scroll view to show the current hour. Does nothing if the current hour is out of range.
+		Positions the scroll view to show the current hour. Does nothing if the current hour is out of range or if the displayed day isn't today.
 	*/
 	private func scrollToNow()
 	{
+		let today = Date()
+		guard UserData.userCalendar.compare(today, to: date, toGranularity: .day) == .orderedSame else {
+			return
+		}
+		
 		let now = Time()
 		guard minutesBetween(ScheduleVC.HOURS.first!, and: now) >= 0 && minutesBetween(now, and: ScheduleVC.HOURS.last!) >= 0 else {
 			return
@@ -154,7 +159,7 @@ class ScheduleVC: UIViewController, DateContainer
     private func drawAllEvents()
 	{
         //consider events that start earliest first
-        let sortedEvents = UserData.selectedEvents[UserData.selectedDate!]!.sorted(by: {$0.startTime < $1.startTime})
+        let sortedEvents = UserData.selectedEvents[date]!.sorted(by: {$0.startTime < $1.startTime})
         guard !sortedEvents.isEmpty else {
             return
         }
@@ -209,9 +214,7 @@ class ScheduleVC: UIViewController, DateContainer
         let container = UIView(frame: CGRect(x: cellX(slot: slot, numSlots: newNumSlots), y: yForStartTime(event.startTime), width: cellWidth(event: event, slot: slot, numSlots: newNumSlots, eventForSlot: newEventForSlot), height: cellHeight(event: event)))
 		
 		//events that aren't occurring right now will be faded out
-		let now = Time()
-		let eventIsOngoing = minutesBetween(event.startTime, and: now) >= 0 && minutesBetween(now, and: event.endTime) >= 0
-		container.alpha = eventIsOngoing ? 1 : 0.6
+		container.alpha = eventOngoing(event) ? 1 : 0.6
 		
 		container.backgroundColor = Colors.BRIGHT_RED
         container.layer.cornerRadius = 3
@@ -427,6 +430,22 @@ class ScheduleVC: UIViewController, DateContainer
 		return CGFloat(minutesBetween(event.startTime, and: event.endTime)) / 60 * Layout.HOUR_HEIGHT
 	}
 	/**
+		Returns true if the given event is currently occurring.
+		- parameter event: Event.
+		- returns: Whether the given event is happening right now.
+	*/
+	private func eventOngoing(_ event:Event) -> Bool
+	{
+		let today = Date()
+		guard UserData.userCalendar.compare(today, to: date, toGranularity: .day) == .orderedSame else {
+			return false
+		}
+		
+		let now = Time()
+		let eventIsOngoing = minutesBetween(event.startTime, and: now) >= 0 && minutesBetween(now, and: event.endTime) >= 0
+		return eventIsOngoing
+	}
+	/**
 		Returns the number of minutes between 2 given times. Note that this accounts for events that cross over midnight. An event that begins at 11PM and ends at 2AM lasts 3 hours, not -21.
 		- parameters:
 			- startTime: Start
@@ -487,5 +506,4 @@ class ScheduleVC: UIViewController, DateContainer
         eventViews.removeAll()
         drawAllEvents()
     }
-    
 }

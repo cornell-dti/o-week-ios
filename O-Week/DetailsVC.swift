@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import PKHUD
 
 /**
 	Displays a user-selected event.
@@ -424,17 +425,21 @@ class DetailsVC: UIViewController, MKMapViewDelegate
 	*/
 	@objc func onAddButtonClick(_ tapGestureRecognizer: UITapGestureRecognizer)
 	{
+		let hudDisplayTime = 0.6
+		
         if (UserData.selectedEventsContains(event!))
 		{
             refreshButton(added: false)
             UserData.removeFromSelectedEvents(event!)
             LocalNotifications.removeNotification(for: event!.pk)
+			HUD.flash(.labeledSuccess(title: nil, subtitle: "Removed"), delay: hudDisplayTime)
         }
 		else
 		{
             refreshButton(added: true)
             UserData.insertToSelectedEvents(event!)
 			LocalNotifications.createNotification(for: event!)
+			HUD.flash(.labeledSuccess(title: nil, subtitle: "Added"), delay: hudDisplayTime)
         }
         changed = true
     }
