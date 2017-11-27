@@ -11,6 +11,7 @@
 		0628E4871E7CA3260066A308 /* FeedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0628E4861E7CA3260066A308 /* FeedVC.swift */; };
 		06523C391FCB8E06003B0257 /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06523C381FCB8E06003B0257 /* Student.swift */; };
 		06523C3B1FCB9268003B0257 /* HasPK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06523C3A1FCB9268003B0257 /* HasPK.swift */; };
+		06523C3D1FCBC985003B0257 /* EmptyStateTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06523C3C1FCBC985003B0257 /* EmptyStateTableVC.swift */; };
 		067EC2E71E8C9F8D0098ED94 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067EC2E61E8C9F8D0098ED94 /* Event.swift */; };
 		067EC2E91E8C9FE20098ED94 /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067EC2E81E8C9FE20098ED94 /* Time.swift */; };
 		06B787D11FA65AEA00534D6E /* DateContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B787D01FA65AEA00534D6E /* DateContainer.swift */; };
@@ -68,6 +69,7 @@
 		0628E4861E7CA3260066A308 /* FeedVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = FeedVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		06523C381FCB8E06003B0257 /* Student.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		06523C3A1FCB9268003B0257 /* HasPK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasPK.swift; sourceTree = "<group>"; };
+		06523C3C1FCBC985003B0257 /* EmptyStateTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateTableVC.swift; sourceTree = "<group>"; };
 		067EC2E61E8C9F8D0098ED94 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Event.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		067EC2E81E8C9FE20098ED94 /* Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
 		06B787D01FA65AEA00534D6E /* DateContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateContainer.swift; sourceTree = "<group>"; };
@@ -147,17 +149,18 @@
 		0614E61D1F2CBDD70080EA2B /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				DC92BCDE1EF2229F009B4A8F /* UserPreferences.swift */,
 				06E738F41EFCA06E00DFF73E /* Category.swift */,
-				067EC2E61E8C9F8D0098ED94 /* Event.swift */,
-				067EC2E81E8C9FE20098ED94 /* Time.swift */,
-				06E738F61EFCA34C00DFF73E /* CoreDataObject.swift */,
-				06E309731EFDE8AA00F37D7F /* JSONObject.swift */,
-				06B787D01FA65AEA00534D6E /* DateContainer.swift */,
-				06FD2BD81FC91BC800E9AEC7 /* GradientView.swift */,
 				06BC603E1FCA1D1F007C9463 /* Colleges.swift */,
-				06523C381FCB8E06003B0257 /* Student.swift */,
+				06E738F61EFCA34C00DFF73E /* CoreDataObject.swift */,
+				06B787D01FA65AEA00534D6E /* DateContainer.swift */,
+				067EC2E61E8C9F8D0098ED94 /* Event.swift */,
+				06FD2BD81FC91BC800E9AEC7 /* GradientView.swift */,
 				06523C3A1FCB9268003B0257 /* HasPK.swift */,
+				06E309731EFDE8AA00F37D7F /* JSONObject.swift */,
+				06523C381FCB8E06003B0257 /* Student.swift */,
+				067EC2E81E8C9FE20098ED94 /* Time.swift */,
+				DC92BCDE1EF2229F009B4A8F /* UserPreferences.swift */,
+				06523C3C1FCBC985003B0257 /* EmptyStateTableVC.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -590,6 +593,7 @@
 				0628E4871E7CA3260066A308 /* FeedVC.swift in Sources */,
 				06BC603D1FC9F7EB007C9463 /* SearchVC.swift in Sources */,
 				067EC2E71E8C9F8D0098ED94 /* Event.swift in Sources */,
+				06523C3D1FCBC985003B0257 /* EmptyStateTableVC.swift in Sources */,
 				06E309741EFDE8AA00F37D7F /* JSONObject.swift in Sources */,
 				067EC2E91E8C9FE20098ED94 /* Time.swift in Sources */,
 				06523C3B1FCB9268003B0257 /* HasPK.swift in Sources */,

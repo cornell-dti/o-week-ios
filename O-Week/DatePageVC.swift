@@ -56,7 +56,7 @@ class DatePageVC:UIPageViewController, UIPageViewControllerDataSource, UIPageVie
 	}
 	
 	/**
-		Sets up the `FeedVC`s, once for each day in orientation. Sets the first page to the one for the appropriate day.
+		Sets up the `FeedVC`s or `ScheduleVC`s, once for each day in orientation. Sets the first page to the one for the appropriate day.
 	*/
 	override func viewDidLoad()
 	{

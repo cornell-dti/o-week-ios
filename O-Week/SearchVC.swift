@@ -12,7 +12,7 @@ import UIKit
 	Search for events.
 	`tableSections`: Sections of cells. Each element has a name, which is the section's header, and rows, cells within the section.
 */
-class SearchVC:UITableViewController, UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate
+class SearchVC: EmptyStateTableVC, UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate
 {
 	let SECTION_MY_CALENDAR = 0
 	let SECTION_ALL_EVENTS = 1
@@ -37,7 +37,7 @@ class SearchVC:UITableViewController, UISearchResultsUpdating, UISearchControlle
 	*/
 	convenience init()
 	{
-		self.init(style: .grouped)
+		self.init(image: UIImage(named:"tab_search")!, text: "Search for orientation events", style: .grouped)
 		detailsVC = DetailsVC()
 	}
 	/**

@@ -12,7 +12,7 @@ import UIKit
 	Displays a list of events, ordered chronologically.
 	`date`: Must be set by whomever instantiates this.
 */
-class FeedVC:UITableViewController, DateContainer
+class FeedVC:EmptyStateTableVC, DateContainer
 {
 	private(set) var date:Date!
 	var detailsVC:DetailsVC!
@@ -29,7 +29,7 @@ class FeedVC:UITableViewController, DateContainer
 	*/
 	convenience init(date:Date, detailsVC:DetailsVC)
 	{
-		self.init(nibName: nil, bundle: nil)
+		self.init(image: UIImage(named:"tab_browse")!, text: "Events are loading…", style: .plain)
 		self.date = date
 		self.detailsVC = detailsVC
 	}
