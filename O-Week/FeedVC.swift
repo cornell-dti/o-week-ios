@@ -51,7 +51,7 @@ class FeedVC:UITableViewController, DateContainer
     // MARK:- Table View Methods
 	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
 	{
-		return 80
+		return Layout.FEED_CELL_HEIGHT
 	}
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {

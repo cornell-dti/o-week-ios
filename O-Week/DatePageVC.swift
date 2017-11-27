@@ -42,6 +42,7 @@ class DatePageVC:UIPageViewController, UIPageViewControllerDataSource, UIPageVie
 			navController.navigationBar.topItem?.title = "My Schedule"
 		}
 		AppDelegate.setUpExtendedNavBar(navController: navController)
+		datePageVC.detailsVC = DetailsVC()
 		return navController
 	}
 	
@@ -66,7 +67,6 @@ class DatePageVC:UIPageViewController, UIPageViewControllerDataSource, UIPageVie
 			return
 		}
 		
-		detailsVC = DetailsVC(nibName: nil, bundle: nil)
 		if (style == .feed)
 		{
 			UserData.DATES.forEach({pages.append(FeedVC(date: $0, detailsVC: detailsVC))})

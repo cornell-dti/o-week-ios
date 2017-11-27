@@ -28,6 +28,14 @@ class FeedCell:UITableViewCell
 	required init?(coder aDecoder: NSCoder) {super.init(coder: aDecoder)}
 	
 	/**
+		Call this to manually initialize.
+	*/
+	convenience init()
+	{
+		self.init(style: .default, reuseIdentifier: nil)
+	}
+	
+	/**
 		Sets up all subviews of the FeedCell.
 		|								|
 		| 	10:30 Move-in		(RQ)	|
@@ -114,6 +122,8 @@ class FeedCell:UITableViewCell
 	*/
     func configure(event:Event)
 	{
+		self.event = event
+		
 		eventTitle.text = event.title
 		eventCaption.text = event.caption
 		eventStartTime.text = event.startTime.description

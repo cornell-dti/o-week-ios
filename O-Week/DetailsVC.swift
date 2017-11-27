@@ -52,12 +52,18 @@ class DetailsVC: UIViewController, MKMapViewDelegate
 	var didSetListeners = false
 	
 	/**
+		Call this to manually initialize.
+	*/
+	convenience init()
+	{
+		self.init(nibName: nil, bundle: nil)
+	}
+	/**
 		Show the event's data on screen.
 	*/
     override func viewDidLoad()
 	{
         super.viewDidLoad()
-		
 		if (!didSetListeners)
 		{
 			didSetListeners = true
