@@ -29,7 +29,7 @@ class FeedVC:EmptyStateTableVC, DateContainer
 	*/
 	convenience init(date:Date, detailsVC:DetailsVC)
 	{
-		self.init(image: UIImage(named:"tab_browse")!, text: "Events are loading…", style: .plain)
+		self.init(image: UIImage(named:"tab_browse")!, text: "Downloading events…", style: .plain)
 		self.date = date
 		self.detailsVC = detailsVC
 	}

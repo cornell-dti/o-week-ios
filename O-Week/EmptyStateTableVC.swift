@@ -13,11 +13,13 @@ import UIKit
 
 	`emptyStateImage`: Image for the empty state.
 	`emptyStateText`: Text to display under the image.
+	`emptyStateLoaded`: True if layout of `emptyState` was completed. Used to ensure layout is only done once.
 */
 class EmptyStateTableVC: UITableViewController
 {
 	private var emptyStateImage:UIImage!
 	private var emptyStateText:String!
+	private var emptyStateLoaded = false
 	
 	/**
 		This MUST be called to provide the empty state with the correct parameters.
@@ -46,10 +48,20 @@ class EmptyStateTableVC: UITableViewController
 	override func viewDidLoad()
 	{
 		super.viewDidLoad()
+		guard !emptyStateLoaded else {
+			return
+		}
+		emptyStateLoaded = true
+		
+		let emptyState = UIView.newAutoLayout()
+		initEmptyState(emptyState, image: emptyStateImage, text:emptyStateText)
 		if let emptyStateTable = tableView as? EmptyStateTable
 		{
-			emptyStateTable.initEmptyState(image:emptyStateImage, text:emptyStateText)
+			emptyStateTable.setEmptyState(emptyState)
 		}
+		
+		//remove dividers that show when the table is empty
+		tableView.tableFooterView = UIView.newAutoLayout()
 	}
 	/**
 		Returns 0 height for sections that have no rows (as to hide the titles when the empty state is showing).
@@ -64,42 +76,27 @@ class EmptyStateTableVC: UITableViewController
 		{
 			return 0.0
 		}
-		return super.tableView(tableView, heightForHeaderInSection: section)
+		//default height
+		return 35.0
 	}
-}
-/**
-	A `UITableView` that displays a custom image and text when the table is empty.
-
-	`emptyState`: The view that will appear when the table is empty.
-	`emptyStateLoaded`: True if layout of `emptyState` was completed. Used to ensure layout is only done once.
-*/
-class EmptyStateTable: UITableView
-{
-	private let emptyState = UIView.newAutoLayout()
-	private var emptyStateLoaded = false
-	
 	/**
-		Set up the empty state TableView.
-		- parameter:
+		Set up the empty state.
+		- parameters:
+			- emptyState: View to contain image & text.
 			- image: Image for the empty state.
 			- text: Text to display under the image.
 	*/
-	func initEmptyState(image:UIImage, text:String)
+	func initEmptyState(_ emptyState:UIView, image:UIImage, text:String)
 	{
-		guard !emptyStateLoaded else {
-			return
-		}
-		emptyStateLoaded = true
-		
 		emptyState.isHidden = true	//defaults to hidden
-		
-		backgroundView = emptyState
-		emptyState.autoMatch(.width, to: .width, of: self)
-		emptyState.autoMatch(.height, to: .height, of: self)
+		view.addSubview(emptyState)
+		emptyState.autoPin(toTopLayoutGuideOf: self, withInset: 0)
+		emptyState.autoPin(toBottomLayoutGuideOf: self, withInset: 0)
+		emptyState.autoAlignAxis(toSuperviewAxis: .vertical)
 		
 		let imageView = UIImageView(image: image.withRenderingMode(.alwaysTemplate))
 		emptyState.addSubview(imageView)
-		imageView.autoMatch(.width, to: .width, of: self, withMultiplier: 1/3)
+		imageView.autoMatch(.width, to: .width, of: view, withMultiplier: 1/3)
 		imageView.autoMatch(.height, to: .width, of: imageView)
 		imageView.autoAlignAxis(toSuperviewAxis: .horizontal)
 		imageView.autoAlignAxis(toSuperviewAxis: .vertical)
@@ -114,6 +111,20 @@ class EmptyStateTable: UITableView
 		subtitle.font = UIFont.systemFont(ofSize: 14)
 		subtitle.autoAlignAxis(.vertical, toSameAxisOf: imageView)
 		subtitle.autoPinEdge(.top, to: .bottom, of: imageView, withOffset: Layout.MARGIN)
+	}
+}
+/**
+	A `UITableView` that displays a custom image and text when the table is empty.
+
+	`emptyState`: The view that will appear when the table is empty.
+*/
+class EmptyStateTable: UITableView
+{
+	private var emptyState:UIView!
+	
+	func setEmptyState(_ view:UIView)
+	{
+		self.emptyState = view
 	}
 	/**
 		Show/hide the empty state based on whether the table is empty.
