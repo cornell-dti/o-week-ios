@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  Student.swift
 //  O-Week
 //
 //  Created by David Chu on 2017/11/26.
@@ -14,7 +14,7 @@ import Foundation
 
 	- see: `Colleges`
 */
-enum Student:String
+enum Student:String, HasPK
 {
 	static let ORDERED:[Student] = [.Transfer]
 	case Transfer = "Transfer"
@@ -23,12 +23,11 @@ enum Student:String
 		Returns the `Category.pk` value of the category associated with this student type. Assumes the database will never change student types' pk values.
 		- returns: `Category.pk`, where the Category is the one for this student type.
 	*/
-	func pkForStudent() -> Int
-	{
+	var pk:Int {
 		return 14
 	}
 	/**
-		The inverse of `pkForStudent()`.
+		The inverse of `pk`.
 		- returns: The correct student type for the `Category.pk`, or nil if this `Category.pk` does not belong to a student type.
 	*/
 	static func studentForPk(_ pk:Int) -> Student?

@@ -10,6 +10,7 @@
 		0628E4851E7C82830066A308 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0628E4841E7C82830066A308 /* MapKit.framework */; };
 		0628E4871E7CA3260066A308 /* FeedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0628E4861E7CA3260066A308 /* FeedVC.swift */; };
 		06523C391FCB8E06003B0257 /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06523C381FCB8E06003B0257 /* Student.swift */; };
+		06523C3B1FCB9268003B0257 /* HasPK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06523C3A1FCB9268003B0257 /* HasPK.swift */; };
 		067EC2E71E8C9F8D0098ED94 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067EC2E61E8C9F8D0098ED94 /* Event.swift */; };
 		067EC2E91E8C9FE20098ED94 /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067EC2E81E8C9FE20098ED94 /* Time.swift */; };
 		06B787D11FA65AEA00534D6E /* DateContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B787D01FA65AEA00534D6E /* DateContainer.swift */; };
@@ -66,6 +67,7 @@
 		0628E4841E7C82830066A308 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		0628E4861E7CA3260066A308 /* FeedVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = FeedVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		06523C381FCB8E06003B0257 /* Student.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
+		06523C3A1FCB9268003B0257 /* HasPK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasPK.swift; sourceTree = "<group>"; };
 		067EC2E61E8C9F8D0098ED94 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Event.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		067EC2E81E8C9FE20098ED94 /* Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
 		06B787D01FA65AEA00534D6E /* DateContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateContainer.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 				06FD2BD81FC91BC800E9AEC7 /* GradientView.swift */,
 				06BC603E1FCA1D1F007C9463 /* Colleges.swift */,
 				06523C381FCB8E06003B0257 /* Student.swift */,
+				06523C3A1FCB9268003B0257 /* HasPK.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -587,6 +590,7 @@
 				067EC2E71E8C9F8D0098ED94 /* Event.swift in Sources */,
 				06E309741EFDE8AA00F37D7F /* JSONObject.swift in Sources */,
 				067EC2E91E8C9FE20098ED94 /* Time.swift in Sources */,
+				06523C3B1FCB9268003B0257 /* HasPK.swift in Sources */,
 				06B787D11FA65AEA00534D6E /* DateContainer.swift in Sources */,
 				DC2C02991E7DC25F00E9DDEF /* ScheduleVC.swift in Sources */,
 				06523C391FCB8E06003B0257 /* Student.swift in Sources */,

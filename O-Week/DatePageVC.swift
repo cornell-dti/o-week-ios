@@ -119,17 +119,6 @@ class DatePageVC:UIPageViewController, UIPageViewControllerDataSource, UIPageVie
 		setViewControllers([newPage], direction: direction, animated: true, completion: nil)
 	}
 	/**
-		Open the filter when it is clicked.
-	*/
-	@objc func onFilterClick()
-	{
-		guard filterVC != nil else {
-			print("DatePageVC: filter clicked, but filterVC is nil")
-			return
-		}
-		navigationController?.pushViewController(filterVC!, animated: true)
-	}
-	/**
 		Returns the `UIViewController` that comes before the one given, nil if the one given has no preceding page.
 		- parameters:
 			- pageViewController: Reference to self.
@@ -184,6 +173,18 @@ class DatePageVC:UIPageViewController, UIPageViewControllerDataSource, UIPageVie
 		scrollable.scrollIndicatorInsets = topMargin
 		//scroll to top
 		scrollable.setContentOffset(CGPoint(x: 0, y: -Layout.DATE_SIZE), animated: false)
+	}
+	
+	/**
+		Open the filter when it is clicked.
+	*/
+	@objc func onFilterClick()
+	{
+		guard filterVC != nil else {
+			print("DatePageVC: filter clicked, but filterVC is nil")
+			return
+		}
+		navigationController?.pushViewController(filterVC!, animated: true)
 	}
 	
 	/**

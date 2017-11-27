@@ -10,15 +10,16 @@ import UIKit
 
 /**
 	Displays a list of categories for the user to filter events in `FeedVC`.
-	`tableSections`: Sections of cells. Each element has a name, which is the section's header, and rows, cells within the section.
-	`selectedFilters`: All cells that are selected. Used to keep track of applied filters.
+	`tableSections`: Sections of cells. Each element has a name, which is the section's header, rows, cells within the section, and data, the data associated with the row.
+	`selectedFilters`: All category pks that are selected. Used to keep track of applied filters.
 */
 class FilterVC: UITableViewController
 {
 	let showRequiredEventsCell = UITableViewCell.newAutoLayout()
 	
-	var tableSections = [(name:String, rows:[UITableViewCell])]()
-	var selectedFilters:Set<UITableViewCell> = []
+	var tableSections = [(name:String, rows:[(cell:UITableViewCell, data:HasPK?)])]()
+	static var requiredFilter = false
+	static var selectedFilters:Set<Int> = []
 	
 	/**
 		Sets the table to `grouped` style, the title to "Filter", and creates the table view cells.
@@ -28,6 +29,7 @@ class FilterVC: UITableViewController
 		self.init(style: .grouped)
 		
 		title = "Filter"
+		navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(onCancelClick))
 		configureTableSections()
 	}
 	/**
@@ -37,20 +39,20 @@ class FilterVC: UITableViewController
 	{
 		showRequiredEventsCell.textLabel?.text = "Required events"
 		
-		tableSections.append((name: "", rows: [showRequiredEventsCell]))
+		tableSections.append((name: "", rows: [(cell: showRequiredEventsCell, data: nil)]))
 		//put student types in 2nd section
 		tableSections.append((name: "Students", rows: Student.ORDERED.map({
 			student in
 			let cell = UITableViewCell.newAutoLayout()
 			cell.textLabel?.text = student.rawValue
-			return cell
+			return (cell: cell, data: student)
 		})))
 		//put colleges in 3rd section
 		tableSections.append((name: "Colleges", rows: Colleges.ORDERED.map({
 			college in
 			let cell = UITableViewCell.newAutoLayout()
 			cell.textLabel?.text = college.rawValue
-			return cell
+			return (cell: cell, data: college)
 		})))
 		//put all the categories that aren't colleges in the last section
 		tableSections.append((name: "", rows: UserData.categories
@@ -58,7 +60,7 @@ class FilterVC: UITableViewController
 				category in
 				let cell = UITableViewCell.newAutoLayout()
 				cell.textLabel?.text = category.name
-				return cell
+				return (cell: cell, data: category)
 			})))
 	}
 	
@@ -78,7 +80,7 @@ class FilterVC: UITableViewController
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
 	{
-        return tableSections[indexPath.section].rows[indexPath.row]
+        return tableSections[indexPath.section].rows[indexPath.row].cell
     }
     /**
 		Gives the selected cell a checkmark (or removes it) and notify listeners.
@@ -88,18 +90,70 @@ class FilterVC: UITableViewController
 	*/
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
 	{
-      	let cell = tableView.cellForRow(at: indexPath)!
-		if (selectedFilters.contains(cell))
+      	let cellAndData = tableSections[indexPath.section].rows[indexPath.row]
+		let cell = cellAndData.cell
+		
+		//check if the cell is the "Required" special cell or just a category
+		if let data = cellAndData.data
 		{
-			cell.accessoryType = .none
-			selectedFilters.remove(cell)
+			if (FilterVC.selectedFilters.contains(data.pk))
+			{
+				cell.accessoryType = .none
+				FilterVC.selectedFilters.remove(data.pk)
+			}
+			else
+			{
+				cell.accessoryType = .checkmark
+				FilterVC.selectedFilters.insert(data.pk)
+			}
 		}
 		else
 		{
-			cell.accessoryType = .checkmark
-			selectedFilters.insert(cell)
+			if (FilterVC.requiredFilter)
+			{
+				cell.accessoryType = .none
+				FilterVC.requiredFilter = false
+			}
+			else
+			{
+				cell.accessoryType = .checkmark
+				FilterVC.requiredFilter = true
+			}
 		}
+		
 		tableView.deselectRow(at: indexPath, animated: true)
 		NotificationCenter.default.post(name: .reloadData, object: nil)
     }
+	
+	/**
+		Called when the navigation bar's "Cancel" button is clicked. Removes all filters and notifies listeners.
+	*/
+	@objc func onCancelClick()
+	{
+		FilterVC.requiredFilter = false
+		FilterVC.selectedFilters.removeAll()
+		tableSections.forEach({$0.rows.forEach({$0.cell.accessoryType = .none})})
+		NotificationCenter.default.post(name: .reloadData, object: nil)
+	}
+	/**
+		Returns the events that should be displayed based on the user's selection of filters. To be used by classes that need to update their feeds.
+		- parameter events: All the events that need to be filtered.
+		- returns: The list of filtered events, in order.
+	*/
+	static func filter(_ events:[Event]) -> [Event]
+	{
+		//no filter active
+		if (selectedFilters.isEmpty && !requiredFilter) {
+			return events
+		}
+		
+		return events.filter({
+			event in
+			if (requiredFilter && UserData.requiredForUser(event: event))
+			{
+				return true
+			}
+			return selectedFilters.contains(event.category)
+		})
+	}
 }

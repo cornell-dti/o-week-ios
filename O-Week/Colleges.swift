@@ -12,7 +12,7 @@ import Foundation
 	Predefined list of colleges and their names.
 	`ORDERED`: An alphabetically ordered list of all enums cases. Should change every time a case is added/removed.
 */
-enum Colleges:String
+enum Colleges:String, HasPK
 {
 	static let ORDERED:[Colleges] = [.CALS, .AAP, .ArtsAndSciences, .Engineering, .Johnson, .ILR, .HumanEc]
 	
@@ -28,8 +28,7 @@ enum Colleges:String
 		Returns the `Category.pk` value of the category associated with this college. Assumes the database will never change colleges' pk values.
 		- returns: `Category.pk`, where the Category is the one for this college.
 	*/
-	func pkForCollege() -> Int
-	{
+	var pk:Int {
 		switch (self)
 		{
 		case .CALS:
@@ -49,7 +48,7 @@ enum Colleges:String
 		}
 	}
 	/**
-		The inverse of `pkForCollege()`.
+		The inverse of `pk`.
 		- returns: The correct college for the `Category.pk`, or nil if this `Category.pk` does not belong to a college.
 	*/
 	static func collegeForPk(_ pk:Int) -> Colleges?

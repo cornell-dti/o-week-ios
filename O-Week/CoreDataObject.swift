@@ -12,7 +12,7 @@ import CoreData
 /**
 	An object that can be saved to and read from `CoreData`.
 */
-protocol CoreDataObject
+protocol CoreDataObject:HasPK
 {
 	/**
 		Reading from `CoreData`.
@@ -39,8 +39,4 @@ protocol CoreDataObject
 		- important: Should be identical to what is listed under `ENTITIES` in `O-week.xcdatamodeld`
 	*/
 	static var entityName:String { get }
-	/**
-		The unique value of this object.
-	*/
-	var pk:Int { get }
 }

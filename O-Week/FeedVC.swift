@@ -44,7 +44,7 @@ class FeedVC:UITableViewController, DateContainer
 		tableView.register(FeedCell.self, forCellReuseIdentifier: FEED_CELL_ID)
 		DatePageVC.makeSpaceForDatePicker(in: tableView)
         setNotificationListener()
-		filter()
+		events = FilterVC.filter(UserData.allEvents[date]!)
 		scrollToNextEvent()
     }
 	
@@ -94,27 +94,8 @@ class FeedVC:UITableViewController, DateContainer
 	*/
     @objc func updateFeed()
 	{
-		filter()
+		events = FilterVC.filter(UserData.allEvents[date]!)
         tableView.reloadData()
-	}
-	/**
-		Retrieve events from `UserData.allEvents`, then apply a filter according to `FilterVC`.
-	
-		- note: Inside the function, `tempEvents` is used because directly manipulating `events` may immediately impact `TableViewDataSource` methods and produce unexpected behavior.
-	*/
-	private func filter()
-	{
-		var tempEvents = UserData.allEvents[date]!
-//		if (FilterVC.filterRequired)
-//		{
-//			tempEvents = tempEvents.filter({$0.required})
-//		}
-//		else if (FilterVC.filterCategory != nil)
-//		{
-//			tempEvents = tempEvents.filter({$0.category == FilterVC.filterCategory!.pk})
-//		}
-		
-		events = tempEvents
 	}
 	/**
 		Scrolls the feed to the event that will occur next. Does nothing if all events today started before current time OR if today is not the date the user selected.
