@@ -10,122 +10,96 @@ import UIKit
 
 /**
 	Displays a list of categories for the user to filter events in `FeedVC`.
-
-	`selectedCell`: The cell currently selected by the user. Saved so we can animate it being unselected in the future.
-	`filterRequired`: True if the user wants to show required events only.
-	`filterCategory`: The category that the user wants to filter by. Will be nil if `filterRequired` is true or if the user wants to show all events.
+	`tableSections`: Sections of cells. Each element has a name, which is the section's header, and rows, cells within the section.
+	`selectedFilters`: All cells that are selected. Used to keep track of applied filters.
 */
 class FilterVC: UITableViewController
 {
-    let sections = ["", "By Category"]
-	let ROW_FILTER_ALL = 0
-	let ROW_FILTER_REQUIRED = 1
-	let SECTION_DEFAULT = 0
-	let SECTION_CATEGORIES = 1
-    
-    var selectedCell: FilterCell?
+	let showRequiredEventsCell = UITableViewCell.newAutoLayout()
 	
-	//filtering types for FeedVC to inspect
-	static var filterRequired = false
-	static var filterCategory:Category?
-    
+	var tableSections = [(name:String, rows:[UITableViewCell])]()
+	var selectedFilters:Set<UITableViewCell> = []
+	
+	/**
+		Sets the table to `grouped` style, the title to "Filter", and creates the table view cells.
+	*/
+	convenience init()
+	{
+		self.init(style: .grouped)
+		
+		title = "Filter"
+		configureTableSections()
+	}
+	/**
+		Sets up the all cells in the table.
+	*/
+	private func configureTableSections()
+	{
+		showRequiredEventsCell.textLabel?.text = "Required events"
+		
+		tableSections.append((name: "", rows: [showRequiredEventsCell]))
+		//put student types in 2nd section
+		tableSections.append((name: "Students", rows: Student.ORDERED.map({
+			student in
+			let cell = UITableViewCell.newAutoLayout()
+			cell.textLabel?.text = student.rawValue
+			return cell
+		})))
+		//put colleges in 3rd section
+		tableSections.append((name: "Colleges", rows: Colleges.ORDERED.map({
+			college in
+			let cell = UITableViewCell.newAutoLayout()
+			cell.textLabel?.text = college.rawValue
+			return cell
+		})))
+		//put all the categories that aren't colleges in the last section
+		tableSections.append((name: "", rows: UserData.categories
+			.filter({Colleges.collegeForPk($0.pk) == nil}).map({
+				category in
+				let cell = UITableViewCell.newAutoLayout()
+				cell.textLabel?.text = category.name
+				return cell
+			})))
+	}
+	
     // MARK:- TableView Methods
 	
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?
 	{
-        return sections[section]
+        return tableSections[section].name
     }
     override func numberOfSections(in tableView: UITableView) -> Int
 	{
-        return sections.count
+        return tableSections.count
     }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
 	{
-		switch (section)
-		{
-		case SECTION_DEFAULT:
-			return 2	//Show all events, show required events
-		case SECTION_CATEGORIES:
-			return UserData.categories.count
-		default:
-			print("FilterVC: unexpected section number: \(section)")
-			return 0
-		}
+		return tableSections[section].rows.count
     }
-	/**
-		Set how each cell looks based on whether or not they are selected. The cell displays custom text if it represents special built-in filters (that are not categories).
-		- parameters:
-			- tableView: Reference to the table.
-			- indexPath: Index & section of the cell.
-	*/
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
 	{
-        let cell = tableView.dequeueReusableCell(withIdentifier: "filterCell") as! FilterCell
-		
-		//set selection here as well, since we want FilterVC to "remember" which filter was selected even after you exit FilterVC and reopen it
-		let selected:Bool
-		switch (indexPath.section)
-		{
-		case SECTION_DEFAULT:
-			if (indexPath.row == ROW_FILTER_ALL)
-			{
-				cell.configureAllEvents()
-				selected = !FilterVC.filterRequired && FilterVC.filterCategory == nil
-			}
-			else
-			{
-				cell.configureRequiredEvents()
-				selected = FilterVC.filterRequired && FilterVC.filterCategory == nil
-			}
-		case SECTION_CATEGORIES:
-			cell.configure(category: UserData.categories[indexPath.row])
-			selected = !FilterVC.filterRequired && FilterVC.filterCategory != nil && FilterVC.filterCategory! == UserData.categories[indexPath.row]
-		default:
-			print("FilterVC: Unexpected section number")
-			selected = false
-		}
-		
-		cell.selected(selected)
-		if (selected)
-		{
-			selectedCell = cell
-		}
-		
-        return cell
+        return tableSections[indexPath.section].rows[indexPath.row]
     }
     /**
-		Set the correct global variables when a filter is selected, and notify listeners. Deselects the previously selected cell (if that exists).
+		Gives the selected cell a checkmark (or removes it) and notify listeners.
 		- parameters:
 			- tableView: Reference to table.
 			- indexPath: Index of selected cell.
 	*/
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
 	{
-        selectedCell?.selected(false)
-        
-        let cell = tableView.cellForRow(at: indexPath) as! FilterCell
-		cell.selected(true)
-        selectedCell = cell
-		
-		//change static vars indicating what to filter
-		if (cell.requiredEvents)
+      	let cell = tableView.cellForRow(at: indexPath)!
+		if (selectedFilters.contains(cell))
 		{
-			FilterVC.filterRequired = true
-			FilterVC.filterCategory = nil
+			cell.accessoryType = .none
+			selectedFilters.remove(cell)
 		}
 		else
 		{
-			FilterVC.filterRequired = false
-			if (cell.category != nil)
-			{
-				FilterVC.filterCategory = cell.category
-			}
-			else
-			{
-				FilterVC.filterCategory = nil
-			}
+			cell.accessoryType = .checkmark
+			selectedFilters.insert(cell)
 		}
+		tableView.deselectRow(at: indexPath, animated: true)
 		NotificationCenter.default.post(name: .reloadData, object: nil)
     }
-    
 }

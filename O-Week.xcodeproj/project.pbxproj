@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0628E4851E7C82830066A308 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0628E4841E7C82830066A308 /* MapKit.framework */; };
 		0628E4871E7CA3260066A308 /* FeedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0628E4861E7CA3260066A308 /* FeedVC.swift */; };
+		06523C391FCB8E06003B0257 /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06523C381FCB8E06003B0257 /* Student.swift */; };
 		067EC2E71E8C9F8D0098ED94 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067EC2E61E8C9F8D0098ED94 /* Event.swift */; };
 		067EC2E91E8C9FE20098ED94 /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067EC2E81E8C9FE20098ED94 /* Time.swift */; };
 		06B787D11FA65AEA00534D6E /* DateContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B787D01FA65AEA00534D6E /* DateContainer.swift */; };
@@ -42,7 +43,6 @@
 		DCD492221EF0D98100F4F93C /* LocalNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD492211EF0D98100F4F93C /* LocalNotifications.swift */; };
 		DCDEBFF71EB414BB0014E028 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDEBFF61EB414BB0014E028 /* UserData.swift */; };
 		DCF15FFB1EEF0E9200793D04 /* FilterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF15FFA1EEF0E9200793D04 /* FilterVC.swift */; };
-		DCF15FFD1EEF0EB800793D04 /* FilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF15FFC1EEF0EB800793D04 /* FilterCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +65,7 @@
 /* Begin PBXFileReference section */
 		0628E4841E7C82830066A308 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		0628E4861E7CA3260066A308 /* FeedVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = FeedVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		06523C381FCB8E06003B0257 /* Student.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		067EC2E61E8C9F8D0098ED94 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Event.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		067EC2E81E8C9FE20098ED94 /* Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
 		06B787D01FA65AEA00534D6E /* DateContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateContainer.swift; sourceTree = "<group>"; };
@@ -110,7 +111,6 @@
 		DCD492211EF0D98100F4F93C /* LocalNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalNotifications.swift; sourceTree = "<group>"; };
 		DCDEBFF61EB414BB0014E028 /* UserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		DCF15FFA1EEF0E9200793D04 /* FilterVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = FilterVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		DCF15FFC1EEF0EB800793D04 /* FilterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = FilterCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +154,7 @@
 				06B787D01FA65AEA00534D6E /* DateContainer.swift */,
 				06FD2BD81FC91BC800E9AEC7 /* GradientView.swift */,
 				06BC603E1FCA1D1F007C9463 /* Colleges.swift */,
+				06523C381FCB8E06003B0257 /* Student.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -234,7 +235,6 @@
 				DCD4464B1E76F941002D8F68 /* DetailsVC.swift */,
 				DCB182371EB7936E0041EEBC /* SettingsVC.swift */,
 				DCF15FFA1EEF0E9200793D04 /* FilterVC.swift */,
-				DCF15FFC1EEF0EB800793D04 /* FilterCell.swift */,
 				06BC603C1FC9F7EB007C9463 /* SearchVC.swift */,
 				DC18B3171E76CBCE00C3FCD6 /* Assets.xcassets */,
 				DC9BD76F1EB6496C00552906 /* O-Week.xcdatamodeld */,
@@ -589,6 +589,7 @@
 				067EC2E91E8C9FE20098ED94 /* Time.swift in Sources */,
 				06B787D11FA65AEA00534D6E /* DateContainer.swift in Sources */,
 				DC2C02991E7DC25F00E9DDEF /* ScheduleVC.swift in Sources */,
+				06523C391FCB8E06003B0257 /* Student.swift in Sources */,
 				DC9BD7711EB6496C00552906 /* O-Week.xcdatamodeld in Sources */,
 				DCC2FF8B1EB24EEA00624B4F /* Internet.swift in Sources */,
 				06B787D31FA6CEE300534D6E /* TabBarVC.swift in Sources */,
@@ -596,7 +597,6 @@
 				06DA69B61F9FEE1800873F39 /* DatePageVC.swift in Sources */,
 				06E738F71EFCA34C00DFF73E /* CoreDataObject.swift in Sources */,
 				DCDEBFF71EB414BB0014E028 /* UserData.swift in Sources */,
-				DCF15FFD1EEF0EB800793D04 /* FilterCell.swift in Sources */,
 				DC18B3111E76CBCE00C3FCD6 /* AppDelegate.swift in Sources */,
 				DCD4464C1E76F941002D8F68 /* DetailsVC.swift in Sources */,
 				DC23E00F1EBD63980060F24F /* DateCell.swift in Sources */,

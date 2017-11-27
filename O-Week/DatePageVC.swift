@@ -11,6 +11,9 @@ import UIKit
 /**
 	Holds a reference to all `FeedVC`s and `ScheduleVC`s, one for each day of orientation. Allows swiping between them.
 	`pages`: All the `FeedVC`s or `ScheduleVC`s. Whatever these are, they must implement the `DateContainer` protocol in order to change `UserData.selectedDate` on page change.
+`style`: Whether the page displayed is a `FeedVC` or a `ScheduleVC`.
+`detailsVC`: A reference to the details page for the `FeedVC` or `ScheduleVC` to use. Stored here for reuse between different pages.
+`filterVC`: A reference to the filter selection page for `FeedVC`. Stored here since `FeedVC` shouldn't control the navigation bar, where the filter button resides.
 */
 class DatePageVC:UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate
 {
@@ -18,6 +21,7 @@ class DatePageVC:UIPageViewController, UIPageViewControllerDataSource, UIPageVie
 	var pages = [UIViewController]()
 	var style:Style!
 	var detailsVC:DetailsVC!
+	var filterVC:FilterVC?
 	
 	/**
 		Creates a `DatePageVC` with a navigation bar that holds either `FeedVC`s or `ScheduleVC`s based on the style given.
@@ -32,7 +36,8 @@ class DatePageVC:UIPageViewController, UIPageViewControllerDataSource, UIPageVie
 		{
 		case .feed:
 			navController.navigationBar.topItem?.title = "Browse Events"
-			navController.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "filter")!, style: .plain, target: self, action: nil)
+			navController.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "filter")!, style: .plain, target: datePageVC, action: #selector(onFilterClick))
+			datePageVC.filterVC = FilterVC()
 		case .schedule:
 			navController.navigationBar.topItem?.title = "My Schedule"
 		}
@@ -97,6 +102,9 @@ class DatePageVC:UIPageViewController, UIPageViewControllerDataSource, UIPageVie
 		view.addSubview(datePicker!.view)
 		datePicker!.didMove(toParentViewController: self)
 	}
+	/**
+		Synchronize the page with `UserData.selectedDate`, which could've been changed by other classes.
+	*/
 	@objc func syncSelectedDate()
 	{
 		guard let currentVC = viewControllers?[0] as? DateContainer else {
@@ -109,6 +117,17 @@ class DatePageVC:UIPageViewController, UIPageViewControllerDataSource, UIPageVie
 		let newPage = pages[UserData.DATES.index(of: UserData.selectedDate)!]
 		let direction:UIPageViewControllerNavigationDirection = (UserData.userCalendar.compare(currentVC.date, to: UserData.selectedDate, toGranularity: .day) == .orderedAscending) ? .forward : .reverse
 		setViewControllers([newPage], direction: direction, animated: true, completion: nil)
+	}
+	/**
+		Open the filter when it is clicked.
+	*/
+	@objc func onFilterClick()
+	{
+		guard filterVC != nil else {
+			print("DatePageVC: filter clicked, but filterVC is nil")
+			return
+		}
+		navigationController?.pushViewController(filterVC!, animated: true)
 	}
 	/**
 		Returns the `UIViewController` that comes before the one given, nil if the one given has no preceding page.

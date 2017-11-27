@@ -105,14 +105,14 @@ class FeedVC:UITableViewController, DateContainer
 	private func filter()
 	{
 		var tempEvents = UserData.allEvents[date]!
-		if (FilterVC.filterRequired)
-		{
-			tempEvents = tempEvents.filter({$0.required})
-		}
-		else if (FilterVC.filterCategory != nil)
-		{
-			tempEvents = tempEvents.filter({$0.category == FilterVC.filterCategory!.pk})
-		}
+//		if (FilterVC.filterRequired)
+//		{
+//			tempEvents = tempEvents.filter({$0.required})
+//		}
+//		else if (FilterVC.filterCategory != nil)
+//		{
+//			tempEvents = tempEvents.filter({$0.category == FilterVC.filterCategory!.pk})
+//		}
 		
 		events = tempEvents
 	}

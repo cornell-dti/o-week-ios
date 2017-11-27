@@ -11,8 +11,8 @@ import UIKit
 /**
 	Displays settings to the user and a list of links to external resources.
 
-	`URLS`: An array of URLs matching each cell in the resources section. Should be updated often.
-	`tableSections`: An array of sections of cells in Settings. Each element has a name, which is the section's header, and rows, an array of cells within the section.
+	`URLS`: URLs matching each cell in the resources section. Should be updated often.
+	`tableSections`: Sections of cells in Settings. Each element has a name, which is the section's header, and rows, cells within the section.
 */
 class SettingsVC: UITableViewController
 {
