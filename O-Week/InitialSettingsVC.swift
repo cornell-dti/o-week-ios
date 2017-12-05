@@ -10,11 +10,12 @@ import UIKit
 
 /**
 	Displays the tutorial that opens on the app's initial launch.
+	`buttons`: The buttons and each page, and the info that each one is associated with. Required: `buttons.count` <= `pages.count`
 */
 class InitialSettingsVC:UIPageViewController, UIPageViewControllerDataSource
 {
 	var pages:[UIViewController]!
-	var buttons:[[UILabel]] = []
+	var buttons:[[(button:UILabel, pk:Int?)]] = []
 	
 	/**
 		Creates a `InitialSettingsVC` with a navigation bar.
@@ -77,10 +78,17 @@ class InitialSettingsVC:UIPageViewController, UIPageViewControllerDataSource
 		transferButton.autoPinEdge(toSuperviewEdge: .right)
 		transferButton.autoPinEdge(toSuperviewEdge: .bottom)
 		
-		buttons.append([freshmanButton, transferButton])
+		buttons.append([(button:freshmanButton, pk:nil), (button:transferButton, pk:Student.Transfer.pk)])
 		
 		return page1
 	}
+	/**
+		Creates the text & buttons for page 2, with listeners for on click events.
+		Adds buttons to `buttons` as the 1st element.
+	
+		Required: `createPage1()` has been run (once).
+		- returns: the 2nd page.
+	*/
 	private func createPage2() -> UIViewController
 	{
 		let page2 = PageVC()
@@ -98,12 +106,19 @@ class InitialSettingsVC:UIPageViewController, UIPageViewControllerDataSource
 		buttonsContainer.alignment = .fill
 		buttonsContainer.axis = .vertical
 		buttonsContainer.spacing = 10
-		let collegeButtons = Colleges.ORDERED.map({createButton(with: $0.rawValue, textSize: 18)})
+		let collegeButtons:[(button:UILabel, pk:Int?)] = Colleges.ORDERED.map({(button:createButton(with: $0.rawValue, textSize: 18), pk:$0.pk)})
 		buttons.append(collegeButtons)
-		collegeButtons.forEach({buttonsContainer.addArrangedSubview($0)})
+		collegeButtons.forEach({buttonsContainer.addArrangedSubview($0.button)})
 		
 		return page2
 	}
+	/**
+		Creates the text & buttons for page 3, with listeners for on click events.
+		Adds buttons to `buttons` as the 2nd element.
+	
+		Required: `createPage1()` and `creaetPage2()` has been run (once).
+		- returns: the 3rd page.
+	*/
 	private func createPage3() -> UIViewController
 	{
 		let page3 = PageVC()
@@ -133,10 +148,15 @@ class InitialSettingsVC:UIPageViewController, UIPageViewControllerDataSource
 		startButton.autoPinEdge(toSuperviewEdge: .right)
 		startButton.autoPinEdge(toSuperviewEdge: .bottom)
 		
-		buttons.append([startButton])
+		buttons.append([(button:startButton, pk:nil)])
 		
 		return page3
 	}
+	/**
+		Creates a `UIView` within the view of the given `UIViewController`
+		- parameter vc: UIViewController
+		- returns: Container (content view of scroll view)
+	*/
 	private func createContainer(in vc:UIViewController) -> UIView
 	{
 		let scrollView = UIScrollView.newAutoLayout()
@@ -149,6 +169,15 @@ class InitialSettingsVC:UIPageViewController, UIPageViewControllerDataSource
 		container.autoMatch(.width, to: .width, of: vc.view, withOffset: -Layout.MARGIN * 2)
 		return container
 	}
+	/**
+		Creates a `UILabel` with the style of a title containing the given text.
+		The title's top, left, and right sides are pinned to the `container`.
+		The label assumes it is the topmost child.
+		- parameters:
+			- title: label.text
+			- container: label.superview
+		- returns: Label
+	*/
 	private func createTitle(_ title:String, in container: UIView) -> UILabel
 	{
 		let text = UILabel.newAutoLayout()
@@ -161,6 +190,14 @@ class InitialSettingsVC:UIPageViewController, UIPageViewControllerDataSource
 		text.autoPinEdge(toSuperviewEdge: .top)
 		return text
 	}
+	/**
+		Creates a `UILabel` with the style of a header containing the given text.
+		The header's left and right sides are pinned to the `container`.
+		- parameters:
+			- header: label.text
+			- container: label.superview
+		- returns: Label
+	*/
 	private func createHeader(_ header:String, in container:UIView) -> UILabel
 	{
 		let text = UILabel.newAutoLayout()
@@ -173,6 +210,14 @@ class InitialSettingsVC:UIPageViewController, UIPageViewControllerDataSource
 		text.autoPinEdge(toSuperviewEdge: .right)
 		return text
 	}
+	/**
+		Creates a `UILabel` with the style of a paragraph containing the given text.
+		The label's left and right sides are pinned to the `container`.
+		- parameters:
+			- paragraph: label.text
+			- container: label.superview
+	-	 returns: Label
+	*/
 	private func createParagraph(_ paragraph:String, in container:UIView) -> UILabel
 	{
 		let text = UILabel.newAutoLayout()
@@ -213,6 +258,10 @@ class InitialSettingsVC:UIPageViewController, UIPageViewControllerDataSource
 	}
 	/**
 		Handles button clicks.
+		Fills the button that was clicked and empties other buttons on that pages.
+		Saves the values for buttons that have a `pk` associated with it.
+		Scrolls to the next page if it isn't the last page, or opens the main app.
+	
 		- parameter gestureRecognizer: Contains the view that was clicked.
 	*/
 	@objc func onButtonClick(_ gestureRecognizer: UIGestureRecognizer)
@@ -224,11 +273,11 @@ class InitialSettingsVC:UIPageViewController, UIPageViewControllerDataSource
 		
 		for pageNum in 0..<buttons.count
 		{
-			if (buttons[pageNum].contains(clickedButton))
+			if let index = buttons[pageNum].map({$0.button}).index(of: clickedButton)
 			{
 				//deselect all buttons
 				buttons[pageNum].forEach({
-					button in
+					(button, _) in
 					button.backgroundColor = UIColor.white
 					button.textColor = Colors.RED
 				})
@@ -236,8 +285,47 @@ class InitialSettingsVC:UIPageViewController, UIPageViewControllerDataSource
 				//select the clicked button
 				clickedButton.backgroundColor = Colors.RED
 				clickedButton.textColor = UIColor.white
+				
+				//save new values
+				if let pk = buttons[pageNum][index].pk
+				{
+					switch pageNum
+					{
+					case 0:	//the 1st page stores the student's type
+						UserData.setStudentType(pk: pk)
+					case 1:	//the 2nd page stores the student's college
+						UserData.setCollegeType(pk: pk)
+					default:
+						print("InitialSettingsVC: onButtonClick called with pk on invalid page: \(pageNum)")
+					}
+				}
+				
+				//go to the next page
+				if (pageNum < pages.count-1)
+				{
+					setViewControllers([pages[pageNum+1]], direction: .forward, animated: true, completion: nil)
+				}
+				else
+				{
+					endTutorial()
+				}
+				return
 			}
 		}
+	}
+	/**
+		Selects all events that are required for the user and transitions to `TabBarVC`.
+	*/
+	private func endTutorial()
+	{
+		//add required events
+		UserData.allEvents.values.flatMap({$0})
+			.filter({UserData.requiredForUser(event: $0)})
+			.forEach({UserData.insertToSelectedEvents($0)})
+		//send notifications
+		LocalNotifications.updateNotifications()
+		
+		present(TabBarVC(), animated: true, completion: nil)
 	}
 	
 	//the following 2 methods are required to scroll through the pages

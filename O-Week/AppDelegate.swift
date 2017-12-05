@@ -61,8 +61,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate
 	*/
 	private func startFirstVC()
 	{
-		//window!.rootViewController = TabBarVC()
-		window!.rootViewController = InitialSettingsVC.createWithNavBar()
+		if (UserData.isFirstRun())
+		{
+			window!.rootViewController = InitialSettingsVC.createWithNavBar()
+		}
+		else
+		{
+			window!.rootViewController = TabBarVC()
+		}
 		window!.makeKeyAndVisible()
 	}
 	

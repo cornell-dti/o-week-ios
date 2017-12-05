@@ -25,6 +25,8 @@ class UserData
     //UserDefaults keys
     static let addedPKsName = "AddedPKs" //KeyPath used for accessing added PKs
 	static let versionName = "version" //KeyPath used for accessing local version to compare with database
+	static let studentTypeName = "student" //KeyPath used for accessing whether the student is a transfer. See `Student` and `studentTypePk`.
+	static let collegeTypeName = "college" //KeyPath used for accessing the college of the user. See `Colleges` and `collegePk`.
     
     //Events
     static var allEvents = [Date: [Event]]()
@@ -43,6 +45,10 @@ class UserData
 	
 	//Categories
 	static var categories = [Category]()
+	
+	//User identity
+	static var studentTypePk:Int? = nil
+	static var collegePk:Int? = nil
 	
     private init(){}
 	
@@ -75,6 +81,25 @@ class UserData
 		}
 	}
 	/**
+		Sets `studentTypePk` and `collegePk` according to saved values.
+	*/
+	private static func initStudentIdentity()
+	{
+		let defaults = UserDefaults.standard
+		let storedStudentPk = defaults.integer(forKey: studentTypeName)
+		let storedCollegePk = defaults.integer(forKey: collegeTypeName)
+		
+		//the integer might be the default value (and not something we saved). Check.
+		if (Student.studentForPk(storedStudentPk) != nil)
+		{
+			studentTypePk = storedStudentPk
+		}
+		if (Colleges.collegeForPk(storedCollegePk) != nil)
+		{
+			collegePk = storedCollegePk
+		}
+	}
+	/**
 		Instantiates `allEvents`, `selectedEvents`, `categories` by reading from CoreData and interacting with the database.
 	
 		- note: Call whenever the app enters foreground or is launched.
@@ -91,6 +116,7 @@ class UserData
 	static func loadData()
 	{
 		initDates()
+		initStudentIdentity()
 		
 		//load from CoreData
 		let eventData = fetchFromCoreData(Event.self)
@@ -176,10 +202,32 @@ class UserData
 		- parameter event: The event to check.
 		- returns: True if the event is required for this user in particular, false otherwise.
 	*/
-	//TODO: Change to integrate sign-in page & saved data
 	static func requiredForUser(event: Event) -> Bool
 	{
-		return event.required || event.categoryRequired
+		if (event.required)
+		{
+			return true
+		}
+		if (event.categoryRequired)
+		{
+			if let student = studentTypePk
+			{
+				if (student == event.category)
+				{
+					//required for student's type
+					return true
+				}
+			}
+			if let college = collegePk
+			{
+				if (college == event.category)
+				{
+					//required for student's college
+					return true
+				}
+			}
+		}
+		return false
 	}
 	
     // MARK:- Search Functions
@@ -466,5 +514,36 @@ class UserData
 			let defaults = UserDefaults.standard
 			defaults.set(newValue, forKey: versionName)
 		}
+	}
+	/**
+		Saves what type of student the user is.
+		- parameter pk: Pk of the category that is the user's identity. Should match values in `Student`.
+	*/
+	static func setStudentType(pk:Int)
+	{
+		let defaults = UserDefaults.standard
+		defaults.set(pk, forKey: studentTypeName)
+		studentTypePk = pk
+	}
+	/**
+		Saves the college the user is in.
+		- parameter pk: Pk of the category that is the user's college. Should match values in `Colleges`.
+	*/
+	static func setCollegeType(pk:Int)
+	{
+		let defaults = UserDefaults.standard
+		defaults.set(pk, forKey: collegeTypeName)
+		collegePk = pk
+	}
+	/**
+		Returns whether or not this is the first time the user's opened the app.
+		Based on whether the college pk value is saved.
+		- returns: True if the user had not used the app before.
+	*/
+	static func isFirstRun() -> Bool
+	{
+		let defaults = UserDefaults.standard
+		let collegeTypePk = defaults.integer(forKey: collegeTypeName)
+		return Colleges.collegeForPk(collegeTypePk) == nil
 	}
 }

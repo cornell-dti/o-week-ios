@@ -144,11 +144,10 @@ class LocalNotifications: NSObject, UNUserNotificationCenterDelegate
 			let pk = Int(id.components(separatedBy: LocalNotifications.EVENT_UPDATED_ID)[1])
 			if let event = UserData.eventFor(pk!)
 			{
-				let storyboard = UIStoryboard(name: "Main", bundle: nil)
-				let detailsVC = storyboard.instantiateViewController(withIdentifier: "detailsVC") as! DetailsVC
-				detailsVC.event = event
-				let navigationController = window.rootViewController as! UINavigationController
-				navigationController.pushViewController(detailsVC, animated: true)
+				let detailsVC = DetailsVC()
+				detailsVC.configure(event: event)
+				let navigationController = window.rootViewController?.navigationController
+				navigationController?.pushViewController(detailsVC, animated: true)
 			}
 		}
 	}
