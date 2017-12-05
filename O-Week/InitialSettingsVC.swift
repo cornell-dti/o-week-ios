@@ -139,11 +139,14 @@ class InitialSettingsVC:UIPageViewController, UIPageViewControllerDataSource
 	}
 	private func createContainer(in vc:UIViewController) -> UIView
 	{
+		let scrollView = UIScrollView.newAutoLayout()
+		vc.view.addSubview(scrollView)
+		scrollView.autoPinEdgesToSuperviewEdges()
+		
 		let container = UIView.newAutoLayout()
-		vc.view.addSubview(container)
-		container.autoPinEdge(toSuperviewEdge: .left, withInset: Layout.MARGIN)
-		container.autoPinEdge(toSuperviewEdge: .right, withInset: Layout.MARGIN)
-		container.autoCenterInSuperview()
+		scrollView.addSubview(container)
+		container.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 40, left: Layout.MARGIN, bottom: 40, right: Layout.MARGIN))
+		container.autoMatch(.width, to: .width, of: vc.view, withOffset: -Layout.MARGIN * 2)
 		return container
 	}
 	private func createTitle(_ title:String, in container: UIView) -> UILabel
