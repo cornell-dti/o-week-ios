@@ -51,7 +51,8 @@ enum Font
 {
 	static let MEDIUM = "AvenirNext-Medium"
 	static let REGULAR = "AvenirNext-Regular"
-	static let BOLD = "AvenirNext-DemiBold"
+	static let DEMIBOLD = "AvenirNext-DemiBold"
+	static let BOLD = "AvenirNext-Bold"
 }
 
 /**

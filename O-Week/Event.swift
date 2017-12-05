@@ -226,7 +226,7 @@ struct Event:Hashable, Comparable, CoreDataObject, JSONObject
 		let remaining = headerAndRemaining[2].trimmingCharacters(in: .whitespacesAndNewlines)
 		
 		//set header
-		let headerAttributes = [NSAttributedStringKey.font: UIFont(name: Font.BOLD, size: TEXT_SIZE)!]
+		let headerAttributes = [NSAttributedStringKey.font: UIFont(name: Font.DEMIBOLD, size: TEXT_SIZE)!]
 		let attributedHeader = NSAttributedString(string: header, attributes: headerAttributes)
 		string.append(attributedHeader)
 		
@@ -241,7 +241,7 @@ struct Event:Hashable, Comparable, CoreDataObject, JSONObject
 			let info = "\(bulletAndInfo[1])\n"
 			
 			//set bullet
-			let attributedBullet = NSAttributedString(string: bullet, attributes:[.font: UIFont(name: Font.BOLD, size: TEXT_SIZE)!, .foregroundColor: Colors.RED])
+			let attributedBullet = NSAttributedString(string: bullet, attributes:[.font: UIFont(name: Font.DEMIBOLD, size: TEXT_SIZE)!, .foregroundColor: Colors.RED])
 			string.append(attributedBullet)
 			
 			//set info

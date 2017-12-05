@@ -134,7 +134,7 @@ class DetailsVC: UIViewController, MKMapViewDelegate
 		eventTitle.autoPinEdge(toSuperviewEdge: .left, withInset: Layout.MARGIN)
 		eventTitle.autoPinEdge(toSuperviewEdge: .right, withInset: Layout.MARGIN)
 		eventTitle.autoPinEdge(toSuperviewEdge: .bottom, withInset: Layout.MARGIN)
-		eventTitle.font = UIFont(name: Font.BOLD, size: 22)
+		eventTitle.font = UIFont(name: Font.DEMIBOLD, size: 22)
 		eventTitle.numberOfLines = 0
 		eventTitle.textAlignment = .left
 		eventTitle.textColor = UIColor.white
@@ -181,7 +181,7 @@ class DetailsVC: UIViewController, MKMapViewDelegate
 		addButton.layer.cornerRadius = 10
 		addButton.textColor = Colors.RED
 		addButton.textAlignment = .center
-		addButton.font = UIFont(name: Font.BOLD, size: 16)
+		addButton.font = UIFont(name: Font.DEMIBOLD, size: 16)
 		
 		
 		//requiredContainer will hold requiredLabel, requiredDescription
@@ -200,7 +200,7 @@ class DetailsVC: UIViewController, MKMapViewDelegate
 		requiredLabel.textAlignment = .center
 		requiredLabel.textColor = UIColor.white
 		requiredLabel.text = "RQ"
-		requiredLabel.font = UIFont(name: Font.BOLD, size: 14)
+		requiredLabel.font = UIFont(name: Font.DEMIBOLD, size: 14)
 		requiredLabel.layer.cornerRadius = 16
 		
 		requiredContainer.addSubview(requiredDescription)

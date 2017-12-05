@@ -50,7 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         navigationBarAppearence.barTintColor = Colors.BRIGHT_RED
         navigationBarAppearence.tintColor = UIColor.white   //back arrow is white
         navigationBarAppearence.isTranslucent = false
-        navigationBarAppearence.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont(name: Font.BOLD, size: 16)!]
+        navigationBarAppearence.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont(name: Font.DEMIBOLD, size: 16)!]
 		
 		let switchAppearance = UISwitch.appearance()
 		switchAppearance.onTintColor = Colors.RED
@@ -61,7 +61,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate
 	*/
 	private func startFirstVC()
 	{
-		window!.rootViewController = TabBarVC()
+		//window!.rootViewController = TabBarVC()
+		window!.rootViewController = InitialSettingsVC.createWithNavBar()
 		window!.makeKeyAndVisible()
 	}
 	

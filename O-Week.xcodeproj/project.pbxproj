@@ -14,6 +14,8 @@
 		06523C3D1FCBC985003B0257 /* EmptyStateTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06523C3C1FCBC985003B0257 /* EmptyStateTableVC.swift */; };
 		067EC2E71E8C9F8D0098ED94 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067EC2E61E8C9F8D0098ED94 /* Event.swift */; };
 		067EC2E91E8C9FE20098ED94 /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067EC2E81E8C9FE20098ED94 /* Time.swift */; };
+		0681D35E1FD362FD00CB5CE2 /* InitialSettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0681D35D1FD362FD00CB5CE2 /* InitialSettingsVC.swift */; };
+		06B0BEDE1FD49662008E0E5E /* PaddedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B0BEDD1FD49662008E0E5E /* PaddedLabel.swift */; };
 		06B787D11FA65AEA00534D6E /* DateContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B787D01FA65AEA00534D6E /* DateContainer.swift */; };
 		06B787D31FA6CEE300534D6E /* TabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B787D21FA6CEE300534D6E /* TabBarVC.swift */; };
 		06BC603D1FC9F7EB007C9463 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06BC603C1FC9F7EB007C9463 /* SearchVC.swift */; };
@@ -72,6 +74,8 @@
 		06523C3C1FCBC985003B0257 /* EmptyStateTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateTableVC.swift; sourceTree = "<group>"; };
 		067EC2E61E8C9F8D0098ED94 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Event.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		067EC2E81E8C9FE20098ED94 /* Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
+		0681D35D1FD362FD00CB5CE2 /* InitialSettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSettingsVC.swift; sourceTree = "<group>"; };
+		06B0BEDD1FD49662008E0E5E /* PaddedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddedLabel.swift; sourceTree = "<group>"; };
 		06B787D01FA65AEA00534D6E /* DateContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateContainer.swift; sourceTree = "<group>"; };
 		06B787D21FA6CEE300534D6E /* TabBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarVC.swift; sourceTree = "<group>"; };
 		06BC603C1FC9F7EB007C9463 /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
@@ -149,18 +153,19 @@
 		0614E61D1F2CBDD70080EA2B /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				06E738F41EFCA06E00DFF73E /* Category.swift */,
-				06BC603E1FCA1D1F007C9463 /* Colleges.swift */,
-				06E738F61EFCA34C00DFF73E /* CoreDataObject.swift */,
-				06B787D01FA65AEA00534D6E /* DateContainer.swift */,
-				067EC2E61E8C9F8D0098ED94 /* Event.swift */,
-				06FD2BD81FC91BC800E9AEC7 /* GradientView.swift */,
-				06523C3A1FCB9268003B0257 /* HasPK.swift */,
-				06E309731EFDE8AA00F37D7F /* JSONObject.swift */,
 				06523C381FCB8E06003B0257 /* Student.swift */,
+				06BC603E1FCA1D1F007C9463 /* Colleges.swift */,
+				06E738F41EFCA06E00DFF73E /* Category.swift */,
+				067EC2E61E8C9F8D0098ED94 /* Event.swift */,
+				06E738F61EFCA34C00DFF73E /* CoreDataObject.swift */,
+				06E309731EFDE8AA00F37D7F /* JSONObject.swift */,
 				067EC2E81E8C9FE20098ED94 /* Time.swift */,
+				06523C3A1FCB9268003B0257 /* HasPK.swift */,
 				DC92BCDE1EF2229F009B4A8F /* UserPreferences.swift */,
+				06B787D01FA65AEA00534D6E /* DateContainer.swift */,
+				06FD2BD81FC91BC800E9AEC7 /* GradientView.swift */,
 				06523C3C1FCBC985003B0257 /* EmptyStateTableVC.swift */,
+				06B0BEDD1FD49662008E0E5E /* PaddedLabel.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -232,6 +237,7 @@
 				DCDEBFF61EB414BB0014E028 /* UserData.swift */,
 				DC18B3101E76CBCE00C3FCD6 /* AppDelegate.swift */,
 				06B787D21FA6CEE300534D6E /* TabBarVC.swift */,
+				0681D35D1FD362FD00CB5CE2 /* InitialSettingsVC.swift */,
 				06DA69B51F9FEE1800873F39 /* DatePageVC.swift */,
 				DC23E0101EBD6E780060F24F /* DatePickerController.swift */,
 				DC23E00E1EBD63980060F24F /* DateCell.swift */,
@@ -602,7 +608,9 @@
 				06523C391FCB8E06003B0257 /* Student.swift in Sources */,
 				DC9BD7711EB6496C00552906 /* O-Week.xcdatamodeld in Sources */,
 				DCC2FF8B1EB24EEA00624B4F /* Internet.swift in Sources */,
+				06B0BEDE1FD49662008E0E5E /* PaddedLabel.swift in Sources */,
 				06B787D31FA6CEE300534D6E /* TabBarVC.swift in Sources */,
+				0681D35E1FD362FD00CB5CE2 /* InitialSettingsVC.swift in Sources */,
 				06E738F51EFCA06E00DFF73E /* Category.swift in Sources */,
 				06DA69B61F9FEE1800873F39 /* DatePageVC.swift in Sources */,
 				06E738F71EFCA34C00DFF73E /* CoreDataObject.swift in Sources */,

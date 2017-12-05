@@ -220,6 +220,8 @@ class ScheduleVC: UIViewController, DateContainer
         container.layer.cornerRadius = 3
         container.layer.borderColor = Colors.BRIGHT_RED.withAlphaComponent(0.6).cgColor
         container.layer.borderWidth = 2
+		container.layer.masksToBounds = true
+		
         contentView.addSubview(container)
         eventViews[container] = event
         drawEvent(event, container: container)
@@ -272,7 +274,7 @@ class ScheduleVC: UIViewController, DateContainer
 			requiredLabel.textAlignment = .center
 			requiredLabel.textColor = Colors.RED
 			requiredLabel.text = "RQ"
-			requiredLabel.font = UIFont(name: Font.BOLD, size: 10)
+			requiredLabel.font = UIFont(name: Font.DEMIBOLD, size: 10)
 			requiredLabel.layer.cornerRadius = 12
 			
 			time.autoPinEdge(.right, to: .left, of: requiredLabel, withOffset: MARGIN)
@@ -285,7 +287,7 @@ class ScheduleVC: UIViewController, DateContainer
         let title = UILabel.newAutoLayout()
         title.numberOfLines = 0
         title.lineBreakMode = .byTruncatingTail
-        title.font = UIFont(name: Font.BOLD, size: 14)
+        title.font = UIFont(name: Font.DEMIBOLD, size: 14)
         title.textColor = UIColor.white
         title.text = event.title
         paddedContainer.addSubview(title)

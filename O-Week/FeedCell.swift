@@ -80,7 +80,7 @@ class FeedCell:UITableViewCell
 		eventTitle.textAlignment = .left
 		eventTitle.textColor = UIColor.black
 		eventTitle.alpha = 0.8
-		eventTitle.font = UIFont(name: Font.BOLD, size: 14)
+		eventTitle.font = UIFont(name: Font.DEMIBOLD, size: 14)
 		eventTitle.lineBreakMode = .byTruncatingTail
 		eventTitle.setContentHuggingPriority(.defaultLow, for: .horizontal)
 		eventTitle.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
@@ -107,7 +107,7 @@ class FeedCell:UITableViewCell
 		requiredText.textColor = UIColor.white
 		requiredText.backgroundColor = Colors.RED
 		requiredText.text = "RQ"
-		requiredText.font = UIFont(name: Font.BOLD, size: 14)
+		requiredText.font = UIFont(name: Font.DEMIBOLD, size: 14)
 		requiredText.isUserInteractionEnabled = false
 		requiredText.autoSetDimensions(to: CGSize(width: 32, height: 32))
 		requiredText.layer.cornerRadius = 16
