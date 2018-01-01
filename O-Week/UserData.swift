@@ -38,10 +38,10 @@ class UserData
     //Dates
     static var DATES = [Date]()
 	static var selectedDate:Date!
-	static let YEAR = 2017
-	static let MONTH = 8
+	static let YEAR = 2018
+	static let MONTH = 1
 	static let START_DAY = 18	//Dates range: [START_DAY, END_DAY], inclusive
-	static let END_DAY = 26		//Note: END_DAY must > START_DAY
+	static let END_DAY = 23		//Note: END_DAY must > START_DAY
 	
 	//Categories
 	static var categories = [Category]()
@@ -391,8 +391,7 @@ class UserData
 	*/
 	static func saveToCoreData(_ object:CoreDataObject)
 	{
-		let appDelegate = UIApplication.shared.delegate as! AppDelegate
-		appDelegate.persistentContainer.performBackgroundTask(
+		CoreData.persistentContainer.performBackgroundTask(
 		{
 			(context) in
 			let entity = NSEntityDescription.entity(forEntityName: type(of: object).entityName, in: context)!
@@ -408,8 +407,7 @@ class UserData
 	*/
 	static func removeFromCoreData(entityName:String, pk:Int)
 	{
-		let appDelegate = UIApplication.shared.delegate as! AppDelegate
-		appDelegate.persistentContainer.performBackgroundTask(
+		CoreData.persistentContainer.performBackgroundTask(
 		{
 			(context) in
 			let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
@@ -425,8 +423,7 @@ class UserData
 	*/
 	private static func fetchFromCoreData(_ type:CoreDataObject.Type) -> [NSManagedObject]
 	{
-		let appDelegate = UIApplication.shared.delegate as! AppDelegate
-		let managedContext = appDelegate.persistentContainer.viewContext
+		let managedContext = CoreData.persistentContainer.viewContext
 		let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: type.entityName)
 		return try! managedContext.fetch(fetchRequest)
 	}

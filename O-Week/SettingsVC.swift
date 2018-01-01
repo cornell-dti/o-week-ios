@@ -23,7 +23,7 @@ class SettingsVC: UITableViewController
 	let campusMap = UITableViewCell.newAutoLayout()
 	let orientationWebsite = UITableViewCell.newAutoLayout()
 	let rescuerApp = UITableViewCell.newAutoLayout()
-	let URLS = ["http://ccengagement.cornell.edu/sites/ccengagement.cornell.edu/files/rnsp/documents/january_orientation_guide_2018.pdf", "https://www.cornell.edu/about/maps/Cornell-campus-map-072213.pdf", "https://newstudents.cornell.edu/spring-2018/first-year/orientation", "itms-apps://itunes.apple.com/us/app/cornell-rescuer/id1209164387?mt=8"]
+	let URLS = ["http://ccengagement.cornell.edu/sites/ccengagement.cornell.edu/files/rnsp/documents/january_orientation_guide_2018.pdf", "https://www.cornell.edu/about/maps/cornell-campus-map-2015.pdf", "https://newstudents.cornell.edu/spring-2018/first-year/orientation", "itms-apps://itunes.apple.com/us/app/cornell-rescuer/id1209164387?mt=8"]
 	
 	lazy var tableSections = [(name:"Notifications", rows:[remindersCell, notifyMeCell]), (name:"Resources", rows:[orientationPdf, campusMap, orientationWebsite, rescuerApp])]
 	

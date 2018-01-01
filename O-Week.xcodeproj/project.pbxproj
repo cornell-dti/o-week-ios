@@ -23,7 +23,7 @@
 		06DA69B61F9FEE1800873F39 /* DatePageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06DA69B51F9FEE1800873F39 /* DatePageVC.swift */; };
 		06E309741EFDE8AA00F37D7F /* JSONObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E309731EFDE8AA00F37D7F /* JSONObject.swift */; };
 		06E738F51EFCA06E00DFF73E /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E738F41EFCA06E00DFF73E /* Category.swift */; };
-		06E738F71EFCA34C00DFF73E /* CoreDataObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E738F61EFCA34C00DFF73E /* CoreDataObject.swift */; };
+		06E738F71EFCA34C00DFF73E /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E738F61EFCA34C00DFF73E /* CoreData.swift */; };
 		06FD2BD91FC91BC800E9AEC7 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06FD2BD81FC91BC800E9AEC7 /* GradientView.swift */; };
 		06FD2BDB1FC9266800E9AEC7 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06FD2BDA1FC9266800E9AEC7 /* Extensions.swift */; };
 		1EAA0BD2099219947F10D17D /* Pods_O_WeekTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C45EF3666707CE5869071BEC /* Pods_O_WeekTests.framework */; };
@@ -83,7 +83,7 @@
 		06DA69B51F9FEE1800873F39 /* DatePageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePageVC.swift; sourceTree = "<group>"; };
 		06E309731EFDE8AA00F37D7F /* JSONObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = JSONObject.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		06E738F41EFCA06E00DFF73E /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Category.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		06E738F61EFCA34C00DFF73E /* CoreDataObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CoreDataObject.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		06E738F61EFCA34C00DFF73E /* CoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CoreData.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		06FD2BD81FC91BC800E9AEC7 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		06FD2BDA1FC9266800E9AEC7 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		680698CA55279B36FAC481E8 /* Pods-O-Week.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-O-Week.release.xcconfig"; path = "Pods/Target Support Files/Pods-O-Week/Pods-O-Week.release.xcconfig"; sourceTree = "<group>"; };
@@ -157,7 +157,7 @@
 				06BC603E1FCA1D1F007C9463 /* Colleges.swift */,
 				06E738F41EFCA06E00DFF73E /* Category.swift */,
 				067EC2E61E8C9F8D0098ED94 /* Event.swift */,
-				06E738F61EFCA34C00DFF73E /* CoreDataObject.swift */,
+				06E738F61EFCA34C00DFF73E /* CoreData.swift */,
 				06E309731EFDE8AA00F37D7F /* JSONObject.swift */,
 				067EC2E81E8C9FE20098ED94 /* Time.swift */,
 				06523C3A1FCB9268003B0257 /* HasPK.swift */,
@@ -613,7 +613,7 @@
 				0681D35E1FD362FD00CB5CE2 /* InitialSettingsVC.swift in Sources */,
 				06E738F51EFCA06E00DFF73E /* Category.swift in Sources */,
 				06DA69B61F9FEE1800873F39 /* DatePageVC.swift in Sources */,
-				06E738F71EFCA34C00DFF73E /* CoreDataObject.swift in Sources */,
+				06E738F71EFCA34C00DFF73E /* CoreData.swift in Sources */,
 				DCDEBFF71EB414BB0014E028 /* UserData.swift in Sources */,
 				DC18B3111E76CBCE00C3FCD6 /* AppDelegate.swift in Sources */,
 				DCD4464C1E76F941002D8F68 /* DetailsVC.swift in Sources */,
