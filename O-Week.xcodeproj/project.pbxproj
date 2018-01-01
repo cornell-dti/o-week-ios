@@ -364,14 +364,14 @@
 					};
 					DC18B3201E76CBCE00C3FCD6 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 82HRX58VPA;
+						DevelopmentTeam = UJQ88SCQSQ;
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 						TestTargetID = DC18B30C1E76CBCE00C3FCD6;
 					};
 					DC18B32B1E76CBCE00C3FCD6 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 82HRX58VPA;
+						DevelopmentTeam = UJQ88SCQSQ;
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 						TestTargetID = DC18B30C1E76CBCE00C3FCD6;
@@ -784,7 +784,7 @@
 				INFOPLIST_FILE = "O-Week/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.cornellsatech.O-Week";
+				PRODUCT_BUNDLE_IDENTIFIER = com.cornellsatech.OWeek;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
@@ -800,7 +800,7 @@
 				INFOPLIST_FILE = "O-Week/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.cornellsatech.O-Week";
+				PRODUCT_BUNDLE_IDENTIFIER = com.cornellsatech.OWeek;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
@@ -813,10 +813,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = 82HRX58VPA;
+				DEVELOPMENT_TEAM = UJQ88SCQSQ;
 				INFOPLIST_FILE = "O-WeekTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.cornellsatech.O-WeekTests";
+				PRODUCT_BUNDLE_IDENTIFIER = com.cornellsatech.OWeekTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;
@@ -830,10 +830,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = 82HRX58VPA;
+				DEVELOPMENT_TEAM = UJQ88SCQSQ;
 				INFOPLIST_FILE = "O-WeekTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.cornellsatech.O-WeekTests";
+				PRODUCT_BUNDLE_IDENTIFIER = com.cornellsatech.OWeekTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;
@@ -846,10 +846,10 @@
 			baseConfigurationReference = D0640BFB5C2E40B3CB9F5023 /* Pods-O-WeekUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				DEVELOPMENT_TEAM = 82HRX58VPA;
+				DEVELOPMENT_TEAM = UJQ88SCQSQ;
 				INFOPLIST_FILE = "O-WeekUITests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.cornellsatech.O-WeekUITests";
+				PRODUCT_BUNDLE_IDENTIFIER = com.cornellsatech.OWeekUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;
@@ -862,10 +862,10 @@
 			baseConfigurationReference = C87BDC79F248EDF66A0B3BBC /* Pods-O-WeekUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				DEVELOPMENT_TEAM = 82HRX58VPA;
+				DEVELOPMENT_TEAM = UJQ88SCQSQ;
 				INFOPLIST_FILE = "O-WeekUITests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.cornellsatech.O-WeekUITests";
+				PRODUCT_BUNDLE_IDENTIFIER = com.cornellsatech.OWeekUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;
