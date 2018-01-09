@@ -59,16 +59,18 @@ class SearchVC: EmptyStateTableVC, UISearchResultsUpdating, UISearchControllerDe
 		searchController.searchBar.barTintColor = UIColor.white
 		searchController.dimsBackgroundDuringPresentation = false
 		
-		if let textfield = searchController.searchBar.value(forKey: "searchField") as? UITextField
+		if let textField = searchController.searchBar.value(forKey: "searchField") as? UITextField
 		{
-			if let backgroundview = textfield.subviews.first
+			if let backgroundview = textField.subviews.first
 			{
 				// Background color
 				backgroundview.backgroundColor = UIColor.white
 				// Rounded corner
-				backgroundview.layer.cornerRadius = 10;
-				backgroundview.clipsToBounds = true;
+				backgroundview.layer.cornerRadius = 10
+				backgroundview.clipsToBounds = true
 			}
+			//cursor color
+			textField.tintColor = UIColor.lightGray
 		}
 		
 		//connection search controller to nav bar
