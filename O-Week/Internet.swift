@@ -59,12 +59,10 @@ class Internet
 					let deletedCategoriesPK = categories["deleted"] as? [Int],
 					let events = data["events"] as? [String:Any],
 					let changedEventsJSON = events["changed"] as? [Any],
-					let deletedEventsPK = events["deleted"] as? [Int] else {
-				return
-			}
-			
-			//quick exit if version # did not change
-			guard version != newestVersion else {
+					let deletedEventsPK = events["deleted"] as? [Int],
+					//quick exit if version # did not change
+					version != newestVersion else {
+				runAsyncFunction({NotificationCenter.default.post(name: .reloadData, object: nil)})
 				return
 			}
 			

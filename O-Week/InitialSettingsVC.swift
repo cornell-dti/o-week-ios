@@ -10,12 +10,16 @@ import UIKit
 
 /**
 	Displays the tutorial that opens on the app's initial launch.
-	`buttons`: The buttons and each page, and the info that each one is associated with. Required: `buttons.count` <= `pages.count`
+	`buttons`: The buttons and each page, and the info that each one is associated with. Required: `buttons.count` <= `pages.count`.
+`waitingOnEventDownload`: True if the user is ready to end the tutorial but the events have yet to be downloaded.
 */
 class InitialSettingsVC:UIPageViewController, UIPageViewControllerDataSource
 {
 	var pages:[UIViewController]!
 	var buttons:[[(button:UILabel, pk:Int?)]] = []
+	var waitingOnEventDownload = false
+	var studentTypePk:Int? = nil
+	var collegePk:Int? = nil
 	
 	/**
 		Creates a `InitialSettingsVC` with a navigation bar.
@@ -35,6 +39,7 @@ class InitialSettingsVC:UIPageViewController, UIPageViewControllerDataSource
 	convenience init()
 	{
 		self.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
+		NotificationCenter.default.addObserver(self, selector: #selector(onEventsReload), name: .reloadData, object: nil)
 	}
 	
 	/**
@@ -292,9 +297,9 @@ class InitialSettingsVC:UIPageViewController, UIPageViewControllerDataSource
 					switch pageNum
 					{
 					case 0:	//the 1st page stores the student's type
-						UserData.setStudentType(pk: pk)
+						studentTypePk = pk
 					case 1:	//the 2nd page stores the student's college
-						UserData.setCollegeType(pk: pk)
+						collegePk = pk
 					default:
 						print("InitialSettingsVC: onButtonClick called with pk on invalid page: \(pageNum)")
 					}
@@ -307,25 +312,68 @@ class InitialSettingsVC:UIPageViewController, UIPageViewControllerDataSource
 				}
 				else
 				{
-					endTutorial()
+					attemptFinish()
 				}
 				return
 			}
 		}
 	}
 	/**
-		Selects all events that are required for the user and transitions to `TabBarVC`.
+		Attempts to add the required events for the user and end the tutorial. Will stall until events are downloaded.
+	
+		Does not save the student type and the college type until the events are updated, otherwise if the app is closed while we're waiting for events to update, the next time the app is opened, it'll skip through the tutorial and no events will be added.
 	*/
-	private func endTutorial()
+	private func attemptFinish()
 	{
-		//add required events
-		UserData.allEvents.values.flatMap({$0})
-			.filter({UserData.requiredForUser(event: $0)})
-			.forEach({UserData.insertToSelectedEvents($0)})
-		//send notifications
-		LocalNotifications.updateNotifications()
-		
-		present(TabBarVC(), animated: true, completion: nil)
+		if (UserData.version == 0)
+		{
+			waitingOnEventDownload = true
+			showRetryDownloadAlert()
+		}
+		else
+		{
+			//set college types
+			if (collegePk != nil)
+			{
+				UserData.setCollegeType(pk: collegePk!)
+			}
+			if (studentTypePk != nil)
+			{
+				UserData.setStudentType(pk: studentTypePk!)
+			}
+			
+			//add required events
+			UserData.allEvents.values.flatMap({$0})
+				.filter({UserData.requiredForUser(event: $0)})
+				.forEach({UserData.insertToSelectedEvents($0)})
+			//send notifications
+			LocalNotifications.updateNotifications()
+			
+			present(TabBarVC(), animated: true, completion: nil)
+		}
+	}
+	
+	/**
+		Listens to events that indicate that an attempt to download events has completed. If `waitingOnEventDownload` is true, then the user has completed the tutorial but the events have yet to finish downloading. Tell the user and let him try again.
+	*/
+	@objc func onEventsReload()
+	{
+		if (waitingOnEventDownload)
+		{
+			//if version == 0, then we DON'T have any events downloaded
+			UserData.version == 0 ? showRetryDownloadAlert() : attemptFinish()
+		}
+	}
+	
+	/**
+		Shows an alert that allows the user to retry downloading events.
+	*/
+	private func showRetryDownloadAlert()
+	{
+		let alert = UIAlertController(title: "Error", message: "Orientation events could not be downloaded", preferredStyle: .alert)
+		let tryAgain = UIAlertAction(title: "Try Again", style: .default, handler: {(action) in UserData.loadData()})
+		alert.addAction(tryAgain)
+		present(alert, animated: true, completion: nil)
 	}
 	
 	//the following 2 methods are required to scroll through the pages
