@@ -29,7 +29,7 @@ class FilterVC: UITableViewController
 		self.init(style: .grouped)
 		
 		title = "Filter"
-		navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(onCancelClick))
+		navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Clear", style: .plain, target: self, action: #selector(onCancelClick))
 		configureTableSections()
 	}
 	/**

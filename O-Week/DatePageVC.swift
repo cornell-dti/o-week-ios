@@ -12,8 +12,9 @@ import UIKit
 	Holds a reference to all `FeedVC`s and `ScheduleVC`s, one for each day of orientation. Allows swiping between them.
 	`pages`: All the `FeedVC`s or `ScheduleVC`s. Whatever these are, they must implement the `DateContainer` protocol in order to change `UserData.selectedDate` on page change.
 `style`: Whether the page displayed is a `FeedVC` or a `ScheduleVC`.
-`detailsVC`: A reference to the details page for the `FeedVC` or `ScheduleVC` to use. Stored here for reuse between different pages.
-`filterVC`: A reference to the filter selection page for `FeedVC`. Stored here since `FeedVC` shouldn't control the navigation bar, where the filter button resides.
+`detailsVC`: Details page for the `FeedVC` or `ScheduleVC` to use. Stored here for reuse between different pages.
+`filterVC`: Filter selection page for `FeedVC`. Stored here since `FeedVC` shouldn't control the navigation bar, where the filter button resides.
+`filterButton`: Button to change filter. Stored to change appearance based on selection of filters.
 */
 class DatePageVC:UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate
 {
@@ -22,6 +23,7 @@ class DatePageVC:UIPageViewController, UIPageViewControllerDataSource, UIPageVie
 	var style:Style!
 	var detailsVC:DetailsVC!
 	var filterVC:FilterVC?
+	var filterButton:UIButton?
 	
 	/**
 		Creates a `DatePageVC` with a navigation bar that holds either `FeedVC`s or `ScheduleVC`s based on the style given.
@@ -36,7 +38,7 @@ class DatePageVC:UIPageViewController, UIPageViewControllerDataSource, UIPageVie
 		{
 		case .feed:
 			navController.navigationBar.topItem?.title = "Browse Events"
-			navController.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "filter")!, style: .plain, target: datePageVC, action: #selector(onFilterClick))
+			navController.navigationBar.topItem?.rightBarButtonItem = createFilterButton(target: datePageVC)
 			datePageVC.filterVC = FilterVC()
 		case .schedule:
 			navController.navigationBar.topItem?.title = "My Schedule"
@@ -44,6 +46,22 @@ class DatePageVC:UIPageViewController, UIPageViewControllerDataSource, UIPageVie
 		AppDelegate.setUpExtendedNavBar(navController: navController)
 		datePageVC.detailsVC = DetailsVC()
 		return navController
+	}
+	
+	/**
+		Creates a filter button.
+		- parameter target: a newly created DatePageVC
+		- returns: Bar button item.
+	*/
+	private static func createFilterButton(target: DatePageVC) -> UIBarButtonItem
+	{
+		let button = UIButton(type: .custom)
+		button.imageEdgeInsets = UIEdgeInsets(top: Layout.MARGIN, left: Layout.MARGIN, bottom: Layout.MARGIN, right: Layout.MARGIN)
+		let image = UIImage(named: "filter")!.withRenderingMode(.alwaysTemplate)
+		button.setImage(image, for: .normal)
+		button.addTarget(target, action: #selector(onFilterClick), for: .touchUpInside)
+		target.filterButton = button
+		return UIBarButtonItem(customView: button)
 	}
 	
 	/**
@@ -70,6 +88,8 @@ class DatePageVC:UIPageViewController, UIPageViewControllerDataSource, UIPageVie
 		if (style == .feed)
 		{
 			UserData.DATES.forEach({pages.append(FeedVC(date: $0, detailsVC: detailsVC))})
+			//listen to data changes to update filter button
+			NotificationCenter.default.addObserver(self, selector: #selector(toggleFilterButton), name: .reloadData, object: nil)
 		}
 		else if (style == .schedule)
 		{
@@ -117,6 +137,30 @@ class DatePageVC:UIPageViewController, UIPageViewControllerDataSource, UIPageVie
 		let newPage = pages[UserData.DATES.index(of: UserData.selectedDate)!]
 		let direction:UIPageViewControllerNavigationDirection = (UserData.userCalendar.compare(currentVC.date, to: UserData.selectedDate, toGranularity: .day) == .orderedAscending) ? .forward : .reverse
 		setViewControllers([newPage], direction: direction, animated: true, completion: nil)
+	}
+	/**
+		Change the appearance of the filter button based on whether or not any filters are on.
+	*/
+	@objc func toggleFilterButton()
+	{
+		guard filterButton != nil else {
+			print("DatePageVC.toggleFilterButton called while filterButton is nil")
+			return
+		}
+		
+		if (FilterVC.selectedFilters.isEmpty && !FilterVC.requiredFilter)
+		{
+			//no filters on
+			filterButton?.backgroundColor = UIColor.clear
+			filterButton?.imageView?.tintColor = UIColor.white
+		}
+		else
+		{
+			//filters currently on
+			filterButton?.backgroundColor = UIColor.white
+			filterButton?.imageView?.tintColor = Colors.BRIGHT_RED
+			filterButton?.layer.cornerRadius = filterButton!.frame.width / 2
+		}
 	}
 	/**
 		Returns the `UIViewController` that comes before the one given, nil if the one given has no preceding page.
