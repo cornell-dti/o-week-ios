@@ -80,6 +80,9 @@ class DatePageVC:UIPageViewController, UIPageViewControllerDataSource, UIPageVie
 	{
 		super.viewDidLoad()
 		
+		//hide back button text
+		navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+		
 		//make sure this function only runs once
 		guard pages.isEmpty else {
 			return
