@@ -246,66 +246,105 @@ class ScheduleVC: UIViewController, DateContainer
 	*/
     func drawEvent(_ event:Event, container:UIView)
 	{
-		let MARGIN:CGFloat = 12
+		let REQUIRED_LABEL_SIZE:CGFloat = 24
+		let MARGIN:CGFloat = 10
+		let required = UserData.requiredForUser(event: event)
 		
-		let paddedContainer = UIView.newAutoLayout()
-		container.addSubview(paddedContainer)
-		paddedContainer.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: MARGIN, left: MARGIN, bottom: MARGIN, right: MARGIN))
-		
-		let time = UILabel.newAutoLayout()
-		time.numberOfLines = 1
-		time.lineBreakMode = .byTruncatingTail
-		time.font = UIFont(name: Font.MEDIUM, size: 14)
-		time.textColor = UIColor.white
-		time.text = "\(event.startTime) - \(event.endTime)"
-		paddedContainer.addSubview(time)
-		time.autoPinEdge(toSuperviewEdge: .left)
-		time.autoPinEdge(toSuperviewEdge: .top)
-		
-		if (UserData.requiredForUser(event: event))
+		var requiredLabel:UITextField?
+		if (required)
 		{
-			let requiredLabel = UITextField.newAutoLayout()
-			paddedContainer.addSubview(requiredLabel)
-			requiredLabel.autoPinEdge(toSuperviewEdge: .right)
-			requiredLabel.autoPinEdge(toSuperviewEdge: .top)
-			requiredLabel.autoSetDimensions(to: CGSize(width: 24, height: 24))
-			requiredLabel.isUserInteractionEnabled = false
-			requiredLabel.backgroundColor = UIColor.white
-			requiredLabel.textAlignment = .center
-			requiredLabel.textColor = Colors.RED
-			requiredLabel.text = "RQ"
-			requiredLabel.font = UIFont(name: Font.DEMIBOLD, size: 10)
-			requiredLabel.layer.cornerRadius = 12
+			requiredLabel = UITextField.newAutoLayout()
+			requiredLabel?.autoSetDimensions(to: CGSize(width: REQUIRED_LABEL_SIZE, height: REQUIRED_LABEL_SIZE))
+			requiredLabel?.isUserInteractionEnabled = false
+			requiredLabel?.backgroundColor = UIColor.white
+			requiredLabel?.textAlignment = .center
+			requiredLabel?.textColor = Colors.RED
+			requiredLabel?.text = "RQ"
+			requiredLabel?.font = UIFont(name: Font.DEMIBOLD, size: 10)
+			requiredLabel?.layer.cornerRadius = REQUIRED_LABEL_SIZE / 2
 			
-			time.autoPinEdge(.right, to: .left, of: requiredLabel, withOffset: MARGIN)
+			container.addSubview(requiredLabel!)
+			requiredLabel?.autoPinEdge(toSuperviewEdge: .right, withInset: MARGIN)
+			requiredLabel?.autoPinEdge(toSuperviewEdge: .top, withInset: MARGIN)
+		}
+		
+		let title = UILabel.newAutoLayout()
+		title.numberOfLines = 0
+		title.lineBreakMode = .byTruncatingTail
+		title.font = UIFont(name: Font.DEMIBOLD, size: 14)
+		title.textColor = UIColor.white
+		title.text = event.title
+		
+		let textWidth = container.frame.width - MARGIN * 2 - (required ? (REQUIRED_LABEL_SIZE + MARGIN) : 0)
+		let textHeight = container.frame.height - MARGIN * 2
+		let singleLineHeight = title.heightForSingleLine(textWidth: textWidth)
+		let numLinesUsed = title.visibleNumberOfLines(textWidth: textWidth)
+		let numLinesAvailable = Int(textHeight / singleLineHeight)
+		let numLinesRemaining = numLinesAvailable - numLinesUsed
+		
+		if (numLinesRemaining <= 0)
+		{
+			//only have room to show title
+			title.numberOfLines = numLinesAvailable
+			
+			//add margin for required label as necessary
+			let rightMargin = MARGIN + (required ? REQUIRED_LABEL_SIZE : 0)
+			container.addSubview(title)
+			title.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: MARGIN, left: MARGIN, bottom: MARGIN, right: rightMargin))
 		}
 		else
 		{
-			time.autoPinEdge(toSuperviewEdge: .right)
+			let paddedContainer = UIStackView.newAutoLayout()
+			container.addSubview(paddedContainer)
+			//don't pin bottom edge, otherwise the views will be stretched vertically to fill the entire container
+			paddedContainer.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: MARGIN, left: MARGIN, bottom: MARGIN, right: MARGIN), excludingEdge: .bottom)
+			paddedContainer.alignment = .top
+			paddedContainer.axis = .vertical
+			
+			let caption = UILabel.newAutoLayout()
+			caption.numberOfLines = 0
+			caption.lineBreakMode = .byTruncatingTail
+			caption.font = UIFont(name: Font.REGULAR, size: 12)
+			caption.textColor = UIColor.white
+			caption.text = event.caption
+			
+			if (numLinesRemaining == 1)
+			{
+				//only have 1 line left to show caption
+				caption.numberOfLines = 1
+				
+				paddedContainer.addArrangedSubview(title)
+				paddedContainer.addArrangedSubview(caption)
+				
+				//add required label margin as necessary
+				if (required)
+				{
+					title.autoPinEdge(toSuperviewEdge: .right, withInset: REQUIRED_LABEL_SIZE)
+				}
+			}
+			else
+			{
+				//multiple lines remaining
+				caption.numberOfLines = numLinesRemaining - 1
+				
+				let time = UILabel.newAutoLayout()
+				time.numberOfLines = 1
+				time.lineBreakMode = .byTruncatingTail
+				time.font = UIFont(name: Font.MEDIUM, size: 14)
+				time.textColor = UIColor.white
+				time.text = "\(event.startTime) - \(event.endTime)"
+				
+				paddedContainer.addArrangedSubview(time)
+				paddedContainer.addArrangedSubview(title)
+				paddedContainer.addArrangedSubview(caption)
+				
+				//add required label margin as necessary
+				if (required)
+				{
+					time.autoPinEdge(toSuperviewEdge: .right, withInset: REQUIRED_LABEL_SIZE)
+				}
+			}
 		}
-		
-        let title = UILabel.newAutoLayout()
-        title.numberOfLines = 0
-        title.lineBreakMode = .byTruncatingTail
-        title.font = UIFont(name: Font.DEMIBOLD, size: 14)
-        title.textColor = UIColor.white
-        title.text = event.title
-        paddedContainer.addSubview(title)
-		title.autoPinEdge(toSuperviewEdge: .left)
-		title.autoPinEdge(.top, to: .bottom, of: time)
-		title.autoPinEdge(toSuperviewEdge: .right)
-        
-        let caption = UILabel.newAutoLayout()
-        caption.numberOfLines = 0
-        caption.lineBreakMode = .byTruncatingTail
-        caption.font = UIFont(name: Font.REGULAR, size: 12)
-        caption.textColor = UIColor.white
-        caption.text = event.caption
-        paddedContainer.addSubview(caption)
-		caption.autoPinEdge(.top, to: .bottom, of: title)
-		caption.autoPinEdge(toSuperviewEdge: .left)
-		caption.autoPinEdge(toSuperviewEdge: .right)
-		
     }
 	/**
 		Distance from the top for a given view based on its start time. The view should either be an event view or a time line.

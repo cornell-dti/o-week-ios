@@ -12,15 +12,24 @@ extension UILabel
 {
 	/**
 		Returns the number of lines this UILabel will take up with the text and font it currently has.
-		Assuems that `font` and `text` have been set.
+		Assumes that `font` and `text` have been set.
 		- parameter textWidth: The width of the UILabel. This is required because `frame.width` may be inaccurate; the UILabel, if created with autolayout, will not have an accurate size.
 		- returns: The number of lines that the text will take up.
 	*/
 	func visibleNumberOfLines(textWidth: CGFloat) -> Int
 	{
-		let heightForSingleLine = height(textWidth: textWidth, string: "A")
 		let heightForCurrentText = height(textWidth: textWidth, string: text!)
-		return Int(heightForCurrentText / heightForSingleLine)
+		return Int(heightForCurrentText / heightForSingleLine(textWidth: textWidth))
+	}
+	/**
+		Returns the height of a single line of text.
+		Assumes that `font` has been set.
+		- parameter textWidth: The width of the UILabel. This is required because `frame.width` may be inaccurate; the UILabel, if created with autolayout, will not have an accurate size.
+		- returns: The height of a single line of text.
+	*/
+	func heightForSingleLine(textWidth: CGFloat) -> CGFloat
+	{
+		return height(textWidth: textWidth, string: "A")
 	}
 	/**
 		Returns the height that a string is expected take up with the current font and the given textWidth.
