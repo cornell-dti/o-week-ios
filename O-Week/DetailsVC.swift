@@ -255,7 +255,7 @@ class DetailsVC: UIViewController, MKMapViewDelegate
 		//|----------------|
 		let mapContainer = UIView.newAutoLayout()
 		scrollContent.addArrangedSubview(mapContainer)
-		mapContainer.autoMatch(.height, to: .width, of: mapContainer, withMultiplier: 1/3)
+		mapContainer.autoMatch(.height, to: .width, of: mapContainer, withMultiplier: 9/16)
 		
 		mapContainer.addSubview(map)
 		map.autoPinEdgesToSuperviewEdges()
@@ -413,7 +413,7 @@ class DetailsVC: UIViewController, MKMapViewDelegate
 		let center = CLLocationCoordinate2DMake(event!.latitude, event!.longitude)
 		let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: center))
 		mapItem.name = event!.caption
-		mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeDefault])
+		mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeWalking])
 	}
 	/**
 		Handle user selection of event detail's more button. Expands event description.
