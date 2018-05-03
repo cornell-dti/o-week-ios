@@ -9,31 +9,21 @@
 /* Begin PBXBuildFile section */
 		0628E4851E7C82830066A308 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0628E4841E7C82830066A308 /* MapKit.framework */; };
 		0628E4871E7CA3260066A308 /* FeedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0628E4861E7CA3260066A308 /* FeedVC.swift */; };
-		06523C391FCB8E06003B0257 /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06523C381FCB8E06003B0257 /* Student.swift */; };
-		06523C3B1FCB9268003B0257 /* HasPK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06523C3A1FCB9268003B0257 /* HasPK.swift */; };
-		06523C3D1FCBC985003B0257 /* EmptyStateTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06523C3C1FCBC985003B0257 /* EmptyStateTableVC.swift */; };
 		067EC2E71E8C9F8D0098ED94 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067EC2E61E8C9F8D0098ED94 /* Event.swift */; };
 		067EC2E91E8C9FE20098ED94 /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067EC2E81E8C9FE20098ED94 /* Time.swift */; };
-		0681D35E1FD362FD00CB5CE2 /* InitialSettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0681D35D1FD362FD00CB5CE2 /* InitialSettingsVC.swift */; };
-		06B0BEDE1FD49662008E0E5E /* PaddedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B0BEDD1FD49662008E0E5E /* PaddedLabel.swift */; };
-		06B787D11FA65AEA00534D6E /* DateContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B787D01FA65AEA00534D6E /* DateContainer.swift */; };
-		06B787D31FA6CEE300534D6E /* TabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B787D21FA6CEE300534D6E /* TabBarVC.swift */; };
-		06BC603D1FC9F7EB007C9463 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06BC603C1FC9F7EB007C9463 /* SearchVC.swift */; };
-		06BC603F1FCA1D1F007C9463 /* Colleges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06BC603E1FCA1D1F007C9463 /* Colleges.swift */; };
-		06DA69B61F9FEE1800873F39 /* DatePageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06DA69B51F9FEE1800873F39 /* DatePageVC.swift */; };
 		06E309741EFDE8AA00F37D7F /* JSONObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E309731EFDE8AA00F37D7F /* JSONObject.swift */; };
 		06E738F51EFCA06E00DFF73E /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E738F41EFCA06E00DFF73E /* Category.swift */; };
-		06E738F71EFCA34C00DFF73E /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E738F61EFCA34C00DFF73E /* CoreData.swift */; };
-		06FD2BD91FC91BC800E9AEC7 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06FD2BD81FC91BC800E9AEC7 /* GradientView.swift */; };
-		06FD2BDB1FC9266800E9AEC7 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06FD2BDA1FC9266800E9AEC7 /* Extensions.swift */; };
+		06E738F71EFCA34C00DFF73E /* CoreDataObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E738F61EFCA34C00DFF73E /* CoreDataObject.swift */; };
 		1EAA0BD2099219947F10D17D /* Pods_O_WeekTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C45EF3666707CE5869071BEC /* Pods_O_WeekTests.framework */; };
 		8131F4C854FE4EBC4970F6ED /* Pods_O_WeekUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC4DC7F5593F0FE2A28A79F1 /* Pods_O_WeekUITests.framework */; };
 		81D80FD806CBE0E9CC128F8E /* Pods_O_Week.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B7E869E216F14755BD6288E /* Pods_O_Week.framework */; };
 		DC18B3111E76CBCE00C3FCD6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC18B3101E76CBCE00C3FCD6 /* AppDelegate.swift */; };
+		DC18B3161E76CBCE00C3FCD6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC18B3141E76CBCE00C3FCD6 /* Main.storyboard */; };
 		DC18B3181E76CBCE00C3FCD6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC18B3171E76CBCE00C3FCD6 /* Assets.xcassets */; };
 		DC18B31B1E76CBCE00C3FCD6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC18B3191E76CBCE00C3FCD6 /* LaunchScreen.storyboard */; };
 		DC18B3261E76CBCE00C3FCD6 /* O_WeekTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC18B3251E76CBCE00C3FCD6 /* O_WeekTests.swift */; };
 		DC18B3311E76CBCE00C3FCD6 /* O_WeekUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC18B3301E76CBCE00C3FCD6 /* O_WeekUITests.swift */; };
+		DC1E83191E85E635000CD56B /* ScheduleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E83181E85E635000CD56B /* ScheduleCell.swift */; };
 		DC23E00F1EBD63980060F24F /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23E00E1EBD63980060F24F /* DateCell.swift */; };
 		DC23E0111EBD6E780060F24F /* DatePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23E0101EBD6E780060F24F /* DatePickerController.swift */; };
 		DC2C02991E7DC25F00E9DDEF /* ScheduleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2C02981E7DC25F00E9DDEF /* ScheduleVC.swift */; };
@@ -47,6 +37,7 @@
 		DCD492221EF0D98100F4F93C /* LocalNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD492211EF0D98100F4F93C /* LocalNotifications.swift */; };
 		DCDEBFF71EB414BB0014E028 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDEBFF61EB414BB0014E028 /* UserData.swift */; };
 		DCF15FFB1EEF0E9200793D04 /* FilterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF15FFA1EEF0E9200793D04 /* FilterVC.swift */; };
+		DCF15FFD1EEF0EB800793D04 /* FilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF15FFC1EEF0EB800793D04 /* FilterCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,23 +60,11 @@
 /* Begin PBXFileReference section */
 		0628E4841E7C82830066A308 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		0628E4861E7CA3260066A308 /* FeedVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = FeedVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		06523C381FCB8E06003B0257 /* Student.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
-		06523C3A1FCB9268003B0257 /* HasPK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasPK.swift; sourceTree = "<group>"; };
-		06523C3C1FCBC985003B0257 /* EmptyStateTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateTableVC.swift; sourceTree = "<group>"; };
 		067EC2E61E8C9F8D0098ED94 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Event.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		067EC2E81E8C9FE20098ED94 /* Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
-		0681D35D1FD362FD00CB5CE2 /* InitialSettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSettingsVC.swift; sourceTree = "<group>"; };
-		06B0BEDD1FD49662008E0E5E /* PaddedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddedLabel.swift; sourceTree = "<group>"; };
-		06B787D01FA65AEA00534D6E /* DateContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateContainer.swift; sourceTree = "<group>"; };
-		06B787D21FA6CEE300534D6E /* TabBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarVC.swift; sourceTree = "<group>"; };
-		06BC603C1FC9F7EB007C9463 /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
-		06BC603E1FCA1D1F007C9463 /* Colleges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colleges.swift; sourceTree = "<group>"; };
-		06DA69B51F9FEE1800873F39 /* DatePageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePageVC.swift; sourceTree = "<group>"; };
 		06E309731EFDE8AA00F37D7F /* JSONObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = JSONObject.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		06E738F41EFCA06E00DFF73E /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Category.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		06E738F61EFCA34C00DFF73E /* CoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CoreData.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		06FD2BD81FC91BC800E9AEC7 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
-		06FD2BDA1FC9266800E9AEC7 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		06E738F61EFCA34C00DFF73E /* CoreDataObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CoreDataObject.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		680698CA55279B36FAC481E8 /* Pods-O-Week.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-O-Week.release.xcconfig"; path = "Pods/Target Support Files/Pods-O-Week/Pods-O-Week.release.xcconfig"; sourceTree = "<group>"; };
 		68228961B2FB9FB4B6D82E11 /* Pods-O-WeekTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-O-WeekTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-O-WeekTests/Pods-O-WeekTests.debug.xcconfig"; sourceTree = "<group>"; };
 		8B7E869E216F14755BD6288E /* Pods_O_Week.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_O_Week.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -97,6 +76,7 @@
 		D0640BFB5C2E40B3CB9F5023 /* Pods-O-WeekUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-O-WeekUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-O-WeekUITests/Pods-O-WeekUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		DC18B30D1E76CBCE00C3FCD6 /* O-Week.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "O-Week.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC18B3101E76CBCE00C3FCD6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppDelegate.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		DC18B3151E76CBCE00C3FCD6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DC18B3171E76CBCE00C3FCD6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DC18B31A1E76CBCE00C3FCD6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DC18B31C1E76CBCE00C3FCD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -106,6 +86,7 @@
 		DC18B32C1E76CBCE00C3FCD6 /* O-WeekUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "O-WeekUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC18B3301E76CBCE00C3FCD6 /* O_WeekUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O_WeekUITests.swift; sourceTree = "<group>"; };
 		DC18B3321E76CBCE00C3FCD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DC1E83181E85E635000CD56B /* ScheduleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleCell.swift; sourceTree = "<group>"; };
 		DC23E00E1EBD63980060F24F /* DateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DateCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		DC23E0101EBD6E780060F24F /* DatePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DatePickerController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		DC2C02981E7DC25F00E9DDEF /* ScheduleVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleVC.swift; sourceTree = "<group>"; };
@@ -119,6 +100,7 @@
 		DCD492211EF0D98100F4F93C /* LocalNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalNotifications.swift; sourceTree = "<group>"; };
 		DCDEBFF61EB414BB0014E028 /* UserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		DCF15FFA1EEF0E9200793D04 /* FilterVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = FilterVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		DCF15FFC1EEF0EB800793D04 /* FilterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = FilterCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,19 +135,12 @@
 		0614E61D1F2CBDD70080EA2B /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				06523C381FCB8E06003B0257 /* Student.swift */,
-				06BC603E1FCA1D1F007C9463 /* Colleges.swift */,
+				DC92BCDE1EF2229F009B4A8F /* UserPreferences.swift */,
 				06E738F41EFCA06E00DFF73E /* Category.swift */,
 				067EC2E61E8C9F8D0098ED94 /* Event.swift */,
-				06E738F61EFCA34C00DFF73E /* CoreData.swift */,
-				06E309731EFDE8AA00F37D7F /* JSONObject.swift */,
 				067EC2E81E8C9FE20098ED94 /* Time.swift */,
-				06523C3A1FCB9268003B0257 /* HasPK.swift */,
-				DC92BCDE1EF2229F009B4A8F /* UserPreferences.swift */,
-				06B787D01FA65AEA00534D6E /* DateContainer.swift */,
-				06FD2BD81FC91BC800E9AEC7 /* GradientView.swift */,
-				06523C3C1FCBC985003B0257 /* EmptyStateTableVC.swift */,
-				06B0BEDD1FD49662008E0E5E /* PaddedLabel.swift */,
+				06E738F61EFCA34C00DFF73E /* CoreDataObject.swift */,
+				06E309731EFDE8AA00F37D7F /* JSONObject.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -176,7 +151,6 @@
 				DC9307081EEC5D2F005AF445 /* Constants.swift */,
 				DCC2FF8A1EB24EEA00624B4F /* Internet.swift */,
 				DCD492211EF0D98100F4F93C /* LocalNotifications.swift */,
-				06FD2BDA1FC9266800E9AEC7 /* Extensions.swift */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -233,21 +207,20 @@
 				0614E61E1F2CBDFF0080EA2B /* Util */,
 				0614E61D1F2CBDD70080EA2B /* Models */,
 				DC18B3191E76CBCE00C3FCD6 /* LaunchScreen.storyboard */,
+				DC18B3141E76CBCE00C3FCD6 /* Main.storyboard */,
 				DC18B31C1E76CBCE00C3FCD6 /* Info.plist */,
 				DCDEBFF61EB414BB0014E028 /* UserData.swift */,
 				DC18B3101E76CBCE00C3FCD6 /* AppDelegate.swift */,
-				06B787D21FA6CEE300534D6E /* TabBarVC.swift */,
-				0681D35D1FD362FD00CB5CE2 /* InitialSettingsVC.swift */,
-				06DA69B51F9FEE1800873F39 /* DatePageVC.swift */,
 				DC23E0101EBD6E780060F24F /* DatePickerController.swift */,
 				DC23E00E1EBD63980060F24F /* DateCell.swift */,
 				0628E4861E7CA3260066A308 /* FeedVC.swift */,
 				DC3274611E7CB4F100CB3E22 /* FeedCell.swift */,
 				DC2C02981E7DC25F00E9DDEF /* ScheduleVC.swift */,
+				DC1E83181E85E635000CD56B /* ScheduleCell.swift */,
 				DCD4464B1E76F941002D8F68 /* DetailsVC.swift */,
 				DCB182371EB7936E0041EEBC /* SettingsVC.swift */,
 				DCF15FFA1EEF0E9200793D04 /* FilterVC.swift */,
-				06BC603C1FC9F7EB007C9463 /* SearchVC.swift */,
+				DCF15FFC1EEF0EB800793D04 /* FilterCell.swift */,
 				DC18B3171E76CBCE00C3FCD6 /* Assets.xcassets */,
 				DC9BD76F1EB6496C00552906 /* O-Week.xcdatamodeld */,
 			);
@@ -350,7 +323,7 @@
 				TargetAttributes = {
 					DC18B30C1E76CBCE00C3FCD6 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = UJQ88SCQSQ;
+						DevelopmentTeam = 82HRX58VPA;
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -364,14 +337,14 @@
 					};
 					DC18B3201E76CBCE00C3FCD6 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = UJQ88SCQSQ;
+						DevelopmentTeam = 82HRX58VPA;
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 						TestTargetID = DC18B30C1E76CBCE00C3FCD6;
 					};
 					DC18B32B1E76CBCE00C3FCD6 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = UJQ88SCQSQ;
+						DevelopmentTeam = 82HRX58VPA;
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 						TestTargetID = DC18B30C1E76CBCE00C3FCD6;
@@ -405,6 +378,7 @@
 			files = (
 				DC18B31B1E76CBCE00C3FCD6 /* LaunchScreen.storyboard in Resources */,
 				DC18B3181E76CBCE00C3FCD6 /* Assets.xcassets in Resources */,
+				DC18B3161E76CBCE00C3FCD6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -573,14 +547,9 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-O-Week/Pods-O-Week-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/PKHUD/PKHUD.framework",
-				"${BUILT_PRODUCTS_DIR}/PureLayout/PureLayout.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PKHUD.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PureLayout.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -597,35 +566,25 @@
 				DCD492221EF0D98100F4F93C /* LocalNotifications.swift in Sources */,
 				DC92BCDF1EF2229F009B4A8F /* UserPreferences.swift in Sources */,
 				0628E4871E7CA3260066A308 /* FeedVC.swift in Sources */,
-				06BC603D1FC9F7EB007C9463 /* SearchVC.swift in Sources */,
 				067EC2E71E8C9F8D0098ED94 /* Event.swift in Sources */,
-				06523C3D1FCBC985003B0257 /* EmptyStateTableVC.swift in Sources */,
 				06E309741EFDE8AA00F37D7F /* JSONObject.swift in Sources */,
 				067EC2E91E8C9FE20098ED94 /* Time.swift in Sources */,
-				06523C3B1FCB9268003B0257 /* HasPK.swift in Sources */,
-				06B787D11FA65AEA00534D6E /* DateContainer.swift in Sources */,
 				DC2C02991E7DC25F00E9DDEF /* ScheduleVC.swift in Sources */,
-				06523C391FCB8E06003B0257 /* Student.swift in Sources */,
 				DC9BD7711EB6496C00552906 /* O-Week.xcdatamodeld in Sources */,
 				DCC2FF8B1EB24EEA00624B4F /* Internet.swift in Sources */,
-				06B0BEDE1FD49662008E0E5E /* PaddedLabel.swift in Sources */,
-				06B787D31FA6CEE300534D6E /* TabBarVC.swift in Sources */,
-				0681D35E1FD362FD00CB5CE2 /* InitialSettingsVC.swift in Sources */,
 				06E738F51EFCA06E00DFF73E /* Category.swift in Sources */,
-				06DA69B61F9FEE1800873F39 /* DatePageVC.swift in Sources */,
-				06E738F71EFCA34C00DFF73E /* CoreData.swift in Sources */,
+				DC1E83191E85E635000CD56B /* ScheduleCell.swift in Sources */,
+				06E738F71EFCA34C00DFF73E /* CoreDataObject.swift in Sources */,
 				DCDEBFF71EB414BB0014E028 /* UserData.swift in Sources */,
+				DCF15FFD1EEF0EB800793D04 /* FilterCell.swift in Sources */,
 				DC18B3111E76CBCE00C3FCD6 /* AppDelegate.swift in Sources */,
 				DCD4464C1E76F941002D8F68 /* DetailsVC.swift in Sources */,
 				DC23E00F1EBD63980060F24F /* DateCell.swift in Sources */,
 				DCF15FFB1EEF0E9200793D04 /* FilterVC.swift in Sources */,
 				DC3274621E7CB4F100CB3E22 /* FeedCell.swift in Sources */,
-				06FD2BDB1FC9266800E9AEC7 /* Extensions.swift in Sources */,
 				DC9307091EEC5D2F005AF445 /* Constants.swift in Sources */,
-				06FD2BD91FC91BC800E9AEC7 /* GradientView.swift in Sources */,
 				DCB182381EB7936E0041EEBC /* SettingsVC.swift in Sources */,
 				DC23E0111EBD6E780060F24F /* DatePickerController.swift in Sources */,
-				06BC603F1FCA1D1F007C9463 /* Colleges.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -661,6 +620,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		DC18B3141E76CBCE00C3FCD6 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DC18B3151E76CBCE00C3FCD6 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
 		DC18B3191E76CBCE00C3FCD6 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -780,13 +747,13 @@
 			baseConfigurationReference = 917B7A99D1405A3BB60EEB5E /* Pods-O-Week.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = UJQ88SCQSQ;
+				DEVELOPMENT_TEAM = 82HRX58VPA;
 				INFOPLIST_FILE = "O-Week/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.cornellsatech.OWeek;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cornellsatech.O-Week";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
@@ -796,13 +763,13 @@
 			baseConfigurationReference = 680698CA55279B36FAC481E8 /* Pods-O-Week.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = UJQ88SCQSQ;
+				DEVELOPMENT_TEAM = 82HRX58VPA;
 				INFOPLIST_FILE = "O-Week/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.cornellsatech.OWeek;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cornellsatech.O-Week";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
@@ -813,10 +780,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = UJQ88SCQSQ;
+				DEVELOPMENT_TEAM = 82HRX58VPA;
 				INFOPLIST_FILE = "O-WeekTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.cornellsatech.OWeekTests;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cornellsatech.O-WeekTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;
@@ -830,10 +797,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = UJQ88SCQSQ;
+				DEVELOPMENT_TEAM = 82HRX58VPA;
 				INFOPLIST_FILE = "O-WeekTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.cornellsatech.OWeekTests;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cornellsatech.O-WeekTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;
@@ -846,10 +813,10 @@
 			baseConfigurationReference = D0640BFB5C2E40B3CB9F5023 /* Pods-O-WeekUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				DEVELOPMENT_TEAM = UJQ88SCQSQ;
+				DEVELOPMENT_TEAM = 82HRX58VPA;
 				INFOPLIST_FILE = "O-WeekUITests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.cornellsatech.OWeekUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cornellsatech.O-WeekUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;
@@ -862,10 +829,10 @@
 			baseConfigurationReference = C87BDC79F248EDF66A0B3BBC /* Pods-O-WeekUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				DEVELOPMENT_TEAM = UJQ88SCQSQ;
+				DEVELOPMENT_TEAM = 82HRX58VPA;
 				INFOPLIST_FILE = "O-WeekUITests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.cornellsatech.OWeekUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cornellsatech.O-WeekUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;
