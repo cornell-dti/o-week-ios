@@ -159,7 +159,7 @@ class ScheduleVC: UIViewController, DateContainer
     private func drawAllEvents()
 	{
         //consider events that start earliest first
-        let sortedEvents = UserData.selectedEvents[date]!.sorted(by: {$0.startTime < $1.startTime})
+        let sortedEvents = UserData.selectedEvents[date]!.values.sorted()
         guard !sortedEvents.isEmpty else {
             return
         }

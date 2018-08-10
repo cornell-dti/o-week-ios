@@ -111,7 +111,7 @@ class LocalNotifications: NSObject, UNUserNotificationCenterDelegate
 			return
 		}
         UserData.selectedEvents.forEach({ (date, events) in
-            events.forEach({createNotification(for: $0)})
+            events.values.forEach({createNotification(for: $0)})
         })
     }
 	

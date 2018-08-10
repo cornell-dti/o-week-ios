@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import CoreData
 
 /**
 	Data-type that holds all information about an event. Designed to be immutable. This will be downloaded from the database via methods in `Internet`, where new events will be compared with saved ones.
@@ -24,9 +23,8 @@ import CoreData
 
 	- Note: see `Category`
 */
-struct Event:Hashable, Comparable, CoreDataObject, JSONObject
+struct Event:Hashable, Comparable, JSONObject
 {
-	static let entityName = "EventEntity"
     let title: String
     let caption: String
     let description: String
@@ -63,12 +61,12 @@ struct Event:Hashable, Comparable, CoreDataObject, JSONObject
 			- latitude: For example, 42.4439000
 			- pk: Unique positive ID given to each event starting from 1.
 	*/
-	init(title:String, caption:String, category:Int, pk: Int, start:Time, end:Time, date: Date, required: Bool, description: String?, longitude:Double, latitude:Double, categoryRequired:Bool, additional:String)
+	private init(title:String, caption:String, category:Int, pk: Int, start:Time, end:Time, date: Date, required: Bool, description: String, longitude:Double, latitude:Double, categoryRequired:Bool, additional:String)
     {
         self.title = title
         self.caption = caption
         self.category = category
-        self.description = description ?? "No description available at this time."
+        self.description = description
         self.date = date
         self.required = required
         self.pk = pk
@@ -78,44 +76,6 @@ struct Event:Hashable, Comparable, CoreDataObject, JSONObject
 		self.latitude = latitude
 		self.categoryRequired = categoryRequired
 		self.additional = additional
-    }
-	/**
-		Creates an event from saved `CoreData`.
-		
-		- important: Should have value fields synced with `O-week.xcdatamodeld` and function `saveToCoreData`.
-		
-		- parameter obj: Object retrieved from `CoreData`. Expects fields:
-				title  => String
-				caption => String
-				pk => int
-				eventDescription => String
-				category => int
-				startTimeHr => int
-				startTimeMin => int
-				endTimeHr => int
-				endTimeMin => int
-				required => bool
-				date => Date
-				longitude => Double
-				latitude => Double
-				categoryRequired => boolean
-				additional => String
-	*/
-    init(_ obj: NSManagedObject)
-	{
-        title = obj.value(forKeyPath: "title") as! String
-        caption = obj.value(forKeyPath: "caption") as! String
-        description = obj.value(forKeyPath: "eventDescription") as? String ?? "No description available at this time"
-        category = obj.value(forKey: "category") as! Int
-        startTime = Time(hour: obj.value(forKeyPath: "startTimeHr") as! Int, minute: obj.value(forKeyPath: "startTimeMin") as! Int)
-        endTime = Time(hour: obj.value(forKeyPath: "endTimeHr") as! Int, minute: obj.value(forKeyPath: "endTimeMin") as! Int)
-        required = obj.value(forKeyPath: "required") as! Bool
-        date = obj.value(forKeyPath: "date") as! Date
-        pk = obj.value(forKeyPath: "pk") as! Int
-		longitude = obj.value(forKey: "longitude") as! Double
-		latitude = obj.value(forKey: "latitude") as! Double
-		categoryRequired = obj.value(forKey: "categoryRequired") as! Bool
-		additional = obj.value(forKey: "additional") as! String
     }
 	/**
 		Creates an event object using data downloaded from the database.
@@ -179,34 +139,59 @@ struct Event:Hashable, Comparable, CoreDataObject, JSONObject
         self.startTime = Time.fromString(startTime)
         self.endTime = Time.fromString(endTime)
     }
+	
 	/**
-		Sets this event to the `CoreData` context given; for saving events.
-		
-		- important: Should have value fields synced with `O-week.xcdatamodeld` and function `init(obj)`.
-		
-		- parameters:
-			- entity: Core data magic.
-			- context: Core data magic.
+		Convert this event to a string to save to disk.
+		- returns: String representation of this object.
 	*/
-	func saveToCoreData(entity: NSEntityDescription, context: NSManagedObjectContext) -> NSManagedObject
+	func toString() -> String
 	{
-		let obj = NSManagedObject(entity: entity, insertInto: context)
-		obj.setValue(title, forKeyPath: "title")
-		obj.setValue(caption, forKeyPath: "caption")
-		obj.setValue(description, forKeyPath: "eventDescription")
-		obj.setValue(pk, forKeyPath: "pk")
-		obj.setValue(startTime.hour, forKeyPath: "startTimeHr")
-		obj.setValue(startTime.minute, forKeyPath: "startTimeMin")
-		obj.setValue(endTime.hour, forKeyPath: "endTimeHr")
-		obj.setValue(endTime.minute, forKeyPath: "endTimeMin")
-		obj.setValue(required, forKeyPath: "required")
-		obj.setValue(date, forKeyPath: "date")
-		obj.setValue(category, forKey: "category")
-		obj.setValue(longitude, forKey: "longitude")
-		obj.setValue(latitude, forKey: "latitude")
-		obj.setValue(categoryRequired, forKey: "categoryRequired")
-		obj.setValue(additional, forKey: "additional")
-		return obj
+		let year = UserData.userCalendar.component(.year, from: date)
+		let month = UserData.userCalendar.component(.month, from: date)
+		let day = UserData.userCalendar.component(.day, from: date)
+		return "\(title)|\(caption)|\(description)|\(category)|\(pk)|\(startTime.hour)|\(startTime.minute)|\(endTime.hour)|\(endTime.minute)|\(required)|\(year)|\(month)|\(day)|\(longitude)|\(latitude)|\(categoryRequired)|\(additional)"
+	}
+	
+	/**
+		Creates an event object from its string representation.
+		- parameter str: String representation of an event.
+		- returns: Event object.
+	*/
+	static func fromString(_ str: String) -> Event?
+	{
+		let parts = str.components(separatedBy: "|")
+		guard parts.count >= 17,
+			let category = Int(parts[3]),
+			let pk = Int(parts[4]),
+			let startHour = Int(parts[5]),
+			let startMinute = Int(parts[6]),
+			let endHour = Int(parts[7]),
+			let endMinute = Int(parts[8]),
+			let required = Bool(parts[9]),
+			let year = Int(parts[10]),
+			let month = Int(parts[11]),
+			let day = Int(parts[12]),
+			let longitude = Double(parts[13]),
+			let latitude = Double(parts[14]),
+			let categoryRequired = Bool(parts[15]) else {
+				print("Invalid event string: \(str)")
+				return nil
+		}
+		
+		let title = parts[0]
+		let caption = parts[1]
+		let description = parts[2]
+		let additional = parts[16]
+		
+		let start = Time(hour: startHour, minute: startMinute)
+		let end = Time(hour: endHour, minute: endMinute)
+		var components = DateComponents()
+		components.year = year
+		components.month = month
+		components.day = day
+		let date = UserData.userCalendar.date(from: components)!
+		
+		return Event(title: title, caption: caption, category: category, pk: pk, start: start, end: end, date: date, required: required, description: description, longitude: longitude, latitude: latitude, categoryRequired: categoryRequired, additional: additional)
 	}
 	
 	/**
@@ -299,5 +284,5 @@ func < (lhs:Event, rhs:Event) -> Bool
 	{
 		return true
 	}
-	return lhs.startTime.hour < rhs.startTime.hour
+	return lhs.startTime < rhs.startTime
 }

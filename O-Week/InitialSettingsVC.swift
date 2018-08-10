@@ -343,7 +343,7 @@ class InitialSettingsVC:UIPageViewController, UIPageViewControllerDataSource
 			}
 			
 			//add required events
-			UserData.allEvents.values.flatMap({$0})
+			UserData.allEvents.values.flatMap({$0.values})
 				.filter({UserData.requiredForUser(event: $0)})
 				.forEach({UserData.insertToSelectedEvents($0)})
 			//send notifications

@@ -7,15 +7,13 @@
 //
 
 import Foundation
-import CoreData
 
 /**
 	The category that an `Event` belongs in. This will be downloaded from the database via methods in `Internet`, where new categories will be compared with saved ones. More in the constructor below.
 	- Note: See `Event`
 */
-struct Category:Hashable, Comparable, CoreDataObject, JSONObject
+struct Category:Hashable, Comparable, JSONObject, HasPK
 {
-	static let entityName = "CategoryEntity"
 	let pk:Int
 	let name:String
 	let description:String
@@ -39,22 +37,6 @@ struct Category:Hashable, Comparable, CoreDataObject, JSONObject
 		self.description = description
 	}
 	/**
-		Creates a category from saved `CoreData`.
-		
-		- important: Should have value fields synced with `O-week.xcdatamodeld` and function `saveToCoreData`.
-		
-		- parameter obj: Object retrieved from `CoreData`. Expects fields:
-				pk => Int
-				category => String
-				description => String
-	*/
-	init(_ obj: NSManagedObject)
-	{
-		self.pk = obj.value(forKeyPath: "pk") as! Int
-		self.name = obj.value(forKey: "name") as! String
-		self.description = obj.value(forKey: "categoryDescription") as! String
-	}
-	/**
 		Creates a category object using data downloaded from the database.
 
 		- parameter jsonOptional: JSON with the expected keys and values:
@@ -73,23 +55,32 @@ struct Category:Hashable, Comparable, CoreDataObject, JSONObject
 		
 		self.init(pk:pk, name:name, description:description)
 	}
+	
 	/**
-		Sets this category to the `CoreData` context given; for saving categories.
-		
-		- important: Should have value fields synced with `O-week.xcdatamodeld` and function `init(obj)`.
-		
-		- parameters:
-			- entity: Core data magic.
-			- context: Core data magic.
-		- returns: Core data magic.
+		Convert this category to a string to save to disk.
+		- returns: String representation of this object.
 	*/
-	func saveToCoreData(entity: NSEntityDescription, context: NSManagedObjectContext) -> NSManagedObject
+	func toString() -> String
 	{
-		let obj = NSManagedObject(entity: entity, insertInto: context)
-		obj.setValue(pk, forKeyPath: "pk")
-		obj.setValue(name, forKeyPath: "name")
-		obj.setValue(description, forKeyPath: "categoryDescription")
-		return obj
+		return "\(pk)|\(name)|\(description)"
+	}
+	
+	/**
+		Create a category object from its string representation.
+		- parameter str: String representation of a category.
+		- returns: Category object.
+	*/
+	static func fromString(_ str:String) -> Category?
+	{
+		let parts = str.components(separatedBy: "|")
+		guard parts.count >= 3,
+			let pk = Int(parts[0]) else {
+			return nil
+		}
+		
+		let name = parts[1]
+		let description = parts[2]
+		return Category(pk: pk, name: name, description: description)
 	}
 }
 /**

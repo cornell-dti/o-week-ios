@@ -377,7 +377,7 @@ class DetailsVC: UIViewController, MKMapViewDelegate
 			}
 			else	//category required
 			{
-				if let category = UserData.categoryFor(event.category)
+				if let category = UserData.categories[event.category]
 				{
 					requiredDescription.text = "Required for \(category.name) Students"
 				}

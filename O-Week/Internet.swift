@@ -67,8 +67,8 @@ class Internet
 			}
 			
 			//note: flatMap can also remove nils
-			let changedCategories = changedCategoriesJSON.map({Category(jsonOptional: $0 as? [String:Any])}).flatMap({$0})
-			let changedEvents = changedEventsJSON.map({Event(jsonOptional: $0 as? [String:Any])}).flatMap({$0})
+			let changedCategories = changedCategoriesJSON.map({Category(jsonOptional: $0 as? [String:Any])}).compactMap({$0})
+			let changedEvents = changedEventsJSON.map({Event(jsonOptional: $0 as? [String:Any])}).compactMap({$0})
 			finish(newestVersion, changedCategories, deletedCategoriesPK, changedEvents, deletedEventsPK)
 			
 			//notify classes that need to know when events were updated

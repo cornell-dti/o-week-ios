@@ -44,7 +44,7 @@ class FeedVC:EmptyStateTableVC, DateContainer
 		tableView.register(FeedCell.self, forCellReuseIdentifier: FEED_CELL_ID)
 		DatePageVC.makeSpaceForDatePicker(in: tableView)
         setNotificationListener()
-		events = FilterVC.filter(UserData.allEvents[date]!)
+		events = FilterVC.filter(UserData.allEvents[date]!.values.sorted())
 		scrollToNextEvent()
     }
 	
@@ -94,7 +94,7 @@ class FeedVC:EmptyStateTableVC, DateContainer
 	*/
     @objc func updateFeed()
 	{
-		events = FilterVC.filter(UserData.allEvents[date]!)
+		events = FilterVC.filter(UserData.allEvents[date]!.values.sorted())
         tableView.reloadData()
 	}
 	/**
@@ -108,6 +108,9 @@ class FeedVC:EmptyStateTableVC, DateContainer
 		guard UserData.userCalendar.compare(date, to: self.date, toGranularity: .day) == .orderedSame else {
 			return
 		}
+		
+		//load table data first
+		tableView.reloadData()
 		
 		for i in 0..<events.count
 		{
