@@ -41,9 +41,9 @@ class UserData
     static var DATES = [Date]()
 	static var selectedDate:Date!
 	static let YEAR = 2018
-	static let MONTH = 1
-	static let START_DAY = 18	//Dates range: [START_DAY, END_DAY], inclusive
-	static let END_DAY = 23		//Note: END_DAY must > START_DAY
+	static let MONTH = 8
+	static let START_DAY = 17	//Dates range: [START_DAY, END_DAY], inclusive
+	static let END_DAY = 29		//Note: END_DAY must > START_DAY
 	
 	//Categories
 	static var categories = [Int:Category]()
@@ -148,6 +148,7 @@ class UserData
 					selectedEvents[date]?.removeValue(forKey: pk)
 				})
 			}
+			saveEvents()
 			
 			//all version updates have been processed. Now, load events that the user has selected into selectedEvents (again).
 			addedPKs.forEach({pk in

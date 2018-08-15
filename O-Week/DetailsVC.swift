@@ -7,7 +7,8 @@
 //
 
 import UIKit
-import MapKit
+import GoogleMaps
+import GooglePlaces
 import PKHUD
 
 /**
@@ -19,7 +20,7 @@ import PKHUD
 	`didSetListeners`: True if listeners for subviews were set. Used to ensure listeners are only set once.
 	`configure(event)`: Method to configure this VC to display the given event. Must be called before presenting to the user.
 */
-class DetailsVC: UIViewController, MKMapViewDelegate
+class DetailsVC: UIViewController
 {
 	let scrollView = UIScrollView.newAutoLayout()
 	let scrollContent = UIStackView.newAutoLayout()
@@ -41,12 +42,14 @@ class DetailsVC: UIViewController, MKMapViewDelegate
 	let moreButtonGradient = GradientView.newAutoLayout()
 	let additional = UILabel.newAutoLayout()
 	
-	let map = MKMapView.newAutoLayout()
+	let map = GMSMapView.newAutoLayout()
+	var mapMarker: GMSMarker?
 	let directionsButton = UIButton(type: .system)
 	
-	let MAP_ZOOM = 0.001
 	let NUM_LINES_IN_CONDENSED_DESCRIPTION = 3
+	let placesClient = GMSPlacesClient.shared()
     var event: Event?
+	var placeLatLng: CLLocationCoordinate2D?
     var changed = false
 	var didLayout = false
 	var didSetListeners = false
@@ -390,30 +393,42 @@ class DetailsVC: UIViewController, MKMapViewDelegate
 	*/
 	private func configureMap(event:Event)
 	{
-		map.delegate = self
+		mapMarker?.map = nil //remove prev marker
 		
-		//set center & zoom
-		let center = CLLocationCoordinate2DMake(event.latitude, event.longitude)
-		let span = MKCoordinateSpanMake(MAP_ZOOM, MAP_ZOOM)
-		let region = MKCoordinateRegionMake(center, span)
-		map.setRegion(region, animated: false)
-		
-		//set marker
-		let marker = MKPointAnnotation()
-		marker.title = event.caption
-		marker.coordinate = center
-		map.addAnnotation(marker)
+		placesClient.lookUpPlaceID(event.placeId, callback: {
+			result, error in
+			guard result != nil else {
+				return
+			}
+			
+			self.placeLatLng = result?.coordinate
+			self.map.moveCamera(GMSCameraUpdate.fit(result!.viewport!))
+			self.mapMarker = GMSMarker(position: result!.coordinate)
+			self.mapMarker!.map = self.map
+			self.map.selectedMarker = self.mapMarker
+		})
 	}
 	/**
-		Handle user selection of map's direction button. Opens Apple Maps and starts navigation.
+		Handle user selection of map's direction button. Opens Google Maps or Apple Maps, depending on availability, and starts navigation.
 		- parameter sender: the the button clicked.
 	*/
 	@objc func onDirectionsButtonClick(_ sender: UIButton)
 	{
-		let center = CLLocationCoordinate2DMake(event!.latitude, event!.longitude)
-		let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: center))
-		mapItem.name = event!.caption
-		mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeWalking])
+		guard placeLatLng != nil else {
+			print("Directions clicked, but place not found by Google")
+			return
+		}
+		
+		let url:URL
+		if (UIApplication.shared.canOpenURL(URL(string: "comgooglemaps://")!))
+		{
+			url = URL(string: "comgooglemaps://center=?q=\(placeLatLng!.latitude),\(placeLatLng!.longitude)")!
+		}
+		else
+		{
+			url = URL(string: "http://maps.apple.com/?q=\(placeLatLng!.latitude),\(placeLatLng!.longitude)")!
+		}
+		UIApplication.shared.open(url, options: [:], completionHandler: nil)
 	}
 	/**
 		Handle user selection of event detail's more button. Expands event description.

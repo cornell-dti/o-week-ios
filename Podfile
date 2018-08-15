@@ -8,6 +8,9 @@ target 'O-Week' do
   # Pods for O-Week
   pod 'PureLayout'
   pod 'PKHUD', '~> 5.0'
+  pod 'GoogleMaps'
+  pod 'GooglePlaces'
+
 
   target 'O-WeekTests' do
     inherit! :search_paths

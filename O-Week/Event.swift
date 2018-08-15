@@ -33,8 +33,7 @@ struct Event:Hashable, Comparable, JSONObject
     let endTime: Time
     let required: Bool
     let date: Date
-	let longitude: Double
-	let latitude: Double
+	let placeId: String
 	let categoryRequired: Bool
 	let additional: String
     let pk: Int
@@ -57,11 +56,10 @@ struct Event:Hashable, Comparable, JSONObject
 			- required: Whether this event is required for new students.
 			- categoryRequired: Whether this event is required for its category.
 			- additional: For example, ## All new students are required to attend this program at the following times: ## ____3:30pm # Residents of Balch, Jameson, Risley, Just About Music, Ecology House, and Latino Living Center; on-campus transfers in Call Alumni Auditorium ____5:30pm # Residents of Dickson, McLLU, Donlon, High Rise 5, and Ujamaa; off-campus transfers in Call Alumni Auditorium ____8:00pm # Residents of Townhouses, Low Rises, Court-Kay-Bauer, Mews, Holland International Living Center, and Akwe:kon
-			- longitude: For example, -76.4785000
-			- latitude: For example, 42.4439000
+			- placeId: String from Google to identify location
 			- pk: Unique positive ID given to each event starting from 1.
 	*/
-	private init(title:String, caption:String, category:Int, pk: Int, start:Time, end:Time, date: Date, required: Bool, description: String, longitude:Double, latitude:Double, categoryRequired:Bool, additional:String)
+	private init(title:String, caption:String, category:Int, pk: Int, start:Time, end:Time, date: Date, required: Bool, description: String, placeId: String, categoryRequired:Bool, additional:String)
     {
         self.title = title
         self.caption = caption
@@ -72,8 +70,7 @@ struct Event:Hashable, Comparable, JSONObject
         self.pk = pk
         startTime = start
         endTime = end
-		self.longitude = longitude
-		self.latitude = latitude
+		self.placeId = placeId
 		self.categoryRequired = categoryRequired
 		self.additional = additional
     }
@@ -90,8 +87,7 @@ struct Event:Hashable, Comparable, JSONObject
 				end_time => Time. See `Time.fromString()`
 				required => bool
 				start_date => Date, formatted as "yyyy-MM-dd"
-				longitude => Double
-				latitude => Double
+				place_ID => String
 				category_required => boolean
 				additional => String
 	*/
@@ -107,11 +103,7 @@ struct Event:Hashable, Comparable, JSONObject
                 let startTime = json["start_time"] as? String,
                 let endTime = json["end_time"] as? String,
 				let required = json["required"] as? Bool,
-			//convert first to String, then to Double. Converting directly to Double will create an error
-				let longitudeStr = json["longitude"] as? String,
-				let longitude = Double(longitudeStr),
-				let latitudeStr = json["latitude"] as? String,
-				let latitude = Double(latitudeStr),
+				let placeId = json["place_ID"] as? String,
 				let categoryRequired = json["category_required"] as? Bool,
 				let additional = json["additional"] as? String else {
 			print("Event.jsonOptional: incorrect JSON format")
@@ -124,8 +116,7 @@ struct Event:Hashable, Comparable, JSONObject
         self.description = description
         self.category = category
 		self.required = required
-		self.longitude = longitude
-		self.latitude = latitude
+		self.placeId = placeId
 		self.categoryRequired = categoryRequired
 		self.additional = additional
         
@@ -149,7 +140,7 @@ struct Event:Hashable, Comparable, JSONObject
 		let year = UserData.userCalendar.component(.year, from: date)
 		let month = UserData.userCalendar.component(.month, from: date)
 		let day = UserData.userCalendar.component(.day, from: date)
-		return "\(title)|\(caption)|\(description)|\(category)|\(pk)|\(startTime.hour)|\(startTime.minute)|\(endTime.hour)|\(endTime.minute)|\(required)|\(year)|\(month)|\(day)|\(longitude)|\(latitude)|\(categoryRequired)|\(additional)"
+		return "\(title)|\(caption)|\(description)|\(category)|\(pk)|\(startTime.hour)|\(startTime.minute)|\(endTime.hour)|\(endTime.minute)|\(required)|\(year)|\(month)|\(day)|\(placeId)|\(categoryRequired)|\(additional)"
 	}
 	
 	/**
@@ -171,9 +162,7 @@ struct Event:Hashable, Comparable, JSONObject
 			let year = Int(parts[10]),
 			let month = Int(parts[11]),
 			let day = Int(parts[12]),
-			let longitude = Double(parts[13]),
-			let latitude = Double(parts[14]),
-			let categoryRequired = Bool(parts[15]) else {
+			let categoryRequired = Bool(parts[14]) else {
 				print("Invalid event string: \(str)")
 				return nil
 		}
@@ -181,7 +170,8 @@ struct Event:Hashable, Comparable, JSONObject
 		let title = parts[0]
 		let caption = parts[1]
 		let description = parts[2]
-		let additional = parts[16]
+		let placeId = parts[13]
+		let additional = parts[15]
 		
 		let start = Time(hour: startHour, minute: startMinute)
 		let end = Time(hour: endHour, minute: endMinute)
@@ -191,7 +181,7 @@ struct Event:Hashable, Comparable, JSONObject
 		components.day = day
 		let date = UserData.userCalendar.date(from: components)!
 		
-		return Event(title: title, caption: caption, category: category, pk: pk, start: start, end: end, date: date, required: required, description: description, longitude: longitude, latitude: latitude, categoryRequired: categoryRequired, additional: additional)
+		return Event(title: title, caption: caption, category: category, pk: pk, start: start, end: end, date: date, required: required, description: description, placeId: placeId, categoryRequired: categoryRequired, additional: additional)
 	}
 	
 	/**

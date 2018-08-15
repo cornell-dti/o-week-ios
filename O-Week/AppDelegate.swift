@@ -9,6 +9,8 @@
 import UIKit
 import CoreData
 import UserNotifications
+import GoogleMaps
+import GooglePlaces
 
 /**
 	First class that is accessed when app first launches. Responsible for setting up stylistic themes, notifications, and handling app life cycle events.
@@ -21,6 +23,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate
 	
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool
 	{
+		GMSServices.provideAPIKey("AIzaSyAfj99YO2rt_bnRE3XBXiL8_0yAaewM_eY")
+		GMSPlacesClient.provideAPIKey("AIzaSyAfj99YO2rt_bnRE3XBXiL8_0yAaewM_eY")
+		
 		window = UIWindow(frame: UIScreen.main.bounds)
         setStyles()
         LocalNotifications.requestPermissionForNotifications()
