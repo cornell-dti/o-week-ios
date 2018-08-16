@@ -1,4 +1,4 @@
-O-Week v1.0
+O-Week v3.2
 ======
 An **iOS** app for incoming freshmen to use during their first week as a Cornell student. The **Android** branch can be found [here](https://github.com/cornell-dti/o-week-android).
 
@@ -6,7 +6,7 @@ An **iOS** app for incoming freshmen to use during their first week as a Cornell
 
 Getting Started
 ------
-You will need **Xcode 9.2** to run the latest version of this app, which uses Swift 4 compiled for iOS 11. Xcode can be downloaded from the Mac App Store. Make sure you are not running a beta version of macOS, as Apple will prevent you from publishing to the App Store if you do.
+You will need **Xcode 9.4.1** to run the latest version of this app, which uses Swift 4 compiled for iOS 11.4. Xcode can be downloaded from the Mac App Store. Make sure you are not running a beta version of macOS, as Apple will prevent you from publishing to the App Store if you do.
 
 Design Choices
 ------
