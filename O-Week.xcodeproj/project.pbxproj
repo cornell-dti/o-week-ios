@@ -456,7 +456,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-O-Week/Pods-O-Week-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-O-Week/Pods-O-Week-resources.sh",
 				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
 				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
 			);
@@ -467,7 +467,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-O-Week/Pods-O-Week-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-O-Week/Pods-O-Week-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		6A6020E6A9F176B5DAA13620 /* [CP] Check Pods Manifest.lock */ = {
@@ -507,7 +507,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-O-Week/Pods-O-Week-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-O-Week/Pods-O-Week-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/PKHUD/PKHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/PureLayout/PureLayout.framework",
 			);
@@ -518,7 +518,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-O-Week/Pods-O-Week-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-O-Week/Pods-O-Week-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

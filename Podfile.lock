@@ -1,13 +1,13 @@
 PODS:
-  - GoogleMaps (2.7.0):
-    - GoogleMaps/Maps (= 2.7.0)
-  - GoogleMaps/Base (2.7.0)
-  - GoogleMaps/Maps (2.7.0):
+  - GoogleMaps (3.1.0):
+    - GoogleMaps/Maps (= 3.1.0)
+  - GoogleMaps/Base (3.1.0)
+  - GoogleMaps/Maps (3.1.0):
     - GoogleMaps/Base
-  - GooglePlaces (2.7.0):
-    - GoogleMaps/Base (= 2.7.0)
-  - PKHUD (5.0.0)
-  - PureLayout (3.0.2)
+  - GooglePlaces (3.1.0):
+    - GoogleMaps/Base (= 3.1.0)
+  - PKHUD (5.3.0)
+  - PureLayout (3.1.4)
 
 DEPENDENCIES:
   - GoogleMaps
@@ -23,11 +23,11 @@ SPEC REPOS:
     - PureLayout
 
 SPEC CHECKSUMS:
-  GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
-  GooglePlaces: 3d06e6c99654545b4738ce49648745779c25f2ef
-  PKHUD: 3c001512c6e002091184197a8de7a20420786e3b
-  PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
+  GoogleMaps: 5c13302e6fe6bb6e686b267196586b91cd594225
+  GooglePlaces: e874db179f2675c4f3eeda0b686b540273a578b0
+  PKHUD: 98f3e4bc904b9c916f1c5bb6d765365b5357291b
+  PureLayout: f08c01b8dec00bb14a1fefa3de4c7d9c265df85e
 
 PODFILE CHECKSUM: 8c6f8aa7443aece5f4e85a663bc2b4eb56f1c4de
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.6.0

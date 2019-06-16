@@ -394,19 +394,22 @@ class DetailsVC: UIViewController
 	private func configureMap(event:Event)
 	{
 		mapMarker?.map = nil //remove prev marker
-		
-		placesClient.lookUpPlaceID(event.placeId, callback: {
-			result, error in
-			guard result != nil else {
-				return
-			}
-			
-			self.placeLatLng = result?.coordinate
-			self.map.moveCamera(GMSCameraUpdate.fit(result!.viewport!))
-			self.mapMarker = GMSMarker(position: result!.coordinate)
-			self.mapMarker!.map = self.map
-			self.map.selectedMarker = self.mapMarker
-		})
+        let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt(GMSPlaceField.all.rawValue))!
+        placesClient.fetchPlace(fromPlaceID: event.placeId, placeFields: fields, sessionToken: nil, callback: {
+                                                                                (result: GMSPlace?, error: Error?) in
+                                                                                if let error = error {
+                                                                                    print("An error occurred: \(error.localizedDescription) when fetching google places")
+                                                                                    return
+                                                                                }
+                                                                                
+                                                                                if let result = result {
+                                                                                    self.placeLatLng = result.coordinate
+                                                                                    self.map.moveCamera(GMSCameraUpdate.fit(result.viewport!))
+                                                                                    let mapMarker = GMSMarker(position: result.coordinate)
+                                                                                    mapMarker.map = self.map
+                                                                                    self.map.selectedMarker = mapMarker
+                                                                                }
+        })
 	}
 	/**
 		Handle user selection of map's direction button. Opens Google Maps or Apple Maps, depending on availability, and starts navigation.
