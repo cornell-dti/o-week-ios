@@ -28,6 +28,7 @@ class UserData
 	static let collegeTypeName = "college" //KeyPath used for accessing the college of the user. See `Colleges` and `collegePk`.
 	static let eventsName = "events" //KeyPath where events are saved
 	static let categoriesName = "categories" //KeyPath where categories are saved
+    static let resourcesName = "resources" //KeyPath were resources are saved
 	static let defaults = UserDefaults.standard
     
     //Events
@@ -36,6 +37,9 @@ class UserData
     
     //Calendar for manipulating dates. You can use this throughout the app.
     static let userCalendar = Calendar.current
+    
+    //resources
+    static var resources = [Resource]()
     
     //Dates
     static var DATES = [Date]()
@@ -121,15 +125,28 @@ class UserData
 	{
 		initDates()
 		initStudentIdentity()
+        getResources()
 		getEvents()
 		getCategories()
-		
+        		
 		let addedPKs = getAddedPKs()
 		addedPKs.forEach({pk in
 			if let event = eventFor(pk) {
 				insertToSelectedEvents(event)
 			}
 		})
+        
+        Internet.getResourceLinks(onCompletion: {
+            resources in
+            print("completed fetching resources")
+            
+            self.resources = []
+            for resource in resources {
+                self.resources.append(resource)
+            }
+            
+            saveResources()
+        })
 		
 		//access database for updates
 		Internet.getUpdatesForVersion(version, onCompletion:
@@ -434,6 +451,18 @@ class UserData
 		}
 		saved.map({Category.fromString($0)!}).forEach({categories[$0.pk] = $0})
 	}
+    static func saveResources()
+    {
+        let resources_strs = resources.map({$0.toString()})
+        defaults.set(resources_strs, forKey: resourcesName)
+    }
+    static func getResources() {
+        guard let resources = defaults.array(forKey: resourcesName) as? [String] else {
+            return
+        }
+        self.resources = []
+        resources.compactMap({Resource.fromString($0)}).forEach({self.resources.append($0)})
+    }
 	/**
 		Returns whether or not this is the first time the user's opened the app.
 		Based on whether the college pk value is saved.

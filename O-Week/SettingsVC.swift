@@ -16,16 +16,12 @@ import UIKit
 */
 class SettingsVC: UITableViewController
 {
+    var resources = UserData.resources
+    
 	let remindersCell = UITableViewCell.newAutoLayout()
 	let notifyMeCell = UITableViewCell.newAutoLayout()
 	
-	let orientationPdf = UITableViewCell.newAutoLayout()
-	let campusMap = UITableViewCell.newAutoLayout()
-	let orientationWebsite = UITableViewCell.newAutoLayout()
-	let rescuerApp = UITableViewCell.newAutoLayout()
-	let URLS = ["https://ccengagement.cornell.edu/sites/ccengagement.cornell.edu/files/rnsp/documents/orient_guide_080718_cornell.pdf", "https://www.cornell.edu/about/maps/cornell-campus-map-2015.pdf", "https://newstudents.cornell.edu/fall-2018/first-year/orientation", "http://cornelldti.org/"]
-	
-	lazy var tableSections = [(name:"Notifications", rows:[remindersCell, notifyMeCell]), (name:"Resources", rows:[orientationPdf, campusMap, orientationWebsite, rescuerApp])]
+	lazy var tableSections = [(name:"Notifications", rows:[remindersCell, notifyMeCell]), (name:"Resources", rows:[])]
 	
     let remindersSwitch = UISwitch.newAutoLayout()
     let notifyMeOption = UILabel.newAutoLayout()
@@ -56,6 +52,7 @@ class SettingsVC: UITableViewController
 	{
         super.viewDidLoad()
 		configureCells()
+        setNotificationListener()
 		
 		let remindersOn = BoolPreference.Reminder.isTrue()
 		remindersSwitch.setOn(remindersOn, animated: false)
@@ -90,11 +87,6 @@ class SettingsVC: UITableViewController
 		notifyMeOption.alpha = 0.6
 		notifyMeOption.text = ListPreference.NotifyTime.get().rawValue
 		
-		//Resources
-		orientationPdf.textLabel?.text = "Orientation PDF"
-		campusMap.textLabel?.text = "Campus Map"
-		orientationWebsite.textLabel?.text = "New Students Orientation Website"
-		rescuerApp.textLabel?.text = "Cornell Design & Tech Initiative"
 	}
 	
     // MARK:- Actions
@@ -122,11 +114,23 @@ class SettingsVC: UITableViewController
 	}
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
 	{
-		return tableSections[section].rows.count
+        switch section {
+        case 0:
+            return tableSections[section].rows.count
+        default:
+            return resources.count
+        }
 	}
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
 	{
-		return tableSections[indexPath.section].rows[indexPath.row]
+        switch indexPath.section {
+        case 0:
+            return tableSections[indexPath.section].rows[indexPath.row]
+        default:
+            let cell = UITableViewCell.newAutoLayout()
+            cell.textLabel?.text = resources[indexPath.row].name
+            return cell
+        }
 	}
 	/**
 		Perform different actions based on the selected cell.
@@ -151,7 +155,7 @@ class SettingsVC: UITableViewController
 			tableView.deselectRow(at: indexPath, animated: false)
 		case let (1, row):	//selected something in resources
 			tableView.deselectRow(at: indexPath, animated: true)
-			if let url = URL(string: URLS[row])
+			if let url = URL(string: resources[row].link)
 			{
 				UIApplication.shared.open(url)
 			}
@@ -189,4 +193,17 @@ class SettingsVC: UITableViewController
 		notifyMeCell.isUserInteractionEnabled = !disable
 		notifyMeCell.contentView.subviews.map({$0 as! UILabel}).forEach({$0.textColor = disable ? Colors.GRAY : UIColor.black})
 	}
+    
+    /**
+     Updates the resource table
+     */
+    @objc private func updateResources() {
+        resources = UserData.resources
+        self.tableView.reloadData()
+    }
+    
+    private func setNotificationListener()
+    {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateResources), name: .reloadData, object: nil)
+    }
 }

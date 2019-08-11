@@ -16,6 +16,7 @@ class Internet
 {
 	//Link to the website where all event info is stored.
     static let DATABASE = "https://us-east1-oweek-1496849141291.cloudfunctions.net/"
+    static let RESOURCE = "https://us-east1-oweek-1496849141291.cloudfunctions.net/getResources"
     
     //suppress default constructor for noninstantiability
     private init(){}
@@ -75,6 +76,19 @@ class Internet
             runAsyncFunction({NotificationCenter.default.post(name: .reloadData, object: nil)})
 		})
 	}
+    
+    static func getResourceLinks(onCompletion finish:@escaping ([Resource]) -> ()) {
+        get(url: RESOURCE, handler:
+            {
+                json in
+                if let data = json as? [Any] {
+                    let resources = data.map({Resource(jsonOptional: $0 as? [String:Any])}).compactMap({$0})
+                    finish(resources)
+                    runAsyncFunction({NotificationCenter.default.post(name: .reloadData, object: nil)})
+                }
+        })
+    }
+    
 	/**
 	Sets an image corresponding to `event` into `imageView`. Attempts to retrieve image from saved files first, then attempts to downlaod image if no saved file exists.
 	
