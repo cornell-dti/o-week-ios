@@ -19,7 +19,7 @@ class FilterVC: UITableViewController
 	
 	var tableSections = [(name:String, rows:[(cell:UITableViewCell, data:HasPK?)])]()
 	static var requiredFilter = false
-	static var selectedFilters:Set<Int> = []
+	static var selectedFilters:Set<String> = []
 	
 	/**
 		Sets the table to `grouped` style, the title to "Filter", and creates the table view cells.
@@ -153,7 +153,12 @@ class FilterVC: UITableViewController
 			{
 				return true
 			}
-			return selectedFilters.contains(event.category)
+            for category in event.categories {
+                if selectedFilters.contains(category) {
+                    return true
+                }
+            }
+            return false
 		})
 	}
 }

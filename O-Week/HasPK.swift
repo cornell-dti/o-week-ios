@@ -13,5 +13,5 @@ import Foundation
 */
 protocol HasPK
 {
-	var pk:Int { get }
+	var pk:String { get }
 }

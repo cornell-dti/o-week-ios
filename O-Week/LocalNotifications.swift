@@ -62,9 +62,9 @@ class LocalNotifications: NSObject, UNUserNotificationCenterDelegate
 		Removes notifications for the given event.
 		- parameter eventPk: Pk of event to remove notifications for.
 	*/
-    static func removeNotification(for eventPk: Int)
+    static func removeNotification(for eventPk: String)
 	{
-        center.removePendingNotificationRequests(withIdentifiers: [String(eventPk)])
+        center.removePendingNotificationRequests(withIdentifiers: [eventPk])
     }
 	
 	/**
@@ -141,8 +141,8 @@ class LocalNotifications: NSObject, UNUserNotificationCenterDelegate
 		let id = response.notification.request.identifier
 		if (id.contains(LocalNotifications.EVENT_UPDATED_ID))
 		{
-			let pk = Int(id.components(separatedBy: LocalNotifications.EVENT_UPDATED_ID)[1])
-			if let event = UserData.eventFor(pk!)
+			let pk = id.components(separatedBy: LocalNotifications.EVENT_UPDATED_ID)[1]
+			if let event = UserData.eventFor(pk)
 			{
 				let detailsVC = DetailsVC()
 				detailsVC.configure(event: event)

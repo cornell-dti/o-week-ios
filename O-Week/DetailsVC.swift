@@ -345,15 +345,7 @@ class DetailsVC: UIViewController
 			eventDescription.numberOfLines = 0
 		}
 		
-		if (!event.additional.isEmpty)
-		{
-			additional.attributedText = event.attributedAdditional()
-			additional.isHidden = false
-		}
-		else
-		{
-			additional.isHidden = true
-		}
+        additional.isHidden = true
 	}
 	/**
 		Set up the required label and description depending on whether the event is required, and for whom.
@@ -361,7 +353,7 @@ class DetailsVC: UIViewController
 	*/
 	private func configureRequired(event:Event)
 	{
-		if (!(event.required || event.categoryRequired))
+		if (!(event.transferRequired || event.firstYearRequired))
 		{
 			requiredContainer.isHidden = true
 			requiredDivider.isHidden = true
@@ -374,17 +366,17 @@ class DetailsVC: UIViewController
 			//change color of RQ label based on whether or not it's required for this user
 			requiredLabel.backgroundColor = UserData.requiredForUser(event: event) ? Colors.RED : Colors.GRAY
 			
-			if (event.required)
+			if (event.firstYearRequired && event.transferRequired)
 			{
 				requiredDescription.text = "Required for All Students"
 			}
-			else	//category required
+			else if(event.firstYearRequired)
 			{
-				if let category = UserData.categories[event.category]
-				{
-					requiredDescription.text = "Required for \(category.name) Students"
-				}
+                requiredDescription.text = "Required for Freshmen Students in Some Colleges"
 			}
+            else {
+                requiredDescription.text = "Required for Transfer Students in Some Colleges"
+            }
 		}
 	}
 	/**
@@ -394,22 +386,16 @@ class DetailsVC: UIViewController
 	private func configureMap(event:Event)
 	{
 		mapMarker?.map = nil //remove prev marker
-        let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt(GMSPlaceField.all.rawValue))!
-        placesClient.fetchPlace(fromPlaceID: event.placeId, placeFields: fields, sessionToken: nil, callback: {
-                                                                                (result: GMSPlace?, error: Error?) in
-                                                                                if let error = error {
-                                                                                    print("An error occurred: \(error.localizedDescription) when fetching google places")
-                                                                                    return
-                                                                                }
-                                                                                
-                                                                                if let result = result {
-                                                                                    self.placeLatLng = result.coordinate
-                                                                                    self.map.moveCamera(GMSCameraUpdate.fit(result.viewport!))
-                                                                                    let mapMarker = GMSMarker(position: result.coordinate)
-                                                                                    mapMarker.map = self.map
-                                                                                    self.map.selectedMarker = mapMarker
-                                                                                }
-        })
+        let camera = GMSCameraPosition.camera(withLatitude: event.latitude, longitude: event.longitude, zoom: 17.0)
+        self.map.camera = camera
+        
+        // Creates a marker in the center of the map.
+        mapMarker = GMSMarker()
+        mapMarker!.position = CLLocationCoordinate2D(latitude:  event.latitude, longitude: event.longitude)
+        mapMarker!.title = event.caption
+        mapMarker!.map = self.map
+        placeLatLng = CLLocationCoordinate2D(latitude: event.latitude, longitude: event.longitude)
+        self.map.selectedMarker = mapMarker
 	}
 	/**
 		Handle user selection of map's direction button. Opens Google Maps or Apple Maps, depending on availability, and starts navigation.

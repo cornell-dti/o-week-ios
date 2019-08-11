@@ -15,7 +15,7 @@ import SystemConfiguration
 class Internet
 {
 	//Link to the website where all event info is stored.
-    static let DATABASE = "https://oweekapp.herokuapp.com/flow/"
+    static let DATABASE = "https://us-east1-oweek-1496849141291.cloudfunctions.net/"
     
     //suppress default constructor for noninstantiability
     private init(){}
@@ -46,33 +46,33 @@ class Internet
 		- version: Current version of database on file. Should be 0 if never downloaded from database.
 		- finish: Function to execute when data is processed.
 	*/
-	static func getUpdatesForVersion(_ version:Int, onCompletion finish:@escaping ((Int, [Category], [Int], [Event], [Int]) -> ()))
+	static func getUpdatesForVersion(_ version:Double, onCompletion finish:@escaping ((Double, [Category], [String], [Event], [String]) -> ()))
 	{
-		get(url: "\(DATABASE)version/\(version)", handler:
+        print("version: \(String(format: "%.0f", version))")
+		get(url: "\(DATABASE)version?timestamp=\(version)", handler:
 		{
 			json in
-			
 			guard let data = json as? [String:Any],
-					let newestVersion = data["version"] as? Int,
-					let categories = data["categories"] as? [String:Any],
-					let changedCategoriesJSON = categories["changed"] as? [Any],
-					let deletedCategoriesPK = categories["deleted"] as? [Int],
-					let events = data["events"] as? [String:Any],
-					let changedEventsJSON = events["changed"] as? [Any],
-					let deletedEventsPK = events["deleted"] as? [Int],
+					let newestVersion = data["timestamp"] as? Double,
+                    let categories = data["categories"] as? [String:Any],
+                    let changedCategoriesJSON = categories["changed"] as? [Any],
+                    let deletedCategoriesPK = categories["deleted"] as? [String],
+                    let events = data["events"] as? [String:Any],
+                    let changedEventsJSON = events["changed"] as? [Any],
+                    let deletedEventsPK = events["deleted"] as? [String],
 					//quick exit if version # did not change
 					version != newestVersion else {
 				runAsyncFunction({NotificationCenter.default.post(name: .reloadData, object: nil)})
 				return
 			}
-			
-			//note: flatMap can also remove nils
-			let changedCategories = changedCategoriesJSON.map({Category(jsonOptional: $0 as? [String:Any])}).compactMap({$0})
-			let changedEvents = changedEventsJSON.map({Event(jsonOptional: $0 as? [String:Any])}).compactMap({$0})
-			finish(newestVersion, changedCategories, deletedCategoriesPK, changedEvents, deletedEventsPK)
-			
-			//notify classes that need to know when events were updated
-			runAsyncFunction({NotificationCenter.default.post(name: .reloadData, object: nil)})
+            
+            //note: flatMap can also remove nils
+            let changedCategories = changedCategoriesJSON.map({Category(jsonOptional: $0 as? [String:Any])}).compactMap({$0})
+            let changedEvents = changedEventsJSON.map({Event(jsonOptional: $0 as? [String:Any])}).compactMap({$0})
+            finish(newestVersion, changedCategories, deletedCategoriesPK, changedEvents, deletedEventsPK)
+
+            //notify classes that need to know when events were updated
+            runAsyncFunction({NotificationCenter.default.post(name: .reloadData, object: nil)})
 		})
 	}
 	/**
@@ -169,3 +169,5 @@ class Internet
         })
     }
 }
+
+

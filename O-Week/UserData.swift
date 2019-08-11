@@ -31,8 +31,8 @@ class UserData
 	static let defaults = UserDefaults.standard
     
     //Events
-	static var allEvents = [Date: [Int:Event]]()
-	static var selectedEvents = [Date: [Int:Event]]()
+	static var allEvents = [Date: [String:Event]]()
+	static var selectedEvents = [Date: [String:Event]]()
     
     //Calendar for manipulating dates. You can use this throughout the app.
     static let userCalendar = Calendar.current
@@ -40,17 +40,17 @@ class UserData
     //Dates
     static var DATES = [Date]()
 	static var selectedDate:Date!
-	static let YEAR = 2018
+	static let YEAR = 2019
 	static let MONTH = 8
-	static let START_DAY = 17	//Dates range: [START_DAY, END_DAY], inclusive
-	static let END_DAY = 29		//Note: END_DAY must > START_DAY
+	static let START_DAY = 23	//Dates range: [START_DAY, END_DAY], inclusive
+	static let DURATION = 15		//Duration of orientation dates
 	
 	//Categories
-	static var categories = [Int:Category]()
+	static var categories = [String:Category]()
 	
 	//User identity
-	static var studentTypePk:Int? = nil
-	static var collegePk:Int? = nil
+	static var studentTypePk:String? = nil
+	static var collegePk:String? = nil
 	
     private init(){}
 	
@@ -68,13 +68,15 @@ class UserData
 		selectedDate = UserData.userCalendar.date(from: dateComponents)!
 		
 		//this assumes END_DAY is larger than START_DAY
-		while (dateComponents.day! <= END_DAY)
+        var count = 0
+		while (count < DURATION)
 		{
 			let date = UserData.userCalendar.date(from: dateComponents)!
 			DATES.append(date)
-			selectedEvents[date] = [Int:Event]()
-			allEvents[date] = [Int:Event]()
+			selectedEvents[date] = [String:Event]()
+			allEvents[date] = [String:Event]()
 			dateComponents.day! += 1
+            count += 1
 			
 			if (UserData.userCalendar.compare(today, to: date, toGranularity: .day) == .orderedSame)
 			{
@@ -88,8 +90,8 @@ class UserData
 	private static func initStudentIdentity()
 	{
 		let defaults = UserDefaults.standard
-		let storedStudentPk = defaults.integer(forKey: studentTypeName)
-		let storedCollegePk = defaults.integer(forKey: collegeTypeName)
+		let storedStudentPk = defaults.string(forKey: studentTypeName) ?? ""
+		let storedCollegePk = defaults.string(forKey: collegeTypeName) ?? ""
 		
 		//the integer might be the default value (and not something we saved). Check.
 		if (Student.studentForPk(storedStudentPk) != nil)
@@ -133,6 +135,8 @@ class UserData
 		Internet.getUpdatesForVersion(version, onCompletion:
 		{
 			newVersion, changedCategories, deletedCategoryPks, changedEvents, deletedEventPks in
+            
+            print("completed fetching, new version:\(newVersion)")
 			
 			//update categories
 			changedCategories.forEach({categories[$0.pk] = $0})
@@ -180,29 +184,15 @@ class UserData
 	*/
 	static func requiredForUser(event: Event) -> Bool
 	{
-		if (event.required)
-		{
-			return true
-		}
-		if (event.categoryRequired)
-		{
-			if let student = studentTypePk
-			{
-				if (student == event.category)
-				{
-					//required for student's type
-					return true
-				}
-			}
-			if let college = collegePk
-			{
-				if (college == event.category)
-				{
-					//required for student's college
-					return true
-				}
-			}
-		}
+		if let student = studentTypePk,
+            let college = collegePk {
+            if event.firstYearRequired && student == Student.Freshmen.pk && event.categories.contains(college) {
+                return true
+            }
+            if event.transferRequired && student == Student.Transfer.pk && event.categories.contains(college) {
+                return true
+            }
+        }
 		return false
 	}
 	
@@ -242,7 +232,7 @@ class UserData
     static func appendToAllEvents(_ event: Event)
 	{
 		guard allEvents[event.date] != nil else {
-			print("appendToAllEvents: attempted to add event with date outside orientation")
+            print("appendToAllEvents: attempted to add event with date outside orientation: \(event.pk), \(event.date)")
 			return
 		}
 		allEvents[event.date]![event.pk] = event
@@ -299,7 +289,7 @@ class UserData
 		- parameter pk: `Event.pk`
 		- returns: Event, nil if no match was found.
 	*/
-	static func eventFor(_ pk:Int) -> Event?
+	static func eventFor(_ pk:String) -> Event?
 	{
 		return allEvents.values.first(where: {$0[pk] != nil})?[pk]
 	}
@@ -332,7 +322,7 @@ class UserData
 			- image: Image to save.
 			- event: The pk of the event this image belongs to. The image will be saved with the `event.pk` as its name so we can access it next time using the event.
 	*/
-	static func saveImage(_ image:UIImage, eventPk:Int)
+	static func saveImage(_ image:UIImage, eventPk:String)
 	{
 		let imageData = UIImagePNGRepresentation(image)
 		let url = documentURLForName("\(eventPk).png")
@@ -343,7 +333,7 @@ class UserData
 	
 		- parameter event: Event whose image we wish to delete.
 	*/
-	static func removeImageOf(_ eventPk:Int)
+	static func removeImageOf(_ eventPk:String)
 	{
 		let url = documentURLForName("\(eventPk).png")
 		try? FileManager.default.removeItem(at: url)
@@ -354,7 +344,7 @@ class UserData
 		- parameter event: Event whose image we wish to read from disk.
 		- returns: Image if one was found, nil otherwise.
 	*/
-	static func loadImageFor(_ eventPk:Int) -> UIImage?
+	static func loadImageFor(_ eventPk:String) -> UIImage?
 	{
 		let url = documentURLForName("\(eventPk).png")
 		return UIImage(contentsOfFile: url.path)
@@ -377,9 +367,9 @@ class UserData
 		Retrieves from `UserDefaults` a list of `event.pk`s of events the user has selected.
 		- returns: List of `pk`s belonging to selected events.
 	*/
-	static func getAddedPKs() -> [Int]
+	static func getAddedPKs() -> [String]
 	{
-		return defaults.object(forKey: addedPKsName) as? [Int] ?? [Int]()
+		return defaults.object(forKey: addedPKsName) as? [String] ?? [String]()
 	}
 	/**
 		Saves to `UserDefaults` the `event.pk`s of events the user has selected.
@@ -392,11 +382,11 @@ class UserData
 	/**
 		The version of the database we have saved on this phone. This value is passed to the database to determine what needs to be updated. This value is then synchronized with the database's current version.
 	*/
-	static var version:Int {
+	static var version:Double {
 		get
 		{
 			//if version was not set, defaults.integer returns 0, which is what we want
-			return defaults.integer(forKey: versionName)
+			return defaults.double(forKey: versionName)
 		}
 		set
 		{
@@ -407,7 +397,7 @@ class UserData
 		Saves what type of student the user is.
 		- parameter pk: Pk of the category that is the user's identity. Should match values in `Student`.
 	*/
-	static func setStudentType(pk:Int)
+	static func setStudentType(pk:String)
 	{
 		defaults.set(pk, forKey: studentTypeName)
 		studentTypePk = pk
@@ -416,7 +406,7 @@ class UserData
 		Saves the college the user is in.
 		- parameter pk: Pk of the category that is the user's college. Should match values in `Colleges`.
 	*/
-	static func setCollegeType(pk:Int)
+	static func setCollegeType(pk:String)
 	{
 		defaults.set(pk, forKey: collegeTypeName)
 		collegePk = pk
@@ -451,7 +441,7 @@ class UserData
 	*/
 	static func isFirstRun() -> Bool
 	{
-		let collegeTypePk = defaults.integer(forKey: collegeTypeName)
+		let collegeTypePk = defaults.string(forKey: collegeTypeName) ?? ""
 		return Colleges.collegeForPk(collegeTypePk) == nil
 	}
 }

@@ -28,19 +28,21 @@ struct Event:Hashable, Comparable, JSONObject
     let title: String
     let caption: String
     let description: String
-    let category: Int
+    let categories: [String]
+    let startTimeUnixRep: Double
+    let endTimeUnixRep: Double
     let startTime: Time
     let endTime: Time
-    let required: Bool
     let date: Date
-	let placeId: String
-	let categoryRequired: Bool
-	let additional: String
-    let pk: Int
+    let longitude: Double
+    let latitude: Double
+    let pk: String
+    let firstYearRequired: Bool
+    let transferRequired: Bool
     
     var hashValue: Int
     {
-        return pk
+        return pk.hashValue
     }
 	
 	/**
@@ -56,23 +58,30 @@ struct Event:Hashable, Comparable, JSONObject
 			- required: Whether this event is required for new students.
 			- categoryRequired: Whether this event is required for its category.
 			- additional: For example, ## All new students are required to attend this program at the following times: ## ____3:30pm # Residents of Balch, Jameson, Risley, Just About Music, Ecology House, and Latino Living Center; on-campus transfers in Call Alumni Auditorium ____5:30pm # Residents of Dickson, McLLU, Donlon, High Rise 5, and Ujamaa; off-campus transfers in Call Alumni Auditorium ____8:00pm # Residents of Townhouses, Low Rises, Court-Kay-Bauer, Mews, Holland International Living Center, and Akwe:kon
-			- placeId: String from Google to identify location
+            - latitude: latitude of the event location
+            - longitude: longitude of the event location
 			- pk: Unique positive ID given to each event starting from 1.
 	*/
-	private init(title:String, caption:String, category:Int, pk: Int, start:Time, end:Time, date: Date, required: Bool, description: String, placeId: String, categoryRequired:Bool, additional:String)
+    private init(title:String, caption:String, categories:[String], pk: String, start: Double, end: Double, description: String, longitude: Double, latitude: Double, firstYearRequired: Bool, transferRequired: Bool)
     {
         self.title = title
         self.caption = caption
-        self.category = category
+        self.categories = categories
         self.description = description
-        self.date = date
-        self.required = required
         self.pk = pk
-        startTime = start
-        endTime = end
-		self.placeId = placeId
-		self.categoryRequired = categoryRequired
-		self.additional = additional
+		self.longitude = longitude
+        self.latitude = latitude
+        self.firstYearRequired = firstYearRequired
+        self.transferRequired = transferRequired
+        
+        self.startTimeUnixRep = start
+        self.endTimeUnixRep = end
+        let startTime = Date(timeIntervalSince1970: start / 1000)
+        let endTime = Date(timeIntervalSince1970: end / 1000)
+        self.date = UserData.userCalendar.date(bySettingHour: 0, minute: 0, second: 0, of: startTime)!
+        self.startTime = Time(hour: UserData.userCalendar.component(.hour, from: startTime), minute: UserData.userCalendar.component(.minute, from: startTime))
+        self.endTime = Time(hour: UserData.userCalendar.component(.hour, from: endTime), minute: UserData.userCalendar.component(.minute, from: endTime))
+        
     }
 	/**
 		Creates an event object using data downloaded from the database.
@@ -95,40 +104,39 @@ struct Event:Hashable, Comparable, JSONObject
     {
         guard let json = jsonOptional,
 				let title = json["name"] as? String,
-                let pk = json["pk"] as? Int,
+                let pk = json["pk"] as? String,
                 let description = json["description"] as? String,
                 let location = json["location"] as? String,
-                let category = json["category"] as? Int,
-                let startDate = json["start_date"] as? String,
-                let startTime = json["start_time"] as? String,
-                let endTime = json["end_time"] as? String,
-				let required = json["required"] as? Bool,
-				let placeId = json["place_ID"] as? String,
-				let categoryRequired = json["category_required"] as? Bool,
-				let additional = json["additional"] as? String else {
+                let categories = json["categories"] as? [String],
+//                let latitude = json["latitude"] as? Double,
+//                let longitude = json["longitude"] as? String,
+                let startTime = json["start"] as? Double,
+                let endTime = json["end"] as? Double,
+                let firstYearRequired = json["firstYearRequired"] as? Bool,
+                let transferRequired = json["transferRequired"] as? Bool
+        else {
 			print("Event.jsonOptional: incorrect JSON format")
             return nil
         }
+        
         
         self.pk = pk
         self.title = title
         self.caption = location
         self.description = description
-        self.category = category
-		self.required = required
-		self.placeId = placeId
-		self.categoryRequired = categoryRequired
-		self.additional = additional
+        self.categories = categories
+		self.firstYearRequired = firstYearRequired
+		self.transferRequired = transferRequired
+        self.latitude = 0
+        self.longitude = 0
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        guard let date = dateFormatter.date(from: startDate) else {
-            return nil
-        }
-        self.date = date
-        
-        self.startTime = Time.fromString(startTime)
-        self.endTime = Time.fromString(endTime)
+        self.startTimeUnixRep = startTime
+        self.endTimeUnixRep = endTime
+        let start = Date(timeIntervalSince1970: startTime / 1000)
+        let end = Date(timeIntervalSince1970: endTime / 1000)
+        self.date = UserData.userCalendar.date(bySettingHour: 0, minute: 0, second: 0, of: start)!
+        self.startTime = Time(hour: UserData.userCalendar.component(.hour, from: start), minute: UserData.userCalendar.component(.minute, from: start))
+        self.endTime = Time(hour: UserData.userCalendar.component(.hour, from: end), minute: UserData.userCalendar.component(.minute, from: end))
     }
 	
 	/**
@@ -137,10 +145,14 @@ struct Event:Hashable, Comparable, JSONObject
 	*/
 	func toString() -> String
 	{
-		let year = UserData.userCalendar.component(.year, from: date)
-		let month = UserData.userCalendar.component(.month, from: date)
-		let day = UserData.userCalendar.component(.day, from: date)
-		return "\(title)|\(caption)|\(description)|\(category)|\(pk)|\(startTime.hour)|\(startTime.minute)|\(endTime.hour)|\(endTime.minute)|\(required)|\(year)|\(month)|\(day)|\(placeId)|\(categoryRequired)|\(additional)"
+		var stringRep =  "\(title)|\(caption)|\(description)|\(pk)|\(startTimeUnixRep)|\(endTimeUnixRep)|\(firstYearRequired)|\(transferRequired)|\(longitude)|\(latitude)|"
+        for (index, category) in categories.enumerated() {
+            stringRep += category
+            if(index < categories.count - 1) {
+                stringRep += ";"
+            }
+        }
+        return stringRep
 	}
 	
 	/**
@@ -151,18 +163,14 @@ struct Event:Hashable, Comparable, JSONObject
 	static func fromString(_ str: String) -> Event?
 	{
 		let parts = str.components(separatedBy: "|")
-		guard parts.count >= 17,
-			let category = Int(parts[3]),
-			let pk = Int(parts[4]),
-			let startHour = Int(parts[5]),
-			let startMinute = Int(parts[6]),
-			let endHour = Int(parts[7]),
-			let endMinute = Int(parts[8]),
-			let required = Bool(parts[9]),
-			let year = Int(parts[10]),
-			let month = Int(parts[11]),
-			let day = Int(parts[12]),
-			let categoryRequired = Bool(parts[14]) else {
+		guard parts.count >= 11,
+			let startTimeUnixRep = Double(parts[4]),
+            let endTimeUnixRep = Double(parts[5]),
+			let firstYearRequired = Bool(parts[6]),
+			let transferRequired = Bool(parts[7]),
+            let longitude = Double(parts[8]),
+            let latitude = Double(parts[9])
+        else {
 				print("Invalid event string: \(str)")
 				return nil
 		}
@@ -170,62 +178,55 @@ struct Event:Hashable, Comparable, JSONObject
 		let title = parts[0]
 		let caption = parts[1]
 		let description = parts[2]
-		let placeId = parts[13]
-		let additional = parts[15]
+		let pk = parts[3]
 		
-		let start = Time(hour: startHour, minute: startMinute)
-		let end = Time(hour: endHour, minute: endMinute)
-		var components = DateComponents()
-		components.year = year
-		components.month = month
-		components.day = day
-		let date = UserData.userCalendar.date(from: components)!
+        let categories = parts[10].components(separatedBy: ";")
 		
-		return Event(title: title, caption: caption, category: category, pk: pk, start: start, end: end, date: date, required: required, description: description, placeId: placeId, categoryRequired: categoryRequired, additional: additional)
+		return Event(title: title, caption: caption, categories: categories, pk: pk, start: startTimeUnixRep, end: endTimeUnixRep, description: description, longitude: longitude, latitude: latitude, firstYearRequired: firstYearRequired, transferRequired: transferRequired)
 	}
 	
-	/**
-		Returns the formatted additional text, with headers and bullets.
-		String is like so: ## HEADER ## ____BULLET # INFO ____BULLET # INFO.
-		- important: Check that `additional` is not empty before calling this method.
-		
-		- returns: Formatted text
-	*/
-	func attributedAdditional() -> NSAttributedString
-	{
-		let TEXT_SIZE:CGFloat = 16
-		
-		let string = NSMutableAttributedString()
-		let headerAndRemaining = additional.components(separatedBy: "##")
-		let header = "\(headerAndRemaining[1].trimmingCharacters(in: .whitespacesAndNewlines))\n"
-		let remaining = headerAndRemaining[2].trimmingCharacters(in: .whitespacesAndNewlines)
-		
-		//set header
-		let headerAttributes = [NSAttributedStringKey.font: UIFont(name: Font.DEMIBOLD, size: TEXT_SIZE)!]
-		let attributedHeader = NSAttributedString(string: header, attributes: headerAttributes)
-		string.append(attributedHeader)
-		
-		let sections = remaining.components(separatedBy: "____")
-		for section in sections
-		{
-			guard !section.isEmpty else {
-				continue
-			}
-			let bulletAndInfo = section.trimmingCharacters(in: .whitespacesAndNewlines).components(separatedBy: " # ")
-			let bullet = "\(bulletAndInfo[0])\t"
-			let info = "\(bulletAndInfo[1])\n"
-			
-			//set bullet
-			let attributedBullet = NSAttributedString(string: bullet, attributes:[.font: UIFont(name: Font.DEMIBOLD, size: TEXT_SIZE)!, .foregroundColor: Colors.RED])
-			string.append(attributedBullet)
-			
-			//set info
-			let attributedInfo = NSAttributedString(string: info, attributes: [.font:UIFont(name: Font.REGULAR, size: 14)!, .foregroundColor: Colors.LIGHT_GRAY])
-			string.append(attributedInfo)
-		}
-		
-		return string
-	}
+//    /** DEPRECATED
+//        Returns the formatted additional text, with headers and bullets.
+//        String is like so: ## HEADER ## ____BULLET # INFO ____BULLET # INFO.
+//        - important: Check that `additional` is not empty before calling this method.
+//
+//        - returns: Formatted text
+//    */
+//    func attributedAdditional() -> NSAttributedString
+//    {
+//        let TEXT_SIZE:CGFloat = 16
+//
+//        let string = NSMutableAttributedString()
+//        let headerAndRemaining = additional.components(separatedBy: "##")
+//        let header = "\(headerAndRemaining[1].trimmingCharacters(in: .whitespacesAndNewlines))\n"
+//        let remaining = headerAndRemaining[2].trimmingCharacters(in: .whitespacesAndNewlines)
+//
+//        //set header
+//        let headerAttributes = [NSAttributedStringKey.font: UIFont(name: Font.DEMIBOLD, size: TEXT_SIZE)!]
+//        let attributedHeader = NSAttributedString(string: header, attributes: headerAttributes)
+//        string.append(attributedHeader)
+//
+//        let sections = remaining.components(separatedBy: "____")
+//        for section in sections
+//        {
+//            guard !section.isEmpty else {
+//                continue
+//            }
+//            let bulletAndInfo = section.trimmingCharacters(in: .whitespacesAndNewlines).components(separatedBy: " # ")
+//            let bullet = "\(bulletAndInfo[0])\t"
+//            let info = "\(bulletAndInfo[1])\n"
+//
+//            //set bullet
+//            let attributedBullet = NSAttributedString(string: bullet, attributes:[.font: UIFont(name: Font.DEMIBOLD, size: TEXT_SIZE)!, .foregroundColor: Colors.RED])
+//            string.append(attributedBullet)
+//
+//            //set info
+//            let attributedInfo = NSAttributedString(string: info, attributes: [.font:UIFont(name: Font.REGULAR, size: 14)!, .foregroundColor: Colors.LIGHT_GRAY])
+//            string.append(attributedInfo)
+//        }
+//
+//        return string
+//    }
 	
 	/**
 		Returns the date as "DayOfWeek, Month DayOfMonth".

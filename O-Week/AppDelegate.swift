@@ -23,8 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate
 	
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool
 	{
-		GMSServices.provideAPIKey("AIzaSyAfj99YO2rt_bnRE3XBXiL8_0yAaewM_eY")
-		GMSPlacesClient.provideAPIKey("AIzaSyAfj99YO2rt_bnRE3XBXiL8_0yAaewM_eY")
+		GMSServices.provideAPIKey("AIzaSyALkTHpeoUUVMDYfIQWbkRRokaVrWarKWE")
+		GMSPlacesClient.provideAPIKey("AIzaSyALkTHpeoUUVMDYfIQWbkRRokaVrWarKWE")
 		
 		window = UIWindow(frame: UIScreen.main.bounds)
         setStyles()

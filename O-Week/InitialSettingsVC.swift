@@ -16,10 +16,10 @@ import UIKit
 class InitialSettingsVC:UIPageViewController, UIPageViewControllerDataSource
 {
 	var pages:[UIViewController]!
-	var buttons:[[(button:UILabel, pk:Int?)]] = []
+	var buttons:[[(button:UILabel, pk:String)]] = []
 	var waitingOnEventDownload = false
-	var studentTypePk:Int? = nil
-	var collegePk:Int? = nil
+	var studentTypePk:String? = nil
+	var collegePk:String? = nil
 	
 	/**
 		Creates a `InitialSettingsVC` with a navigation bar.
@@ -83,7 +83,7 @@ class InitialSettingsVC:UIPageViewController, UIPageViewControllerDataSource
 		transferButton.autoPinEdge(toSuperviewEdge: .right)
 		transferButton.autoPinEdge(toSuperviewEdge: .bottom)
 		
-		buttons.append([(button:freshmanButton, pk:nil), (button:transferButton, pk:Student.Transfer.pk)])
+		buttons.append([(button:freshmanButton, pk:Student.Freshmen.pk), (button:transferButton, pk:Student.Transfer.pk)])
 		
 		return page1
 	}
@@ -111,7 +111,7 @@ class InitialSettingsVC:UIPageViewController, UIPageViewControllerDataSource
 		buttonsContainer.alignment = .fill
 		buttonsContainer.axis = .vertical
 		buttonsContainer.spacing = 10
-		let collegeButtons:[(button:UILabel, pk:Int?)] = Colleges.ORDERED.map({(button:createButton(with: $0.rawValue, textSize: 18), pk:$0.pk)})
+		let collegeButtons:[(button:UILabel, pk:String)] = Colleges.ORDERED.map({(button:createButton(with: $0.rawValue, textSize: 18), pk:$0.pk)})
 		buttons.append(collegeButtons)
 		collegeButtons.forEach({buttonsContainer.addArrangedSubview($0.button)})
 		
@@ -153,7 +153,7 @@ class InitialSettingsVC:UIPageViewController, UIPageViewControllerDataSource
 		startButton.autoPinEdge(toSuperviewEdge: .right)
 		startButton.autoPinEdge(toSuperviewEdge: .bottom)
 		
-		buttons.append([(button:startButton, pk:nil)])
+		buttons.append([(button:startButton, pk:"")])
 		
 		return page3
 	}
@@ -292,19 +292,18 @@ class InitialSettingsVC:UIPageViewController, UIPageViewControllerDataSource
 				clickedButton.textColor = UIColor.white
 				
 				//save new values
-				if let pk = buttons[pageNum][index].pk
-				{
-					switch pageNum
-					{
-					case 0:	//the 1st page stores the student's type
-						studentTypePk = pk
-					case 1:	//the 2nd page stores the student's college
-						collegePk = pk
-					default:
-						print("InitialSettingsVC: onButtonClick called with pk on invalid page: \(pageNum)")
-					}
-				}
+                let pk = buttons[pageNum][index].pk
+                switch pageNum
+                {
+                case 0:	//the 1st page stores the student's type
+                    studentTypePk = pk
+                case 1:	//the 2nd page stores the student's college
+                    collegePk = pk
+                default:
+                    print("InitialSettingsVC: onButtonClick called with pk on invalid page: \(pageNum)")
+                }
 				
+                
 				//go to the next page
 				if (pageNum < pages.count-1)
 				{

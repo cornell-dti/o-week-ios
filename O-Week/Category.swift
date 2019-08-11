@@ -14,12 +14,12 @@ import Foundation
 */
 struct Category:Hashable, Comparable, JSONObject, HasPK
 {
-	let pk:Int
+	let pk:String
 	let name:String
 	let description:String
 	var hashValue: Int
 	{
-		return pk
+		return pk.hashValue
 	}
 	
 	/**
@@ -30,7 +30,7 @@ struct Category:Hashable, Comparable, JSONObject, HasPK
 			- name: For example, "College of Engineering".
 			- description: More information about a `Category`. Currently unused.
 	*/
-	init(pk:Int, name:String, description:String)
+	init(pk:String, name:String, description:String)
 	{
 		self.pk = pk
 		self.name = name
@@ -47,13 +47,13 @@ struct Category:Hashable, Comparable, JSONObject, HasPK
 	init?(jsonOptional: [String:Any]?)
 	{
 		guard let json = jsonOptional,
-			let pk = json["pk"] as? Int,
-			let name = json["category"] as? String,
-			let description = json["description"] as? String else {
+			let pk = json["pk"] as? String,
+			let name = json["category"] as? String
+        else {
 				return nil
 		}
 		
-		self.init(pk:pk, name:name, description:description)
+		self.init(pk:pk, name:name, description:"")
 	}
 	
 	/**
@@ -73,11 +73,8 @@ struct Category:Hashable, Comparable, JSONObject, HasPK
 	static func fromString(_ str:String) -> Category?
 	{
 		let parts = str.components(separatedBy: "|")
-		guard parts.count >= 3,
-			let pk = Int(parts[0]) else {
-			return nil
-		}
 		
+        let pk = parts[0]
 		let name = parts[1]
 		let description = parts[2]
 		return Category(pk: pk, name: name, description: description)
