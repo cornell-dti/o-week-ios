@@ -12,7 +12,6 @@ import UIKit
 	Holds a reference to all `FeedVC`s and `ScheduleVC`s, one for each day of orientation. Allows swiping between them.
 	`pages`: All the `FeedVC`s or `ScheduleVC`s. Whatever these are, they must implement the `DateContainer` protocol in order to change `UserData.selectedDate` on page change.
 `style`: Whether the page displayed is a `FeedVC` or a `ScheduleVC`.
-`detailsVC`: Details page for the `FeedVC` or `ScheduleVC` to use. Stored here for reuse between different pages.
 `filterVC`: Filter selection page for `FeedVC`. Stored here since `FeedVC` shouldn't control the navigation bar, where the filter button resides.
 `filterButton`: Button to change filter. Stored to change appearance based on selection of filters.
 */
@@ -21,7 +20,6 @@ class DatePageVC:UIPageViewController, UIPageViewControllerDataSource, UIPageVie
 	var datePicker:DatePickerController?
 	var pages = [UIViewController]()
 	var style:Style!
-	var detailsVC:DetailsVC!
 	var filterVC:FilterVC?
 	var filterButton:UIButton?
 	
@@ -44,7 +42,6 @@ class DatePageVC:UIPageViewController, UIPageViewControllerDataSource, UIPageVie
 			navController.navigationBar.topItem?.title = "My Schedule"
 		}
 		AppDelegate.setUpExtendedNavBar(navController: navController)
-		datePageVC.detailsVC = DetailsVC()
 		return navController
 	}
 	
@@ -90,13 +87,13 @@ class DatePageVC:UIPageViewController, UIPageViewControllerDataSource, UIPageVie
 		
 		if (style == .feed)
 		{
-			UserData.DATES.forEach({pages.append(FeedVC(date: $0, detailsVC: detailsVC))})
+			UserData.DATES.forEach({pages.append(FeedVC(date: $0))})
 			//listen to data changes to update filter button
 			NotificationCenter.default.addObserver(self, selector: #selector(toggleFilterButton), name: .reloadData, object: nil)
 		}
 		else if (style == .schedule)
 		{
-			UserData.DATES.forEach({pages.append(ScheduleVC(date: $0, detailsVC: detailsVC))})
+			UserData.DATES.forEach({pages.append(ScheduleVC(date: $0))})
 		}
 		
 		let pageToShow = pages[UserData.DATES.index(of: UserData.selectedDate)!]

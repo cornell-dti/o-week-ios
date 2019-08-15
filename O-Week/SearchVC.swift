@@ -19,7 +19,6 @@ class SearchVC: EmptyStateTableVC, UISearchResultsUpdating, UISearchControllerDe
 	let SEARCH_MIN_CHARS = 3
 	
 	let searchController = UISearchController(searchResultsController: nil)
-	var detailsVC:DetailsVC!
 	var tableSections:[(name:String, rows:[FeedCell])] = [(name: "My Calendar", rows:[]), (name:"All Events", rows:[])]
 	
 	/**
@@ -38,7 +37,6 @@ class SearchVC: EmptyStateTableVC, UISearchResultsUpdating, UISearchControllerDe
 	convenience init()
 	{
 		self.init(image: UIImage(named:"tab_search")!, text: "Search for orientation events", style: .grouped)
-		detailsVC = DetailsVC()
 	}
 	/**
 		Configure the search controller.
@@ -46,8 +44,7 @@ class SearchVC: EmptyStateTableVC, UISearchResultsUpdating, UISearchControllerDe
 	override func viewDidLoad()
 	{
 		super.viewDidLoad()
-		
-		configureSearchBar()
+        configureSearchBar()
 	}
 	/**
 		Sets the look of the search bar and links it up to the nav bar.
@@ -55,9 +52,11 @@ class SearchVC: EmptyStateTableVC, UISearchResultsUpdating, UISearchControllerDe
 	private func configureSearchBar()
 	{
 		//set search bar appearances
+        self.definesPresentationContext = true
 		searchController.searchBar.tintColor = UIColor.white
 		searchController.searchBar.barTintColor = UIColor.white
 		searchController.dimsBackgroundDuringPresentation = false
+        searchController.definesPresentationContext = true
 		
 		if let textField = searchController.searchBar.value(forKey: "searchField") as? UITextField
 		{
@@ -173,6 +172,7 @@ class SearchVC: EmptyStateTableVC, UISearchResultsUpdating, UISearchControllerDe
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
 	{
 		let cell = tableSections[indexPath.section].rows[indexPath.row]
+        let detailsVC = DetailsVC()
 		detailsVC.configure(event: cell.event!)
 		navigationController?.setNavigationBarHidden(false, animated: false)
 		navigationController?.pushViewController(detailsVC, animated: true)

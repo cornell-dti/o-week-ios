@@ -312,6 +312,7 @@ class InitialSettingsVC:UIPageViewController, UIPageViewControllerDataSource
 				else
 				{
 					attemptFinish()
+                    UserData.saveAddedPKs()
 				}
 				return
 			}

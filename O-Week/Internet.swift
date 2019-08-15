@@ -98,14 +98,7 @@ class Internet
 	*/
     static func getImageFor(_ event:Event, imageView:UIImageView)
     {
-		if let image = UserData.loadImageFor(event.pk)
-		{
-			imageView.image = image
-		}
-		else
-		{
-			imageFrom("\(DATABASE)event/\(event.pk)/image", imageView: imageView, event: event)
-		}
+        imageFrom(event.img, imageView: imageView, event: event)
     }
 	/**
 	Downloads an image from the url, then sets the image downloaded to `imageView` and saves the image such that it can be retreived from disk with `event` next time the image is requested.
@@ -131,7 +124,6 @@ class Internet
                 if let downloadedImage = UIImage(data: data!)
                 {
                     runAsyncFunction({imageView.image = downloadedImage})
-					UserData.saveImage(downloadedImage, eventPk: event.pk)
                 }
             }
         })

@@ -15,7 +15,6 @@ import UIKit
 class FeedVC:EmptyStateTableVC, DateContainer
 {
 	private(set) var date:Date!
-	var detailsVC:DetailsVC!
 	var events = [Event]()
 	let FEED_CELL_ID = "feedCell"
     
@@ -25,13 +24,11 @@ class FeedVC:EmptyStateTableVC, DateContainer
 		Initialize FeedVC to the given date.
 		- parameters:
 			- date: Date this FeedVC will show events for.
-			- detailsVC: Reference to DetailsVC to segue to.
 	*/
-	convenience init(date:Date, detailsVC:DetailsVC)
+	convenience init(date:Date)
 	{
 		self.init(image: UIImage(named:"tab_browse")!, text: "No events on this day.", style: .plain)
 		self.date = date
-		self.detailsVC = detailsVC
 	}
 	
 	/**
@@ -73,6 +70,7 @@ class FeedVC:EmptyStateTableVC, DateContainer
 	*/
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
 	{
+        let detailsVC = DetailsVC()
 		detailsVC.configure(event: events[indexPath.row])
 		navigationController?.pushViewController(detailsVC, animated: true)
     }

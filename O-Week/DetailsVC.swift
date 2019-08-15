@@ -259,9 +259,11 @@ class DetailsVC: UIViewController
         linkButton.autoPinEdge(.top, to: .bottom, of: eventDescription)
         linkButton.autoPinEdge(.bottom, to: .bottom, of: detailsContainer)
         linkButton.autoPinEdge(.left, to: .left, of: detailsContainer)
+        linkButton.autoPinEdge(.right, to: .right, of: detailsContainer)
         linkButton.titleLabel?.font = UIFont(name: Font.MEDIUM, size: 14)
         linkButton.setTitleColor(view.tintColor, for: .normal)
         linkButton.addTarget(self, action: #selector(onURLButtonClick(_:)), for: .touchUpInside)
+        linkButton.contentHorizontalAlignment = .left
         
         
 		
@@ -332,6 +334,7 @@ class DetailsVC: UIViewController
         linkButton.setTitle(event.url, for: .normal)
         if event.url == "" {
             NSLayoutConstraint.activate([linkButton.heightAnchor.constraint(equalToConstant: 0)])
+            linkButton.isHidden = true
             view.setNeedsUpdateConstraints()
         }
 		
@@ -406,7 +409,7 @@ class DetailsVC: UIViewController
 	private func configureMap(event:Event)
 	{
 		mapMarker?.map = nil //remove prev marker
-        let camera = GMSCameraPosition.camera(withLatitude: event.latitude, longitude: event.longitude, zoom: 17.0)
+        let camera = GMSCameraPosition.camera(withLatitude: event.latitude, longitude: event.longitude, zoom: 15.0)
         self.map.camera = camera
         
         // Creates a marker in the center of the map.

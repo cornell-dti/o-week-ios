@@ -25,7 +25,6 @@ class ScheduleVC: UIViewController, DateContainer
 	var eventViews = [UIView:Event]()
 	
 	private(set) var date:Date!
-	var detailsVC:DetailsVC!
     
 	static let HOURS = {
 		() -> [Time] in
@@ -56,13 +55,11 @@ class ScheduleVC: UIViewController, DateContainer
 		Initialize to the given date.
 		- parameters:
 			- date: Date this `ScheduleVC` will show events for.
-			- detailsVC: Reference to DetailsVC to segue to.
 	*/
-	convenience init(date:Date, detailsVC:DetailsVC)
+	convenience init(date:Date)
 	{
 		self.init(nibName: nil, bundle: nil)
 		self.date = date
-		self.detailsVC = detailsVC
 	}
 	/**
 		Start listening for changes in events.
@@ -523,7 +520,7 @@ class ScheduleVC: UIViewController, DateContainer
 			print("Unknown object was clicked")
 			return
 		}
-		
+        let detailsVC = DetailsVC()
 		detailsVC.configure(event: event)
 		navigationController?.pushViewController(detailsVC, animated: true)
     }
