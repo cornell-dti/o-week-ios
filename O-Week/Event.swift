@@ -39,6 +39,8 @@ struct Event:Hashable, Comparable, JSONObject
     let pk: String
     let firstYearRequired: Bool
     let transferRequired: Bool
+    let url: String
+    let img: String
     
     var hashValue: Int
     {
@@ -62,7 +64,7 @@ struct Event:Hashable, Comparable, JSONObject
             - longitude: longitude of the event location
 			- pk: Unique positive ID given to each event starting from 1.
 	*/
-    private init(title:String, caption:String, categories:[String], pk: String, start: Double, end: Double, description: String, longitude: Double, latitude: Double, firstYearRequired: Bool, transferRequired: Bool)
+    private init(title:String, caption:String, categories:[String], pk: String, start: Double, end: Double, description: String, longitude: Double, latitude: Double, firstYearRequired: Bool, transferRequired: Bool, url: String, img:String)
     {
         self.title = title
         self.caption = caption
@@ -73,6 +75,8 @@ struct Event:Hashable, Comparable, JSONObject
         self.latitude = latitude
         self.firstYearRequired = firstYearRequired
         self.transferRequired = transferRequired
+        self.url = url
+        self.img = img
         
         self.startTimeUnixRep = start
         self.endTimeUnixRep = end
@@ -108,12 +112,14 @@ struct Event:Hashable, Comparable, JSONObject
                 let description = json["description"] as? String,
                 let location = json["location"] as? String,
                 let categories = json["categories"] as? [String],
-//                let latitude = json["latitude"] as? Double,
-//                let longitude = json["longitude"] as? String,
+                let latitude = json["latitude"] as? Double,
+                let longitude = json["longitude"] as? Double,
                 let startTime = json["start"] as? Double,
                 let endTime = json["end"] as? Double,
                 let firstYearRequired = json["firstYearRequired"] as? Bool,
-                let transferRequired = json["transferRequired"] as? Bool
+                let transferRequired = json["transferRequired"] as? Bool,
+                let url = json["url"] as? String,
+                let img = json["img"] as? String
         else {
 			print("Event.jsonOptional: incorrect JSON format")
             return nil
@@ -127,8 +133,10 @@ struct Event:Hashable, Comparable, JSONObject
         self.categories = categories
 		self.firstYearRequired = firstYearRequired
 		self.transferRequired = transferRequired
-        self.latitude = 0
-        self.longitude = 0
+        self.latitude = latitude
+        self.longitude = longitude
+        self.img = img
+        self.url = url
         
         self.startTimeUnixRep = startTime
         self.endTimeUnixRep = endTime
@@ -145,7 +153,7 @@ struct Event:Hashable, Comparable, JSONObject
 	*/
 	func toString() -> String
 	{
-		var stringRep =  "\(title)|\(caption)|\(description)|\(pk)|\(startTimeUnixRep)|\(endTimeUnixRep)|\(firstYearRequired)|\(transferRequired)|\(longitude)|\(latitude)|"
+		var stringRep =  "\(title)|\(caption)|\(description)|\(pk)|\(startTimeUnixRep)|\(endTimeUnixRep)|\(firstYearRequired)|\(transferRequired)|\(longitude)|\(latitude)|\(url)|\(img)|"
         for (index, category) in categories.enumerated() {
             stringRep += category
             if(index < categories.count - 1) {
@@ -163,7 +171,7 @@ struct Event:Hashable, Comparable, JSONObject
 	static func fromString(_ str: String) -> Event?
 	{
 		let parts = str.components(separatedBy: "|")
-		guard parts.count >= 11,
+		guard parts.count >= 13,
 			let startTimeUnixRep = Double(parts[4]),
             let endTimeUnixRep = Double(parts[5]),
 			let firstYearRequired = Bool(parts[6]),
@@ -179,10 +187,12 @@ struct Event:Hashable, Comparable, JSONObject
 		let caption = parts[1]
 		let description = parts[2]
 		let pk = parts[3]
+        let url = parts[10]
+        let img = parts[11]
 		
-        let categories = parts[10].components(separatedBy: ";")
+        let categories = parts[12].components(separatedBy: ";")
 		
-		return Event(title: title, caption: caption, categories: categories, pk: pk, start: startTimeUnixRep, end: endTimeUnixRep, description: description, longitude: longitude, latitude: latitude, firstYearRequired: firstYearRequired, transferRequired: transferRequired)
+		return Event(title: title, caption: caption, categories: categories, pk: pk, start: startTimeUnixRep, end: endTimeUnixRep, description: description, longitude: longitude, latitude: latitude, firstYearRequired: firstYearRequired, transferRequired: transferRequired, url: url, img: img)
 	}
 	
 //    /** DEPRECATED

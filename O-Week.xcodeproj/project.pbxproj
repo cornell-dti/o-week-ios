@@ -343,6 +343,7 @@
 				TargetAttributes = {
 					DC18B30C1E76CBCE00C3FCD6 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = NHAKALPCJ4;
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -717,7 +718,7 @@
 			baseConfigurationReference = 917B7A99D1405A3BB60EEB5E /* Pods-O-Week.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = NHAKALPCJ4;
 				INFOPLIST_FILE = "O-Week/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -733,7 +734,7 @@
 			baseConfigurationReference = 680698CA55279B36FAC481E8 /* Pods-O-Week.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = NHAKALPCJ4;
 				INFOPLIST_FILE = "O-Week/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

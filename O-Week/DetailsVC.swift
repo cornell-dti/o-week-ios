@@ -41,6 +41,8 @@ class DetailsVC: UIViewController
 	let moreButton = UILabel.newAutoLayout()
 	let moreButtonGradient = GradientView.newAutoLayout()
 	let additional = UILabel.newAutoLayout()
+    
+    let linkButton = UIButton.newAutoLayout()
 	
 	let map = GMSMapView.newAutoLayout()
 	var mapMarker: GMSMarker?
@@ -231,13 +233,15 @@ class DetailsVC: UIViewController
 		marginedContent.addArrangedSubview(detailsContainer)
 		
 		detailsContainer.addSubview(eventDescription)
-		eventDescription.autoPinEdgesToSuperviewEdges()
+		eventDescription.autoPinEdge(.top, to: .top, of: detailsContainer)
+        eventDescription.autoPinEdge(.left, to: .left, of: detailsContainer)
+        eventDescription.autoPinEdge(.right, to: .right, of: detailsContainer)
 		eventDescription.font = UIFont(name: Font.REGULAR, size: 14)
 		eventDescription.textColor = Colors.LIGHT_GRAY
 		
 		detailsContainer.addSubview(moreButton)
-		moreButton.autoPinEdge(toSuperviewEdge: .bottom)
-		moreButton.autoPinEdge(toSuperviewEdge: .right)
+		moreButton.autoPinEdge(.bottom, to: .bottom, of: eventDescription)
+        moreButton.autoPinEdge(.right, to: .right, of: eventDescription)
 		moreButton.font = UIFont(name: Font.MEDIUM, size: 14)
 		moreButton.backgroundColor = UIColor.white
 		moreButton.textColor = Colors.RED
@@ -245,10 +249,21 @@ class DetailsVC: UIViewController
 		
 		detailsContainer.addSubview(moreButtonGradient)
 		moreButtonGradient.autoPinEdge(.right, to: .left, of: moreButton)
-		moreButtonGradient.autoPinEdge(toSuperviewEdge: .bottom)
+        moreButtonGradient.autoPinEdge(.bottom, to: .bottom, of: moreButton)
 		moreButtonGradient.autoMatch(.width, to: .width, of: moreButton)
 		moreButtonGradient.autoMatch(.height, to: .height, of: moreButton)
 		moreButtonGradient.setGradient(colors: [UIColor(white: 1, alpha: 0).cgColor, UIColor.white.cgColor], orientation: .leftToRight)
+        
+        
+        detailsContainer.addSubview(linkButton)
+        linkButton.autoPinEdge(.top, to: .bottom, of: eventDescription)
+        linkButton.autoPinEdge(.bottom, to: .bottom, of: detailsContainer)
+        linkButton.autoPinEdge(.left, to: .left, of: detailsContainer)
+        linkButton.titleLabel?.font = UIFont(name: Font.MEDIUM, size: 14)
+        linkButton.setTitleColor(view.tintColor, for: .normal)
+        linkButton.addTarget(self, action: #selector(onURLButtonClick(_:)), for: .touchUpInside)
+        
+        
 		
 		//mapContainer will hold map, mapBanner, and directionsButton
 		//|----------------|
@@ -314,6 +329,11 @@ class DetailsVC: UIViewController
         eventLocation.text = event.caption
         eventDescription.text = event.description
 		eventTime.text = "\(event.startTime) - \(event.endTime)"
+        linkButton.setTitle(event.url, for: .normal)
+        if event.url == "" {
+            NSLayoutConstraint.activate([linkButton.heightAnchor.constraint(equalToConstant: 0)])
+            view.setNeedsUpdateConstraints()
+        }
 		
         refreshButton(added: UserData.selectedEventsContains(event))
 		Internet.getImageFor(event, imageView: eventImage)
@@ -397,6 +417,15 @@ class DetailsVC: UIViewController
         placeLatLng = CLLocationCoordinate2D(latitude: event.latitude, longitude: event.longitude)
         self.map.selectedMarker = mapMarker
 	}
+    
+    @objc func onURLButtonClick(_ sender: UIButton) {
+        if let url = URL(string: event?.url ?? "") {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+        print ("Empty link button clicked")
+    }
+    
+    
 	/**
 		Handle user selection of map's direction button. Opens Google Maps or Apple Maps, depending on availability, and starts navigation.
 		- parameter sender: the the button clicked.
