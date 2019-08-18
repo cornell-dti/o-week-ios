@@ -349,7 +349,9 @@ class InitialSettingsVC:UIPageViewController, UIPageViewControllerDataSource
 			//send notifications
 			LocalNotifications.updateNotifications()
 			
-			present(TabBarVC(), animated: true, completion: nil)
+            let tabBarVC = TabBarVC()
+            tabBarVC.modalPresentationStyle = .fullScreen
+			present(tabBarVC, animated: true, completion: nil)
 		}
 	}
 	
