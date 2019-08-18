@@ -10,6 +10,7 @@ target 'O-Week' do
   pod 'PKHUD', '~> 5.0'
   pod 'GoogleMaps'
   pod 'GooglePlaces'
+  pod 'Kingfisher', '~> 5.0'
 
 
   target 'O-WeekTests' do

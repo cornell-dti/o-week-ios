@@ -10,6 +10,7 @@ import UIKit
 import GoogleMaps
 import GooglePlaces
 import PKHUD
+import Kingfisher
 
 /**
 	Displays a user-selected event.
@@ -275,7 +276,7 @@ class DetailsVC: UIViewController
 		//|----------------|
 		let mapContainer = UIView.newAutoLayout()
 		scrollContent.addArrangedSubview(mapContainer)
-		mapContainer.autoMatch(.height, to: .width, of: mapContainer, withMultiplier: 9/16)
+		mapContainer.autoMatch(.height, to: .width, of: mapContainer, withMultiplier: 11/16)
 		
 		mapContainer.addSubview(map)
 		map.autoPinEdgesToSuperviewEdges()
@@ -339,7 +340,7 @@ class DetailsVC: UIViewController
         }
 		
         refreshButton(added: UserData.selectedEventsContains(event))
-		Internet.getImageFor(event, imageView: eventImage)
+		eventImage.kf.setImage(with: URL(string: event.img))
 		configureMap(event:event)
 		configureRequired(event: event)
 		configureDescription(event: event)
