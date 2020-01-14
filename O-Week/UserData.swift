@@ -44,10 +44,10 @@ class UserData
     //Dates
     static var DATES = [Date]()
 	static var selectedDate:Date!
-	static let YEAR = 2019
-	static let MONTH = 8
-	static let START_DAY = 23	//Dates range: [START_DAY, END_DAY], inclusive
-	static let DURATION = 15		//Duration of orientation dates
+	static let YEAR = 2020
+	static let MONTH = 1
+	static let START_DAY = 14	//Dates range: [START_DAY, END_DAY], inclusive
+	static let DURATION = 20		//Duration of orientation dates
 	
 	//Categories
 	static var categories = [String:Category]()
@@ -156,7 +156,7 @@ class UserData
             print("completed fetching, new version:\(newVersion)")
 			
 			//update categories
-			changedCategories.forEach({categories[$0.pk] = $0})
+            changedCategories.forEach({categories[$0.pk] = $0})
 			deletedCategoryPks.forEach({categories.removeValue(forKey: $0)})
 			saveCategories()
 			

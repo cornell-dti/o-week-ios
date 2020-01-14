@@ -153,7 +153,7 @@ struct Event:Hashable, Comparable, JSONObject
 	*/
 	func toString() -> String
 	{
-		var stringRep =  "\(title)|\(caption)|\(description)|\(pk)|\(startTimeUnixRep)|\(endTimeUnixRep)|\(firstYearRequired)|\(transferRequired)|\(longitude)|\(latitude)|\(url)|\(img)|"
+		var stringRep =  "\(title)||\(caption)||\(description)||\(pk)||\(startTimeUnixRep)||\(endTimeUnixRep)||\(firstYearRequired)||\(transferRequired)||\(longitude)||\(latitude)||\(url)||\(img)||"
         for (index, category) in categories.enumerated() {
             stringRep += category
             if(index < categories.count - 1) {
@@ -170,7 +170,7 @@ struct Event:Hashable, Comparable, JSONObject
 	*/
 	static func fromString(_ str: String) -> Event?
 	{
-		let parts = str.components(separatedBy: "|")
+		let parts = str.components(separatedBy: "||")
 		guard parts.count >= 13,
 			let startTimeUnixRep = Double(parts[4]),
             let endTimeUnixRep = Double(parts[5]),

@@ -27,9 +27,9 @@ enum Student:String, HasPK
 	var pk:String {
         switch self {
         case .Transfer:
-            return "B8AE27DD-DCD0-EF66-FC3B05EB37B392D7"
+            return "Transfer Students"
         case .Freshmen:
-            return "B8AFD836-CF90-1614-C4C83BEF191C9C07"
+            return "First-Year Students"
         }
 		
 	}
@@ -39,11 +39,11 @@ enum Student:String, HasPK
 	*/
 	static func studentForPk(_ pk:String) -> Student?
 	{
-		if (pk == "B8AE27DD-DCD0-EF66-FC3B05EB37B392D7")
+		if (pk == "Transfer Students")
 		{
 			return .Transfer
 		}
-        else if pk == "B8AFD836-CF90-1614-C4C83BEF191C9C07" {
+        else if pk == "First-Year Students" {
             return .Freshmen
         }
 		return nil

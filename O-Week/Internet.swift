@@ -50,7 +50,7 @@ class Internet
 	static func getUpdatesForVersion(_ version:Double, onCompletion finish:@escaping ((Double, [Category], [String], [Event], [String]) -> ()))
 	{
         print("version: \(String(format: "%.0f", version))")
-		get(url: "\(DATABASE)version?timestamp=\(version)", handler:
+		get(url: "https://scraperjanorientationcornell.herokuapp.com/eventsiOS/", handler:
 		{
 			json in
 			guard let data = json as? [String:Any],
