@@ -16,9 +16,9 @@ import Foundation
 */
 enum Student:String, HasPK
 {
-	static let ORDERED:[Student] = [.Transfer]
-	case Transfer = "Transfer"
-    case Freshmen = "Freshmen"
+	static let ORDERED:[Student] = [.Transfer, .Freshmen]
+	case Transfer = "Transfer Students"
+    case Freshmen = "First-Year Students"
 	
 	/**
 		Returns the `Category.pk` value of the category associated with this student type. Assumes the database will never change student types' pk values.

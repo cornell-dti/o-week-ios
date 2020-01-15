@@ -46,8 +46,8 @@ class UserData
 	static var selectedDate:Date!
 	static let YEAR = 2020
 	static let MONTH = 1
-	static let START_DAY = 14	//Dates range: [START_DAY, END_DAY], inclusive
-	static let DURATION = 20		//Duration of orientation dates
+	static let START_DAY = 16	//Dates range: [START_DAY, END_DAY], inclusive
+	static let DURATION = 18		//Duration of orientation dates
 	
 	//Categories
 	static var categories = [String:Category]()

@@ -20,9 +20,9 @@ enum Colleges:String, HasPK
 	case AAP = "Architecture, Art, and Planning"
 	case ArtsAndSciences = "Arts & Sciences"
 	case Engineering = "Engineering"
-	case JohnsonB = "Johnson School of Business"
-    case JohnsonH = "Johnson School of Hotel Management"
-	case ILR = "Industrial Labor Relations"
+	case JohnsonB = "SC Johnson College of Business"
+    case JohnsonH = "SC Johnson College of Business - Hotel Administration"
+	case ILR = "ILR School"
 	case HumanEc = "Human Ecology"
 	
 	/**
