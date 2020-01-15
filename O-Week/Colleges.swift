@@ -16,7 +16,7 @@ enum Colleges:String, HasPK
 {
 	static let ORDERED:[Colleges] = [.CALS, .AAP, .ArtsAndSciences, .Engineering, .JohnsonB, .JohnsonH, .ILR, .HumanEc]
 	
-	case CALS = "Agriculture and Life Sciences"
+	case CALS = "Agriculture & Life Sciences"
 	case AAP = "Architecture, Art, and Planning"
 	case ArtsAndSciences = "Arts & Sciences"
 	case Engineering = "Engineering"
@@ -33,7 +33,7 @@ enum Colleges:String, HasPK
 		switch (self)
 		{
 		case .CALS:
-			return "Agriculture and Life Sciences"
+			return "Agriculture & Life Sciences"
 		case .AAP:
 			return "Architecture, Art, and Planning"
 		case .ArtsAndSciences:
@@ -58,7 +58,7 @@ enum Colleges:String, HasPK
 	{
 		switch (pk)
 		{
-        case "Agriculture and Life Sciences":
+        case "Agriculture & Life Sciences":
 			return .CALS
 		case "Architecture, Art, and Planning":
 			return .AAP

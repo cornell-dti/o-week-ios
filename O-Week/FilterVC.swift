@@ -56,7 +56,7 @@ class FilterVC: UITableViewController
 		})))
 		//put all the categories that aren't colleges in the last section
 		tableSections.append((name: "", rows: UserData.categories.values
-            .filter({Colleges.collegeForPk($0.pk) == nil && $0.pk.trimmingCharacters(in: [" "]) != "Required" }).map({
+            .filter({Colleges.collegeForPk($0.pk) == nil && $0.pk.trimmingCharacters(in: [" "]) != "Required" }).sorted().map({
 				category in
 				let cell = UITableViewCell.newAutoLayout()
 				cell.textLabel?.text = category.name
