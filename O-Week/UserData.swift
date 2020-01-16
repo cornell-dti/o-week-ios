@@ -37,7 +37,6 @@ class UserData
     
     //Calendar for manipulating dates. You can use this throughout the app.
     static let userCalendar = Calendar.current
-    
     //resources
     static var resources = [Resource]()
     
@@ -177,7 +176,7 @@ class UserData
 					insertToSelectedEvents(event)
 				}
 			})
-			
+       
 			//delete and resend notifications
 			let changedSelectedEvents = changedEvents.filter({addedPKs.contains($0.pk)})
 			if (BoolPreference.Reminder.isTrue())
@@ -203,10 +202,10 @@ class UserData
 	{
 		if let student = studentTypePk,
             let college = collegePk {
-            if event.firstYearRequired && student == Student.Freshmen.pk && event.categories.contains(college) {
+            if event.firstYearRequired && student == Student.Freshmen.pk && (event.categories.contains(college) || event.categories.contains("University Events")) {
                 return true
             }
-            if event.transferRequired && student == Student.Transfer.pk && event.categories.contains(college) {
+            if event.transferRequired && student == Student.Transfer.pk && (event.categories.contains(college) || event.categories.contains("University Events")) {
                 return true
             }
         }

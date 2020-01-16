@@ -142,9 +142,11 @@ struct Event:Hashable, Comparable, JSONObject
         self.endTimeUnixRep = endTime
         let start = Date(timeIntervalSince1970: startTime / 1000)
         let end = Date(timeIntervalSince1970: endTime / 1000)
+        var utcCalendar = Calendar(identifier: .gregorian)
+        utcCalendar.timeZone = TimeZone(abbreviation: "UTC")!
         self.date = UserData.userCalendar.date(bySettingHour: 0, minute: 0, second: 0, of: start)!
-        self.startTime = Time(hour: UserData.userCalendar.component(.hour, from: start), minute: UserData.userCalendar.component(.minute, from: start))
-        self.endTime = Time(hour: UserData.userCalendar.component(.hour, from: end), minute: UserData.userCalendar.component(.minute, from: end))
+        self.startTime = Time(hour: utcCalendar.component(.hour, from: start), minute: utcCalendar.component(.minute, from: start))
+        self.endTime = Time(hour: utcCalendar.component(.hour, from: end), minute: utcCalendar.component(.minute, from: end))
     }
 	
 	/**
