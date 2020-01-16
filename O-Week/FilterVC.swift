@@ -56,7 +56,7 @@ class FilterVC: UITableViewController
 		})))
 		//put all the categories that aren't colleges in the last section
 		tableSections.append((name: "", rows: UserData.categories.values
-			.filter({Colleges.collegeForPk($0.pk) == nil}).map({
+            .filter({Colleges.collegeForPk($0.pk) == nil && Student.studentForPk($0.pk) == nil && $0.pk.trimmingCharacters(in: [" "]) != "Required" }).sorted().map({
 				category in
 				let cell = UITableViewCell.newAutoLayout()
 				cell.textLabel?.text = category.name
@@ -103,8 +103,8 @@ class FilterVC: UITableViewController
 			}
 			else
 			{
-				cell.accessoryType = .checkmark
-				FilterVC.selectedFilters.insert(data.pk)
+                cell.accessoryType = .checkmark
+                FilterVC.selectedFilters.insert(data.pk)
 			}
 		}
 		else
@@ -149,16 +149,70 @@ class FilterVC: UITableViewController
 		
 		return events.filter({
 			event in
-			if (requiredFilter && UserData.requiredForUser(event: event))
-			{
-				return true
-			}
-            for category in event.categories {
-                if selectedFilters.contains(category) {
-                    return true
+//            if (requiredFilter && event.categories.contains("Required"))
+//            {
+//                if(selectedFilters.contains("Transfer Students") && selectedFilters.contains("First-Year Students")){
+//                    return event.transferRequired || event.firstYearRequired;
+//                } else if (selectedFilters.contains("Transfer Students")){
+//                    return event.transferRequired;
+//                } else if (selectedFilters.contains("First-Year Students")){
+//                    return event.firstYearRequired;
+//                } else {
+//                    return true;
+//                }
+//            }
+            
+            var numCollegeFiltersPassed:Int = Int(0);
+            var numCollegeFilters:Int = Int(0);
+            
+            for category in selectedFilters {
+                if(Colleges.collegeForPk(category) == nil){
+                    if(!event.categories.contains(category)){
+                        return false;
+                    }
+                    if(requiredFilter && !event.categories.contains("Required")){
+                        return false;
+                    }
+                    if(selectedFilters.contains("Transfer Students") && selectedFilters.contains("First-Year Students")){
+                        if(!(event.categories.contains("Transfer Students") && event.categories.contains("First-Year Students"))){
+                            return false;
+                        };
+                    } else if (selectedFilters.contains("Transfer Students")){
+                        if(!(event.categories.contains("Transfer Students"))){
+                            return false;
+                        };
+                    } else if (selectedFilters.contains("First-Year Students")){
+                        if(!(event.categories.contains("First-Year Students"))){
+                            return false;
+                        };
+                    }
+                } else {
+                    numCollegeFilters = numCollegeFilters.advanced(by: 1);
+                    if(requiredFilter && !event.categories.contains("Required")){
+                        return false;
+                    }
+                    if(selectedFilters.contains("Transfer Students") && selectedFilters.contains("First-Year Students")){
+                        if(!(event.categories.contains("Transfer Students") && event.categories.contains("First-Year Students"))){
+                            return false;
+                        };
+                    } else if (selectedFilters.contains("Transfer Students")){
+                        if(!(event.categories.contains("Transfer Students"))){
+                            return false;
+                        };
+                    } else if (selectedFilters.contains("First-Year Students")){
+                        if(!(event.categories.contains("First-Year Students"))){
+                            return false;
+                        };
+                    }
+                    if(event.categories.contains(category)){
+                        numCollegeFiltersPassed = numCollegeFiltersPassed.advanced(by: 1);
+                    }
                 }
             }
-            return false
+            if(numCollegeFiltersPassed == 0 && numCollegeFilters > 0){
+                return false;
+            }
+            return true;
 		})
 	}
 }

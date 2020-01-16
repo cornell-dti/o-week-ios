@@ -50,12 +50,12 @@ class LocalNotifications: NSObject, UNUserNotificationCenterDelegate
 			return
 		}
 		
-		updatedEvents.forEach({
-			let content = UNMutableNotificationContent()
-			content.title = "\"\($0.title)\" has been updated"
-			let request = UNNotificationRequest(identifier: "change\($0.pk)", content: content, trigger: nil)
-			center.add(request, withCompletionHandler: nil)
-		})
+//        updatedEvents.forEach({
+//            let content = UNMutableNotificationContent()
+//            content.title = "\"\($0.title)\" has been updated"
+//            let request = UNNotificationRequest(identifier: "change\($0.pk)", content: content, trigger: nil)
+//            center.add(request, withCompletionHandler: nil)
+//        })
 	}
 	
 	/**

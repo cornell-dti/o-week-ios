@@ -37,17 +37,16 @@ class UserData
     
     //Calendar for manipulating dates. You can use this throughout the app.
     static let userCalendar = Calendar.current
-    
     //resources
     static var resources = [Resource]()
     
     //Dates
     static var DATES = [Date]()
 	static var selectedDate:Date!
-	static let YEAR = 2019
-	static let MONTH = 8
-	static let START_DAY = 23	//Dates range: [START_DAY, END_DAY], inclusive
-	static let DURATION = 15		//Duration of orientation dates
+	static let YEAR = 2020
+	static let MONTH = 1
+	static let START_DAY = 16	//Dates range: [START_DAY, END_DAY], inclusive
+	static let DURATION = 18		//Duration of orientation dates
 	
 	//Categories
 	static var categories = [String:Category]()
@@ -156,7 +155,7 @@ class UserData
             print("completed fetching, new version:\(newVersion)")
 			
 			//update categories
-			changedCategories.forEach({categories[$0.pk] = $0})
+            changedCategories.forEach({categories[$0.pk] = $0})
 			deletedCategoryPks.forEach({categories.removeValue(forKey: $0)})
 			saveCategories()
 			
@@ -177,7 +176,7 @@ class UserData
 					insertToSelectedEvents(event)
 				}
 			})
-			
+       
 			//delete and resend notifications
 			let changedSelectedEvents = changedEvents.filter({addedPKs.contains($0.pk)})
 			if (BoolPreference.Reminder.isTrue())
@@ -203,10 +202,10 @@ class UserData
 	{
 		if let student = studentTypePk,
             let college = collegePk {
-            if event.firstYearRequired && student == Student.Freshmen.pk && event.categories.contains(college) {
+            if event.firstYearRequired && student == Student.Freshmen.pk && (event.categories.contains(college) || event.categories.contains("University Events")) {
                 return true
             }
-            if event.transferRequired && student == Student.Transfer.pk && event.categories.contains(college) {
+            if event.transferRequired && student == Student.Transfer.pk && (event.categories.contains(college) || event.categories.contains("University Events")) {
                 return true
             }
         }

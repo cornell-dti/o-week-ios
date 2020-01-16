@@ -16,13 +16,13 @@ enum Colleges:String, HasPK
 {
 	static let ORDERED:[Colleges] = [.CALS, .AAP, .ArtsAndSciences, .Engineering, .JohnsonB, .JohnsonH, .ILR, .HumanEc]
 	
-	case CALS = "Agriculture and Life Sciences"
+	case CALS = "Agriculture & Life Sciences"
 	case AAP = "Architecture, Art, and Planning"
 	case ArtsAndSciences = "Arts & Sciences"
 	case Engineering = "Engineering"
-	case JohnsonB = "Johnson School of Business"
-    case JohnsonH = "Johnson School of Hotel Management"
-	case ILR = "Industrial Labor Relations"
+	case JohnsonB = "SC Johnson College of Business"
+    case JohnsonH = "SC Johnson College of Business - Hotel Administration"
+	case ILR = "ILR School"
 	case HumanEc = "Human Ecology"
 	
 	/**
@@ -33,21 +33,21 @@ enum Colleges:String, HasPK
 		switch (self)
 		{
 		case .CALS:
-			return "8D0BC52D-C504-D514-F334BEB4E18FF455"
+			return "Agriculture & Life Sciences"
 		case .AAP:
-			return "8D0F380C-047E-8FD3-CDA449EB7C41A466"
+			return "Architecture, Art, and Planning"
 		case .ArtsAndSciences:
-			return "8D0D75B3-BE48-48D8-DF46CC38682879C3"
+			return "Arts & Sciences"
 		case .Engineering:
-			return "8D11CBA4-D6D3-7FDB-17ECC36ACBED42A5"
+			return "Engineering"
 		case .JohnsonB:
-			return "3D51CFD6-A23C-EF4E-A6DF0F01930ACB62"
+			return "SC Johnson College of Business"
         case .JohnsonH:
-            return "8D084B16-073C-2EF4-0716B6DB7034C2F6"
+            return "SC Johnson College of Business - Hotel Administration"
 		case .ILR:
-			return "8D139B03-E3DE-A329-B364603149879B5A"
+			return "ILR School"
 		case .HumanEc:
-			return "8D107B76-AFFE-D1B3-D4D752BCD7ED2265"
+			return "Human Ecology"
 		}
 	}
 	/**
@@ -58,21 +58,21 @@ enum Colleges:String, HasPK
 	{
 		switch (pk)
 		{
-		case "8D0BC52D-C504-D514-F334BEB4E18FF455":
+        case "Agriculture & Life Sciences":
 			return .CALS
-		case "8D0F380C-047E-8FD3-CDA449EB7C41A466":
+		case "Architecture, Art, and Planning":
 			return .AAP
-		case "8D0D75B3-BE48-48D8-DF46CC38682879C3":
+		case "Arts & Sciences":
 			return .ArtsAndSciences
-		case "8D11CBA4-D6D3-7FDB-17ECC36ACBED42A5":
+		case "Engineering":
 			return .Engineering
-		case "3D51CFD6-A23C-EF4E-A6DF0F01930ACB62":
+		case "SC Johnson College of Business":
 			return .JohnsonB
-        case "8D084B16-073C-2EF4-0716B6DB7034C2F6":
+        case "SC Johnson College of Business - Hotel Administration":
             return .JohnsonH
-		case "8D139B03-E3DE-A329-B364603149879B5A":
+		case "ILR School":
 			return .ILR
-		case "8D107B76-AFFE-D1B3-D4D752BCD7ED2265":
+		case "Human Ecology":
 			return .HumanEc
 		default:
 			return nil

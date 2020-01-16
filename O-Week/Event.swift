@@ -142,9 +142,11 @@ struct Event:Hashable, Comparable, JSONObject
         self.endTimeUnixRep = endTime
         let start = Date(timeIntervalSince1970: startTime / 1000)
         let end = Date(timeIntervalSince1970: endTime / 1000)
+        var utcCalendar = Calendar(identifier: .gregorian)
+        utcCalendar.timeZone = TimeZone(abbreviation: "UTC")!
         self.date = UserData.userCalendar.date(bySettingHour: 0, minute: 0, second: 0, of: start)!
-        self.startTime = Time(hour: UserData.userCalendar.component(.hour, from: start), minute: UserData.userCalendar.component(.minute, from: start))
-        self.endTime = Time(hour: UserData.userCalendar.component(.hour, from: end), minute: UserData.userCalendar.component(.minute, from: end))
+        self.startTime = Time(hour: utcCalendar.component(.hour, from: start), minute: utcCalendar.component(.minute, from: start))
+        self.endTime = Time(hour: utcCalendar.component(.hour, from: end), minute: utcCalendar.component(.minute, from: end))
     }
 	
 	/**
@@ -153,7 +155,7 @@ struct Event:Hashable, Comparable, JSONObject
 	*/
 	func toString() -> String
 	{
-		var stringRep =  "\(title)|\(caption)|\(description)|\(pk)|\(startTimeUnixRep)|\(endTimeUnixRep)|\(firstYearRequired)|\(transferRequired)|\(longitude)|\(latitude)|\(url)|\(img)|"
+		var stringRep =  "\(title)||\(caption)||\(description)||\(pk)||\(startTimeUnixRep)||\(endTimeUnixRep)||\(firstYearRequired)||\(transferRequired)||\(longitude)||\(latitude)||\(url)||\(img)||"
         for (index, category) in categories.enumerated() {
             stringRep += category
             if(index < categories.count - 1) {
@@ -170,7 +172,7 @@ struct Event:Hashable, Comparable, JSONObject
 	*/
 	static func fromString(_ str: String) -> Event?
 	{
-		let parts = str.components(separatedBy: "|")
+		let parts = str.components(separatedBy: "||")
 		guard parts.count >= 13,
 			let startTimeUnixRep = Double(parts[4]),
             let endTimeUnixRep = Double(parts[5]),

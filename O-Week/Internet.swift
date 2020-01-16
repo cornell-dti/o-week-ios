@@ -4,7 +4,6 @@
 //  Created by David Chu on 2017/4/23.
 //  Copyright © 2017 Cornell D&TI. All rights reserved.
 //
-
 import UIKit
 import SystemConfiguration
 
@@ -14,62 +13,59 @@ import SystemConfiguration
  */
 class Internet
 {
-	//Link to the website where all event info is stored.
-    static let DATABASE = "https://scraperjanorientationcornell.herokuapp.com/events/"
+    //Link to the website where all event info is stored.
+    static let DATABASE = "https://us-east1-oweek-1496849141291.cloudfunctions.net/"
     static let RESOURCE = "https://us-east1-oweek-1496849141291.cloudfunctions.net/getResources"
     
     //suppress default constructor for noninstantiability
     private init(){}
-	
-	/**
-	
-	Downloads all events and categories to update the app to the database's newest version. The `onCompletion` provided will be executed, provided with the new data as arguments. Then, classes that care about such updates will be updated
-	
-	- important: `onCompletion` will not be executed if the database does not contain a newer version. One should not depend on its execution.
-	
-	Expected JSON structure:
-	
-		{
-	 		version: Int,
-			categories:
-			{
-				changed: [Category.init(jsonOptional:[String:Any]), category2, ...],
-				deleted: [Category.pk, pk2, ...]
-			},
-			events:
-			{
-				changed: [Event.init(jsonOptional:[String:Any])}, event2, ...],
-				deleted: [Event.pk, pk2, ...]
-			}
-		}
-	
-	- Parameters:
-		- version: Current version of database on file. Should be 0 if never downloaded from database.
-		- finish: Function to execute when data is processed.
-	*/
-	static func getUpdatesForVersion(_ version:Double, onCompletion finish:@escaping ((Double, [Category], [String], [Event], [String]) -> ()))
-	{
-        print("version: \(String(format: "%.0f", version))")
-        let newestVersion: Double = NSDate().timeIntervalSince1970;
-		get(url: "\(DATABASE)version?timestamp=\(version)", handler:
-		{
-			json in
-			guard let data = json as? [String:Any],
-                let events = data["EVENTS"] as? [String:Any],
-            for(event in events){
-                
+    
+    /**
+    
+    Downloads all events and categories to update the app to the database's newest version. The `onCompletion` provided will be executed, provided with the new data as arguments. Then, classes that care about such updates will be updated
+    
+    - important: `onCompletion` will not be executed if the database does not contain a newer version. One should not depend on its execution.
+    
+    Expected JSON structure:
+    
+        {
+             version: Int,
+            categories:
+            {
+                changed: [Category.init(jsonOptional:[String:Any]), category2, ...],
+                deleted: [Category.pk, pk2, ...]
+            },
+            events:
+            {
+                changed: [Event.init(jsonOptional:[String:Any])}, event2, ...],
+                deleted: [Event.pk, pk2, ...]
             }
-//                    let categories = data["categories"] as? [String:Any],
-//                    let changedCategoriesJSON = categories["changed"] as? [Any],
-//                    let deletedCategoriesPK = categories["deleted"] as? [String],
-//                    let events = data["events"] as? [String:Any],
-//                    let changedEventsJSON = events["changed"] as? [Any],
-//                    let deletedEventsPK = events["deleted"] as? [String],
-					//quick exit if version # did not change
-					version != newestVersion else {
-				runAsyncFunction({NotificationCenter.default.post(name: .reloadData, object: nil)})
-				return
-			}
+        }
+    
+    - Parameters:
+        - version: Current version of database on file. Should be 0 if never downloaded from database.
+        - finish: Function to execute when data is processed.
+    */
+    static func getUpdatesForVersion(_ version:Double, onCompletion finish:@escaping ((Double, [Category], [String], [Event], [String]) -> ()))
+    {
+        print("version: \(String(format: "%.0f", version))")
+        get(url: "https://scraperjanorientationcornell.herokuapp.com/eventsiOS/", handler:
+        {
+            json in
+            guard let data = json as? [String:Any],
+                    let newestVersion = data["timestamp"] as? Double,
+                    let categories = data["categories"] as? [String:Any],
+                    let changedCategoriesJSON = categories["changed"] as? [Any],
+                    let deletedCategoriesPK = categories["deleted"] as? [String],
+                    let events = data["events"] as? [String:Any],
+                    let changedEventsJSON = events["changed"] as? [Any],
+                    let deletedEventsPK = events["deleted"] as? [String],
+                    //quick exit if version # did not change
+                    version != newestVersion else {
+                runAsyncFunction({NotificationCenter.default.post(name: .reloadData, object: nil)})
+                return
+            }
+            
             
             //note: flatMap can also remove nils
             let changedCategories = changedCategoriesJSON.map({Category(jsonOptional: $0 as? [String:Any])}).compactMap({$0})
@@ -78,8 +74,8 @@ class Internet
 
             //notify classes that need to know when events were updated
             runAsyncFunction({NotificationCenter.default.post(name: .reloadData, object: nil)})
-		})
-	}
+        })
+    }
     
     static func getResourceLinks(onCompletion finish:@escaping ([Resource]) -> ()) {
         get(url: RESOURCE, handler:
@@ -96,8 +92,8 @@ class Internet
     /**
      Sends a GET request to the`url` with the given keys, retrieves a JSON object, then runs `handler` with the JSON object when it is done. Always use this function to communicate with the server.
      - Parameters:
-     	- url: URL to send the GET request to
-     	- handler: A function used to process the info returned from the database
+         - url: URL to send the GET request to
+         - handler: A function used to process the info returned from the database
      */
     private static func get(url:String, handler:((Any?) -> ())?)
     {
@@ -139,5 +135,3 @@ class Internet
         })
     }
 }
-
-
