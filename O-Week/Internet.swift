@@ -49,11 +49,11 @@ class Internet
     static func getUpdatesForVersion(_ version:Double, onCompletion finish:@escaping ((Double, [Category], [String], [Event], [String]) -> ()))
     {
         print("version: \(String(format: "%.0f", version))")
-        get(url: "https://scraperjanorientationcornell.herokuapp.com/eventsiOS/", handler:
-        {
-            json in
-            guard let data = json as? [String:Any],
-                    let newestVersion = data["timestamp"] as? Double,
+		get(url: "https://scraperjanorientationcornell.herokuapp.com/eventsiOS/", handler:
+		{
+			json in
+			guard let data = json as? [String:Any],
+					let newestVersion = data["timestamp"] as? Double,
                     let categories = data["categories"] as? [String:Any],
                     let changedCategoriesJSON = categories["changed"] as? [Any],
                     let deletedCategoriesPK = categories["deleted"] as? [String],
